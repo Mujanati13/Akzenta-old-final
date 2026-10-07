@@ -1,0 +1,486 @@
+<section class="min-h-[calc(100vh-95px)] flex flex-col">
+  <h2 translate class="flex justify-between items-center text-primary-700 mb-2 lg:mb-4">
+    <div class="flex items-center">
+      <app-icon name="users" class="w-5 h-5 lg:w-6 lg:h-6 mr-1 text-primary-700" />
+      <span class="text-2xl lg:text-3xl font-bold font-dm">Benutzer bearbeiten</span>
+    </div>
+    <button type="button" class="ml-auto cursor-pointer flex items-center justify-center text-primary-600 hover:text-primary-700 transition-colors" (click)="cancel()" title="Zurück">
+      <app-icon name="arrow-left" class="w-8 h-8 flex items-center text-primary-700"></app-icon>
+    </button>
+  </h2>
+
+  <!-- Loading state with skeleton -->
+  <div *ngIf="isLoading" class="relative mb-6 overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-br from-primary-50/50 via-white to-amber-50/40 animate-dashboard-shimmer"></div>
+    <div class="relative z-10 p-5 sm:p-6 space-y-5">
+      <div class="rounded-xl border border-gray-100 bg-white/90 p-4 sm:p-5 shadow-sm space-y-4">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-3">
+          <div class="h-[60px] rounded-[4px] bg-gray-100 animate-pulse"></div>
+          <div class="h-[60px] rounded-[4px] bg-gray-100 animate-pulse"></div>
+          <div class="h-[60px] rounded-[4px] bg-gray-100 animate-pulse"></div>
+        </div>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-3">
+          <div class="h-[60px] rounded-[4px] bg-gray-100 animate-pulse"></div>
+          <div class="h-[60px] rounded-[4px] bg-gray-100 animate-pulse"></div>
+        </div>
+        <div class="h-[50px] w-full lg:w-[389px] rounded-[4px] bg-primary-100/70 animate-pulse"></div>
+        <div class="space-y-3 pt-1">
+          <div class="h-3 w-44 rounded bg-gray-100 animate-pulse"></div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
+            <div *ngFor="let _ of [1, 2, 3, 4]" class="h-[60px] rounded-[4px] bg-gray-100 animate-pulse"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- User form -->
+  <form *ngIf="!isLoading && currentUser" [formGroup]="userForm" (ngSubmit)="onSubmit()" class="flex-1" autocomplete="off">
+    <!-- Mobile: Button toggle instead of tabs -->
+    <div class="flex flex-col gap-2 sm:hidden mb-4">
+      <button
+        type="button"
+        [disabled]="userType !== 'akzente'"
+        class="w-full h-[50px] rounded-[4px] font-medium transition-colors"
+        [ngClass]="{
+          'bg-primary-500 text-white': selectedTab === 0,
+          'bg-gray-100 text-gray-700': selectedTab !== 0,
+          'opacity-50 cursor-not-allowed': userType !== 'akzente',
+        }"
+      >
+        Akzente
+      </button>
+      <button
+        type="button"
+        [disabled]="userType !== 'client'"
+        class="w-full h-[50px] rounded-[4px] font-medium transition-colors"
+        [ngClass]="{
+          'bg-primary-500 text-white': selectedTab === 1,
+          'bg-gray-100 text-gray-700': selectedTab !== 1,
+          'opacity-50 cursor-not-allowed': userType !== 'client',
+        }"
+      >
+        Kunde
+      </button>
+    </div>
+
+    <!-- Mobile: Content panels (no tabs) -->
+    <div class="sm:hidden">
+      <!-- Akzente Panel (Mobile) -->
+      <div *ngIf="selectedTab === 0">
+        <div class="flex flex-col gap-y-6 mt-4">
+          <div class="flex flex-col gap-4">
+            <!-- Salutation -->
+            <p-iftalabel class="w-full">
+              <p-dropdown
+                id="salutation_mobile"
+                formControlName="salutation"
+                [options]="salutationOptions"
+                optionLabel="name"
+                optionValue="code"
+                class="w-full h-[60px]"
+                styleClass="w-full"
+              ></p-dropdown>
+              <label for="salutation_mobile">Anrede <span class="text-red-500">*</span></label>
+            </p-iftalabel>
+            <!-- FirstName -->
+            <p-iftalabel class="w-full">
+              <input pInputText id="firstName_mobile" formControlName="firstName" autocomplete="off" class="w-full h-[60px] pr-10 border border-gray-300 focus:outline-none text-gray-700 bg-white" />
+              <label for="firstName_mobile">Vorname <span class="text-red-500">*</span></label>
+            </p-iftalabel>
+            <!-- LastName -->
+            <p-iftalabel class="w-full">
+              <input pInputText id="lastName_mobile" formControlName="lastName" autocomplete="off" class="w-full h-[60px] pr-10 border border-gray-300 focus:outline-none text-gray-700 bg-white" />
+              <label for="lastName_mobile">Name <span class="text-red-500">*</span></label>
+            </p-iftalabel>
+          </div>
+          <div class="flex flex-col gap-4">
+            <!-- Phone -->
+            <p-iftalabel class="w-full">
+              <input pInputText id="phone_mobile" formControlName="phone" autocomplete="off" class="w-full h-[60px] pr-10 border border-gray-300 focus:outline-none text-gray-700 bg-white" />
+              <label for="phone_mobile">Telefon</label>
+            </p-iftalabel>
+            <!-- Email -->
+            <p-iftalabel class="w-full">
+              <input pInputText id="email_mobile" formControlName="email" autocomplete="new-email" [readonly]="true" class="w-full h-[60px] pr-10 border border-gray-300 focus:outline-none text-gray-500 bg-gray-100 cursor-not-allowed" />
+              <label for="email_mobile">E-Mail (nicht änderbar)</label>
+            </p-iftalabel>
+          </div>
+          <!-- Password Button -->
+          <div class="flex gap-x-2">
+            <button
+              type="button"
+              (click)="generateNewPassword()"
+              class="cursor-pointer px-3 py-4 bg-primary-500 text-white rounded-[4px] font-dm text-[14px] w-full hover:bg-primary-600 transition-colors"
+            >
+              Neues Passwort generieren und verschicken
+            </button>
+          </div>
+        </div>
+
+        <!-- Favoritisierte Kunden (Mobile) -->
+        <div class="mt-2" *ngIf="allClientCompanies.length > 0">
+          <h3 class="text-[14px] font-bold text-primary-500 mb-2">Favoritisierte Kunden</h3>
+          <div class="grid grid-cols-1 gap-4" formGroupName="companies">
+            <div
+              *ngFor="let company of allClientCompanies; trackBy: trackByCompanyId"
+              class="border border-[#DCDCDC] rounded-[4px] p-3 flex items-center justify-between h-[60px] cursor-pointer"
+              [class.border-blue-600]="isCompanySelected(getControlName(company))"
+              [class.shadow-selected]="isCompanySelected(getControlName(company))"
+              [class.bg-blue-50]="isCompanySelected(getControlName(company))"
+              (click)="toggleCompanySelection(getControlName(company))"
+            >
+              <img [src]="company.logo?.path || getFallbackImage()" [alt]="company.name" class="h-6 object-contain" (error)="$event.target.src = getFallbackImage()" />
+              <div class="flex items-center gap-x-4">
+                <span class="text-sm font-dm text-gray-700">{{ company.name }}</span>
+                <p-checkbox [formControlName]="getControlName(company)" [binary]="true" [inputId]="'company_' + company.id + '_mobile_akzente'" (onClick)="$event.stopPropagation()"></p-checkbox>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Client Panel (Mobile) -->
+      <div *ngIf="selectedTab === 1">
+        <div class="flex flex-col gap-y-6 mt-4">
+          <div class="flex flex-col gap-4">
+            <!-- Salutation -->
+            <p-iftalabel class="w-full">
+              <p-dropdown
+                id="salutation2_mobile"
+                formControlName="salutation"
+                [options]="salutationOptions"
+                optionLabel="name"
+                optionValue="code"
+                class="w-full h-[60px]"
+                styleClass="w-full"
+              ></p-dropdown>
+              <label for="salutation2_mobile">Anrede <span class="text-red-500">*</span></label>
+            </p-iftalabel>
+            <!-- FirstName -->
+            <p-iftalabel class="w-full">
+              <input pInputText id="firstName2_mobile" formControlName="firstName" autocomplete="off" class="w-full h-[60px] pr-10 border border-gray-300 focus:outline-none text-gray-700 bg-white" />
+              <label for="firstName2_mobile">Vorname <span class="text-red-500">*</span></label>
+            </p-iftalabel>
+            <!-- LastName -->
+            <p-iftalabel class="w-full">
+              <input pInputText id="lastName2_mobile" formControlName="lastName" autocomplete="off" class="w-full h-[60px] pr-10 border border-gray-300 focus:outline-none text-gray-700 bg-white" />
+              <label for="lastName2_mobile">Name <span class="text-red-500">*</span></label>
+            </p-iftalabel>
+            <div class="flex items-center gap-4 h-[60px] px-4 border border-gray-300 rounded-[4px] w-full">
+              <p-checkbox formControlName="isSales" [binary]="true" inputId="isSales_mobile"></p-checkbox>
+              <label for="isSales_mobile" class="text-base font-medium text-gray-700 cursor-pointer">Vertrieb</label>
+            </div>
+          </div>
+          <div class="flex flex-col gap-4">
+            <!-- Phone -->
+            <p-iftalabel class="w-full">
+              <input pInputText id="phone2_mobile" formControlName="phone" autocomplete="off" class="w-full h-[60px] pr-10 border border-gray-300 focus:outline-none text-gray-700 bg-white" />
+              <label for="phone2_mobile">Telefon <span class="text-red-500">*</span></label>
+            </p-iftalabel>
+            <!-- Email -->
+            <p-iftalabel class="w-full">
+              <input pInputText id="email2_mobile" formControlName="email" autocomplete="new-email" [readonly]="true" class="w-full h-[60px] pr-10 border border-gray-300 focus:outline-none text-gray-500 bg-gray-100 cursor-not-allowed" />
+              <label for="email2_mobile">E-Mail (nicht änderbar)</label>
+            </p-iftalabel>
+          </div>
+          <!-- Password Button -->
+          <div class="flex gap-x-2">
+            <button
+              type="button"
+              (click)="generateNewPassword()"
+              class="cursor-pointer px-3 py-4 bg-primary-500 text-white rounded-[4px] font-dm text-[14px] w-full hover:bg-primary-600 transition-colors"
+            >
+              Neues Passwort generieren und verschicken
+            </button>
+          </div>
+        </div>
+
+        <!-- Zuordnung Kunden (Mobile) -->
+        <div class="mt-2" *ngIf="allClientCompanies.length > 0">
+          <h3 class="text-[14px] font-bold text-primary-500 mb-2">Zuordnung Kunden</h3>
+          <div class="grid grid-cols-1 gap-4" formGroupName="companies">
+            <div
+              *ngFor="let company of allClientCompanies; trackBy: trackByCompanyId"
+              class="border border-[#DCDCDC] rounded-[4px] p-3 flex items-center justify-between h-[60px] cursor-pointer"
+              [class.border-blue-600]="isCompanySelected(getControlName(company))"
+              [class.shadow-selected]="isCompanySelected(getControlName(company))"
+              [class.bg-blue-50]="isCompanySelected(getControlName(company))"
+              (click)="toggleCompanySelection(getControlName(company))"
+            >
+              <img [src]="company.logo?.path || getFallbackImage()" [alt]="company.name" class="h-6 object-contain" (error)="$event.target.src = getFallbackImage()" />
+              <div class="flex items-center gap-x-4">
+                <span class="text-sm font-dm text-gray-700">{{ company.name }}</span>
+                <p-checkbox [formControlName]="getControlName(company)" [binary]="true" [inputId]="'company_' + company.id + '_mobile_client'" (onClick)="$event.stopPropagation()"></p-checkbox>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <p-tabs [value]="selectedTab" (onChange)="onTabChange($event)" class="hidden sm:block">
+      <p-tablist>
+        <p-tab [value]="0" class="w-full sm:w-[309px]" [disabled]="userType !== 'akzente'">Akzente</p-tab>
+        <p-tab [value]="1" class="w-full sm:w-[309px]" [disabled]="userType !== 'client'">Kunde</p-tab>
+      </p-tablist>
+      <p-tabpanels>
+        <!-- Akzente Tab Panel -->
+        <p-tabpanel [value]="0">
+          <div class="flex flex-col gap-y-6 mt-6">
+            <div class="flex flex-col lg:flex-row gap-4 lg:gap-x-2">
+              <!-- Anrede -->
+              <p-iftalabel class="w-full lg:w-auto">
+                <p-dropdown
+                  id="salutation"
+                  formControlName="salutation"
+                  [options]="salutationOptions"
+                  optionLabel="name"
+                  optionValue="code"
+                  class="w-full lg:w-[123px] h-[60px]"
+                  styleClass="w-full"
+                ></p-dropdown>
+                <label for="salutation">Anrede <span class="text-red-500">*</span></label>
+              </p-iftalabel>
+
+              <!-- Vorname -->
+              <p-iftalabel class="w-full lg:w-auto">
+                <input
+                  pInputText
+                  id="firstName"
+                  formControlName="firstName"
+                  autocomplete="off"
+                  class="w-full lg:w-[337px] h-[60px] pr-10 border border-gray-300 focus:outline-none text-gray-700 bg-white"
+                />
+                <label for="firstName">Vorname <span class="text-red-500">*</span></label>
+              </p-iftalabel>
+
+              <!-- Name -->
+              <p-iftalabel class="w-full lg:w-auto">
+                <input
+                  pInputText
+                  id="lastName"
+                  formControlName="lastName"
+                  autocomplete="off"
+                  class="w-full lg:w-[337px] h-[60px] pr-10 border border-gray-300 focus:outline-none text-gray-700 bg-white"
+                />
+                <label for="lastName">Name <span class="text-red-500">*</span></label>
+              </p-iftalabel>
+            </div>
+
+            <div class="flex flex-col lg:flex-row gap-4 lg:gap-x-2">
+              <!-- Telefon -->
+              <p-iftalabel class="w-full lg:w-auto">
+                <input pInputText id="phone" formControlName="phone" autocomplete="off" class="w-full lg:w-[337px] h-[60px] pr-10 border border-gray-300 focus:outline-none text-gray-700 bg-white" />
+                <label for="phone">Telefon</label>
+              </p-iftalabel>
+
+              <!-- E-Mail -->
+              <p-iftalabel class="w-full lg:w-auto">
+                <input
+                  pInputText
+                  id="email"
+                  formControlName="email"
+                  autocomplete="new-email"
+                  [readonly]="true"
+                  class="w-full lg:w-[337px] h-[60px] pr-10 border border-gray-300 focus:outline-none text-gray-500 bg-gray-100 cursor-not-allowed"
+                />
+                <label for="email">E-Mail (nicht änderbar)</label>
+              </p-iftalabel>
+            </div>
+
+            <!-- Removed password input and only kept the reset button -->
+            <div class="flex gap-x-2">
+              <button
+                type="button"
+                (click)="generateNewPassword()"
+                class="cursor-pointer px-3 py-4 bg-primary-500 text-white rounded-[4px] font-dm text-[14px] w-full lg:w-[389px] hover:bg-primary-600 transition-colors"
+              >
+                Neues Passwort generieren und verschicken
+              </button>
+            </div>
+          </div>
+
+          <!-- Favoritisierte Kunden for Akzente -->
+          <div class="mt-2" *ngIf="allClientCompanies.length > 0">
+            <h3 class="text-[14px] font-bold text-primary-500 mb-2">Favoritisierte Kunden</h3>
+
+            <!-- Dynamic client companies grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4" formGroupName="companies">
+              <div
+                *ngFor="let company of allClientCompanies; let i = index; trackBy: trackByCompanyId"
+                class="border border-[#DCDCDC] rounded-[4px] p-3 flex items-center justify-between h-[60px] cursor-pointer transition-all duration-200 hover:shadow-md"
+                [class.border-blue-600]="isCompanySelected(getControlName(company))"
+                [class.shadow-selected]="isCompanySelected(getControlName(company))"
+                [class.bg-blue-50]="isCompanySelected(getControlName(company))"
+                (click)="toggleCompanySelection(getControlName(company))"
+              >
+                <!-- Company logo or fallback -->
+                <img [src]="company.logo?.path || getFallbackImage()" [alt]="company.name" class="h-6 object-contain" (error)="$event.target.src = getFallbackImage()" />
+                <div class="flex items-center gap-x-4">
+                  <span class="text-sm font-dm text-gray-700">{{ company.name }}</span>
+                  <p-checkbox
+                    (click)="toggleCompanySelection(getControlName(company))"
+                    [formControlName]="getControlName(company)"
+                    [binary]="true"
+                    [inputId]="'company_' + company.id + '_akzente'"
+                    (onClick)="$event.stopPropagation()"
+                  ></p-checkbox>
+                </div>
+              </div>
+            </div>
+          </div>
+        </p-tabpanel>
+
+        <!-- Client Tab Panel -->
+        <p-tabpanel [value]="1">
+          <div class="flex flex-col gap-y-6 mt-6">
+            <div class="flex flex-col lg:flex-row gap-4 lg:gap-x-2">
+              <!-- Anrede -->
+              <p-iftalabel class="w-full lg:w-auto">
+                <p-dropdown
+                  id="salutation2"
+                  formControlName="salutation"
+                  [options]="salutationOptions"
+                  optionLabel="name"
+                  optionValue="code"
+                  class="w-full lg:w-[123px] h-[60px]"
+                  styleClass="w-full"
+                ></p-dropdown>
+                <label for="salutation2">Anrede <span class="text-red-500">*</span></label>
+              </p-iftalabel>
+
+              <!-- Vorname -->
+              <p-iftalabel class="w-full lg:w-auto">
+                <input
+                  pInputText
+                  id="firstName2"
+                  formControlName="firstName"
+                  autocomplete="off"
+                  class="w-full lg:w-[337px] h-[60px] pr-10 border border-gray-300 focus:outline-none text-gray-700 bg-white"
+                />
+                <label for="firstName2">Vorname <span class="text-red-500">*</span></label>
+              </p-iftalabel>
+
+              <!-- Name -->
+              <p-iftalabel class="w-full lg:w-auto">
+                <input
+                  pInputText
+                  id="lastName2"
+                  formControlName="lastName"
+                  autocomplete="off"
+                  class="w-full lg:w-[337px] h-[60px] pr-10 border border-gray-300 focus:outline-none text-gray-700 bg-white"
+                />
+                <label for="lastName2">Name <span class="text-red-500">*</span></label>
+              </p-iftalabel>
+              <div class="flex items-center gap-4 h-[60px] px-4 border border-gray-300 rounded-[4px] w-full lg:w-auto min-w-[150px]">
+                <p-checkbox formControlName="isSales" [binary]="true" inputId="isSales2"></p-checkbox>
+                <label for="isSales2" class="text-base font-medium text-gray-700 cursor-pointer">Vertrieb</label>
+              </div>
+            </div>
+
+            <div class="flex flex-col lg:flex-row gap-4 lg:gap-x-2">
+              <!-- Telefon -->
+              <p-iftalabel class="w-full lg:w-auto">
+                <input pInputText id="phone2" formControlName="phone" autocomplete="off" class="w-full lg:w-[337px] h-[60px] pr-10 border border-gray-300 focus:outline-none text-gray-700 bg-white" />
+                <label for="phone2">Telefon <span class="text-red-500">*</span></label>
+              </p-iftalabel>
+
+              <!-- E-Mail -->
+              <p-iftalabel class="w-full lg:w-auto">
+                <input
+                  pInputText
+                  id="email2"
+                  formControlName="email"
+                  autocomplete="new-email"
+                  [readonly]="true"
+                  class="w-full lg:w-[337px] h-[60px] pr-10 border border-gray-300 focus:outline-none text-gray-500 bg-gray-100 cursor-not-allowed"
+                />
+                <label for="email2">E-Mail (nicht änderbar)</label>
+              </p-iftalabel>
+            </div>
+
+            <!-- Removed password input and only kept the reset button -->
+            <div class="flex gap-x-2">
+              <button
+                type="button"
+                (click)="generateNewPassword()"
+                class="cursor-pointer px-3 py-4 bg-primary-500 text-white rounded-[4px] font-dm text-[14px] w-full lg:w-[389px] hover:bg-primary-600 transition-colors"
+              >
+                Neues Passwort generieren und verschicken
+              </button>
+            </div>
+          </div>
+
+          <!-- Zuordnung Kunden for Client -->
+          <div class="mt-2" *ngIf="allClientCompanies.length > 0">
+            <h3 class="text-[14px] font-bold text-primary-500 mb-2">Zuordnung Kunden</h3>
+
+            <!-- Dynamic client companies grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4" formGroupName="companies">
+              <div
+                *ngFor="let company of allClientCompanies; let i = index; trackBy: trackByCompanyId"
+                class="border border-[#DCDCDC] rounded-[4px] p-3 flex items-center justify-between h-[60px] cursor-pointer transition-all duration-200 hover:shadow-md"
+                [class.border-blue-600]="isCompanySelected(getControlName(company))"
+                [class.shadow-selected]="isCompanySelected(getControlName(company))"
+                [class.bg-blue-50]="isCompanySelected(getControlName(company))"
+                (click)="toggleCompanySelection(getControlName(company))"
+              >
+                <!-- Company logo or fallback -->
+                <img [src]="company.logo?.path || getFallbackImage()" [alt]="company.name" class="h-6 object-contain" (error)="$event.target.src = getFallbackImage()" />
+                <div class="flex items-center gap-x-4">
+                  <span class="text-sm font-dm text-gray-700">{{ company.name }}</span>
+                  <p-checkbox
+                    (click)="toggleCompanySelection(getControlName(company))"
+                    [formControlName]="getControlName(company)"
+                    [binary]="true"
+                    [inputId]="'company_' + company.id + '_client'"
+                    (onClick)="$event.stopPropagation()"
+                  ></p-checkbox>
+                </div>
+              </div>
+            </div>
+          </div>
+        </p-tabpanel>
+      </p-tabpanels>
+    </p-tabs>
+
+    <!-- Empty state for companies -->
+    <div *ngIf="!isLoading && allClientCompanies.length === 0" class="mt-8 text-center py-8 text-gray-500">
+      <p>Keine Kundenunternehmen verfügbar.</p>
+    </div>
+  </form>
+
+  <!-- Error state -->
+  <div *ngIf="!isLoading && !currentUser" class="flex items-center justify-center py-8">
+    <div class="text-center">
+      <p class="text-gray-500 text-lg mb-4">Benutzer nicht gefunden</p>
+      <button (click)="cancel()" class="px-4 py-2 bg-primary-500 text-white rounded-[4px] hover:bg-primary-600 transition-colors">Zurück zur Übersicht</button>
+    </div>
+  </div>
+
+  <!-- Action buttons -->
+  <div class="sticky bottom-0 bg-white py-4 px-4 sm:pl-6 sm:pr-0 z-10" *ngIf="!isLoading && currentUser">
+    <div class="flex flex-col sm:flex-row justify-center sm:justify-end gap-3 sm:gap-4 w-full">
+      <button
+        type="button"
+        (click)="cancel()"
+        class="py-2 bg-white border border-primary-500 text-primary-500 font-dm cursor-pointer text-[14px] rounded-[4px] transition-colors duration-200 hover:bg-primary-50 h-[49px] w-full sm:w-[150px]"
+      >
+        <span>Schließen</span>
+      </button>
+      <button
+        type="button"
+        (click)="onSubmit()"
+        [disabled]="!isFormValidForSubmission() || isSubmitting"
+        class="py-2 bg-primary-500 hover:bg-primary-700 text-white font-dm cursor-pointer text-[14px] rounded-[4px] transition-colors duration-200 disabled:bg-gray-300 disabled:cursor-not-allowed h-[49px] w-full sm:w-[200px]"
+      >
+        <span *ngIf="!isSubmitting">Änderungen speichern</span>
+        <span *ngIf="isSubmitting" class="flex items-center justify-center">
+          <i class="pi pi-spin pi-spinner mr-2"></i>
+          Speichere...
+        </span>
+      </button>
+    </div>
+  </div>
+</section>

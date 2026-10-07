@@ -1,0 +1,147 @@
+<!-- Same structure & styling as shared date-picker, scaled down for inline report cells -->
+<div class="relative w-full min-w-0" cdkOverlayOrigin #trigger="cdkOverlayOrigin">
+  <div
+    class="h-[28px] px-2 border border-gray-300 rounded-[4px] font-dm text-[11px] w-full min-w-0 text-gray-600 focus-within:ring-0 focus-within:border-primary-500 flex items-center justify-between"
+    [class.opacity-60]="disabled"
+    [class.pointer-events-none]="disabled"
+  >
+    <input
+      type="text"
+      class="flex-1 min-w-0 bg-transparent outline-none border-0 placeholder:text-gray-400 placeholder:text-[10px]"
+      [placeholder]="placeholder"
+      [ngModel]="inputValue"
+      (ngModelChange)="onInputValueChange($event)"
+      (blur)="onInputBlur()"
+      (keydown)="onInputKeydown($event)"
+      [disabled]="disabled"
+      inputmode="numeric"
+      autocomplete="off"
+    />
+    <div class="flex flex-shrink-0 items-center gap-x-1.5" [class.pointer-events-none]="disabled">
+      <button
+        *ngIf="selectedDate && !disabled"
+        type="button"
+        class="focus:outline-none bg-gray-100 rounded-full p-0.5 hover:bg-gray-200 transition duration-200 ease-in-out cursor-pointer"
+        (click)="clearDate($event)"
+      >
+        <svg class="h-3.5 w-3.5 text-gray-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+      <button type="button" class="focus:outline-none cursor-pointer leading-none" [disabled]="disabled" (click)="openPicker($event)" title="Kalender öffnen">
+        <app-icon name="calendar" class="w-[15px] h-[15px] text-primary-500 inline-block" />
+      </button>
+    </div>
+  </div>
+
+  <ng-template
+    cdkConnectedOverlay
+    [cdkConnectedOverlayOrigin]="trigger"
+    [cdkConnectedOverlayOpen]="showPicker"
+    [cdkConnectedOverlayPositions]="positions"
+    [cdkConnectedOverlayHasBackdrop]="true"
+    [cdkConnectedOverlayBackdropClass]="'bg-black/25'"
+    (backdropClick)="closePicker()"
+  >
+    <div
+      class="fixed inset-0 z-[100] bg-white flex flex-col lg:static lg:block lg:bg-white lg:shadow-lg lg:rounded-[4px] lg:border lg:border-gray-100 lg:mt-1 lg:min-w-[260px] lg:max-w-[min(280px,calc(100vw-1rem))]"
+    >
+      <div class="flex items-center justify-between px-3 py-2.5 lg:p-1.5 border-b border-gray-200 lg:border-none bg-white">
+        <span class="block lg:hidden text-base font-semibold text-gray-800">Datum auswählen</span>
+        <button
+          type="button"
+          (click)="closePicker()"
+          class="focus:outline-none text-gray-500 hover:text-gray-700 transition-colors cursor-pointer p-1 rounded hover:bg-gray-100 ml-auto"
+          title="Schließen"
+        >
+          <svg class="w-5 h-5 lg:w-4 lg:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+
+      <div class="flex-1 overflow-y-auto lg:overflow-visible p-3 lg:p-1.5">
+        <div class="grid grid-cols-2 items-center gap-x-1.5 mb-3 lg:mb-1.5">
+          <div class="relative bg-primary-500 text-white px-1.5 py-0.5 rounded">
+            <select
+              class="text-xs appearance-none bg-transparent pr-5 pl-1.5 py-0.5 text-white focus:outline-none cursor-pointer w-full"
+              [ngModel]="currentMonth.getMonth()"
+              (ngModelChange)="changeCurrentMonth(+$event)"
+            >
+              <option class="text-black" *ngFor="let month of months" [value]="month.value">{{ month.name }}</option>
+            </select>
+            <div class="absolute right-0.5 top-1/2 -translate-y-1/2 pointer-events-none">
+              <svg class="h-4 w-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+              </svg>
+            </div>
+          </div>
+
+          <div class="relative bg-primary-500 text-white px-1.5 py-0.5 rounded">
+            <select
+              class="text-xs appearance-none bg-transparent pr-5 pl-1.5 py-0.5 text-white focus:outline-none cursor-pointer w-full"
+              [ngModel]="currentMonth.getFullYear()"
+              (ngModelChange)="changeCurrentYear(+$event)"
+            >
+              <option class="text-black" *ngFor="let year of years" [value]="year">{{ year }}</option>
+            </select>
+            <div class="absolute right-0.5 top-1/2 -translate-y-1/2 pointer-events-none">
+              <svg class="h-4 w-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <table class="w-full border-collapse">
+          <thead>
+            <tr class="text-[8px] text-gray-500">
+              <th class="w-8 h-6 lg:h-5 text-[9px] lg:text-[8px] font-normal">Mo</th>
+              <th class="w-8 h-6 lg:h-5 text-[9px] lg:text-[8px] font-normal">Di</th>
+              <th class="w-8 h-6 lg:h-5 text-[9px] lg:text-[8px] font-normal">Mi</th>
+              <th class="w-8 h-6 lg:h-5 text-[9px] lg:text-[8px] font-normal">Do</th>
+              <th class="w-8 h-6 lg:h-5 text-[9px] lg:text-[8px] font-normal">Fr</th>
+              <th class="w-8 h-6 lg:h-5 text-[9px] lg:text-[8px] font-normal">Sa</th>
+              <th class="w-8 h-6 lg:h-5 text-[9px] lg:text-[8px] font-normal">So</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let week of weeks">
+              <td *ngFor="let day of week" class="text-center p-0.5">
+                <button
+                  *ngIf="day; else emptyDay"
+                  type="button"
+                  class="w-full h-10 lg:w-7 lg:h-7 flex items-center justify-center text-xs lg:text-[10px] rounded transition-colors"
+                  [ngClass]="{
+                    'bg-primary-500 text-white': isSelectedDate(day),
+                    'hover:bg-gray-100 text-gray-700': !isSelectedDate(day) && !isToday(day),
+                    'font-semibold': isSelectedDate(day),
+                    'bg-gray-50': !isSelectedDate(day) && day.getMonth() !== currentMonth.getMonth(),
+                    'text-gray-400': !isSelectedDate(day) && day.getMonth() !== currentMonth.getMonth(),
+                    'bg-primary-500/70 text-white': isToday(day) && !isSelectedDate(day),
+                  }"
+                  (click)="handleDateClick(day)"
+                >
+                  {{ day.getDate() }}
+                </button>
+                <ng-template #emptyDay>
+                  <div class="w-full h-10 lg:w-7 lg:h-7"></div>
+                </ng-template>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="p-3 lg:p-1.5 border-t border-gray-100 flex justify-end bg-white">
+        <button
+          type="button"
+          (click)="onDone()"
+          class="cursor-pointer w-full lg:w-auto bg-primary-500 text-white rounded-[4px] px-4 py-2 text-xs font-semibold shadow-sm hover:bg-primary-600 focus:outline-none transition-colors"
+        >
+          Fertig
+        </button>
+      </div>
+    </div>
+  </ng-template>
+</div>

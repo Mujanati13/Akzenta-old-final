@@ -1,0 +1,410 @@
+<section>
+  <!-- Loading state -->
+  <div *ngIf="loading" class="relative mb-8 overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-br from-primary-50/50 via-white to-amber-50/40 animate-dashboard-shimmer"></div>
+    <div class="relative z-10 p-5 sm:p-6 space-y-5">
+      <div class="flex items-center justify-between">
+        <div class="h-6 w-36 rounded-md bg-primary-100/70 animate-pulse"></div>
+      </div>
+
+      <div class="rounded-[25px] bg-[#187DA4]/90 p-4 sm:p-6 space-y-4">
+        <div class="h-8 w-64 rounded bg-white/30 animate-pulse"></div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <div class="h-4 w-40 rounded bg-white/25 animate-pulse"></div>
+          <div class="h-4 w-36 rounded bg-white/25 animate-pulse"></div>
+        </div>
+        <div class="flex flex-wrap gap-2">
+          <div class="h-7 w-24 rounded-[4px] bg-white/30 animate-pulse"></div>
+          <div class="h-7 w-20 rounded-[4px] bg-white/25 animate-pulse"></div>
+        </div>
+      </div>
+
+      <div class="rounded-xl border border-gray-100 bg-white/90 shadow-sm p-4 sm:p-5 space-y-4">
+        <div class="h-5 w-28 rounded bg-gray-100 animate-pulse"></div>
+        <div class="space-y-3">
+          <div class="h-14 w-full rounded-[4px] bg-gray-100 animate-pulse"></div>
+          <div class="h-14 w-full rounded-[4px] bg-gray-100 animate-pulse"></div>
+          <div class="h-14 w-full rounded-[4px] bg-gray-100 animate-pulse"></div>
+        </div>
+      </div>
+
+      <div class="rounded-xl border border-gray-100 bg-white/90 shadow-sm p-4 sm:p-5 space-y-4">
+        <div class="h-5 w-20 rounded bg-gray-100 animate-pulse"></div>
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          <div class="h-20 rounded-[6px] bg-gray-100 animate-pulse" *ngFor="let _ of [1, 2, 3, 4]"></div>
+        </div>
+      </div>
+
+      <div class="rounded-xl border border-gray-100 bg-white/90 shadow-sm p-4 sm:p-5 space-y-4">
+        <div class="h-5 w-24 rounded bg-gray-100 animate-pulse"></div>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          <div class="h-40 rounded-[6px] bg-gray-100 animate-pulse"></div>
+          <div class="h-40 rounded-[6px] bg-gray-100 animate-pulse"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Error state -->
+  <div *ngIf="error" class="bg-red-50 p-4 rounded-[4px]">
+    <p class="text-red-800">Es ist ein Fehler aufgetreten. Bitte versuchen Sie es später erneut.</p>
+  </div>
+
+  <!-- Report details -->
+  <div *ngIf="!loading && !error">
+    <h2 translate class="flex justify-between items-center text-primary-700 mb-2 lg:mb-4">
+      <div class="flex items-center">
+        <app-icon name="projects" class="w-5 h-5 lg:w-6 lg:h-6 mr-1 text-primary-700" />
+        <span class="text-2xl lg:text-3xl font-bold font-dm">Projekte</span>
+      </div>
+      <button *ngIf="canGoBack" type="button" class="cursor-pointer flex items-center justify-center text-primary-600 hover:text-primary-700 transition-colors" (click)="goBack()" title="Zurück">
+        <app-icon name="arrow-left" class="w-8 h-8 flex items-center text-primary-700"></app-icon>
+      </button>
+    </h2>
+    <!-- Project Header -->
+    <div class="bg-[#187DA4] rounded-[25px] text-white py-[15px] px-[20px] sm:px-[37px] mb-6">
+      <div class="flex flex-col lg:flex-row lg:justify-between lg:items-center font-dm gap-y-4 lg:gap-y-0">
+        <div class="flex-1">
+          <div class="flex justify-between items-start">
+            <div>
+              <h2 class="lg:text-lg sm:text-[28px] lg:text-base font-bold leading-none">{{ report.project?.name || '' }}</h2>
+              <p class="text-[12px] sm:text-[13px]">{{ report.project?.startDate | euDate }} - {{ report.project?.endDate | euDate }}</p>
+              <div
+                class="mt-2 text-white uppercase text-[12px] sm:text-[14px] font-extrabold py-0.25 px-3 rounded-[4px] inline-block uppercase min-w-[70px] text-center"
+                [style.background-color]="report.status?.color"
+              >
+                {{ report.status?.name }}
+              </div>
+            </div>
+            <div class="flex lg:hidden gap-x-[12px] sm:gap-x-[16px] uppercase font-dm text-[9px] sm:text-[10px]">
+              <div class="flex flex-col items-center">
+                <div class="bg-white w-[32px] h-[32px] md:w-[36px] md:h-[36px] rounded-full p-2 mb-1 flex items-center justify-center cursor-pointer">
+                  <app-favorite-toggle
+                    class="h-5 w-5 sm:h-5 sm:w-5 flex-shrink-0"
+                    activeColor="primary-500"
+                    inactiveColor="black"
+                    [isFavorite]="report.isFavorite"
+                    (favoriteChange)="onFavoriteChanged($event, report)"
+                  />
+                </div>
+                <span class="mt-1 hidden sm:block">Favorit</span>
+              </div>
+              <div class="flex flex-col items-center">
+                <div class="bg-white w-[32px] h-[32px] md:w-[36px] md:h-[36px] rounded-full p-2 mb-1 flex items-center justify-center cursor-pointer" (click)="downloadSingleReportExcel()">
+                  <app-icon name="download" title="Excel Download" />
+                </div>
+                <span class="mt-1 hidden sm:block">Exportieren</span>
+              </div>
+            </div>
+          </div>
+          <div class="flex flex-col sm:flex-row sm:gap-x-[20px] lg:gap-x-[75px] mt-4 gap-y-3 sm:gap-y-0">
+            <div class="text-[12px] sm:text-[13px]">
+              <p class="font-extrabold">{{ report.branch?.name || '' }}</p>
+              <p>{{ getFormattedAddress(report) }}</p>
+            </div>
+            <div class="flex gap-x-[10px]">
+              <div class="text-[12px] sm:text-[13px]">
+                <p>Datum:</p>
+              </div>
+              <div class="text-[12px] sm:text-[13px]">
+                <p>{{ report.plannedOn | euDate }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="flex flex-col sm:flex-row lg:flex-col lg:h-[130px] justify-between items-center lg:items-center gap-x-4 lg:gap-x-0">
+          <div class="flex flex-col items-center w-full sm:w-auto">
+            <div class="toggle-container rounded-[10px] overflow-hidden flex">
+              <button class="cursor-pointer toggle-option py-1 px-2 sm:px-3 text-[12px] sm:text-[14px] font-bold uppercase" [class.active]="isStatusOpen()" (click)="updateStatus('UngeprüfT')">
+                UngeprüfT
+              </button>
+              <button class="cursor-pointer toggle-option py-1 px-2 sm:px-3 text-[12px] sm:text-[14px] font-bold uppercase" [class.active]="!isStatusOpen()" (click)="updateStatus('Freigegeben')">
+                Freigegeben
+              </button>
+            </div>
+            <span class="mt-1 uppercase font-dm text-[10px] sm:text-[11px]">STATUS</span>
+          </div>
+          <div
+            class="hidden lg:flex gap-x-[12px] sm:gap-x-[16px] flex-wrap justify-center sm:justify-between lg:justify-center lg:gap-x-4 lg:w-full uppercase font-dm text-[9px] sm:text-[10px] w-full sm:w-auto"
+          >
+            <div class="flex flex-col items-center">
+              <div class="bg-white w-[32px] h-[32px] md:w-[36px] md:h-[36px] rounded-full p-2 mb-1 flex items-center justify-center cursor-pointer">
+                <app-favorite-toggle
+                  class="h-5 w-5 sm:h-5 sm:w-5 flex-shrink-0"
+                  activeColor="primary-500"
+                  inactiveColor="black"
+                  [isFavorite]="report.isFavorite"
+                  (favoriteChange)="onFavoriteChanged($event, report)"
+                />
+              </div>
+              <span class="mt-1">Favorit</span>
+            </div>
+            <div class="flex flex-col items-center">
+              <div class="bg-white w-[32px] h-[32px] md:w-[36px] md:h-[36px] rounded-full p-2 mb-1 flex items-center justify-center cursor-pointer" (click)="downloadSingleReportExcel()">
+                <app-icon name="download" title="Excel Download" />
+              </div>
+              <span class="mt-1">Exportieren</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Accordion sections -->
+    <p-accordion multiple="true" [(value)]="activeAccordionValue" (onOpen)="onAccordionPanelOpen($event)">
+      <!-- Details section -->
+      <p-accordion-panel value="0">
+        <p-accordion-header>Details</p-accordion-header>
+        <p-accordion-content>
+          <div class="flex flex-col gap-y-4">
+            <div *ngIf="report?.project?.questions" class="space-y-4">
+              <div *ngFor="let question of report.project.questions">
+                <div class="border border-gray-200 rounded-[4px] p-3 min-h-[60px] bg-white">
+                  <p class="text-[14px] text-gray-600 mb-1 font-bold">{{ question.questionText }}</p>
+                  <ng-container *ngIf="question.answerType.name === 'text'">
+                    <span class="text-[15px]">{{ getAnswerForQuestion(question.id)?.textAnswer || '-' }}</span>
+                  </ng-container>
+                  <ng-container *ngIf="question.answerType.name === 'boolean'">
+                    <span class="text-[15px]">
+                      {{ getAnswerForQuestion(question.id)?.textAnswer === 'true' ? 'Ja' : 'Nein' }}
+                    </span>
+                  </ng-container>
+                  <ng-container *ngIf="question.answerType.name === 'select'">
+                    <span class="text-[15px]">
+                      {{ getAnswerForQuestion(question.id)?.selectedOption?.optionText || '-' }}
+                    </span>
+                  </ng-container>
+                  <ng-container *ngIf="question.answerType.name === 'multiselect'">
+                    <span class="text-[15px]">
+                      {{ getMultiAnswersForQuestion(question.id) }}
+                    </span>
+                  </ng-container>
+                </div>
+              </div>
+            </div>
+          </div>
+        </p-accordion-content>
+      </p-accordion-panel>
+
+      <!-- Photos section -->
+      <p-accordion-panel value="1">
+        <p-accordion-header>Fotos</p-accordion-header>
+        <p-accordion-content>
+          <div *ngIf="!galleryImages || galleryImages.length === 0" class="text-center py-8">
+            <p class="text-gray-500">Keine Fotos verfügbar</p>
+          </div>
+
+          <p-galleria
+            *ngIf="galleryImages && galleryImages.length > 0"
+            #galleria
+            [value]="galleryImages"
+            [thumbnailsPosition]="position"
+            [containerStyle]="{ 'max-width': '100%' }"
+            [numVisible]="galleryImages.length > 4 ? 4 : galleryImages.length"
+            [showItemNavigators]="false"
+            [showThumbnailNavigators]="false"
+            [circular]="true"
+            [(activeIndex)]="selectedPhotoIndex"
+            class="custom-galleria"
+          >
+            <!-- Main photo template -->
+            <ng-template pTemplate="item" let-item>
+              <div class="relative w-full">
+                <!-- Label overlays for main photo -->
+                <div class="absolute top-0 left-0 bg-white px-4 py-1 font-bold text-[14px] z-10 uppercase">
+                  {{ item.beforeAfterType === 'before' ? 'VORHER' : 'NACHHER' }} {{ item.title.split(',')[0] }}
+                </div>
+                <div class="absolute top-0 right-0 bg-white px-4 py-1 text-xs z-10 uppercase">{{ item.date | euDate }} | KW {{ item.date | date: 'w' }}</div>
+
+                <!-- Main image -->
+                <img [src]="item.itemImageSrc" [alt]="item.alt" class="w-full max-h-[685px] object-contain mt-8" loading="lazy" />
+
+                <!-- Navigation controls - positioned absolutely -->
+                <div class="absolute top-1/2 left-4 transform -translate-y-1/2">
+                  <button class="cursor-pointer" (click)="selectedPhotoIndex = selectedPhotoIndex === 0 ? galleryImages.length - 1 : selectedPhotoIndex - 1">
+                    <app-icon name="arrow-left" class="w-5 h-5 text-gray-700" />
+                  </button>
+                </div>
+                <div class="absolute top-1/2 right-4 transform -translate-y-1/2">
+                  <button class="cursor-pointer" (click)="selectedPhotoIndex = selectedPhotoIndex === galleryImages.length - 1 ? 0 : selectedPhotoIndex + 1">
+                    <app-icon name="arrow-right" class="w-5 h-5 text-gray-700" />
+                  </button>
+                </div>
+
+                <!-- Bottom information bar -->
+                <div class="absolute bottom-0 left-0 w-full bg-white bg-opacity-80 py-1 px-2 text-[13px] italic flex justify-between">
+                  <span>{{ getFormattedAddress(report) }}</span>
+                </div>
+              </div>
+            </ng-template>
+
+            <!-- Thumbnail template -->
+            <ng-template pTemplate="thumbnail" let-item let-i="index">
+              <div class="relative overflow-hidden cursor-pointer w-[202px] h-[114px]" [class.border-primary-500]="selectedPhotoIndex === i" [class.shadow-selected]="selectedPhotoIndex === i">
+                <img [src]="item.thumbnailImageSrc" [alt]="item.alt" class="w-full h-full object-cover" loading="lazy" />
+              </div>
+              <div class="text-[10px] text-center py-0.5 truncate uppercase">{{ item.beforeAfterType === 'before' ? 'VORHER' : 'NACHHER' }} {{ item.title.split(',')[0] }}</div>
+            </ng-template>
+          </p-galleria>
+
+          <!-- Pagination indicators -->
+          <div class="flex justify-center mt-4 gap-x-1" *ngIf="galleryImages && galleryImages.length > 0">
+            <span
+              *ngFor="let _ of galleryImages; let i = index"
+              class="w-[17px] h-[17px] rounded-full cursor-pointer"
+              [class.bg-primary-500]="i === selectedPhotoIndex"
+              [ngClass]="{ 'border border-primary-500': i !== selectedPhotoIndex }"
+              (click)="selectPhoto(i)"
+            ></span>
+          </div>
+        </p-accordion-content>
+      </p-accordion-panel>
+
+      <!-- Dialog section -->
+      <p-accordion-panel value="3">
+        <p-accordion-header>Dialog</p-accordion-header>
+        <p-accordion-content>
+          <div class="flex flex-col gap-y-4">
+            <div class="mt-4">
+              <div class="lg:border-r border-gray-200 lg:pr-4 flex flex-col h-[400px]">
+                <div class="flex-1 overflow-y-auto" #clientScrollContainer>
+                  <div class="flex flex-col gap-y-4 p-2" *ngIf="report.clientMessages && report.clientMessages.length">
+                    <ng-container *ngFor="let message of report.clientMessages; let i = index">
+                      <div *ngIf="i === 0 || message.date !== report.clientMessages[i - 1]?.date" class="flex items-center py-2">
+                        <div class="border-t border-gray-200 w-full"></div>
+                        <span class="text-xs text-gray-500 px-8">{{ message.date }}</span>
+                        <div class="border-t border-gray-200 w-full"></div>
+                      </div>
+                      <div class="flex" [class.justify-end]="message.sender !== 'client'">
+                        <div class="flex items-end max-w-[80%]" [class.flex-row-reverse]="message.sender === 'client'">
+                          <div *ngIf="message.sender === 'client'" class="w-10 h-10 rounded-full overflow-hidden flex-shrink-0">
+                            <img [src]="message.avatar" [alt]="message.senderName" class="w-full h-full object-cover" />
+                          </div>
+                          <div class="mx-2" [class.order-first]="message.sender === 'client'">
+                            <span class="text-[13px] text-gray-500">{{ message.senderName }} {{ message.time }}</span>
+                            <div
+                              [ngClass]="{
+                                'bg-[#464B58]': message.sender !== 'client',
+                                'text-black': message.sender === 'client',
+                                'text-white': message.sender !== 'client',
+                                'bg-[#F2F2F2]': message.sender === 'client',
+                              }"
+                              class="rounded-lg p-4 mb-1 text-[14px]"
+                            >
+                              <p>{{ message.text }}</p>
+                            </div>
+                          </div>
+                          <div *ngIf="message.sender !== 'client'" class="w-10 h-10 rounded-full overflow-hidden flex-shrink-0">
+                            <img [src]="message.avatar" [alt]="message.senderName" class="w-full h-full object-cover" />
+                          </div>
+                        </div>
+                      </div>
+                    </ng-container>
+                  </div>
+                </div>
+                <div class="p-3 border-t border-gray-200 mt-auto">
+                  <div class="flex gap-x-2">
+                    <textarea
+                      class="w-full border border-gray-300 rounded-[6px] p-2"
+                      rows="1"
+                      placeholder="Kommentare"
+                      [(ngModel)]="clientMessageContent"
+                      [disabled]="sendingClientMessage"
+                      (keydown.enter)="$event.preventDefault(); sendClientMessage()"
+                    ></textarea>
+                    <button
+                      class="bg-primary-500 flex items-center justify-center text-white w-[49px] h-[47px] ml-2 rounded-[6px]"
+                      (click)="sendClientMessage()"
+                      [disabled]="sendingClientMessage || !clientMessageContent.trim()"
+                    >
+                      <div *ngIf="sendingClientMessage" class="animate-spin rounded-full h-4 w-4 border-t-2 border-b-2 border-white mr-2"></div>
+                      <app-icon *ngIf="!sendingClientMessage" name="send" />
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </p-accordion-content>
+      </p-accordion-panel>
+    </p-accordion>
+  </div>
+</section>
+
+<!-- CSV/Excel Download Success/Error Dialog -->
+<p-dialog
+  [(visible)]="csvDialogVisible"
+  [modal]="true"
+  [draggable]="false"
+  [resizable]="false"
+  [style]="{ width: '329px' }"
+  [contentStyle]="{ padding: '2rem', borderRadius: '8px', textAlign: 'center' }"
+  [showHeader]="false"
+  [closeOnEscape]="true"
+  [dismissableMask]="true"
+>
+  <div class="flex flex-col items-center">
+    <div
+      class="w-[71px] h-[71px] rounded-full flex items-center justify-center mb-6"
+      [ngStyle]="{
+        border: csvDialogIsError ? '2px solid #D10003' : '2px solid #007296',
+        background: csvDialogIsError ? '#FFEFF0' : '#EFF6FF',
+      }"
+    >
+      <app-icon *ngIf="!csvDialogIsError" name="modal-check" class="" />
+      <app-icon *ngIf="csvDialogIsError" name="cross" class="text-[#D10003] w-[25px] h-[25px]" />
+    </div>
+
+    <h2 class="text-[14px] font-medium mb-4" [ngClass]="csvDialogIsError ? 'text-[#D10003]' : ''">
+      {{ dialogMessage }}
+    </h2>
+
+    <hr class="w-full border-t border-gray-200 mb-4" />
+
+    <button
+      (click)="csvDialogVisible = false"
+      [ngClass]="csvDialogIsError ? 'bg-[#D10003] hover:bg-[#D10003]' : 'bg-[#007296] hover:bg-[#005d7a]'"
+      class="text-white text-[14px] rounded-[4px] transition-colors flex items-center justify-center gap-2 w-[183px] h-[37px]"
+    >
+      <span>OK</span>
+    </button>
+  </div>
+</p-dialog>
+
+<!-- Status Confirmation Dialog -->
+<p-dialog
+  [(visible)]="confirmationDialogVisible"
+  [modal]="true"
+  [draggable]="false"
+  [resizable]="false"
+  [style]="{ width: '329px' }"
+  [contentStyle]="{ padding: '2rem', borderRadius: '8px', textAlign: 'center' }"
+  [showHeader]="false"
+  [closeOnEscape]="true"
+  [dismissableMask]="true"
+>
+  <div class="flex flex-col items-center">
+    <div class="w-[71px] h-[71px] rounded-full flex items-center justify-center mb-6 border-2 border-[#187DA4] bg-[#EFF6FF]">
+      <span class="text-[#187DA4] text-[30px] font-bold">?</span>
+    </div>
+
+    <h2 class="text-[14px] font-medium mb-4">Möchten Sie den Status wirklich auf "Freigegeben" ändern?</h2>
+
+    <hr class="w-full border-t border-gray-200 mb-4" />
+
+    <div class="flex gap-2 w-full justify-center">
+      <button
+        (click)="confirmationDialogVisible = false"
+        class="cursor-pointer bg-gray-200 hover:bg-gray-300 text-gray-800 text-[14px] rounded-[4px] transition-colors flex items-center justify-center gap-2 w-[120px] h-[37px]"
+      >
+        <span>Abbrechen</span>
+      </button>
+      <button
+        (click)="confirmStatusUpdate()"
+        class="cursor-pointer bg-[#007296] hover:bg-[#005d7a] text-white text-[14px] rounded-[4px] transition-colors flex items-center justify-center gap-2 w-[120px] h-[37px]"
+      >
+        <span>Bestätigen</span>
+      </button>
+    </div>
+  </div>
+</p-dialog>

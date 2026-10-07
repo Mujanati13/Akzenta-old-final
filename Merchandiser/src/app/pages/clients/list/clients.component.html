@@ -1,0 +1,211 @@
+<section class="">
+  <div class="sticky top-0 z-20 pb-2 -mx-4 px-4 sm:mx-0 sm:px-0 sm:pb-0 bg-white">
+    <h2 translate class="flex justify-between items-center text-primary-700 mb-2 lg:mb-4 flex-shrink-0">
+      <div class="flex items-center">
+        <app-icon name="clients" class="w-5 h-5 lg:w-6 lg:h-6 mr-1 text-primary-700" />
+        <span class="text-2xl lg:text-3xl font-bold font-dm">Kunden</span>
+      </div>
+      <button
+        type="button"
+        *ngIf="allCards && allCards.length > 0"
+        class="lg:hidden relative inline-flex items-center justify-center w-8 h-8 rounded-[4px] bg-gradient-to-br from-[#00839b] to-[#006a7e] text-white shadow-[0_4px_8px_rgba(0,131,155,0.3)] shrink-0 active:scale-95 transition-transform"
+        (click)="openClientsMobileFilterSheet()"
+      >
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M6 12h12M8 18h8" />
+        </svg>
+        <span *ngIf="getClientsMobileFilterBadgeCount() > 0" class="absolute -top-[3px] -right-[3px] w-3 h-3 bg-[#00839b] border-2 border-white rounded-full z-[100]"></span>
+      </button>
+    </h2>
+
+    <!-- Mobile: Alle Kunden / Favoriten always visible (filter sheet is Kundensuche only) -->
+    <div *ngIf="allCards && allCards.length > 0" class="lg:hidden grid grid-cols-2 gap-2 mb-3">
+      <a
+        class="min-h-[40px] h-[40px] flex-1 min-w-0 font-dm font-bold text-primary-500 rounded-[4px] transition-shadow duration-200 cursor-pointer flex items-center justify-center no-underline"
+        [class.opacity-50]="isLoading"
+        [class.cursor-not-allowed]="isLoading"
+        [ngStyle]="{
+          'box-shadow': activeFilter === 'all' ? '0 0 0 3px rgba(0, 111, 155, 0.7)' : '0 0 0 3px rgba(0, 0, 0, 0.09)',
+        }"
+        routerLink="."
+        [queryParams]="{ filter: null }"
+        queryParamsHandling="merge"
+      >
+        Alle Kunden
+      </a>
+      <a
+        class="min-h-[40px] h-[40px] flex-1 min-w-0 font-dm font-bold text-primary-500 rounded-[4px] transition-shadow duration-200 cursor-pointer flex items-center justify-center no-underline"
+        [class.opacity-50]="isLoading"
+        [class.cursor-not-allowed]="isLoading"
+        [ngStyle]="{
+          'box-shadow': activeFilter === 'favorites' ? '0 0 0 3px rgba(0, 111, 155, 0.7)' : '0 0 0 3px rgba(0, 0, 0, 0.09)',
+        }"
+        routerLink="."
+        [queryParams]="{ filter: 'favorites' }"
+        queryParamsHandling="merge"
+      >
+        Favoriten
+      </a>
+    </div>
+
+    <div class="hidden lg:grid">
+      <div class="mb-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[285px_285px_285px_auto] gap-3 lg:gap-[15px] items-center">
+        <!-- Alle Kunden link -->
+        <a
+          class="lg:h-[50px] h-[40px] flex-1 min-w-0 font-dm font-bold text-primary-500 rounded-[4px] transition-shadow duration-200 cursor-pointer flex items-center justify-center"
+          [class.opacity-50]="isLoading"
+          [class.cursor-not-allowed]="isLoading"
+          [ngStyle]="{
+            'box-shadow': activeFilter === 'all' ? '0 0 0 3px rgba(0, 111, 155, 0.7)' : '0 0 0 3px rgba(0, 0, 0, 0.09)',
+          }"
+          routerLink="."
+          [queryParams]="{ filter: null }"
+          queryParamsHandling="merge"
+        >
+          Alle Kunden
+        </a>
+
+        <!-- Favoriten link -->
+        <a
+          class="lg:h-[50px] h-[40px] flex-1 min-w-0 font-dm font-bold text-primary-500 rounded-[4px] transition-shadow duration-200 cursor-pointer flex items-center justify-center"
+          [class.opacity-50]="isLoading"
+          [class.cursor-not-allowed]="isLoading"
+          [ngStyle]="{
+            'box-shadow': activeFilter === 'favorites' ? '0 0 0 3px rgba(0, 111, 155, 0.7)' : '0 0 0 3px rgba(0, 0, 0, 0.09)',
+          }"
+          routerLink="."
+          [queryParams]="{ filter: 'favorites' }"
+          queryParamsHandling="merge"
+        >
+          Favoriten
+        </a>
+
+        <!-- Search Input -->
+        <div class="relative w-full md:col-span-2 lg:col-span-1" [class.opacity-50]="isLoading" *ngIf="allCards && allCards.length > 0">
+          <input
+            type="text"
+            placeholder="Kundensuche"
+            [(ngModel)]="searchTerm"
+            (input)="onSearchInput($event)"
+            [disabled]="isLoading"
+            class="w-full lg:h-[50px] h-[45px] pl-4 pr-10 rounded-[4px] border border-gray-300 focus:outline-none focus:ring-0 focus:border-primary-500 font-dm text-base lg:text-sm text-gray-600 placeholder:text-gray-400 disabled:cursor-not-allowed appearance-none"
+          />
+
+          <app-icon *ngIf="!searchTerm" name="search" class="absolute right-2 top-1/2 transform -translate-y-1/2 w-[19px] h-[19px] text-gray-500 pointer-events-none"></app-icon>
+
+          <button
+            *ngIf="searchTerm"
+            type="button"
+            (click)="onSearchInput({ target: { value: '' } })"
+            class="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700 cursor-pointer transition-colors disabled:cursor-not-allowed"
+            [disabled]="isLoading"
+          >
+            <svg class="h-5 w-5 lg:w-5 lg:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading state -->
+  <div *ngIf="isLoading && cards.length === 0" class="animate-pulse py-2 space-y-4">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-[15px]">
+      <div class="h-[40px] lg:h-[50px] rounded-[4px] bg-gray-100"></div>
+      <div class="h-[40px] lg:h-[50px] rounded-[4px] bg-gray-100"></div>
+      <div class="h-[45px] lg:h-[50px] rounded-[4px] bg-gray-100 md:col-span-2 lg:col-span-1"></div>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6">
+      <div class="rounded-[20px] bg-gray-100 h-56"></div>
+      <div class="rounded-[20px] bg-gray-100 h-56"></div>
+      <div class="rounded-[20px] bg-gray-100 h-56"></div>
+      <div class="rounded-[20px] bg-gray-100 h-56"></div>
+    </div>
+  </div>
+
+  <!-- Empty state when no results -->
+  <div *ngIf="!isLoading && cards.length === 0" class="py-2">
+    <div class="bg-[#FDECEC] border border-[#F5C2C7] rounded-[4px] px-4 py-2 text-[#842029] text-sm">
+      <p>Keine Kunden gefunden.</p>
+    </div>
+  </div>
+
+  <!-- Client cards grid -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6 pt-2" *ngIf="cards.length > 0">
+    <!-- Client cards -->
+    <div
+      *ngFor="let item of cards; let i = index"
+      style="box-shadow: 0px 0px 3.5px 3px rgba(0, 0, 0, 0.13)"
+      class="bg-white rounded-[20px] lg:px-[30px] lg:pt-[21px] lg:pb-[16px] px-6 py-4 flex flex-col space-y-4 hover:shadow-lg transition-shadow cursor-pointer"
+    >
+      <div class="flex justify-between items-start lg:h-[73px] h-[60px]">
+        <!-- Company logo -->
+        <a [routerLink]="['/clients', item.id]" class="h-[53px] sm:h-[45px] md:h-[40px] max-w-[70%] flex items-center">
+          <img
+            *ngIf="item.logo?.path; else defaultLogo"
+            [src]="item.logo.path"
+            [alt]="item.name"
+            class="lg:h-full object-contain lg:max-w-full h-[40px]"
+            (error)="$event.target.style.display = 'none'"
+          />
+          <ng-template #defaultLogo>
+            <div class="h-full w-20 bg-gray-100 rounded-lg flex items-center justify-center">
+              <span class="text-gray-400 text-xs font-bold">{{ item.name.charAt(0) }}</span>
+            </div>
+          </ng-template>
+        </a>
+        <div class="flex items-center space-x-2">
+          <app-favorite-toggle
+            [title]="item.isFavorite ? 'von favoriten entfernen' : 'als favorit hinzufügen'"
+            class="flex-shrink-0"
+            iconSize="w-6 h-6"
+            [isFavorite]="item.isFavorite"
+            (favoriteChange)="onFavoriteChanged($event, item)"
+          />
+        </div>
+      </div>
+
+      <!-- Stats -->
+      <ul class="text-sm text-primary-200 space-y-2">
+        <li [routerLink]="['/clients', item.id]" [queryParams]="{ status: 'new' }">
+          <span class="border rounded-full aspect-square px-1 text-black">{{ item.reportCounts?.newReports || 0 }}</span>
+          <span class="text-primary-500">neue Reports</span>
+        </li>
+        <li [routerLink]="['/clients', item.id]" [queryParams]="{ status: 'ongoing' }">
+          <span class="border rounded-full aspect-square px-1 text-black">{{ item.reportCounts?.ongoingReports || 0 }}</span>
+          <span class="text-primary-500">offene Reports</span>
+        </li>
+        <li [routerLink]="['/clients', item.id]" [queryParams]="{ status: 'completed' }">
+          <span class="border rounded-full aspect-square px-1 text-black">{{ item.reportCounts?.completedReports || 0 }}</span>
+          <span class="text-primary-500">abgeschlossene Reports</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Load more button -->
+  <div class="text-center mt-8" *ngIf="hasNextPage && !isLoading">
+    <button
+      class="px-6 py-3 bg-gray-100 text-gray-700 rounded-[4px] hover:bg-gray-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+      [disabled]="isLoadingMore"
+      (click)="loadMore()"
+    >
+      <span *ngIf="!isLoadingMore">Weitere Kunden laden</span>
+      <span *ngIf="isLoadingMore" class="flex items-center gap-2">
+        <div class="inline-block animate-spin rounded-full h-5 w-5 border-b-2 border-gray-500"></div>
+        Lade...
+      </span>
+    </button>
+  </div>
+
+  <app-mobile-filter-sheet
+    [(visible)]="showClientsMobileFilterSheet"
+    filterMode="clients"
+    title="Kunden filtern"
+    [projectSearchTerm]="searchTerm"
+    (projectSearchTermChange)="onClientsSheetSearch($event)"
+    (clear)="onClientsSheetClear()"
+  >
+  </app-mobile-filter-sheet>
+</section>

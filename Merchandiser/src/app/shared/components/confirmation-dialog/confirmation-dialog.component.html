@@ -1,0 +1,48 @@
+<p-dialog
+  [visible]="visible"
+  (visibleChange)="onDialogVisibilityChange($event)"
+  [modal]="true"
+  [style]="{ width: width }"
+  [closable]="!loading"
+  [draggable]="false"
+  [resizable]="false"
+  [showHeader]="false"
+  [contentStyle]="{ padding: '0', borderRadius: '18px', overflow: 'hidden' }"
+  appendTo="body"
+>
+  <div class="bg-white">
+    <div class="px-6 pt-6 pb-4 border-b border-gray-100">
+      <div class="flex items-start gap-4">
+        <div
+          class="h-12 w-12 shrink-0 rounded-2xl text-white inline-flex items-center justify-center shadow-md"
+          [ngClass]="success ? 'bg-gradient-to-br from-emerald-500 to-teal-600' : danger ? 'bg-gradient-to-br from-rose-500 to-red-600' : 'bg-gradient-to-br from-amber-400 to-orange-500'"
+        >
+          <i [ngClass]="success ? 'pi pi-check text-lg' : danger ? 'pi pi-trash text-lg' : 'pi pi-exclamation-triangle text-lg'"></i>
+        </div>
+        <div class="flex-1 min-w-0">
+          <p class="text-xs font-semibold tracking-[0.08em] uppercase text-primary-500">{{ subtitle }}</p>
+          <h3 class="text-xl font-semibold text-gray-900 leading-tight mt-1">{{ title }}</h3>
+        </div>
+      </div>
+    </div>
+
+    <div class="px-6 py-5">
+      <div *ngIf="!loading" class="rounded-2xl border border-gray-200 bg-gray-50/80 p-4">
+        <p *ngIf="message" class="text-sm text-gray-700 leading-relaxed">{{ message }}</p>
+        <ng-content></ng-content>
+      </div>
+
+      <div *ngIf="loading" class="flex flex-col items-center justify-center py-6 gap-3">
+        <p-progressSpinner styleClass="w-11 h-11" strokeWidth="4"></p-progressSpinner>
+        <span class="text-sm text-gray-600 font-medium">Wird aktualisiert...</span>
+      </div>
+    </div>
+  </div>
+
+  <ng-template pTemplate="footer">
+    <div class="px-6 py-4 border-t border-gray-100 bg-gray-50/70 flex justify-end gap-3" *ngIf="!loading">
+      <p-button [label]="cancelLabel" icon="pi pi-times" (onClick)="onCancel()" styleClass="p-button-text p-button-sm"></p-button>
+      <p-button [label]="confirmLabel" icon="pi pi-check" (onClick)="onConfirm()" [styleClass]="danger ? 'p-button-danger p-button-sm' : 'p-button-primary p-button-sm'"></p-button>
+    </div>
+  </ng-template>
+</p-dialog>

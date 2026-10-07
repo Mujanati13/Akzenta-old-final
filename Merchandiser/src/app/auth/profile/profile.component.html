@@ -1,0 +1,890 @@
+<div class="flex h-screen bg-white overflow-hidden">
+  <app-preloader *ngIf="isLoading" message="Initializing application..."></app-preloader>
+
+  <!-- Desktop Sidebar -->
+  <aside class="hidden md:block bg-[#FBFBFB] border-r border-r-[#DCDCDC] h-full transition-all duration-300 ease-in-out w-[210px]">
+    <div class="flex flex-col h-full">
+      <!-- Logo section -->
+      <div class="w-full flex items-center justify-end pr-4 mt-4 mb-2">
+        <img (click)="navigateToDashboard($event)" src="/logo.png" class="h-[80px] w-auto cursor-pointer" alt="Akzente Logo" />
+      </div>
+
+      <!-- Navigation Links (Steps) -->
+      <div class="flex-1 overflow-y-auto">
+        <!-- Your existing sidebar navigation links -->
+        <div class="space-y-1 px-5 pt-3 pb-4">
+          <a
+            routerLink="/dashboard"
+            id="menu-item-1"
+            class="group flex items-center px-3 py-2 text-sm font-medium rounded-[4px] w-full transition-all duration-200 cursor-pointer gap-x-3 text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+          >
+            <app-icon name="dashboard" class="w-4 text-primary-700" />
+            <span class="font-dm font-semibold text-[12px]">{{ 'Dashboard' | translate }}</span>
+          </a>
+
+          <!-- Step 1: Personal Information -->
+          <a
+            (click)="goToStep(1)"
+            id="menu-item-1"
+            [ngClass]="{
+              'text-primary-300 font-medium': activeStep === 1,
+              'text-gray-700 hover:bg-gray-100 hover:text-gray-900': activeStep !== 1,
+            }"
+            class="group flex items-center px-3 py-2 text-sm font-medium rounded-[4px] w-full transition-all duration-200 cursor-pointer gap-x-3"
+          >
+            <app-icon name="sidebar_list" class="w-4 text-primary-700" />
+            <span class="font-dm font-semibold text-[12px]">{{ 'Persönliches' | translate }}</span>
+          </a>
+
+          <!-- Step 2: Qualifications -->
+          <a
+            (click)="goToStep(2)"
+            id="menu-item-2"
+            [ngClass]="{
+              'text-primary-300 font-medium': activeStep === 2,
+              'text-gray-700 hover:bg-gray-100 hover:text-gray-900': activeStep !== 2,
+            }"
+            class="group flex items-center px-3 py-2 text-sm font-medium rounded-[4px] w-full transition-all duration-200 cursor-pointer gap-x-3"
+          >
+            <!-- Step Indicator as Icon -->
+            <app-icon name="sidebar_list" class="w-4 text-primary-700" />
+            <span class="font-dm font-semibold text-[12px]">{{ 'Qualifikationen' | translate }}</span>
+          </a>
+
+          <!-- Step 3: Data & Password -->
+          <a
+            (click)="goToStep(3)"
+            id="menu-item-3"
+            [ngClass]="{
+              'text-primary-300 font-medium': activeStep === 3,
+              'text-gray-700 hover:bg-gray-100 hover:text-gray-900': activeStep !== 3,
+            }"
+            class="group flex items-center px-3 py-2 text-sm font-medium rounded-[4px] w-full transition-all duration-200 cursor-pointer gap-x-3"
+          >
+            <!-- Step Indicator as Icon -->
+            <app-icon name="sidebar_list" class="w-4 text-primary-700" />
+            <span class="font-dm font-semibold text-[12px]">{{ 'Daten' | translate }}</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Profile and Logout Section (match main sidebar) -->
+      <div class="border-t border-gray-200 p-4">
+        <div class="flex items-center justify-center gap-x-4">
+          <!-- User Profile -->
+          <div class="relative">
+            <button #profileButton (click)="toggleProfileMenu($event)" class="flex items-center cursor-pointer focus:outline-none" type="button">
+              <div class="h-10 w-10 rounded-full bg-yellow-400 flex items-center justify-center mr-1 text-sm font-bold text-gray-800 shrink-0">{{ getInitials() }}</div>
+              <h4 class="text-sm font-semibold text-[#342E30] truncate">{{ userName }}</h4>
+            </button>
+
+            <!-- Profile Menu Dropdown -->
+            <div *ngIf="isProfileMenuOpen" #profileMenu class="absolute bottom-12 mb-2 left-0 w-48 bg-white rounded-[4px] shadow-md py-1 border border-gray-200 z-50">
+              <ul>
+                <li>
+                  <a (click)="closeProfileMenu()" routerLink="/dashboard" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer">
+                    <div class="flex items-center">
+                      <app-icon name="dashboard" class="h-5 w-5 mr-3 text-gray-500" />
+                      <span translate>Dashboard</span>
+                    </div>
+                  </a>
+                </li>
+                <li>
+                  <a (click)="closeProfileMenu()" routerLink="/settings" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer">
+                    <div class="flex items-center">
+                      <svg class="h-5 w-5 mr-3 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                        <path
+                          fill-rule="evenodd"
+                          d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z"
+                          clip-rule="evenodd"
+                        />
+                      </svg>
+                      <span translate>Einstellungen</span>
+                    </div>
+                  </a>
+                </li>
+                <li class="border-t border-gray-100">
+                  <a (click)="closeProfileMenu()" routerLink="/logout" class="block px-4 py-2 text-sm text-red-600 hover:bg-gray-100 cursor-pointer">
+                    <div class="flex items-center">
+                      <svg class="h-5 w-5 mr-3 text-red-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                        <path
+                          fill-rule="evenodd"
+                          d="M3 3a1 1 0 00-1 1v12a1 1 0 001 1h12a1 1 0 001-1V4a1 1 0 00-1-1H3zm11 4a1 1 0 10-2 0v4a1 1 0 102 0V7zm-3 1a1 1 0 10-2 0v3a1 1 0 102 0V8zM8 9a1 1 0 00-2 0v2a1 1 0 102 0V9z"
+                          clip-rule="evenodd"
+                        />
+                      </svg>
+                      <span translate>Logout</span>
+                    </div>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Logout Button -->
+          <a routerLink="/logout" class="flex items-center justify-center h-8 w-8 rounded-full text-red-500 hover:text-red-700">
+            <app-icon name="logout" class="w-5 h-5" />
+          </a>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Mobile Sidebar Overlay -->
+  <div
+    [ngClass]="{ 'opacity-100 pointer-events-auto': isSidebarActive, 'opacity-0 pointer-events-none': !isSidebarActive }"
+    class="fixed inset-0 bg-black/20 z-30 md:hidden transition-opacity duration-300"
+    (click)="toggleSidebar()"
+  ></div>
+
+  <!-- Mobile Sidebar -->
+  <aside
+    [ngClass]="{ 'translate-x-0': isSidebarActive, '-translate-x-full': !isSidebarActive }"
+    class="fixed top-0 left-0 h-full w-64 bg-[#FBFBFB] z-40 md:hidden transform transition-transform duration-300 ease-in-out"
+  >
+    <div class="flex flex-col h-full">
+      <!-- Logo section with close button -->
+      <div class="w-full flex items-start justify-between px-4 pt-4 mb-2">
+        <button type="button" (click)="toggleSidebar()" class="p-2 rounded-[4px] text-gray-500 hover:text-gray-700 hover:bg-gray-100 focus:outline-none" aria-label="Sidebar schließen">
+          <i class="pi pi-times text-lg"></i>
+        </button>
+        <img (click)="navigateToDashboard($event)" src="/logo.png" class="h-[80px] w-auto cursor-pointer" alt="Akzente Logo" />
+      </div>
+
+      <!-- Navigation Links (Steps) -->
+      <div class="flex-1 overflow-y-auto">
+        <div class="space-y-1 px-5 pt-3 pb-4">
+          <!-- Your existing sidebar navigation links -->
+          <a
+            routerLink="/dashboard"
+            id="menu-item-1"
+            class="group flex items-center px-3 py-2 text-sm font-medium rounded-[4px] w-full transition-all duration-200 cursor-pointer gap-x-3 text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+          >
+            <app-icon name="dashboard" class="w-4 text-primary-700" />
+            <span class="font-dm font-semibold text-[12px]">{{ 'Dashboard' | translate }}</span>
+          </a>
+
+          <!-- Step 1: Personal Information -->
+          <a
+            (click)="goToStep(1)"
+            id="menu-item-1"
+            [ngClass]="{
+              'text-primary-300 font-medium': activeStep === 1,
+              'text-gray-700 hover:bg-gray-100 hover:text-gray-900': activeStep !== 1,
+            }"
+            class="group flex items-center px-3 py-2 text-sm font-medium rounded-[4px] w-full transition-all duration-200 cursor-pointer gap-x-3"
+          >
+            <app-icon name="sidebar_list" class="w-4 text-primary-700" />
+            <span class="font-dm font-semibold text-[12px]">{{ 'Persönliches' | translate }}</span>
+          </a>
+
+          <!-- Step 2: Qualifications -->
+          <a
+            (click)="goToStep(2)"
+            id="menu-item-2"
+            [ngClass]="{
+              'text-primary-300 font-medium': activeStep === 2,
+              'text-gray-700 hover:bg-gray-100 hover:text-gray-900': activeStep !== 2,
+            }"
+            class="group flex items-center px-3 py-2 text-sm font-medium rounded-[4px] w-full transition-all duration-200 cursor-pointer gap-x-3"
+          >
+            <!-- Step Indicator as Icon -->
+            <app-icon name="sidebar_list" class="w-4 text-primary-700" />
+            <span class="font-dm font-semibold text-[12px]">{{ 'Qualifikationen' | translate }}</span>
+          </a>
+
+          <!-- Step 3: Data & Password -->
+          <a
+            (click)="goToStep(3)"
+            id="menu-item-3"
+            [ngClass]="{
+              'text-primary-300 font-medium': activeStep === 3,
+              'text-gray-700 hover:bg-gray-100 hover:text-gray-900': activeStep !== 3,
+            }"
+            class="group flex items-center px-3 py-2 text-sm font-medium rounded-[4px] w-full transition-all duration-200 cursor-pointer gap-x-3"
+          >
+            <!-- Step Indicator as Icon -->
+            <app-icon name="sidebar_list" class="w-4 text-primary-700" />
+            <span class="font-dm font-semibold text-[12px]">{{ 'Daten' | translate }}</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Profile and Logout Section -->
+      <div class="border-t border-gray-200 p-4">
+        <div class="flex items-center justify-center gap-x-4">
+          <div class="relative">
+            <button #profileButton (click)="toggleProfileMenu($event)" class="flex items-center cursor-pointer focus:outline-none" type="button">
+              <div class="h-10 w-10 rounded-full bg-yellow-400 flex items-center justify-center mr-1 text-sm font-bold text-gray-800 shrink-0">{{ getInitials() }}</div>
+              <h4 class="text-sm font-semibold text-[#342E30] truncate">{{ userName }}</h4>
+            </button>
+
+            <!-- Profile Menu Dropdown -->
+            <div *ngIf="isProfileMenuOpen" #profileMenu class="absolute bottom-12 mb-2 left-0 w-48 bg-white rounded-[4px] shadow-md py-1 border border-gray-200 z-50">
+              <ul>
+                <li>
+                  <a (click)="closeProfileMenu(); toggleSidebar()" routerLink="/dashboard" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer">
+                    <div class="flex items-center">
+                      <app-icon name="dashboard" class="h-5 w-5 mr-3 text-gray-500" />
+                      <span translate>Dashboard</span>
+                    </div>
+                  </a>
+                </li>
+                <li>
+                  <a (click)="closeProfileMenu(); toggleSidebar()" routerLink="/settings" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer">
+                    <div class="flex items-center">
+                      <svg class="h-5 w-5 mr-3 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                        <path
+                          fill-rule="evenodd"
+                          d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z"
+                          clip-rule="evenodd"
+                        />
+                      </svg>
+                      <span translate>Einstellungen</span>
+                    </div>
+                  </a>
+                </li>
+                <li class="border-t border-gray-100">
+                  <a (click)="closeProfileMenu(); toggleSidebar()" routerLink="/logout" class="block px-4 py-2 text-sm text-red-600 hover:bg-gray-100 cursor-pointer">
+                    <div class="flex items-center">
+                      <svg class="h-5 w-5 mr-3 text-red-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                        <path
+                          fill-rule="evenodd"
+                          d="M3 3a1 1 0 00-1 1v12a1 1 0 001 1h12a1 1 0 001-1V4a1 1 0 00-1-1H3zm11 4a1 1 0 10-2 0v4a1 1 0 102 0V7zm-3 1a1 1 0 10-2 0v3a1 1 0 102 0V8zM8 9a1 1 0 00-2 0v2a1 1 0 102 0V9z"
+                          clip-rule="evenodd"
+                        />
+                      </svg>
+                      <span translate>Logout</span>
+                    </div>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <a routerLink="/logout" class="flex items-center justify-center h-8 w-8 rounded-full text-red-500 hover:text-red-700">
+            <app-icon name="logout" class="w-5 h-5" />
+          </a>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="flex-1 flex flex-col overflow-hidden relative">
+    <!-- Header -->
+    <nav class="bg-white h-[60px] px-2 lg:px-8 flex items-center justify-between">
+      <!-- Left Side: Hamburger Menu (Mobile) and Title -->
+      <div class="flex items-center">
+        <!-- Hamburger Menu (Mobile Only) -->
+        <button (click)="toggleSidebar()" class="mr-2 md:mr-3 p-2 rounded-[4px] text-gray-500 hover:text-gray-700 hover:bg-gray-100 focus:outline-none md:hidden">
+          <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+
+        <!-- Language Selector -->
+        <app-language-selector></app-language-selector>
+      </div>
+
+      <!-- Right Side: Client Logo, Search, Notifications, User Profile -->
+      <h4 class="text-[14px] md:text-[15px] font-dm text-primary-500 truncate max-w-[150px] sm:max-w-none"><span class="hidden sm:inline">Hello, </span>{{ userName }}</h4>
+    </nav>
+
+    <!-- Content Area with Stepper Panels -->
+    <div class="flex-1 overflow-y-auto p-4 md:p-8">
+      <!-- ADD STEPPER INDICATOR HERE -->
+      <form [formGroup]="userForm">
+        <!-- Add stepper indicator similar to registration form -->
+        <p-stepper [(value)]="activeStep">
+          <p-step-list class="px-2 sm:px-4 w-full mb-8 sm:mb-16 overflow-x-auto">
+            <p-step [value]="1" class="flex flex-row flex-auto">
+              <ng-template #content let-activateCallback="activateCallback" let-value="value">
+                <button class="bg-transparent border-0 inline-flex flex-col gap-2 items-center relative" (click)="goToStep(1)">
+                  <span
+                    class="rounded-full w-10 h-10 inline-flex items-center justify-center"
+                    [ngClass]="{
+                      'bg-primary-500 text-white border-2 border-primary-500': value === activeStep,
+                      'bg-[#E9EBFB] text-primary-500 border-2 border-primary-500': value < activeStep,
+                      'border-2 border-gray-300 text-gray-400': value > activeStep,
+                    }"
+                  >
+                    <ng-container *ngIf="value < activeStep; else stepNumber1">
+                      <app-icon name="stepper-check" class="text-primary-500 flex items-center h-4.5 w-4.5"></app-icon>
+                    </ng-container>
+                    <ng-template #stepNumber1>
+                      {{ ('0' + value).slice(-2) }}
+                    </ng-template>
+                  </span>
+                  <span class="text-sm absolute -bottom-8 left-1/2 -translate-x-1/2 text-center font-medium hidden sm:block whitespace-nowrap" [ngClass]="{ 'text-primary-500': value <= activeStep }"
+                    >Persönliches</span
+                  >
+                </button>
+              </ng-template>
+            </p-step>
+
+            <p-step [value]="2" class="flex flex-row flex-auto">
+              <ng-template #content let-activateCallback="activateCallback" let-value="value">
+                <button class="bg-transparent border-0 inline-flex flex-col gap-2 items-center relative" (click)="goToStep(2)">
+                  <span
+                    class="rounded-full w-10 h-10 inline-flex items-center justify-center"
+                    [ngClass]="{
+                      'bg-primary-500 text-white border-2 border-primary-500': value === activeStep,
+                      'bg-[#E9EBFB] text-primary-500 border-2 border-primary-500': value < activeStep,
+                      'border-2 border-gray-300 text-gray-400': value > activeStep,
+                    }"
+                  >
+                    <ng-container *ngIf="value < activeStep; else stepNumber2">
+                      <app-icon name="stepper-check" class="text-primary-500 flex items-center h-4.5 w-4.5"></app-icon>
+                    </ng-container>
+                    <ng-template #stepNumber2>
+                      {{ ('0' + value).slice(-2) }}
+                    </ng-template>
+                  </span>
+                  <span class="text-sm absolute -bottom-8 left-1/2 -translate-x-1/2 text-center font-medium hidden sm:block whitespace-nowrap" [ngClass]="{ 'text-primary-500': value <= activeStep }"
+                    >Qualifikationen</span
+                  >
+                </button>
+              </ng-template>
+            </p-step>
+
+            <p-step [value]="3">
+              <ng-template #content let-activateCallback="activateCallback" let-value="value">
+                <button class="bg-transparent border-0 inline-flex flex-col gap-2 items-center relative" (click)="goToStep(3)">
+                  <span
+                    class="rounded-full w-10 h-10 inline-flex items-center justify-center"
+                    [ngClass]="{
+                      'bg-primary-500 text-white border-2 border-primary-500': value === activeStep,
+                      'bg-[#E9EBFB] text-primary-500 border-2 border-primary-500': value < activeStep,
+                      'border-2 border-gray-300 text-gray-400': value > activeStep,
+                    }"
+                  >
+                    <ng-container *ngIf="value < activeStep; else stepNumber3">
+                      <app-icon name="stepper-check" class="text-primary-500 flex items-center h-4.5 w-4.5"></app-icon>
+                    </ng-container>
+                    <ng-template #stepNumber3>
+                      {{ ('0' + value).slice(-2) }}
+                    </ng-template>
+                  </span>
+                  <span class="text-sm absolute -bottom-8 left-1/2 -translate-x-1/2 text-center font-medium hidden sm:block whitespace-nowrap" [ngClass]="{ 'text-primary-500': value <= activeStep }"
+                    >Daten</span
+                  >
+                </button>
+              </ng-template>
+            </p-step>
+          </p-step-list>
+        </p-stepper>
+
+        <!-- Existing step content with ngSwitch remains unchanged -->
+        <div [ngSwitch]="activeStep" class="mt-6 md:mt-10">
+          <!-- Step 1: Personal Information -->
+          <div *ngSwitchCase="1">
+            <div class="min-h-[20rem] flex flex-col w-full lg:pt-0 pt-6">
+              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <!-- First row: Name and Contact Info -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 lg:gap-4 gap-2 col-span-1 md:col-span-2 lg:col-span-3">
+                  <div class="mb-2">
+                    <p-iftalabel>
+                      <!-- Update gender dropdown -->
+                      <p-select id="gender" formControlName="gender" [options]="genderOptions" optionLabel="name" class="w-full h-[45px]" styleClass="profile-select" appendTo="body"></p-select>
+                      <label for="gender">Geschlecht</label>
+                    </p-iftalabel>
+                  </div>
+
+                  <div class="mb-2">
+                    <p-iftalabel>
+                      <input
+                        pInputText
+                        id="firstName"
+                        formControlName="firstName"
+                        autocomplete="given-name"
+                        required
+                        class="w-full py-3 border border-gray-300 focus:outline-none text-gray-700 bg-white h-[45px]"
+                      />
+                      <label for="firstName">Vorname</label>
+                    </p-iftalabel>
+                    <small *ngIf="userForm.get('firstName')?.invalid && userForm.get('firstName')?.touched" class="text-red-500">Vorname ist erforderlich</small>
+                  </div>
+
+                  <div class="mb-2">
+                    <p-iftalabel>
+                      <input
+                        pInputText
+                        id="lastName"
+                        formControlName="lastName"
+                        autocomplete="family-name"
+                        required
+                        class="w-full py-3 border border-gray-300 focus:outline-none text-gray-700 bg-white h-[45px]"
+                      />
+                      <label for="lastName">Name</label>
+                    </p-iftalabel>
+                    <small *ngIf="userForm.get('lastName')?.invalid && userForm.get('lastName')?.touched" class="text-red-500">Name ist erforderlich</small>
+                  </div>
+
+                  <div class="mb-2">
+                    <app-date-picker placeholder="Geburstag *" [selectedDate]="userForm.get('birthDate')?.value" (dateSelected)="onBirthDateSelected($event)"></app-date-picker>
+                  </div>
+                </div>
+                <div class="mb-2">
+                  <p-iftalabel>
+                    <input pInputText id="email" formControlName="email" autocomplete="email" required class="w-full py-3 border border-gray-300 focus:outline-none text-gray-700 bg-white h-[45px]" />
+                    <label for="email">E-Mail</label>
+                  </p-iftalabel>
+                  <small *ngIf="userForm.get('email')?.invalid && userForm.get('email')?.touched" class="text-red-500">Gültige E-Mail ist erforderlich</small>
+                </div>
+
+                <div class="mb-2">
+                  <p-iftalabel>
+                    <input
+                      pInputText
+                      id="phoneNumber"
+                      formControlName="phoneNumber"
+                      autocomplete="tel"
+                      inputmode="tel"
+                      class="w-full py-3 border border-gray-300 focus:outline-none text-gray-700 bg-white h-[45px]"
+                    />
+                    <label for="phoneNumber">Telefonnummer</label>
+                  </p-iftalabel>
+                  <small *ngIf="userForm.get('phoneNumber')?.invalid && userForm.get('phoneNumber')?.touched" class="text-red-500"> Bitte geben Sie eine gültige deutsche Telefonnummer ein </small>
+                </div>
+
+                <div class="mb-2">
+                  <p-iftalabel>
+                    <input pInputText id="website" formControlName="website" autocomplete="url" class="w-full py-3 border border-gray-300 focus:outline-none text-gray-700 bg-white h-[45px]" />
+                    <label for="website">Website</label>
+                  </p-iftalabel>
+                  <small *ngIf="userForm.get('website')?.invalid && userForm.get('website')?.touched" class="text-red-500"> Bitte geben Sie eine gültige Website-URL ein </small>
+                </div>
+
+                <div class="mb-2 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-1 xl:grid-cols-2 gap-4">
+                  <p-iftalabel>
+                    <input
+                      pInputText
+                      id="postalCode"
+                      formControlName="postalCode"
+                      autocomplete="postal-code"
+                      class="w-full py-3 border border-gray-300 focus:outline-none text-gray-700 bg-white h-[45px]"
+                    />
+                    <label for="postalCode">PLZ</label>
+                  </p-iftalabel>
+                  <p-iftalabel>
+                    <!-- Update country dropdown -->
+                    <p-select
+                      id="country"
+                      formControlName="country"
+                      [options]="countryOptions"
+                      optionLabel="name"
+                      optionValue="id"
+                      class="w-full h-[45px]"
+                      styleClass="profile-select"
+                      appendTo="body"
+                      placeholder="Land auswählen"
+                    ></p-select>
+                    <label for="country">Land</label>
+                  </p-iftalabel>
+                </div>
+
+                <div class="mb-2">
+                  <p-iftalabel>
+                    <!-- Add city dropdown -->
+                    <p-select
+                      id="city"
+                      formControlName="city"
+                      [options]="cityOptions"
+                      optionLabel="name"
+                      optionValue="id"
+                      class="w-full h-[45px]"
+                      styleClass="profile-select"
+                      appendTo="body"
+                      placeholder="Stadt auswählen"
+                      [loading]="isLoadingCities"
+                    ></p-select>
+                    <label for="city">Stadt</label>
+                  </p-iftalabel>
+                </div>
+
+                <div class="mb-2">
+                  <p-iftalabel>
+                    <input pInputText id="nationality" formControlName="nationality" class="w-full py-3 border border-gray-300 focus:outline-none text-gray-700 bg-white h-[45px]" />
+                    <label for="nationality">Nationalität</label>
+                  </p-iftalabel>
+                </div>
+              </div>
+
+              <!-- Language Section -->
+              <div class="mt-2">
+                <label class="block text-[14px] font-bold text-primary-500 mb-2">Sprachen</label>
+                <div formArrayName="languages">
+                  <div *ngFor="let lang of languages.controls; let i = index" [formGroupName]="i" class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+                    <p-iftalabel>
+                      <p-select
+                        [id]="'language_' + i"
+                        formControlName="languageId"
+                        [options]="languageOptions"
+                        optionLabel="name"
+                        optionValue="id"
+                        class="w-full h-[45px]"
+                        styleClass="profile-select"
+                        appendTo="body"
+                      ></p-select>
+                      <label [for]="'language_' + i">Sprache {{ i + 1 }}</label>
+                    </p-iftalabel>
+
+                    <p-iftalabel>
+                      <p-select
+                        [id]="'languageLevel_' + i"
+                        formControlName="levelId"
+                        [options]="languageLevelOptions"
+                        optionLabel="name"
+                        optionValue="id"
+                        class="w-full h-[45px]"
+                        styleClass="profile-select"
+                        appendTo="body"
+                      ></p-select>
+                      <label [for]="'languageLevel_' + i">Niveau</label>
+                    </p-iftalabel>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 2: Job Types and Specializations -->
+          <div *ngSwitchCase="2">
+            <div class="min-h-[20rem] flex flex-col">
+              <div>
+                <h2 class="block text-[14px] font-bold text-primary-500 mb-2">Qualifikationen</h2>
+                <p class="text-gray-700 text-[14px] mb-6">Gebe bitte mindestens eine Qualifikation an. Deine Referenzen helfen uns einen passenden Job für dich zu finden!</p>
+
+                <!-- Dynamic Job Types and Specializations -->
+                <div *ngFor="let jobTypeGroup of getGroupedSpecializations(); let jobTypeIndex = index" class="mb-6">
+                  <!-- Job Type Header -->
+                  <h3 class="block text-[14px] font-bold text-primary-500 mb-2">{{ jobTypeGroup.jobTypeName }}</h3>
+
+                  <!-- Specializations for this Job Type -->
+                  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                    <div
+                      *ngFor="let specialization of jobTypeGroup.specializations; let specIndex = index"
+                      class="border border-[#DCDCDC] rounded-[4px] p-3 flex items-center justify-between h-[45px] cursor-pointer"
+                      [class.border-primary-500]="isSpecializationSelected(specialization.id)"
+                      [class.shadow-selected]="isSpecializationSelected(specialization.id)"
+                      (click)="toggleSpecializationSelection(specialization.id)"
+                    >
+                      <span>{{ specialization.name }}</span>
+                      <p-checkbox
+                        [ngModel]="isSpecializationSelected(specialization.id)"
+                        [ngModelOptions]="{ standalone: true }"
+                        [binary]="true"
+                        [inputId]="'specialization_' + specialization.id"
+                        (click)="toggleSpecializationSelection(specialization.id); $event.stopPropagation()"
+                      ></p-checkbox>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Referenzen Section -->
+                <div class="mb-4">
+                  <h3 class="block text-[14px] font-bold text-primary-500 mb-2">Referenzen</h3>
+                  <div formArrayName="references">
+                    <div *ngFor="let ref of references.controls; let i = index" [formGroupName]="i" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 mb-4 relative">
+                      <div>
+                        <p-iftalabel>
+                          <input pInputText [id]="'company_' + i" formControlName="company" class="w-full py-3 border border-gray-300 focus:outline-none text-gray-700 bg-white h-[45px]" />
+                          <label [for]="'company_' + i">Firma</label>
+                        </p-iftalabel>
+                      </div>
+
+                      <div>
+                        <p-iftalabel>
+                          <!-- Changed from dropdown to text input -->
+                          <input pInputText [id]="'activity_' + i" formControlName="activity" class="w-full py-3 border border-gray-300 focus:outline-none text-gray-700 bg-white h-[45px]" />
+                          <label [for]="'activity_' + i">Aktivität</label>
+                        </p-iftalabel>
+                      </div>
+
+                      <div>
+                        <p-iftalabel>
+                          <!-- Changed from dropdown to text input -->
+                          <input pInputText [id]="'industry_' + i" formControlName="industry" class="w-full py-3 border border-gray-300 focus:outline-none text-gray-700 bg-white h-[45px]" />
+                          <label [for]="'industry_' + i">Branche</label>
+                        </p-iftalabel>
+                      </div>
+
+                      <div>
+                        <p-iftalabel>
+                          <app-date-picker [selectedDate]="getFromDate(i)" placeholder="Von" (dateSelected)="onFromDateSelected(i, $event)"> </app-date-picker>
+                        </p-iftalabel>
+                      </div>
+
+                      <div class="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-2">
+                        <div class="min-w-0">
+                          <p-iftalabel>
+                            <app-date-picker [selectedDate]="getToDate(i)" placeholder="Bis" (dateSelected)="onToDateSelected(i, $event)"> </app-date-picker>
+                          </p-iftalabel>
+                          <small *ngIf="references.at(i).hasError('invalidDateRange') && (references.at(i).touched || references.at(i).dirty)" class="text-red-500 block mt-1">
+                            Das Enddatum darf nicht vor dem Startdatum liegen.
+                          </small>
+                        </div>
+
+                        <!-- Remove reference button -->
+                        <button *ngIf="i > 0" type="button" (click)="removeReference(i)" class="remove-entry-btn shrink-0" aria-label="Referenz entfernen" title="Referenz entfernen">
+                          <i class="pi pi-times remove-entry-btn__icon"></i>
+                        </button>
+                      </div>
+                    </div>
+
+                    <!-- Add reference button -->
+                    <button
+                      type="button"
+                      (click)="addReference()"
+                      class="flex items-center gap-1 text-primary-500 mt-2 bg-primary-500 hover:bg-primary-700 text-white cursor-pointer transition-colors duration-200 px-3 py-2 rounded-[4px] text-[14px]"
+                    >
+                      <i class="pi pi-plus"></i>
+                      <span>Weiter Anhang</span>
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Ausbildung Section -->
+                <div>
+                  <h3 class="block text-[14px] font-bold text-primary-500 mb-2">Ausbildung</h3>
+                  <div formArrayName="education">
+                    <div *ngFor="let edu of education.controls; let i = index" [formGroupName]="i" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 mb-4 relative">
+                      <div>
+                        <p-iftalabel>
+                          <input pInputText [id]="'institution_' + i" formControlName="institution" class="w-full py-3 border border-gray-300 focus:outline-none text-gray-700 bg-white h-[45px]" />
+                          <label [for]="'institution_' + i">Firma</label>
+                        </p-iftalabel>
+                      </div>
+
+                      <div>
+                        <p-iftalabel>
+                          <input pInputText [id]="'qualification_' + i" formControlName="qualification" class="w-full py-3 border border-gray-300 focus:outline-none text-gray-700 bg-white h-[45px]" />
+                          <label [for]="'qualification_' + i">Aktivität</label>
+                        </p-iftalabel>
+                      </div>
+
+                      <div class="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-2">
+                        <div class="min-w-0">
+                          <p-iftalabel>
+                            <app-date-picker [selectedDate]="getgraduationDate(i)" placeholder="Abschlussjahr" (dateSelected)="ongraduationDateSelected(i, $event)"> </app-date-picker>
+                          </p-iftalabel>
+                        </div>
+
+                        <!-- Remove education button -->
+                        <button *ngIf="i > 0" type="button" (click)="removeEducation(i)" class="remove-entry-btn shrink-0" aria-label="Ausbildung entfernen" title="Ausbildung entfernen">
+                          <i class="pi pi-times remove-entry-btn__icon"></i>
+                        </button>
+                      </div>
+                    </div>
+
+                    <!-- Add education button -->
+                    <button
+                      type="button"
+                      (click)="addEducation()"
+                      class="flex items-center gap-1 text-primary-500 mt-2 bg-primary-500 hover:bg-primary-700 text-white cursor-pointer transition-colors duration-200 px-3 py-2 rounded-[4px] text-[14px]"
+                    >
+                      <i class="pi pi-plus"></i>
+                      <span>Weiter Anhang</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 3: Files -->
+          <div *ngSwitchCase="3">
+            <div class="min-h-[20rem] flex flex-col">
+              <p class="text-gray-700 text-[14px] mb-6">
+                Persönliche Daten und Qualifikationen speichern Sie mit „Speichern und weiter …“ in den Schritten davor. Auf dieser Seite laden Sie Portrait, Gesamtaufnahme, Lebenslauf und weitere
+                Anhänge hoch – Dateien werden beim Auswählen automatisch gespeichert. Mit dem Button unten schließen Sie diesen Bereich ab.
+              </p>
+              <div class="flex flex-col gap-y-6 mb-4">
+                <!-- Portrait & Gesamtaufnahme -->
+                <div>
+                  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+                    <div>
+                      <h4 class="block text-[14px] font-bold text-primary-500 mb-2">Portrait <span class="text-red-500">*</span></h4>
+                      <app-multi-image-upload
+                        [count]="1"
+                        [label]=""
+                        [imageLabels]="['Portrait']"
+                        containerWidth="w-full"
+                        [maxFileSizeBytes]="profileImageMaxBytes"
+                        [prePopulatedImages]="portraitImages"
+                        (imagesChanged)="onPortraitImageChanged($event)"
+                        (fileDeleted)="onFileDeleted($event, 'portrait')"
+                        (fileRejected)="onFileRejected($event)"
+                      ></app-multi-image-upload>
+                    </div>
+                    <div>
+                      <h4 class="block text-[14px] font-bold text-primary-500 mb-2">Gesamtaufnahme</h4>
+                      <app-multi-image-upload
+                        [count]="1"
+                        [label]=""
+                        [imageLabels]="['Gesamtaufnahme']"
+                        containerWidth="w-full"
+                        [maxFileSizeBytes]="profileImageMaxBytes"
+                        [prePopulatedImages]="fullBodyImages"
+                        (imagesChanged)="onGesamtaufnahmeImageChanged($event)"
+                        (fileDeleted)="onFileDeleted($event, 'full_body_shot')"
+                        (fileRejected)="onFileRejected($event)"
+                      ></app-multi-image-upload>
+                    </div>
+                    <div>
+                      <h4 class="block text-[14px] font-bold text-primary-500 mb-2">Lebenslauf</h4>
+                      <app-multi-image-upload
+                        [count]="1"
+                        [label]=""
+                        [imageLabels]="['Lebenslauf']"
+                        containerWidth="w-full"
+                        [maxFileSizeBytes]="profileDocumentMaxBytes"
+                        [prePopulatedImages]="cvFiles"
+                        (imagesChanged)="onLebenslaufChanged($event)"
+                        (fileDeleted)="onFileDeleted($event, 'resume')"
+                        (fileRejected)="onFileRejected($event)"
+                        [acceptFileTypes]="'.pdf,.doc,.docx'"
+                      ></app-multi-image-upload>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Weiterer Anhang -->
+                <div>
+                  <div class="grid grid-cols-1 sm:grid-cols-2 max-w-full md:max-w-[928px] gap-4 md:gap-6">
+                    <div>
+                      <h4 class="block text-[14px] font-bold text-primary-500 mb-2">Weiterer Anhang</h4>
+                      <app-multi-image-upload
+                        [count]="5"
+                        [label]=""
+                        [imageLabels]="['Dokument 1', 'Dokument 2', 'Dokument 3', 'Dokument 4', 'Dokument 5']"
+                        containerWidth="w-full"
+                        [maxFileSizeBytes]="profileDocumentMaxBytes"
+                        [prePopulatedImages]="additionalFiles"
+                        (imagesChanged)="onWeitereAnhangChanged($event)"
+                        (fileDeleted)="onFileDeleted($event, 'additional_attachments')"
+                        (fileRejected)="onFileRejected($event)"
+                        [acceptFileTypes]="'.pdf,.doc,.docx,.jpg,.jpeg,.png'"
+                      ></app-multi-image-upload>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <!-- Sticky Navigation Footer -->
+    <div class="sticky bottom-0 bg-white py-3 md:py-4 px-4 md:px-6 border-t border-gray-200 shadow-md z-10 w-full">
+      <div [ngSwitch]="activeStep">
+        <!-- Step 1 Navigation -->
+        <div *ngSwitchCase="1" class="flex justify-end h-[49px]">
+          <button
+            (click)="goToStep(2)"
+            [disabled]="isStepLoading"
+            [class.opacity-50]="isStepLoading"
+            class="bg-primary-500 hover:bg-primary-700 text-white font-dm text-[14px] rounded-[4px] px-4 md:px-6 py-3 transition-colors duration-200 cursor-pointer h-[49px] w-full sm:w-auto md:w-[311px]"
+          >
+            <span *ngIf="!isStepLoading">{{ 'Speichern und weiter zu Qualifikationen' | translate }}</span>
+            <span *ngIf="isStepLoading" class="flex items-center justify-center">
+              <i class="pi pi-spin pi-spinner mr-2"></i>
+              {{ 'Speichern...' | translate }}
+            </span>
+          </button>
+        </div>
+
+        <!-- Step 2 Navigation -->
+        <div *ngSwitchCase="2" class="flex flex-col sm:flex-row justify-between items-center gap-y-2 h-auto sm:h-[49px]">
+          <button
+            (click)="goToStep(1)"
+            class="border border-primary-500 hover:bg-primary-700/10 text-primary-500 font-dm text-[14px] rounded-[4px] px-4 md:px-6 py-3 transition-colors duration-200 cursor-pointer h-[49px] w-full sm:w-auto md:w-[311px]"
+          >
+            {{ 'Vorherige' | translate }}
+          </button>
+          <button
+            (click)="goToStep(3)"
+            [disabled]="isStepLoading"
+            [class.opacity-50]="isStepLoading"
+            class="bg-primary-500 hover:bg-primary-700 text-white font-dm text-[14px] rounded-[4px] px-4 md:px-6 py-3 transition-colors duration-200 cursor-pointer h-[49px] w-full sm:w-auto md:w-[311px]"
+          >
+            <span *ngIf="!isStepLoading">{{ 'Speichern und weiter zu Dateien' | translate }}</span>
+            <span *ngIf="isStepLoading" class="flex items-center justify-center">
+              <i class="pi pi-spin pi-spinner mr-2"></i>
+              {{ 'Speichern...' | translate }}
+            </span>
+          </button>
+        </div>
+
+        <!-- Step 3 Navigation -->
+        <div *ngSwitchCase="3" class="flex flex-col sm:flex-row justify-between items-center gap-y-2 h-auto sm:h-[49px]">
+          <button
+            (click)="goToStep(2)"
+            class="border border-primary-500 hover:bg-primary-700/10 text-primary-500 font-dm text-[14px] rounded-[4px] px-4 md:px-6 py-3 transition-colors duration-200 cursor-pointer h-[49px] w-full sm:w-auto md:w-[311px]"
+          >
+            {{ 'Vorherige' | translate }}
+          </button>
+          <div class="flex flex-col items-stretch sm:items-end gap-1 w-full sm:w-auto md:w-[311px]">
+            <p *ngIf="portraitImages.length === 0" class="text-xs text-amber-600 text-center sm:text-right">Bitte laden Sie ein Portrait hoch, um fortzufahren.</p>
+            <button
+              type="button"
+              (click)="saveProfile()"
+              [disabled]="isRegistering || isLoading || portraitImages.length === 0"
+              [class.opacity-50]="isRegistering || isLoading || portraitImages.length === 0"
+              class="bg-primary-500 hover:bg-primary-700 text-white font-dm text-[14px] rounded-[4px] px-4 md:px-6 py-3 transition-colors duration-200 cursor-pointer h-[49px] w-full disabled:cursor-not-allowed"
+            >
+              <span *ngIf="!isRegistering">{{ 'Dateien speichern und abschließen' | translate }}</span>
+              <span *ngIf="isRegistering" class="flex items-center justify-center">
+                <i class="pi pi-spin pi-spinner mr-2"></i>
+                {{ 'Speichern' | translate }}
+              </span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- Success Modal -->
+<p-dialog
+  [(visible)]="successModalVisible"
+  [modal]="true"
+  [draggable]="false"
+  [resizable]="false"
+  [style]="{ width: '90%', maxWidth: '290px' }"
+  [contentStyle]="{ padding: '1.5rem', borderRadius: '8px', textAlign: 'center' }"
+  [showHeader]="false"
+  [closeOnEscape]="true"
+  [dismissableMask]="true"
+>
+  <div class="flex flex-col items-center">
+    <!-- Success Icon -->
+    <div class="w-[71px] h-[71px] rounded-full border-2 border-[#007296] flex items-center justify-center mb-6 bg-[#EFF6FF]">
+      <app-icon name="modal-check"></app-icon>
+    </div>
+
+    <!-- Success Message -->
+    <h2 class="text-[14px] font-medium mb-4">Änderungen, erfolgreich gespeichert</h2>
+
+    <!-- Divider -->
+    <hr class="w-full border-t border-gray-200 mb-4" />
+
+    <div class="flex flex-col sm:flex-row items-center gap-y-2 sm:gap-x-4">
+      <!-- Close button -->
+      <button (click)="closeModal()" class="w-full sm:w-auto bg-[#F1F5F9] hover:bg-[#E8E8E8] text-[#007296] text-[14px] rounded-[4px] transition-colors px-3 h-[37px] cursor-pointer">
+        <span>Schließen</span>
+      </button>
+
+      <!-- Navigate to dashboard/area button -->
+      <button
+        (click)="goToDashboard()"
+        class="w-full sm:w-auto sm:min-w-[145px] bg-[#007296] hover:bg-[#005d7a] text-white text-[14px] rounded-[4px] transition-colors px-3 h-[37px] whitespace-nowrap cursor-pointer"
+      >
+        <span>Zu meinem Bereich</span>
+      </button>
+    </div>
+  </div>
+</p-dialog>

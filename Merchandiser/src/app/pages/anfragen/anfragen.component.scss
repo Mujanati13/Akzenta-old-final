@@ -1,0 +1,425 @@
+// Main projects table backgrounds (override global striped / hover styles)
+:host ::ng-deep .anfragen-projects-table {
+  .p-datatable-tbody > tr.project-row,
+  .p-datatable-tbody > tr.project-row > td {
+    background-color: #f1f1f1 !important;
+  }
+
+  .p-datatable-tbody > tr.expanded-row,
+  .p-datatable-tbody > tr.expanded-row > td {
+    background-color: #ffffff !important;
+  }
+
+  .p-datatable-tbody > tr.project-row:hover,
+  .p-datatable-tbody > tr.expanded-row:hover {
+    transform: none !important;
+  }
+
+  .col-projekt {
+    width: 5rem !important;
+    min-width: 5rem !important;
+    max-width: 5rem !important;
+  }
+
+  .col-clientName {
+    width: 500px !important;
+    min-width: 500px !important;
+  }
+
+  .col-formattedZeitraum {
+    width: 16rem !important;
+    min-width: 16rem !important;
+  }
+}
+
+/* Page content animation */
+:host section {
+  animation: pageFadeIn 0.4s ease forwards;
+}
+
+@keyframes pageFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Header animation */
+:host h2 {
+  animation: headerSlideIn 0.5s ease 0.1s both;
+}
+
+@keyframes headerSlideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-15px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Search and filter section animation */
+:host .grid,
+:host .flex {
+  animation: filtersFadeIn 0.5s ease 0.2s both;
+}
+
+@keyframes filtersFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Table animations — main project rows only */
+:host ::ng-deep .anfragen-projects-table .p-datatable-tbody > tr.project-row {
+  opacity: 0;
+  transform: translateX(-10px);
+  animation: tableRowSlideIn 0.4s ease forwards;
+}
+
+:host ::ng-deep .anfragen-projects-table .p-datatable-tbody > tr.project-row:nth-child(1) {
+  animation-delay: 0.05s;
+}
+
+:host ::ng-deep .anfragen-projects-table .p-datatable-tbody > tr.project-row:nth-child(3) {
+  animation-delay: 0.1s;
+}
+
+:host ::ng-deep .anfragen-projects-table .p-datatable-tbody > tr.project-row:nth-child(5) {
+  animation-delay: 0.15s;
+}
+
+:host ::ng-deep .anfragen-projects-table .p-datatable-tbody > tr.project-row:nth-child(7) {
+  animation-delay: 0.2s;
+}
+
+:host ::ng-deep .anfragen-projects-table .p-datatable-tbody > tr.project-row:nth-child(9) {
+  animation-delay: 0.25s;
+}
+
+:host ::ng-deep .anfragen-projects-table .p-datatable-tbody > tr.project-row:nth-child(n + 11) {
+  animation-delay: 0.3s;
+}
+
+@keyframes tableRowSlideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Table hover effects — main project rows only */
+:host ::ng-deep .anfragen-projects-table .p-datatable-tbody > tr.project-row {
+  transition: background-color 0.2s ease;
+}
+
+/* Button animations */
+:host button {
+  transition: all 0.2s ease;
+}
+
+:host button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  transition: all 0.2s ease;
+}
+
+/* Icon animations */
+:host app-icon {
+  transition: transform 0.2s ease;
+}
+
+:host app-icon:hover {
+  transform: scale(1.1);
+  transition: transform 0.2s ease;
+}
+
+// Mobile column filter modal — centered, same as HeadOffice dashboard
+::ng-deep .dashboard-column-filter-modal.p-dialog {
+  .p-dialog-mask {
+    background-color: rgba(15, 23, 42, 0.4);
+    backdrop-filter: blur(4px);
+  }
+
+  .p-dialog {
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow:
+      0 25px 50px -12px rgba(0, 0, 0, 0.25),
+      0 0 0 1px rgba(0, 0, 0, 0.05);
+    max-height: 85vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .p-dialog-content {
+    border-radius: 20px;
+    overflow: hidden;
+    padding: 0;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+  }
+}
+
+.dashboard-filter-modal-inner {
+  display: flex;
+  flex-direction: column;
+  min-height: 280px;
+  max-height: 75vh;
+  background: #fff;
+  border-radius: 20px;
+}
+
+.filter-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  flex-shrink: 0;
+  background: linear-gradient(to bottom, #fafbfc, #fff);
+}
+
+.filter-modal-header-content {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.dashboard-filter-modal-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 4px;
+  background: linear-gradient(135deg, var(--primary-500, #00839b) 0%, var(--primary-600, #006d82) 100%);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.dashboard-filter-modal-label {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #6b7280;
+  margin: 0 0 0.125rem 0;
+  line-height: 1.2;
+}
+
+.dashboard-filter-modal-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #111827;
+  margin: 0;
+  line-height: 1.3;
+  font-family: var(--font-dm, inherit);
+}
+
+.filter-modal-close {
+  width: 36px;
+  height: 36px;
+  border-radius: 4px;
+  border: none;
+  background: rgba(0, 0, 0, 0.04);
+  color: #6b7280;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    background-color 0.2s,
+    color 0.2s;
+  flex-shrink: 0;
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.08);
+    color: #374151;
+  }
+}
+
+.dashboard-filter-modal-body {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  padding: 0;
+
+  .p-listbox {
+    border: none !important;
+  }
+}
+
+.dashboard-column-filter-modal-listbox,
+::ng-deep .dashboard-column-filter-modal .dashboard-column-filter-modal-listbox.p-listbox {
+  width: 100% !important;
+  max-height: min(50vh, 320px) !important;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+::ng-deep .dashboard-column-filter-modal .p-listbox-list-container {
+  max-height: min(50vh, 320px);
+}
+
+::ng-deep .column-filter-popover .p-listbox-option,
+::ng-deep .dashboard-column-filter-modal .p-listbox-option,
+::ng-deep .column-filter-popover .p-listbox-option-label,
+::ng-deep .dashboard-column-filter-modal .p-listbox-option-label {
+  font-size: 13px !important;
+}
+
+::ng-deep .column-filter-popover .p-listbox-option,
+::ng-deep .dashboard-column-filter-modal .p-listbox-option {
+  font-size: 13px !important;
+}
+
+::ng-deep .column-filter-popover .p-listbox-option {
+  font-size: 13px !important;
+}
+
+.expanded-row {
+  background-color: transparent;
+}
+
+.expanded-row-cell {
+  background: #ffffff;
+  position: relative;
+  overflow: visible;
+  padding: 0 !important;
+}
+
+.orders-table-wrapper {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  background: #ffffff;
+}
+
+.anfragen-orders-list {
+  min-width: 72rem;
+  background: #ffffff;
+}
+
+.anfragen-order-row {
+  display: grid;
+  grid-template-columns: 4.5rem minmax(7rem, 1fr) minmax(6.5rem, 1fr) minmax(5.5rem, 0.9fr) minmax(10rem, 1.6fr) minmax(6rem, 0.9fr) minmax(15rem, auto);
+  gap: 0.25rem;
+  align-items: center;
+  padding: 0.5rem 0.25rem;
+  background-color: #ffffff;
+  border-bottom: 1px solid #f3f4f6;
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.anfragen-order-cell {
+  min-width: 0;
+  font-size: 12px;
+  line-height: 1.35;
+  color: #374151;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  &--merchandiser {
+    font-weight: 500;
+    color: #111827;
+  }
+
+  &--kunde {
+    font-weight: 600;
+    color: #007296;
+  }
+
+  &--notiz {
+    font-style: italic;
+    color: #6b7280;
+  }
+
+  &--actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    overflow: visible;
+    white-space: normal;
+  }
+}
+
+.anfragen-status-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 74px;
+  height: 23px;
+  background-color: #00a8e9;
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 600;
+  border-radius: 2px;
+  text-transform: uppercase;
+}
+
+.anfragen-action-btn {
+  cursor: pointer;
+  border: none;
+  border-radius: 4px;
+  padding: 0.5rem 0.875rem;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.2;
+  white-space: nowrap;
+  transition: background-color 0.2s ease;
+
+  &--accept {
+    background-color: #6fcc08;
+    color: #ffffff;
+
+    &:hover {
+      background-color: #16a34a;
+    }
+  }
+
+  &--reject {
+    background-color: #d10003;
+    color: #ffffff;
+
+    &:hover {
+      background-color: #b91c1c;
+    }
+  }
+}
+
+.anfragen-orders-empty {
+  padding: 1rem;
+  text-align: center;
+  color: #6b7280;
+  font-size: 14px;
+  background: #ffffff;
+}

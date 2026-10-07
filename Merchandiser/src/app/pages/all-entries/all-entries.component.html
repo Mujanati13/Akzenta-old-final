@@ -1,0 +1,794 @@
+<section class="h-[100dvh] lg:h-auto overflow-hidden lg:overflow-visible flex flex-col">
+  <div class="sticky top-0 z-20 pb-2 -mx-4 px-4 sm:mx-0 sm:px-0 sm:pb-0">
+    <h2 translate class="flex justify-between items-center text-primary-700 mb-2 lg:mb-4">
+      <div class="flex items-center">
+        <app-icon name="see_all" class="w-5 h-5 lg:w-6 lg:h-6 mr-1 text-primary-700" />
+        <span class="text-2xl lg:text-3xl font-bold font-dm">{{ 'All Entries' | translate }}</span>
+      </div>
+      <button
+        type="button"
+        *ngIf="allReports && allReports.length > 0"
+        class="lg:hidden relative inline-flex items-center justify-center w-8 h-8 rounded-[4px] bg-gradient-to-br from-[#00839b] to-[#006a7e] text-white shadow-[0_4px_8px_rgba(0,131,155,0.3)] shrink-0 active:scale-95 transition-transform"
+        (click)="openMobileFilterSheet()"
+      >
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M6 12h12M8 18h8" />
+        </svg>
+        <span *ngIf="getTotalMobileActiveFilters() > 0" class="absolute -top-[3px] -right-[3px] w-3 h-3 bg-[#00839b] border-2 border-white rounded-full z-10"></span>
+      </button>
+    </h2>
+
+    <div class="hidden lg:grid">
+      <div *ngIf="allReports && allReports.length > 0" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[285px_285px_285px_auto] gap-2 lg:gap-[15px] items-center flex-shrink-0">
+        <!-- Search Input for Projects -->
+        <div class="relative w-full lg:w-[285px]">
+          <input
+            type="text"
+            [placeholder]="'Project Search' | translate"
+            [(ngModel)]="projectSearchTerm"
+            (input)="onProjectSearch($event)"
+            [class]="
+              'lg:h-[50px] h-[45px] px-4 border border-gray-300  rounded-[4px] font-dm text-sm w-full focus:outline-none focus:ring-0 focus:border-primary-500' +
+              (projectSearchTerm && projectSearchTerm.length > 0 ? ' pr-10' : '')
+            "
+          />
+          <app-icon *ngIf="!projectSearchTerm || projectSearchTerm.length === 0" name="search" class="absolute right-2 top-1/2 transform -translate-y-1/2 w-[19px] h-[19px] text-gray-500" />
+          <button
+            *ngIf="projectSearchTerm && projectSearchTerm.length > 0"
+            type="button"
+            (click)="clearProjectSearch()"
+            class="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 cursor-pointer transition-colors"
+            [title]="'Clear Search' | translate"
+          >
+            <svg class="h-5 w-5 lg:w-5 lg:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+        <!-- Search Input for Filiales -->
+        <div class="relative w-full lg:w-[285px]">
+          <input
+            type="text"
+            [placeholder]="'Branch Search' | translate"
+            [(ngModel)]="filialeSearchTerm"
+            (input)="onFilialeSearch($event)"
+            [class]="
+              'lg:h-[50px] h-[45px] px-4 border border-gray-300 rounded-[4px] font-dm text-sm w-full focus:outline-none focus:ring-0 focus:border-primary-500' +
+              (filialeSearchTerm && filialeSearchTerm.length > 0 ? ' pr-10' : '')
+            "
+          />
+          <app-icon *ngIf="!filialeSearchTerm || filialeSearchTerm.length === 0" name="search" class="absolute right-2 top-1/2 transform -translate-y-1/2 w-[19px] h-[19px] text-gray-500" />
+          <button
+            *ngIf="filialeSearchTerm && filialeSearchTerm.length > 0"
+            type="button"
+            (click)="clearFilialeSearch()"
+            class="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 cursor-pointer transition-colors"
+            [title]="'Clear Search' | translate"
+          >
+            <svg class="h-5 w-5 lg:w-5 lg:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+
+        <!-- Date Picker with Custom Popover -->
+        <app-date-range-picker [(selectedRange)]="dateRange2" (rangeSelected)="onRangeSelected($event)" position="right"></app-date-range-picker>
+
+        <!-- Clear Filters Button -->
+        <div class="w-full lg:w-auto">
+          <button
+            *ngIf="projectSearchTerm || filialeSearchTerm || dateRange2.start || dateRange2.end || hasColumnFilters()"
+            (click)="clearFilters()"
+            class="group cursor-pointer relative isolate w-full lg:w-auto inline-flex items-center justify-center gap-2.5 overflow-hidden rounded-[4px] border border-rose-200/80 bg-gradient-to-r from-white via-rose-50 to-orange-50 px-4 py-2 text-[12px] font-semibold text-rose-700 shadow-sm ring-1 ring-white/60 transition-all duration-300 hover:border-rose-300 hover:bg-white/90 hover:from-white hover:via-rose-100 hover:to-white hover:text-rose-800 hover:shadow-md hover:shadow-rose-200/40 hover:ring-rose-200/70 disabled:pointer-events-none disabled:opacity-40"
+          >
+            <span
+              class="relative flex h-6 w-6 items-center justify-center rounded-full bg-rose-500/15 ring-1 ring-rose-500/20 transition-all duration-300 group-hover:bg-rose-500/10 group-hover:ring-rose-300/50"
+            >
+              <svg class="column-filter-btn__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h5M20 20v-5h-5M5 9a7 7 0 0111.9-4.9L19 6M5 15a7 7 0 0011.9 4.9L19 18" />
+              </svg>
+            </span>
+            <span class="tracking-[0.01em]">Suche zurücksetzen</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="hidden" *ngIf="allReports && allReports.length > 0">
+      <div
+        class="hidden flex gap-2 mb-0 overflow-x-auto pb-2 pt-2 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent -mx-4 px-4 sm:mx-0 sm:px-0 bg-gray-50 sm:bg-transparent border-b border-gray-200 sm:border-none shadow-sm sm:shadow-none relative z-10"
+      >
+        <button
+          type="button"
+          class="flex items-center gap-1.5 px-3 py-2 text-xs font-medium rounded-[4px] border transition-colors flex-shrink-0"
+          [class.opacity-50]="!canFilterColumn('status')"
+          [class.cursor-not-allowed]="!canFilterColumn('status')"
+          [class.bg-primary-100]="getColumnFilterValue('status') && getColumnFilterValue('status').length > 0"
+          [class.border-primary-500]="getColumnFilterValue('status') && getColumnFilterValue('status').length > 0"
+          [class.text-primary-700]="getColumnFilterValue('status') && getColumnFilterValue('status').length > 0"
+          [class.bg-white]="!getColumnFilterValue('status') || getColumnFilterValue('status').length === 0"
+          [class.border-gray-300]="!getColumnFilterValue('status') || getColumnFilterValue('status').length === 0"
+          [class.text-gray-700]="!getColumnFilterValue('status') || getColumnFilterValue('status').length === 0"
+          [attr.aria-disabled]="!canFilterColumn('status')"
+          (click)="canFilterColumn('status') && openStatusFilter($event)"
+        >
+          <svg class="column-filter-btn__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M6 12h12M8 18h8" />
+          </svg>
+          {{ 'Status' | translate }}
+          <span *ngIf="getColumnFilterValue('status') && getColumnFilterValue('status').length > 0" class="bg-primary-500 text-white text-[10px] px-1.5 py-0.5 rounded-full">
+            {{ getColumnFilterValue('status').length }}
+          </span>
+        </button>
+
+        <button
+          type="button"
+          class="flex items-center gap-1.5 px-3 py-2 text-xs font-medium rounded-[4px] border transition-colors flex-shrink-0"
+          [class.opacity-50]="!canFilterColumn('branch.client.name')"
+          [class.cursor-not-allowed]="!canFilterColumn('branch.client.name')"
+          [class.bg-primary-100]="getColumnFilterValue('branch.client.name') && getColumnFilterValue('branch.client.name').length > 0"
+          [class.border-primary-500]="getColumnFilterValue('branch.client.name') && getColumnFilterValue('branch.client.name').length > 0"
+          [class.text-primary-700]="getColumnFilterValue('branch.client.name') && getColumnFilterValue('branch.client.name').length > 0"
+          [class.bg-white]="!getColumnFilterValue('branch.client.name') || getColumnFilterValue('branch.client.name').length === 0"
+          [class.border-gray-300]="!getColumnFilterValue('branch.client.name') || getColumnFilterValue('branch.client.name').length === 0"
+          [class.text-gray-700]="!getColumnFilterValue('branch.client.name') || getColumnFilterValue('branch.client.name').length === 0"
+          [attr.aria-disabled]="!canFilterColumn('branch.client.name')"
+          (click)="canFilterColumn('branch.client.name') && openColumnFilter('branch.client.name', $event)"
+        >
+          <svg class="column-filter-btn__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M6 12h12M8 18h8" />
+          </svg>
+          {{ 'Client' | translate }}
+          <span *ngIf="getColumnFilterValue('branch.client.name') && getColumnFilterValue('branch.client.name').length > 0" class="bg-primary-500 text-white text-[10px] px-1.5 py-0.5 rounded-full">
+            {{ getColumnFilterValue('branch.client.name').length }}
+          </span>
+        </button>
+
+        <button
+          type="button"
+          class="flex items-center gap-1.5 px-3 py-2 text-xs font-medium rounded-[4px] border transition-colors flex-shrink-0"
+          [class.opacity-50]="!canFilterColumn('project.name')"
+          [class.cursor-not-allowed]="!canFilterColumn('project.name')"
+          [class.bg-primary-100]="getColumnFilterValue('project.name') && getColumnFilterValue('project.name').length > 0"
+          [class.border-primary-500]="getColumnFilterValue('project.name') && getColumnFilterValue('project.name').length > 0"
+          [class.text-primary-700]="getColumnFilterValue('project.name') && getColumnFilterValue('project.name').length > 0"
+          [class.bg-white]="!getColumnFilterValue('project.name') || getColumnFilterValue('project.name').length === 0"
+          [class.border-gray-300]="!getColumnFilterValue('project.name') || getColumnFilterValue('project.name').length === 0"
+          [class.text-gray-700]="!getColumnFilterValue('project.name') || getColumnFilterValue('project.name').length === 0"
+          [attr.aria-disabled]="!canFilterColumn('project.name')"
+          (click)="canFilterColumn('project.name') && openColumnFilter('project.name', $event)"
+        >
+          <svg class="column-filter-btn__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M6 12h12M8 18h8" />
+          </svg>
+          {{ 'Project' | translate }}
+          <span *ngIf="getColumnFilterValue('project.name') && getColumnFilterValue('project.name').length > 0" class="bg-primary-500 text-white text-[10px] px-1.5 py-0.5 rounded-full">
+            {{ getColumnFilterValue('project.name').length }}
+          </span>
+        </button>
+
+        <button
+          type="button"
+          class="flex items-center gap-1.5 px-3 py-2 text-xs font-medium rounded-[4px] border transition-colors flex-shrink-0"
+          [class.opacity-50]="!canFilterColumn('branch.name')"
+          [class.cursor-not-allowed]="!canFilterColumn('branch.name')"
+          [class.bg-primary-100]="getColumnFilterValue('branch.name') && getColumnFilterValue('branch.name').length > 0"
+          [class.border-primary-500]="getColumnFilterValue('branch.name') && getColumnFilterValue('branch.name').length > 0"
+          [class.text-primary-700]="getColumnFilterValue('branch.name') && getColumnFilterValue('branch.name').length > 0"
+          [class.bg-white]="!getColumnFilterValue('branch.name') || getColumnFilterValue('branch.name').length === 0"
+          [class.border-gray-300]="!getColumnFilterValue('branch.name') || getColumnFilterValue('branch.name').length === 0"
+          [class.text-gray-700]="!getColumnFilterValue('branch.name') || getColumnFilterValue('branch.name').length === 0"
+          [attr.aria-disabled]="!canFilterColumn('branch.name')"
+          (click)="canFilterColumn('branch.name') && openColumnFilter('branch.name', $event)"
+        >
+          <svg class="column-filter-btn__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M6 12h12M8 18h8" />
+          </svg>
+          {{ 'Branch' | translate }}
+          <span *ngIf="getColumnFilterValue('branch.name') && getColumnFilterValue('branch.name').length > 0" class="bg-primary-500 text-white text-[10px] px-1.5 py-0.5 rounded-full">
+            {{ getColumnFilterValue('branch.name').length }}
+          </span>
+        </button>
+
+        <button
+          type="button"
+          class="flex items-center gap-1.5 px-3 py-2 text-xs font-medium rounded-[4px] border transition-colors flex-shrink-0"
+          [class.opacity-50]="!canFilterColumn('feedback')"
+          [class.cursor-not-allowed]="!canFilterColumn('feedback')"
+          [class.bg-primary-100]="getColumnFilterValue('feedback') && getColumnFilterValue('feedback').length > 0"
+          [class.border-primary-500]="getColumnFilterValue('feedback') && getColumnFilterValue('feedback').length > 0"
+          [class.text-primary-700]="getColumnFilterValue('feedback') && getColumnFilterValue('feedback').length > 0"
+          [class.bg-white]="!getColumnFilterValue('feedback') || getColumnFilterValue('feedback').length === 0"
+          [class.border-gray-300]="!getColumnFilterValue('feedback') || getColumnFilterValue('feedback').length === 0"
+          [class.text-gray-700]="!getColumnFilterValue('feedback') || getColumnFilterValue('feedback').length === 0"
+          [attr.aria-disabled]="!canFilterColumn('feedback')"
+          (click)="canFilterColumn('feedback') && openColumnFilter('feedback', $event)"
+        >
+          <svg class="column-filter-btn__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M6 12h12M8 18h8" />
+          </svg>
+          {{ 'Feedback' | translate }}
+          <span *ngIf="getColumnFilterValue('feedback') && getColumnFilterValue('feedback').length > 0" class="bg-primary-500 text-white text-[10px] px-1.5 py-0.5 rounded-full">
+            {{ getColumnFilterValue('feedback').length }}
+          </span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading indicator -->
+  <div *ngIf="isLoading" class="animate-pulse space-y-4 pt-2">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 lg:gap-[15px]">
+      <div class="h-[45px] lg:h-[50px] rounded-[4px] bg-gray-100"></div>
+      <div class="h-[45px] lg:h-[50px] rounded-[4px] bg-gray-100"></div>
+      <div class="h-[45px] lg:h-[50px] rounded-[4px] bg-gray-100"></div>
+      <div class="h-[45px] lg:h-[50px] rounded-[4px] bg-gray-100"></div>
+    </div>
+    <div class="rounded-lg border-2 border-gray-100 p-4 space-y-3">
+      <div class="h-11 bg-gray-100 rounded"></div>
+      <div class="h-11 bg-gray-100 rounded"></div>
+      <div class="h-11 bg-gray-100 rounded"></div>
+      <div class="h-11 bg-gray-100 rounded"></div>
+    </div>
+  </div>
+
+  <!-- Error message -->
+  <div *ngIf="error && !isLoading" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+    {{ error }}
+    <button (click)="loadReports()" class="ml-4 bg-red-500 text-white px-3 py-1 rounded text-sm hover:bg-red-600">{{ 'Retry' | translate }}</button>
+  </div>
+
+  <!-- Mobile Card View -->
+  <div class="lg:hidden pt-0 flex flex-col flex-1 min-h-0" *ngIf="!isLoading">
+    <!-- Mobile Filter Buttons -->
+    <div *ngIf="false" class="flex gap-2 mb-3 overflow-x-auto pb-2 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent -mx-1 px-1">
+      <button
+        type="button"
+        class="flex items-center gap-1.5 px-3 py-2 text-xs font-medium rounded-[4px] border transition-colors flex-shrink-0"
+        [class.bg-primary-100]="getColumnFilterValue('status') && getColumnFilterValue('status').length > 0"
+        [class.border-primary-500]="getColumnFilterValue('status') && getColumnFilterValue('status').length > 0"
+        [class.text-primary-700]="getColumnFilterValue('status') && getColumnFilterValue('status').length > 0"
+        [class.bg-white]="!getColumnFilterValue('status') || getColumnFilterValue('status').length === 0"
+        [class.border-gray-300]="!getColumnFilterValue('status') || getColumnFilterValue('status').length === 0"
+        [class.text-gray-700]="!getColumnFilterValue('status') || getColumnFilterValue('status').length === 0"
+        (click)="openStatusFilter($event)"
+      >
+        <svg class="column-filter-btn__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M6 12h12M8 18h8" />
+        </svg>
+        {{ 'Status' | translate }}
+        <span *ngIf="getColumnFilterValue('status') && getColumnFilterValue('status').length > 0" class="bg-primary-500 text-white text-[10px] px-1.5 py-0.5 rounded-full">
+          {{ getColumnFilterValue('status').length }}
+        </span>
+      </button>
+
+      <button
+        type="button"
+        class="flex items-center gap-1.5 px-3 py-2 text-xs font-medium rounded-[4px] border transition-colors flex-shrink-0"
+        [class.bg-primary-100]="getColumnFilterValue('branch.client.name') && getColumnFilterValue('branch.client.name').length > 0"
+        [class.border-primary-500]="getColumnFilterValue('branch.client.name') && getColumnFilterValue('branch.client.name').length > 0"
+        [class.text-primary-700]="getColumnFilterValue('branch.client.name') && getColumnFilterValue('branch.client.name').length > 0"
+        [class.bg-white]="!getColumnFilterValue('branch.client.name') || getColumnFilterValue('branch.client.name').length === 0"
+        [class.border-gray-300]="!getColumnFilterValue('branch.client.name') || getColumnFilterValue('branch.client.name').length === 0"
+        [class.text-gray-700]="!getColumnFilterValue('branch.client.name') || getColumnFilterValue('branch.client.name').length === 0"
+        (click)="openColumnFilter('branch.client.name', $event)"
+      >
+        <svg class="column-filter-btn__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M6 12h12M8 18h8" />
+        </svg>
+        {{ 'Client' | translate }}
+        <span *ngIf="getColumnFilterValue('branch.client.name') && getColumnFilterValue('branch.client.name').length > 0" class="bg-primary-500 text-white text-[10px] px-1.5 py-0.5 rounded-full">
+          {{ getColumnFilterValue('branch.client.name').length }}
+        </span>
+      </button>
+
+      <button
+        type="button"
+        class="flex items-center gap-1.5 px-3 py-2 text-xs font-medium rounded-[4px] border transition-colors flex-shrink-0"
+        [class.bg-primary-100]="getColumnFilterValue('project.name') && getColumnFilterValue('project.name').length > 0"
+        [class.border-primary-500]="getColumnFilterValue('project.name') && getColumnFilterValue('project.name').length > 0"
+        [class.text-primary-700]="getColumnFilterValue('project.name') && getColumnFilterValue('project.name').length > 0"
+        [class.bg-white]="!getColumnFilterValue('project.name') || getColumnFilterValue('project.name').length === 0"
+        [class.border-gray-300]="!getColumnFilterValue('project.name') || getColumnFilterValue('project.name').length === 0"
+        [class.text-gray-700]="!getColumnFilterValue('project.name') || getColumnFilterValue('project.name').length === 0"
+        (click)="openColumnFilter('project.name', $event)"
+      >
+        <svg class="column-filter-btn__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M6 12h12M8 18h8" />
+        </svg>
+        {{ 'Project' | translate }}
+        <span *ngIf="getColumnFilterValue('project.name') && getColumnFilterValue('project.name').length > 0" class="bg-primary-500 text-white text-[10px] px-1.5 py-0.5 rounded-full">
+          {{ getColumnFilterValue('project.name').length }}
+        </span>
+      </button>
+
+      <button
+        type="button"
+        class="flex items-center gap-1.5 px-3 py-2 text-xs font-medium rounded-[4px] border transition-colors flex-shrink-0"
+        [class.bg-primary-100]="getColumnFilterValue('branch.name') && getColumnFilterValue('branch.name').length > 0"
+        [class.border-primary-500]="getColumnFilterValue('branch.name') && getColumnFilterValue('branch.name').length > 0"
+        [class.text-primary-700]="getColumnFilterValue('branch.name') && getColumnFilterValue('branch.name').length > 0"
+        [class.bg-white]="!getColumnFilterValue('branch.name') || getColumnFilterValue('branch.name').length === 0"
+        [class.border-gray-300]="!getColumnFilterValue('branch.name') || getColumnFilterValue('branch.name').length === 0"
+        [class.text-gray-700]="!getColumnFilterValue('branch.name') || getColumnFilterValue('branch.name').length === 0"
+        (click)="openColumnFilter('branch.name', $event)"
+      >
+        <svg class="column-filter-btn__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M6 12h12M8 18h8" />
+        </svg>
+        {{ 'Branch' | translate }}
+        <span *ngIf="getColumnFilterValue('branch.name') && getColumnFilterValue('branch.name').length > 0" class="bg-primary-500 text-white text-[10px] px-1.5 py-0.5 rounded-full">
+          {{ getColumnFilterValue('branch.name').length }}
+        </span>
+      </button>
+
+      <button
+        type="button"
+        class="flex items-center gap-1.5 px-3 py-2 text-xs font-medium rounded-[4px] border transition-colors flex-shrink-0"
+        [class.bg-primary-100]="getColumnFilterValue('feedback') && getColumnFilterValue('feedback').length > 0"
+        [class.border-primary-500]="getColumnFilterValue('feedback') && getColumnFilterValue('feedback').length > 0"
+        [class.text-primary-700]="getColumnFilterValue('feedback') && getColumnFilterValue('feedback').length > 0"
+        [class.bg-white]="!getColumnFilterValue('feedback') || getColumnFilterValue('feedback').length === 0"
+        [class.border-gray-300]="!getColumnFilterValue('feedback') || getColumnFilterValue('feedback').length === 0"
+        [class.text-gray-700]="!getColumnFilterValue('feedback') || getColumnFilterValue('feedback').length === 0"
+        (click)="openColumnFilter('feedback', $event)"
+      >
+        <svg class="column-filter-btn__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M6 12h12M8 18h8" />
+        </svg>
+        {{ 'Feedback' | translate }}
+        <span *ngIf="getColumnFilterValue('feedback') && getColumnFilterValue('feedback').length > 0" class="bg-primary-500 text-white text-[10px] px-1.5 py-0.5 rounded-full">
+          {{ getColumnFilterValue('feedback').length }}
+        </span>
+      </button>
+    </div>
+
+    <!-- Empty state for mobile -->
+    <div *ngIf="filteredReports.length === 0 && (!allReports || allReports.length === 0)" class="py-2">
+      <div class="bg-[#FDECEC] border border-[#F5C2C7] rounded-[4px] px-4 py-2 text-[#842029] text-sm">
+        <p>{{ 'No reports found.' | translate }}</p>
+      </div>
+    </div>
+
+    <!-- Cards container -->
+    <div #mobileReportsList class="flex flex-col gap-3 flex-1 min-h-0 overflow-y-auto pb-4">
+      <div *ngFor="let report of filteredReports" class="bg-white rounded-lg shadow-md border border-gray-200 p-4 hover:shadow-lg transition-shadow duration-150">
+        <!-- Card Header with Client Name and Status -->
+        <div class="flex items-start justify-between mb-3">
+          <div class="flex-1">
+            <a class="text-primary-700 font-bold text-sm cursor-pointer hover:text-primary-800" (click)="navigateToClientFirstProject(getReportClientId(report)); $event.stopPropagation()">
+              {{ getReportClientName(report) }}
+            </a>
+            <p class="text-gray-600 text-xs mt-1">{{ report.project?.name || '-' }}</p>
+          </div>
+          <span
+            *ngIf="report?.status"
+            class="text-white w-[70px] h-[20px] text-[10px] font-dm font-semibold rounded-sm flex items-center justify-center uppercase"
+            [style.background-color]="getStatusDisplayColor(report)"
+          >
+            {{ getStatusDisplayName(report) }}
+          </span>
+        </div>
+
+        <!-- Card Body -->
+        <a
+          [routerLink]="!isAnfrageStatus(report) ? ['/clients', getReportClientId(report), 'projects', report.project?.id, 'reports', report.id] : null"
+          class="block text-inherit no-underline"
+          [class.pointer-events-none]="isAnfrageStatus(report)"
+          [class.cursor-default]="isAnfrageStatus(report)"
+          (click)="onReportNavigation()"
+        >
+          <div class="grid grid-cols-2 gap-2 text-xs mb-3">
+            <div>
+              <span class="text-gray-500 block">{{ 'Branch' | translate }}</span>
+              <span class="text-gray-800 font-medium">{{ report.branch?.name || '-' }}</span>
+            </div>
+            <div>
+              <span class="text-gray-500 block">{{ 'Feedback' | translate }}</span>
+              <span class="text-gray-800 font-medium">{{ (report.feedback == 'true' ? 'Yes' : 'No') | translate }}</span>
+            </div>
+            <div>
+              <span class="text-gray-500 block">{{ 'Planned on' | translate }}</span>
+              <span class="text-gray-800 font-medium">{{ report.plannedOn | euDate }}</span>
+            </div>
+            <div>
+              <span class="text-gray-500 block">{{ 'Report to' | translate }}</span>
+              <span class="text-gray-800 font-medium">{{ report.reportTo | euDate }}</span>
+            </div>
+          </div>
+        </a>
+
+        <!-- Card Footer with Actions -->
+        <div class="flex items-center justify-end gap-4 pt-3 border-t border-gray-100" *ngIf="!isAnfrageStatus(report)">
+          <a
+            [routerLink]="['/clients', getReportClientId(report), 'projects', report.project?.id, 'edit-report', report.id]"
+            class="flex items-center cursor-pointer"
+            [title]="'Edit' | translate"
+            (click)="onReportNavigation(); $event.stopPropagation()"
+          >
+            <app-icon name="pencil" class="w-5 h-5 text-primary-500 hover:text-primary-600" />
+          </a>
+          <a
+            [routerLink]="['/clients', getReportClientId(report), 'projects', report.project?.id, 'reports', report.id]"
+            class="flex items-center cursor-pointer"
+            [title]="'View' | translate"
+            (click)="onReportNavigation(); $event.stopPropagation()"
+          >
+            <app-icon name="resizeable_eye" class="w-5 h-5 text-primary-500 hover:text-primary-600" />
+          </a>
+          <app-favorite-toggle
+            [title]="(report.isFavorite ? 'Remove from favorites' : 'Add to favorites') | translate"
+            class="h-5 w-5 flex-shrink-0"
+            [iconSize]="'h-5 w-5'"
+            [isFavorite]="report.isFavorite"
+            (favoriteChange)="onFavoriteChanged($event, report)"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Desktop Table View - Hidden on mobile -->
+  <p-table
+    #reportsTable
+    class="w-full hidden lg:block lg:pt-4"
+    *ngIf="!isLoading && allReports && allReports.length > 0"
+    [value]="filteredReports"
+    stripedRows
+    [scrollable]="true"
+    scrollHeight="70vh"
+    dataKey="id"
+    [tableStyle]="{ 'min-width': '60rem' }"
+    [columns]="getVisibleColumns()"
+    [reorderableColumns]="true"
+    (onColReorder)="onColReorder($event)"
+    [rowHover]="false"
+    [loading]="false"
+    [paginator]="false"
+    [lazy]="false"
+  >
+    <ng-template #header let-columns>
+      <tr [class.bg-gray-100]="filteredReports.length === 0" [class.text-gray-400]="filteredReports.length === 0">
+        <th [title]="'nach Recht oder Links verschieben'" *ngFor="let col of columns" pReorderableColumn [class.rounded-l-lg]="col.field === 'branch.client.name'">
+          <div class="flex items-center relative" [class.space-x-2]="col.field">
+            <ng-container [ngSwitch]="col.field">
+              <ng-container *ngSwitchCase="'status'">
+                <div class="flex items-center gap-2 text-[13px]">
+                  <span>{{ col.header | translate }}</span>
+                  <div class="flex items-center gap-2 mt-1">
+                    <app-icon name="table_sort" class="w-3 cursor-pointer" [class.text-primary-500]="sortField === 'status'" (click)="onSort('status')" />
+                    <span
+                      class="column-filter-btn"
+                      [ngClass]="{
+                        'column-filter-btn--active': getColumnFilterValue('status')?.length > 0,
+                        'column-filter-btn--disabled': !canFilterColumn('status'),
+                      }"
+                      (click)="canFilterColumn('status') && openStatusFilter($event); $event.stopPropagation()"
+                    >
+                      <svg class="column-filter-btn__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M6 12h12M8 18h8" />
+                      </svg>
+                      <span *ngIf="getColumnFilterValue('status')?.length > 0" class="column-filter-btn__badge">
+                        {{ getColumnFilterValue('status').length }}
+                      </span>
+                    </span>
+                  </div>
+                </div>
+              </ng-container>
+              <ng-container *ngSwitchDefault>
+                <div class="flex items-center gap-2 text-[13px]">
+                  <span>{{ col.header | translate }}</span>
+                  <div class="flex items-center gap-2 mt-1">
+                    <app-icon name="table_sort" class="w-3 cursor-pointer" [class.text-primary-500]="sortField === col.field" (click)="onSort(col.field); $event.stopPropagation()" />
+                    <span
+                      class="column-filter-btn"
+                      [ngClass]="{
+                        'column-filter-btn--active': getColumnFilterValue(col.field)?.length > 0,
+                        'column-filter-btn--disabled': !canFilterColumn(col.field),
+                      }"
+                      (click)="canFilterColumn(col.field) && openColumnFilter(col.field, $event); $event.stopPropagation()"
+                    >
+                      <svg class="column-filter-btn__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M6 12h12M8 18h8" />
+                      </svg>
+                      <span *ngIf="getColumnFilterValue(col.field)?.length > 0" class="column-filter-btn__badge">
+                        {{ getColumnFilterValue(col.field).length }}
+                      </span>
+                    </span>
+                  </div>
+                </div>
+              </ng-container>
+            </ng-container>
+          </div>
+        </th>
+        <th class="rounded-r-lg">
+          <div class="flex space-x-2 items-center text-[13px] justify-end cursor-pointer">
+            <span (click)="toggleSettingsPopover($event)"> {{ 'Settings' | translate }}</span>
+            <span class="pi pi-cog text-sm!" (click)="toggleSettingsPopover($event)"></span>
+          </div>
+        </th>
+      </tr>
+    </ng-template>
+
+    <ng-template #body let-report let-columns="columns">
+      <tr
+        class="bg-white transition-colors duration-150"
+        [class.hover:!bg-gray-200]="!isAnfrageStatus(report)"
+        [class.cursor-pointer]="!isAnfrageStatus(report)"
+        [class.cursor-default]="isAnfrageStatus(report)"
+      >
+        <td
+          *ngFor="let col of columns"
+          class="p-0"
+          [class.rounded-l-lg]="col.field === 'branch.client.name'"
+          [title]="col.header == 'Client' || col.header == 'Project' ? 'das ganze Projekt öffnen ' : 'Einsatz Details anzeigen'"
+        >
+          <!-- Client Name Cell: Click goes to Client's First Project -->
+          <a
+            *ngIf="col.field === 'branch.client.name'"
+            class="flex w-full h-full text-inherit font-bold text-[12px] no-underline items-center py-2 cursor-pointer"
+            (click)="navigateToClientFirstProject(getReportClientId(report)); $event.stopPropagation()"
+          >
+            {{ getReportClientName(report) }}
+          </a>
+
+          <a
+            *ngIf="col.field !== 'branch.client.name'"
+            [routerLink]="!isAnfrageStatus(report) ? ['/clients', getReportClientId(report), 'projects', report.project?.id, 'reports', report.id] : null"
+            class="flex w-full h-full text-inherit no-underline items-center py-2 text-[12px]"
+            [class.pointer-events-none]="isAnfrageStatus(report)"
+            (click)="onReportNavigation()"
+          >
+            <ng-container [ngSwitch]="col.field">
+              <!-- Handle special rendering for nested fields -->
+              <ng-container *ngSwitchCase="'branch.name'">
+                {{ report.branch?.name || '-' }}
+              </ng-container>
+              <ng-container *ngSwitchCase="'branch.client.name'">
+                {{ getReportClientName(report) }}
+              </ng-container>
+              <ng-container *ngSwitchCase="'project.name'">
+                {{ report.project?.name || '-' }}
+              </ng-container>
+              <ng-container *ngSwitchCase="'status'">
+                <span
+                  *ngIf="report?.status"
+                  class="text-white w-[110px] h-[23px] text-[11px] font-dm font-semibold rounded-sm flex items-center justify-center uppercase"
+                  [style.background-color]="getStatusDisplayColor(report)"
+                >
+                  {{ getStatusDisplayName(report) }}
+                </span>
+              </ng-container>
+              <ng-container *ngSwitchCase="'plannedOn'">
+                {{ report.plannedOn | euDate }}
+              </ng-container>
+              <ng-container *ngSwitchCase="'reportTo'">
+                {{ report.reportTo | euDate }}
+              </ng-container>
+              <ng-container *ngSwitchCase="'feedback'">
+                {{ (report.feedback == 'true' ? 'Yes' : 'No') | translate }}
+              </ng-container>
+              <!-- Default rendering for other fields -->
+              <ng-container *ngSwitchDefault>
+                {{ report[col.field] || '-' }}
+              </ng-container>
+            </ng-container>
+          </a>
+        </td>
+        <td class="rounded-r-lg">
+          <div class="flex space-x-3 justify-end px-3" *ngIf="!isAnfrageStatus(report)">
+            <a
+              [routerLink]="['/clients', getReportClientId(report), 'projects', report.project?.id, 'edit-report', report.id]"
+              class="flex items-center cursor-pointer"
+              [title]="'Edit (Right click for new tab)' | translate"
+              (click)="onReportNavigation(); $event.stopPropagation()"
+            >
+              <app-icon name="pencil" class="h-5 w-5 text-primary-500 hover:text-primary-600" [title]="'Edit (Right click for new tab)' | translate" />
+            </a>
+            <a
+              [routerLink]="['/clients', getReportClientId(report), 'projects', report.project?.id, 'reports', report.id]"
+              class="flex items-center cursor-pointer"
+              [title]="'View (Right click for new tab)' | translate"
+              (click)="onReportNavigation(); $event.stopPropagation()"
+            >
+              <app-icon name="resizeable_eye" class="h-5 w-5 text-primary-500 hover:text-primary-600" [title]="'View (Right click for new tab)' | translate" />
+            </a>
+            <app-favorite-toggle
+              [title]="(report.isFavorite ? 'Remove from favorites' : 'Add to favorites') | translate"
+              class="h-5 w-5 flex-shrink-0"
+              [isFavorite]="report.isFavorite"
+              (favoriteChange)="onFavoriteChanged($event, report)"
+            />
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+
+    <ng-template #emptymessage>
+      <tr>
+        <td colspan="10" class="text-center p-4">
+          <div *ngIf="!isLoading && !error && (!allReports || allReports.length === 0)" class="py-2">
+            <div class="bg-[#FDECEC] border border-[#F5C2C7] rounded-[4px] px-4 py-2 text-[#842029] text-sm">
+              <p>{{ 'No reports found.' | translate }}</p>
+            </div>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+
+  <div *ngIf="!isLoading && (!allReports || allReports.length === 0)" class="hidden lg:block pt-4">
+    <div class="bg-[#FDECEC] border border-[#F5C2C7] rounded-[4px] px-4 py-2 text-[#842029] text-sm">
+      <p>{{ 'No reports found.' | translate }}</p>
+    </div>
+  </div>
+</section>
+
+<!-- Column settings popover -->
+<p-popover #columnsPopover [styleClass]="'column-filter-popover settings-popover'" appendTo="body" [dismissable]="false" (onHide)="onSettingsPopoverClose()" (onShow)="onSettingsPopoverShow()">
+  <div class="column-filter-popover-content settings-popover-content w-[85vw] sm:w-[20rem]">
+    <div class="column-filter-popover-header">
+      <div class="column-filter-popover-header flex items-center justify-between pb-2">
+        <div class="flex items-center gap-3">
+          <span class="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-[4px] bg-gradient-to-br from-primary-500 to-primary-600 text-white shadow-sm" aria-hidden="true">
+            <span class="pi pi-cog text-sm!"></span>
+          </span>
+          <div>
+            <p class="m-0 text-[10px] font-bold uppercase tracking-[0.08em] text-slate-500">Columns Settings</p>
+            <p class="m-0 font-dm text-[15px] font-bold text-slate-900">Settings</p>
+          </div>
+        </div>
+        <div class="ml-auto flex items-center gap-2">
+          <button
+            type="button"
+            class="filter-modal-clear shrink-0"
+            [disabled]="selectedColumns.length === getSelectableColumns().length"
+            (click)="selectedColumns = getSelectableColumns().slice(); onColumnsChange(selectedColumns)"
+            aria-label="Filter zurücksetzen"
+          >
+            <svg class="filter-modal-clear__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+            </svg>
+            <span>Clear</span>
+          </button>
+          <button type="button" (click)="columnsPopover.hide(); $event.stopPropagation()" class="filter-modal-close" aria-label="Schließen">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+    <p-listbox
+      [options]="getSelectableColumns()"
+      [(ngModel)]="selectedColumns"
+      [multiple]="true"
+      [checkbox]="true"
+      [filter]="true"
+      optionLabel="header"
+      emptyMessage="Keine Daten vorhanden"
+      emptyFilterMessage="Keine Ergebnisse gefunden"
+      class="settings-listbox"
+      (onChange)="onColumnsChange($event.value)"
+    />
+    <div class="filter-modal-footer filter-modal-footer--end">
+      <button type="button" class="filter-modal-btn filter-modal-btn--compact" (click)="columnsPopover.hide(); $event.stopPropagation()">Fertig</button>
+    </div>
+  </div>
+</p-popover>
+
+<!-- Mobile: Centered column filter modal -->
+<p-dialog
+  [(visible)]="showColumnFilterModal"
+  [modal]="true"
+  [closable]="true"
+  [draggable]="false"
+  [resizable]="false"
+  [style]="{ width: 'min(92vw, 400px)', maxHeight: '85vh' }"
+  styleClass="dashboard-column-filter-modal"
+  [contentStyle]="{ overflow: 'hidden', padding: '0', borderRadius: '16px' }"
+  (onHide)="closeColumnFilterModal()"
+  [showHeader]="false"
+  appendTo="body"
+>
+  <div class="dashboard-filter-modal-inner">
+    <div class="filter-modal-header">
+      <div class="filter-modal-header-content">
+        <span class="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-[4px] bg-gradient-to-br from-primary-500 to-primary-600 text-white shadow-sm" aria-hidden="true">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"
+            />
+          </svg>
+        </span>
+        <div>
+          <p class="dashboard-filter-modal-label">Filter</p>
+          <p class="dashboard-filter-modal-title">{{ getColumnFilterModalTitle() | translate }}</p>
+        </div>
+      </div>
+      <button type="button" (click)="closeColumnFilterModal()" class="dashboard-filter-modal-close" aria-label="Schließen">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+    <div class="dashboard-filter-modal-body">
+      <!-- Status filter with color dots -->
+      <p-listbox
+        *ngIf="currentFilterField === 'status'"
+        [options]="currentGenericOptions"
+        [(ngModel)]="genericFilterValues['status']"
+        [multiple]="true"
+        [checkbox]="true"
+        [filter]="true"
+        optionLabel="label"
+        optionValue="value"
+        emptyMessage="Keine Daten vorhanden"
+        emptyFilterMessage="Keine Ergebnisse gefunden"
+        class="dashboard-column-filter-modal-listbox"
+        (onChange)="onFilterSelectionChange()"
+      >
+        <ng-template let-status pTemplate="item">
+          <div class="flex items-center gap-2">
+            <span class="w-3 h-3 rounded-full" [style.background-color]="status.color || '#9CA3AF'"></span>
+            <span>{{ status.label }}</span>
+          </div>
+        </ng-template>
+      </p-listbox>
+      <!-- All other fields -->
+      <p-listbox
+        *ngIf="currentFilterField && currentFilterField !== 'status'"
+        [options]="currentGenericOptions"
+        [(ngModel)]="genericFilterValues[currentFilterField]"
+        [multiple]="true"
+        [checkbox]="true"
+        [filter]="true"
+        optionLabel="label"
+        optionValue="value"
+        emptyMessage="Keine Daten vorhanden"
+        emptyFilterMessage="Keine Ergebnisse gefunden"
+        class="dashboard-column-filter-modal-listbox"
+        (onChange)="onFilterSelectionChange()"
+      />
+    </div>
+  </div>
+</p-dialog>
+
+<!-- Generic Filter Popover -->
+<app-column-filter-popover
+  #genericFilterPopover
+  [title]="currentFilterField ? getColumnHeader(currentFilterField) : 'Filter'"
+  [options]="currentGenericOptions"
+  [(selectedValues)]="genericFilterValues[currentFilterField]"
+  (filterChange)="onFilterSelectionChange()"
+  (popoverHide)="onGenericFilterPopoverClose()"
+>
+  <ng-template #itemTemplate let-option>
+    <div class="flex items-center gap-2">
+      <span *ngIf="currentFilterField === 'status'" class="w-3 h-3 rounded-full" [style.background-color]="option.color || '#9CA3AF'"></span>
+      <span>{{ option.label }}</span>
+    </div>
+  </ng-template>
+</app-column-filter-popover>
+
+<!-- Mobile bottom sheet filter -->
+<app-mobile-filter-sheet
+  [(visible)]="showMobileFilterSheet"
+  title="All Entries Filter"
+  [(projectSearchTerm)]="projectSearchTerm"
+  [(filialeSearchTerm)]="filialeSearchTerm"
+  [(dateRange)]="dateRange2"
+  [columns]="mobileFilterColumns"
+  [filterValues]="mobileFilterValues"
+  [columnOptions]="mobileFilterColumnOptions"
+  [canFilterMap]="mobileFilterCanFilterMap"
+  (projectSearchTermChange)="projectSearchTerm = $event; applyFilters(); saveFilterState()"
+  (filialeSearchTermChange)="filialeSearchTerm = $event; applyFilters(); saveFilterState()"
+  (dateRangeChange)="onRangeSelected($event)"
+  (columnFilterChanged)="onMobileFilterChanged($event)"
+  (allColumnFiltersCleared)="onMobileFilterCleared()"
+  (clear)="clearFilters()"
+></app-mobile-filter-sheet>

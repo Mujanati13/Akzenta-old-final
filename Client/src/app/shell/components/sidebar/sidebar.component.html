@@ -1,0 +1,131 @@
+<div class="flex flex-col h-full bg-[#FBFBFB] border border-r-[#DCDCDC] relative">
+  <button (click)="closeSidebar.emit()" class="absolute top-4 left-4 p-2 pl-1.5 lg:hidden text-gray-500 hover:text-gray-700 z-50">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+    </svg>
+  </button>
+  <div class="w-full flex items-center justify-end pr-4 mt-4 mb-2">
+    <img (click)="navigateToDashboard($event)" src="/logo.png" class="h-[80px] w-auto cursor-pointer" alt="10685573-ALT" />
+  </div>
+
+  <!-- Navigation Links -->
+  <div class="flex-1 overflow-y-auto">
+    <div class="space-y-1 px-5 pt-3 pb-4">
+      <ng-container *ngFor="let item of sidebarItems; let i = index">
+        <ng-container *ngIf="shellService.allowedAccess(item)">
+          <div>
+            <ng-container>
+              <!-- Menu Item -->
+              <a
+                [routerLink]="item.href"
+                (click)="onNavItemClick(); resetFilters()"
+                id="menu-item-{{ i }}"
+                [ngClass]="{
+                  'text-primary-300 font-medium': item.active,
+                  'text-gray-700 hover:bg-gray-100 hover:text-gray-900': !item.active,
+                  'opacity-50 pointer-events-none': item.disabled,
+                }"
+                class="group flex items-center px-1 py-2 text-sm font-medium rounded-[4px] w-full transition-all duration-200 cursor-pointer gap-x-3"
+              >
+                <!-- Icon -->
+                <ng-container *ngIf="item.icon">
+                  <app-icon [name]="item.icon" class="sidebar-icon text-primary-700" />
+                </ng-container>
+
+                <span class="flex-1 truncate font-dm font-semibold text-[12px]">{{ item.title | translate }}</span>
+                <!--  tag   -->
+                <ng-container *ngIf="item.tag && item.tag !== true">
+                  <span class="ml-2 inline-flex place-self-center items-center justify-center lg:w-5 lg:h-5 h-3 w-3 rounded-full bg-red-600 text-white text[10px] lg:text-[13px] font-bold shadow-md">
+                    {{ item.tag }}
+                  </span>
+                </ng-container>
+              </a>
+
+              <!-- Sub Menu - Always Visible -->
+              <div *ngIf="item.subItems && item.subItems.length" class="mt-1 ml-5 pl-3 border-l-2 border-gray-400">
+                <ng-container *ngFor="let subItem of item.subItems">
+                  <ng-container *ngIf="shellService.allowedAccess(subItem)">
+                    <a
+                      (click)="onNavItemClick(); activateSidebarSubItem(i, subItem); resetFilters()"
+                      [routerLink]="subItem.href || undefined"
+                      [ngClass]="{
+                        'text-primary-300': subItem.active,
+                        'text-gray-600 hover:bg-gray-100 hover:text-gray-800': !subItem.active,
+                        'opacity-50 pointer-events-none': subItem.disabled,
+                      }"
+                      class="group flex items-center px-3 text-[12px] py-0.5 text-sm font-medium rounded-[4px] w-full transition-all duration-200 cursor-pointer my-1"
+                    >
+                      <span>{{ subItem.title | translate }}</span>
+                    </a>
+                  </ng-container>
+                </ng-container>
+              </div>
+            </ng-container>
+          </div>
+        </ng-container>
+      </ng-container>
+    </div>
+  </div>
+
+  <!-- Profile and Logout Section -->
+  <div class="border-t border-gray-200 p-4">
+    <div class="flex items-center justify-between">
+      <!-- User Profile -->
+      <div class="relative">
+        <button #profileButton (click)="toggleProfileMenu()" class="flex items-center cursor-pointer focus:outline-none">
+          <img alt="Logo" class="h-8 w-8 mr-3" src="images/placeholder.png" />
+          <h4 class="text-sm font-semibold text-[#342E30] truncate">{{ userName }}</h4>
+        </button>
+
+        <!-- Profile Menu Dropdown -->
+        <div *ngIf="isProfileMenuOpen" #profileMenu class="absolute bottom-12 mb-2 left-0 w-48 bg-white rounded-[4px] shadow-md py-1 border border-gray-200 z-10">
+          <ul>
+            <li>
+              <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer">
+                <div class="flex items-center">
+                  <svg class="h-5 w-5 mr-3 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
+                  </svg>
+                  <span translate>Profile</span>
+                </div>
+              </a>
+            </li>
+            <li>
+              <a routerLink="/settings" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer">
+                <div class="flex items-center">
+                  <svg class="h-5 w-5 mr-3 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                    <path
+                      fill-rule="evenodd"
+                      d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z"
+                      clip-rule="evenodd"
+                    />
+                  </svg>
+                  <span translate>Settings</span>
+                </div>
+              </a>
+            </li>
+            <li class="border-t border-gray-100">
+              <a routerLink="/logout" class="block px-4 py-2 text-sm text-red-600 hover:bg-gray-100 cursor-pointer">
+                <div class="flex items-center">
+                  <svg class="h-5 w-5 mr-3 text-red-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                    <path
+                      fill-rule="evenodd"
+                      d="M3 3a1 1 0 00-1 1v12a1 1 0 001 1h12a1 1 0 001-1V4a1 1 0 00-1-1H3zm11 4a1 1 0 10-2 0v4a1 1 0 102 0V7zm-3 1a1 1 0 10-2 0v3a1 1 0 102 0V8zM8 9a1 1 0 00-2 0v2a1 1 0 102 0V9z"
+                      clip-rule="evenodd"
+                    />
+                  </svg>
+                  <span translate>Logout</span>
+                </div>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Logout Button -->
+      <a routerLink="/logout" class="flex items-center justify-center h-8 w-8 rounded-full text-red-500 hover:text-red-700">
+        <app-icon name="logout" class="w-5 h-5" />
+      </a>
+    </div>
+  </div>
+</div>

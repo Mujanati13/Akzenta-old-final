@@ -1,0 +1,103 @@
+<nav class="bg-white min-h-[60px] px-2 sm:px-4 lg:px-8 py-2 flex items-center justify-between gap-2 sm:gap-4">
+  <!-- Left Side: Hamburger Menu (Mobile) and Title -->
+  <div class="flex items-center min-w-0">
+    <!-- Hamburger Menu (Mobile Only) -->
+    <button (click)="toggleSidebar()" class="mr-1 sm:mr-3 p-2 rounded-[4px] text-gray-500 hover:text-gray-700 hover:bg-gray-100 focus:outline-none lg:hidden">
+      <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+      </svg>
+    </button>
+
+    <!-- Language Selector -->
+    <app-language-selector></app-language-selector>
+  </div>
+
+  <!-- Right Side: Client Logo, Search, Notifications, User Profile -->
+  <div class="flex items-center gap-2 sm:gap-4 min-w-0">
+    <!-- Client Company Logo - Show when a client company is active -->
+    <div *ngIf="currentClientCompany" class="flex items-center gap-2 sm:gap-3 min-w-0">
+      <div class="h-10 flex items-center px-1 sm:px-3 py-1 min-w-0">
+        <ng-container *ngIf="clientLogo; else activeCompanyLogoFallback">
+          <img [src]="clientLogo" [alt]="currentClientCompany?.name" class="h-[34px] sm:h-[40px] lg:h-[47px] max-w-[82px] sm:max-w-[120px] object-contain" (error)="clientLogo = null" />
+        </ng-container>
+        <ng-template #activeCompanyLogoFallback>
+          <div
+            class="h-[34px] sm:h-[40px] lg:h-[47px] w-[44px] sm:w-[52px] lg:w-[60px] rounded-[6px] bg-gradient-to-br from-slate-100 to-slate-200 border border-slate-200 flex items-center justify-center text-slate-500"
+          >
+            <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M3 21h18M5 21V7.5A1.5 1.5 0 016.5 6h11A1.5 1.5 0 0119 7.5V21M8 9h2m4 0h2M8 13h2m4 0h2"></path>
+            </svg>
+          </div>
+        </ng-template>
+      </div>
+
+      <!-- Client Company Dropdown - Only show if multiple companies -->
+      <div *ngIf="getClientCompanies().length > 1" class="relative client-dropdown min-w-0">
+        <button
+          #clientDropdownButton
+          (click)="toggleClientDropdown()"
+          class="group flex items-center cursor-pointer gap-2 sm:gap-3 px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-[6px] border border-gray-200/80 bg-gradient-to-br from-white to-gray-50 hover:border-blue-200 transition-all duration-200 max-w-[170px] sm:max-w-[240px]"
+        >
+          <div class="min-w-0 text-left">
+            <p class="text-[10px] sm:text-xs text-gray-400 leading-none mb-0.5">Active Company</p>
+            <p class="truncate text-xs sm:text-sm font-medium text-gray-700 group-hover:text-gray-900">{{ currentClientCompany?.name }}</p>
+          </div>
+          <svg class="w-4 h-4 text-gray-400 shrink-0 ml-auto transition-transform duration-200" [class.rotate-180]="showClientDropdown" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+          </svg>
+        </button>
+
+        <!-- Dropdown Menu -->
+        <div
+          *ngIf="showClientDropdown"
+          class="client-company-dropdown fixed w-64 sm:w-72 bg-white/95 backdrop-blur rounded-[8px] shadow-xl z-[200] border border-gray-100 max-h-[min(70vh,calc(100dvh-5rem))] overflow-y-auto overscroll-contain p-2"
+          [ngStyle]="clientDropdownStyle"
+        >
+          <div class="px-2 py-2 text-xs uppercase tracking-wide text-gray-400 font-semibold">Switch Company</div>
+          <div class="space-y-1">
+            <div
+              *ngFor="let company of getClientCompanies()"
+              (click)="switchClientCompany(company); showClientDropdown = false"
+              class="px-2 py-1.5 rounded-[8px] text-xs sm:text-sm text-gray-700 hover:bg-gray-50 cursor-pointer flex items-center gap-3 transition-colors duration-150 border border-transparent hover:border-gray-100"
+              [class.bg-blue-50]="company.id === currentClientCompany?.id"
+              [class.border-blue-100]="company.id === currentClientCompany?.id"
+            >
+              <div class="w-8 h-8 rounded-[6px] bg-gray-50 border border-gray-100 flex items-center justify-center shrink-0">
+                <ng-container *ngIf="company.logo?.path; else dropdownCompanyLogoFallback">
+                  <img [src]="company.logo?.path" [alt]="company.name" class="w-6 h-6 object-contain" (error)="onImageError($event)" />
+                </ng-container>
+                <ng-template #dropdownCompanyLogoFallback>
+                  <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M3 21h18M5 21V7.5A1.5 1.5 0 016.5 6h11A1.5 1.5 0 0119 7.5V21M8 9h2m4 0h2M8 13h2m4 0h2"></path>
+                  </svg>
+                </ng-template>
+              </div>
+              <span class="truncate font-medium">{{ company.name }}</span>
+              <svg *ngIf="company.id === currentClientCompany?.id" class="w-4 h-4 text-blue-600 ml-auto shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Fallback to regular client logo if no client company -->
+    <div *ngIf="!currentClientCompany && currentClient" class="flex items-center gap-2 sm:gap-3 min-w-0">
+      <div class="h-10 flex items-center px-1 sm:px-3 py-1 min-w-0">
+        <ng-container *ngIf="clientLogo; else clientLogoFallback">
+          <img [src]="clientLogo" [alt]="currentClient?.name" class="h-[34px] sm:h-[47px] max-w-[82px] sm:max-w-[120px] object-contain" (error)="clientLogo = null" />
+        </ng-container>
+        <ng-template #clientLogoFallback>
+          <div class="h-[34px] sm:h-[47px] w-[44px] sm:w-[60px] rounded-xl bg-gradient-to-br from-slate-100 to-slate-200 border border-slate-200 flex items-center justify-center text-slate-500">
+            <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M3 21h18M5 21V7.5A1.5 1.5 0 016.5 6h11A1.5 1.5 0 0119 7.5V21M8 9h2m4 0h2M8 13h2m4 0h2"></path>
+            </svg>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+
+    <!-- ...existing code... -->
+  </div>
+</nav>

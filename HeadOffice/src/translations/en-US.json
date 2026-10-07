@@ -1,0 +1,19 @@
+{
+  "APP_NAME": "Angular v18 Boiler Plate",
+  "LANGUAGE": "English",
+  "Hello World": "Hello World",
+  "Home": "Home",
+  "Login": "Login",
+  "Username": "Username",
+  "Password": "Password",
+  "Angular Boiler Plate V18": "Angular Boiler Plate V18",
+  "Dashboard": "Dashboard",
+  "ERRORS.DASHBOARD_LOAD_FAILED": "An error occurred while loading the dashboard data. Please try again later.",
+  "ERRORS.DASHBOARD_LOAD_TOAST": "Failed to load dashboard data",
+  "ERRORS.FAVORITES_LOAD_FAILED": "An error occurred while loading favorites. Please try again later.",
+  "ERRORS.NOTIFICATIONS_LOAD_FAILED": "An error occurred while loading notifications. Please try again later.",
+  "ERRORS.GENERIC_RETRY": "An error occurred. Please try again later.",
+  "COMMON.CLOSE": "Close",
+  "COMMON.VIEW_RIGHT_CLICK_NEW_TAB": "View (right-click for new tab)",
+  "COMMON.EDIT_RIGHT_CLICK_NEW_TAB": "Edit (right-click for new tab)"
+}

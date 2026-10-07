@@ -1,0 +1,244 @@
+<section class="pb-2">
+  <h2 translate class="flex justify-between items-center text-primary-700 mb-2 lg:mb-4">
+    <div class="flex items-center">
+      <app-icon name="dashboard" class="w-5 h-5 lg:w-6 lg:h-6 mr-1 text-primary-700" />
+      <span class="text-2xl lg:text-3xl font-bold font-dm">Dashboard</span>
+    </div>
+  </h2>
+
+  <!-- Loading State -->
+  <div *ngIf="loading" class="animate-pulse space-y-4">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-3">
+      <div class="rounded-xl bg-gray-100 h-44 lg:col-span-2"></div>
+      <div class="rounded-xl bg-gray-100 h-44"></div>
+    </div>
+    <div class="rounded-xl border-2 border-gray-100 p-4 space-y-3">
+      <div class="h-6 bg-gray-100 rounded w-72"></div>
+      <div class="h-12 bg-gray-100 rounded"></div>
+      <div class="h-12 bg-gray-100 rounded"></div>
+      <div class="h-12 bg-gray-100 rounded"></div>
+    </div>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="error && !loading" class="bg-red-50 p-4 rounded-[4px] mb-6">
+    <p class="text-red-800">{{ 'ERRORS.DASHBOARD_LOAD_FAILED' | translate }}</p>
+  </div>
+
+  <!-- Dashboard Content -->
+  <div *ngIf="!loading && !error">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-3 mb-4">
+      <!-- Card 1 - Upcoming Projects -->
+      <div class="bg-primary-500 text-white rounded-xl p-4 lg:px-[30px] lg:py-[21px] lg:col-span-2 flex flex-col space-y-4">
+        <div class="flex justify-between items-center text-base lg:text-xl">
+          <h4 class="font-extrabold font-dm">Deine nächsten Umsetzungen</h4>
+          <span class="inline-flex aspect-square items-center py-0.5 px-3 rounded-full font-medium bg-white text-primary-500">
+            {{ upcomingProjectsCount }}
+          </span>
+        </div>
+        <div class="flex flex-col lg:flex-row lg:justify-between lg:items-end text-lg lg:text-2xl space-y-4 lg:space-y-0">
+          <div class="text-sm space-y-2">
+            <div *ngIf="upcomingProjects.length === 0" class="text-white/80">Keine bevorstehenden Umsetzungen</div>
+            <div *ngFor="let project of upcomingProjects" class="flex flex-col sm:flex-row">
+              <div class="sm:w-50 flex-shrink-0 font-medium">{{ project.date | euDate }}</div>
+              <div class="flex-1">{{ project.clientCompany }} - {{ project.projectName }}</div>
+            </div>
+          </div>
+          <a [routerLink]="['/all-entries']" class="px-4 border border-gray-200 rounded-[4px] py-2 text-sm font-dm cursor-pointer self-start lg:self-end"> Alle zeigen </a>
+        </div>
+      </div>
+
+      <!-- Card 2 - New Requests -->
+      <div class="bg-[#00A5D3] text-white rounded-[20px] p-4 lg:px-[30px] lg:py-[21px] flex flex-col space-y-4">
+        <div class="flex justify-between items-center text-base lg:text-xl">
+          <h4 class="font-extrabold font-dm">Neue Anfragen</h4>
+          <span class="inline-flex aspect-square items-center py-0.5 px-3 rounded-full font-medium bg-white text-[#00A5D3]">
+            {{ newRequestsCount }}
+          </span>
+        </div>
+        <div class="flex flex-col lg:flex-row lg:justify-between lg:items-end text-lg lg:text-2xl space-y-4 lg:space-y-0">
+          <ul class="text-sm space-y-2">
+            <li *ngIf="newRequests.length === 0" class="text-white/80">Keine neuen Anfragen</li>
+            <li *ngFor="let request of newRequests">{{ request.createdAt | euDate }} - {{ request.branch?.name || 'Unbekannt' }}</li>
+          </ul>
+          <a [routerLink]="['/anfragen']" class="px-4 border border-gray-200 rounded-[4px] py-2 text-sm font-dm cursor-pointer self-start lg:self-end"> Alle zeigen </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Second table - Overdue Reports -->
+  <div *ngIf="!loading && !error">
+    <div class="items-center flex justify-between">
+      <h4 class="text-base lg:text-xl font-bold font-dm ml-4 mb-2">Fällige / Fehlende Reports ({{ getFilteredOverdueReports().length }})</h4>
+    </div>
+
+    <!-- Empty State -->
+    <div *ngIf="getFilteredOverdueReports().length === 0 && overdueReports.length > 0" class="mb-10 border-2 border-[#F1F1F1] rounded-lg p-10 text-center">
+      <p class="text-gray-500 text-base font-dm lg:text-lg">Keine Reports entsprechen den ausgewählten Filtern</p>
+    </div>
+
+    <div *ngIf="overdueReports.length === 0" class="empty-data-alert">Keine fälligen oder fehlenden Reports</div>
+    <!-- Table -->
+    <div *ngIf="overdueReports.length > 0 && getFilteredOverdueReports().length > 0" class="mb-10 border-2 border-[#F1F1F1] rounded-lg">
+      <p-table
+        [value]="getFilteredOverdueReports()"
+        stripedRows
+        [scrollable]="true"
+        scrollHeight="400px"
+        dataKey="id"
+        [tableStyle]="{ 'min-width': '60rem', 'table-layout': 'fixed' }"
+        [columns]="getOverdueReportsVisibleColumns()"
+        [sortField]="overdueSortField"
+        [sortOrder]="overdueSortOrder"
+        [reorderableColumns]="true"
+        (onColReorder)="onOverdueReportsColReorder($event)"
+      >
+        <ng-template #header let-columns>
+          <tr [class.opacity-50]="getFilteredOverdueReports().length === 0" [class.text-gray-400]="getFilteredOverdueReports().length === 0">
+            <th class="rounded-l-lg" style="width: 200px; min-width: 200px; max-width: 200px">
+              <div class="flex items-center gap-2 text-[13px]">
+                <span>Status</span>
+                <app-icon name="table_sort" class="w-3 cursor-pointer" [class.text-primary-500]="overdueSortField === 'status'" (click)="onOverdueSort('status')" />
+              </div>
+            </th>
+            <th *ngFor="let col of columns" pReorderableColumn style="width: 200px; min-width: 200px; max-width: 200px">
+              <div class="flex items-center gap-2 text-[13px]">
+                <span>{{ col.header }}</span>
+                <app-icon name="table_sort" class="w-3 cursor-pointer" [class.text-primary-500]="overdueSortField === col.field" (click)="onOverdueSort(col.field); $event.stopPropagation()" />
+                <span
+                  class="column-filter-btn"
+                  [ngClass]="{
+                    'column-filter-btn--active': getOverdueReportsColumnFilterValue(col.field)?.length > 0,
+                    'column-filter-btn--disabled': !canFilterOverdueReportsColumn(col.field),
+                  }"
+                  (click)="canFilterOverdueReportsColumn(col.field) && openOverdueReportsColumnFilter(col.field, $event); $event.stopPropagation()"
+                  [title]="getColumnFilterTooltip(col.header, getOverdueReportsColumnFilterValue(col.field)?.length || 0)"
+                >
+                  <svg class="column-filter-btn__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M6 12h12M8 18h8" />
+                  </svg>
+                  <span *ngIf="getOverdueReportsColumnFilterValue(col.field)?.length > 0" class="column-filter-btn__badge">
+                    {{ getOverdueReportsColumnFilterValue(col.field).length }}
+                  </span>
+                </span>
+              </div>
+            </th>
+            <th class="rounded-r-lg" style="width: 150px; min-width: 150px; max-width: 150px">
+              <div class="flex space-x-2 items-center text-[13px] justify-end cursor-pointer" (click)="toggleSettingsPopover($event)">
+                <span>Settings</span>
+                <span class="pi pi-cog text-sm!"></span>
+              </div>
+            </th>
+          </tr>
+        </ng-template>
+        <ng-template #body let-report let-columns="columns">
+          <tr>
+            <td class="rounded-l-lg" style="width: 200px; min-width: 200px; max-width: 200px">
+              <span *ngIf="report?.status" class="text-white w-[70px] h-[23px] text-xs rounded-sm flex items-center justify-center" style="background-color: #d10003"> Fällig </span>
+            </td>
+            <td *ngFor="let col of columns" class="truncate" style="width: 200px; min-width: 200px; max-width: 200px">
+              <ng-container [ngSwitch]="col.field">
+                <ng-container *ngSwitchCase="'kunde'">
+                  <span class="text-[12px] cursor-pointer hover:underline" (click)="navigateToClientFirstProject(report.branch?.client?.id); $event.stopPropagation()">
+                    {{ getReportKunde(report) }}
+                  </span>
+                </ng-container>
+                <ng-container *ngSwitchCase="'store'">
+                  <span class="text-[12px]">{{ getReportStore(report) }}</span>
+                </ng-container>
+                <ng-container *ngSwitchCase="'ort'">
+                  <span class="text-[12px]">{{ getReportOrt(report) }}</span>
+                </ng-container>
+                <ng-container *ngSwitchCase="'besuchsdatum'">
+                  <span class="text-[12px]">{{ getReportBesuchsdatum(report) }}</span>
+                </ng-container>
+                <ng-container *ngSwitchDefault>
+                  <span class="text-[12px]">{{ report[col.field] || '-' }}</span>
+                </ng-container>
+              </ng-container>
+            </td>
+            <td class="rounded-r-lg" style="width: 150px; min-width: 150px; max-width: 150px">
+              <div class="flex space-x-3 justify-end">
+                <a *ngIf="report.branch?.client?.id && report.project?.id && report.id" [routerLink]="['/clients', report.branch.client.id, 'projects', report.project.id, 'reports', report.id]">
+                  <app-icon name="resizeable_eye" class="w-5 h-5 flex items-center cursor-pointer text-primary-500" title="Anzeigen" />
+                </a>
+                <a *ngIf="report.branch?.client?.id && report.project?.id && report.id" [routerLink]="['/clients', report.branch.client.id, 'projects', report.project.id, 'edit-report', report.id]">
+                  <app-icon name="pencil" class="w-4.5 h-4.5 flex items-center cursor-pointer text-primary-500" title="Bearbeiten" />
+                </a>
+                <app-favorite-toggle
+                  [title]="report.isFavorite ? 'von favoriten entfernen' : 'als favorit hinzufügen'"
+                  class="w-4.5 h-4.5 flex-shrink-0"
+                  [isFavorite]="report.isFavorite"
+                  (favoriteChange)="onFavoriteChanged($event, report)"
+                />
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+      <p-popover #overdueReportsPopover [styleClass]="'column-filter-popover settings-popover'" appendTo="body" [dismissable]="true" (onHide)="onSettingsPopoverClose()">
+        <div class="column-filter-popover-content settings-popover-content w-[85vw] sm:w-[20rem]">
+          <div class="column-filter-popover-header">
+            <div class="column-filter-popover-header flex items-center justify-between pb-2">
+              <div class="flex items-center gap-3">
+                <span class="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-[4px] bg-gradient-to-br from-primary-500 to-primary-600 text-white shadow-sm" aria-hidden="true">
+                  <span class="pi pi-cog text-sm!"></span>
+                </span>
+                <div>
+                  <p class="m-0 text-[10px] font-bold uppercase tracking-[0.08em] text-slate-500">Columns Settings</p>
+                  <p class="m-0 font-dm text-[15px] font-bold text-slate-900">Settings</p>
+                </div>
+              </div>
+              <div class="ml-auto flex items-center gap-2">
+                <button
+                  type="button"
+                  class="filter-modal-clear shrink-0"
+                  [disabled]="isAllOverdueReportsColumnsSelected()"
+                  (click)="clearOverdueReportsColumns($event)"
+                  aria-label="Filter zurücksetzen"
+                >
+                  <svg class="filter-modal-clear__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                  </svg>
+                  <span>Clear</span>
+                </button>
+                <button type="button" (click)="onSettingsPopoverClose($event)" class="filter-modal-close" aria-label="Schließen">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+          <p-listbox
+            [options]="cols"
+            [(ngModel)]="overdueReportsColumns"
+            [multiple]="true"
+            [checkbox]="true"
+            [filter]="true"
+            optionLabel="header"
+            emptyMessage="Keine Daten vorhanden"
+            emptyFilterMessage="Keine Ergebnisse gefunden"
+            class="settings-listbox"
+            (onChange)="onOverdueReportsColumnsChange($event.value)"
+          />
+          <div class="filter-modal-footer filter-modal-footer--end">
+            <button type="button" class="filter-modal-btn filter-modal-btn--compact" (click)="onSettingsPopoverClose($event)">Fertig</button>
+          </div>
+        </div>
+      </p-popover>
+    </div>
+  </div>
+
+  <!-- Overdue Reports Column Filter Popover -->
+  <app-column-filter-popover
+    #overdueReportsColumnFilterPopover
+    [title]="currentOverdueReportsFilterField ? getColumnHeader(currentOverdueReportsFilterField) : 'Filter'"
+    [options]="currentOverdueReportsColumnOptions"
+    [(selectedValues)]="overdueReportsColumnFilters[currentOverdueReportsFilterField]"
+    (filterChange)="onOverdueReportsFiltersChanged()"
+    (popoverHide)="onFilterPopoverClose()"
+  >
+  </app-column-filter-popover>
+</section>

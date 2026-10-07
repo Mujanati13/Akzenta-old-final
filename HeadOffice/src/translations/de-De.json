@@ -1,0 +1,19 @@
+{
+  "APP_NAME": "Angular v18 Boiler Plate",
+  "LANGUAGE": "Deutsch",
+  "Hello World": "Hallo Welt",
+  "Home": "Heim",
+  "Login": "Einloggen",
+  "Username": "Nutzername",
+  "Password": "Passwort",
+  "Angular Boiler Plate V18": "Eckige Kesselplatte V18",
+  "Dashboard": "Dashboard",
+  "ERRORS.DASHBOARD_LOAD_FAILED": "Es ist ein Fehler beim Laden der Dashboard-Daten aufgetreten. Bitte versuchen Sie es später erneut.",
+  "ERRORS.DASHBOARD_LOAD_TOAST": "Fehler beim Laden der Dashboard-Daten",
+  "ERRORS.FAVORITES_LOAD_FAILED": "Es ist ein Fehler beim Laden der Favoriten aufgetreten. Bitte versuchen Sie es später erneut.",
+  "ERRORS.NOTIFICATIONS_LOAD_FAILED": "Es ist ein Fehler beim Laden der Benachrichtigungen aufgetreten. Bitte versuchen Sie es später erneut.",
+  "ERRORS.GENERIC_RETRY": "Es ist ein Fehler aufgetreten. Bitte versuchen Sie es später erneut.",
+  "COMMON.CLOSE": "Schließen",
+  "COMMON.VIEW_RIGHT_CLICK_NEW_TAB": "Anzeigen (Rechtsklick für neuen Tab)",
+  "COMMON.EDIT_RIGHT_CLICK_NEW_TAB": "Bearbeiten (Rechtsklick für neuen Tab)"
+}

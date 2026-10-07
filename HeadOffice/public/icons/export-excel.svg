@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+  <!-- Excel document -->
+  <rect x="3" y="2" width="14" height="20" rx="2" fill="currentColor"/>
+  <text x="10" y="16" text-anchor="middle" fill="white" font-family="Arial,sans-serif" font-size="9" font-weight="bold">X</text>
+  <!-- Export arrow -->
+  <path d="M19 8v10a2 2 0 0 1-2 2H7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+  <path d="M15 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+</svg>

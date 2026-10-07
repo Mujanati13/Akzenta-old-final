@@ -1,0 +1,50 @@
+.p-inputgroupaddon:first-child,
+.p-inputgroupaddon + .p-inputgroupaddon {
+  border-radius: 6px 0 0 6px;
+  min-width: auto;
+  padding-right: 0px;
+}
+
+.p-inputtext {
+  font-size: 11px;
+  padding-top: 23px;
+}
+
+// Style for the button in inputgroup
+.p-inputgroupaddon button {
+  white-space: nowrap;
+  height: 100%;
+}
+
+.p-autocomplete {
+  .p-autocomplete-multiple-container {
+    padding: 0.5rem;
+    min-height: 46px;
+  }
+
+  .p-autocomplete-chip {
+    font-size: 12px !important;
+  }
+
+  .p-chip {
+    background-color: #f4f4f5;
+  }
+
+  .p-autocomplete-token {
+    background-color: #f3f4f6;
+    color: #374151;
+    border-radius: 0.25rem;
+    padding: 0.25rem 0.5rem;
+    margin-right: 0.25rem;
+  }
+}
+
+.green-toggle {
+  --p-toggleswitch-checked-background: #3dc000 !important;
+  --p-toggleswitch-checked-hover-background: #3dc000 !important;
+}
+
+.p-autocomplete-input-multiple {
+  border: 1px solid var(--p-autocomplete-border-color) !important;
+  border-right: 0px !important;
+}

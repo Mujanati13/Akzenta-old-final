@@ -1,0 +1,144 @@
+.chat-bubble {
+  position: relative;
+}
+
+.chat-bubble-left::after,
+.chat-bubble-right::after {
+  content: "";
+  position: absolute;
+  bottom: 8px;
+}
+
+.chat-bubble-left::after {
+  left: -10px;
+  border-right: 10px solid #f2f2f2;
+  border-bottom: 10px solid transparent;
+}
+
+.chat-bubble-right::after {
+  right: -10px;
+  border-left: 10px solid #464b58;
+  border-bottom: 10px solid transparent;
+}
+:root {
+  --p-galleria-border-width: 0px;
+}
+
+:host ::ng-deep {
+  .p-accordion {
+    .p-accordion-header {
+      .p-accordion-header-link {
+        background-color: #f8f8f8;
+        padding: 1rem;
+        font-weight: 600;
+
+        &:focus {
+          box-shadow: none;
+        }
+      }
+    }
+  }
+
+  .p-rating .p-rating-icon.p-rating-icon-active {
+    color: #ffc107;
+  }
+
+  // Custom Galleria styles
+  .custom-galleria {
+    .p-galleria-item-wrapper {
+      position: relative;
+    }
+
+    .p-galleria-thumbnail-container {
+      padding: 1rem 0;
+
+      .p-galleria-thumbnail-items-container {
+        .p-galleria-thumbnail-item {
+          opacity: 1;
+
+          &.p-galleria-thumbnail-item-active {
+            img {
+              border-color: #3b82f6;
+            }
+          }
+        }
+      }
+
+      .p-galleria-thumbnail-prev,
+      .p-galleria-thumbnail-next {
+        background-color: #f3f4f6;
+        border-radius: 9999px;
+        margin: 0 0.25rem;
+        color: #4b5563;
+
+        &:hover {
+          background-color: #e5e7eb;
+        }
+
+        &:focus {
+          box-shadow: none;
+        }
+      }
+    }
+
+    .p-galleria-indicators {
+      justify-content: center;
+      margin-top: 1rem;
+
+      .p-galleria-indicator {
+        &.p-highlight button {
+          background-color: #3b82f6;
+        }
+
+        button {
+          width: 0.5rem;
+          height: 0.5rem;
+          border-radius: 9999px;
+          background-color: #d1d5db;
+        }
+      }
+    }
+  }
+}
+
+.shadow-selected {
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
+}
+
+.toggle-container {
+  border: 3px solid white;
+  background-color: white;
+  display: inline-flex;
+}
+
+.toggle-option {
+  min-width: 60px;
+  height: 33px;
+  cursor: pointer;
+  text-align: center;
+  border-radius: 4px;
+}
+
+.toggle-option:first-child.active {
+  background-color: #6fcc08;
+  color: white;
+}
+
+.toggle-option:first-child:not(.active) {
+  background-color: white;
+  color: black;
+}
+
+.toggle-option:last-child.active {
+  background-color: #6fcc08;
+  color: white;
+}
+
+.toggle-option:last-child:not(.active) {
+  background-color: white;
+  color: black;
+}
+
+:host ::ng-deep .p-accordion-panel {
+  opacity: 1;
+}

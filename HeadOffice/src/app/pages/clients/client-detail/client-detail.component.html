@@ -1,0 +1,1702 @@
+<!-- Loading state -->
+<div *ngIf="isLoading" class="relative mb-8 overflow-hidden">
+  <div class="absolute inset-0 bg-gradient-to-br from-primary-50/50 via-white to-amber-50/40 animate-dashboard-shimmer"></div>
+
+  <div class="relative z-10 p-5 sm:p-6 lg:p-8">
+    <div class="flex flex-col gap-4 sm:gap-5">
+      <div class="flex items-center justify-between">
+        <div class="space-y-2">
+          <div class="h-7 w-48 rounded-md bg-primary-100/70 animate-pulse"></div>
+          <div class="h-4 w-32 rounded-md bg-gray-100 animate-pulse"></div>
+        </div>
+        <!-- <div class="flex items-center gap-2 rounded-full border border-primary-100 bg-white/90 px-3 py-1.5 shadow-sm">
+          <span class="h-2.5 w-2.5 rounded-full bg-primary-400 animate-pulse"></span>
+          <span class="text-xs font-medium text-primary-700">Projekte werden geladen ...</span>
+        </div> -->
+      </div>
+
+      <div class="hidden lg:grid grid-cols-5 gap-2.5">
+        <div class="h-10 rounded-lg bg-gray-100/90 animate-pulse"></div>
+        <div class="h-10 rounded-lg bg-gray-100/90 animate-pulse"></div>
+        <div class="h-10 rounded-lg bg-gray-100/90 animate-pulse"></div>
+        <div class="h-10 rounded-lg bg-gray-100/90 animate-pulse"></div>
+        <div class="h-10 rounded-lg bg-gray-100/90 animate-pulse"></div>
+      </div>
+
+      <div class="rounded-xl border border-gray-100 bg-white/90 shadow-sm overflow-hidden">
+        <div class="hidden md:grid grid-cols-12 gap-3 px-4 py-3 bg-gray-50/90 border-b border-gray-100">
+          <div class="col-span-4 h-3 rounded bg-gray-200/80 animate-pulse"></div>
+          <div class="col-span-2 h-3 rounded bg-gray-200/80 animate-pulse"></div>
+          <div class="col-span-2 h-3 rounded bg-gray-200/80 animate-pulse"></div>
+          <div class="col-span-2 h-3 rounded bg-gray-200/80 animate-pulse"></div>
+          <div class="col-span-2 h-3 rounded bg-gray-200/80 animate-pulse"></div>
+        </div>
+
+        <div class="divide-y divide-gray-100">
+          <div class="grid grid-cols-1 md:grid-cols-12 gap-3 md:gap-4 px-4 py-4">
+            <div class="md:col-span-4 space-y-2">
+              <div class="h-4 w-3/4 rounded bg-gray-100 animate-pulse"></div>
+              <div class="h-3 w-1/2 rounded bg-gray-100 animate-pulse"></div>
+            </div>
+            <div class="md:col-span-2 h-6 w-24 rounded-full bg-primary-100/70 animate-pulse"></div>
+            <div class="md:col-span-2 h-4 w-20 rounded bg-gray-100 animate-pulse"></div>
+            <div class="md:col-span-2 h-4 w-24 rounded bg-gray-100 animate-pulse"></div>
+            <div class="md:col-span-2 flex md:justify-end">
+              <div class="h-8 w-20 rounded-md bg-gray-100 animate-pulse"></div>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-12 gap-3 md:gap-4 px-4 py-4">
+            <div class="md:col-span-4 space-y-2">
+              <div class="h-4 w-2/3 rounded bg-gray-100 animate-pulse"></div>
+              <div class="h-3 w-1/3 rounded bg-gray-100 animate-pulse"></div>
+            </div>
+            <div class="md:col-span-2 h-6 w-24 rounded-full bg-primary-100/70 animate-pulse"></div>
+            <div class="md:col-span-2 h-4 w-16 rounded bg-gray-100 animate-pulse"></div>
+            <div class="md:col-span-2 h-4 w-20 rounded bg-gray-100 animate-pulse"></div>
+            <div class="md:col-span-2 flex md:justify-end">
+              <div class="h-8 w-20 rounded-md bg-gray-100 animate-pulse"></div>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-12 gap-3 md:gap-4 px-4 py-4">
+            <div class="md:col-span-4 space-y-2">
+              <div class="h-4 w-4/5 rounded bg-gray-100 animate-pulse"></div>
+              <div class="h-3 w-2/5 rounded bg-gray-100 animate-pulse"></div>
+            </div>
+            <div class="md:col-span-2 h-6 w-24 rounded-full bg-primary-100/70 animate-pulse"></div>
+            <div class="md:col-span-2 h-4 w-20 rounded bg-gray-100 animate-pulse"></div>
+            <div class="md:col-span-2 h-4 w-24 rounded bg-gray-100 animate-pulse"></div>
+            <div class="md:col-span-2 flex md:justify-end">
+              <div class="h-8 w-20 rounded-md bg-gray-100 animate-pulse"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Error state -->
+<div *ngIf="error" class="bg-red-50 p-4 rounded-[4px] mb-6">
+  <p class="text-red-800">Aus Sicherheitsgründen wurde der Zugriff auf diese Website vorübergehend gesperrt, da ungewöhnliche Aktivitäten festgestellt wurden.</p>
+</div>
+
+<section class="flex flex-col h-full" [class.client-detail--filter-modal-open]="showColumnFilterModal">
+  <div *ngIf="!isLoading && !error && client" class="dashboard-content flex flex-col h-full" [class.dashboard-content-enter]="contentAnimationReady">
+    <!-- Sticky header and filters for mobile -->
+    <div class="sticky top-0 z-20 pt-3 pb-2 -mx-4 px-4 sm:mx-0 sm:px-0 sm:pb-0">
+      <h2 translate class="w-full flex justify-between items-center gap-2 text-primary-700 mb-4 flex-shrink-0">
+        <div class="flex items-center min-w-0 flex-1 overflow-hidden">
+          <app-icon name="projects" class="w-5 h-5 lg:w-6 lg:h-6 mr-1.5 text-primary-700 flex-shrink-0" />
+          <span class="font-dm min-w-0 flex-1 overflow-hidden pr-1">
+            <span class="block text-lg sm:text-2xl lg:text-3xl font-bold truncate leading-tight" [attr.title]="getProjectsPageTitle()">
+              {{ getProjectsPageTitle() }}
+            </span>
+          </span>
+          <span class="text-2xl lg:text-3xl font-bold font-dm flex-shrink-0">
+            <span
+              *ngIf="statusFilter"
+              class="hidden lg:inline-flex ml-3 items-center gap-2 rounded-[4px] border border-primary-200/70 bg-gradient-to-r from-white via-primary-50 to-amber-50 px-2.5 py-1.5 shadow-sm shadow-primary-100/50 align-middle whitespace-nowrap"
+            >
+              <span class="inline-flex h-7 w-7 items-center justify-center rounded-full bg-primary-600 text-white shadow-inner shadow-primary-400/40">
+                <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M6 12h12M8 18h8" />
+                </svg>
+              </span>
+              <span class="font-dm text-sm font-bold text-primary-700 leading-none">
+                {{ getStatusFilterDisplay() }}
+              </span>
+              <span class="inline-flex min-w-[2rem] items-center justify-center rounded-full bg-primary-600 px-2 py-0.5 text-[11px] font-bold text-white leading-none">
+                {{ getFilteredReportsCount() }}
+              </span>
+            </span>
+          </span>
+        </div>
+        <!-- Toggle filters on mobile/tablet button (visible until desktop lg layout) -->
+        <button
+          type="button"
+          class="lg:hidden relative inline-flex items-center justify-center w-8 h-8 rounded-[4px] bg-gradient-to-br from-[#00839b] to-[#006a7e] text-white shadow-[0_4px_8px_rgba(0,131,155,0.3)] shrink-0 active:scale-95 transition-transform"
+          (click)="openProjectsMobileFilterSheet()"
+        >
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M6 12h12M8 18h8"></path>
+          </svg>
+          <span *ngIf="getTotalProjectsActiveFilters() > 0" class="absolute -top-[3px] -right-[3px] w-3 h-3 bg-[#00839b] border-2 border-white rounded-full z-[100]"></span>
+        </button>
+        <!-- <button type="button" class="ml-auto cursor-pointer flex items-center justify-center text-primary-600 hover:text-primary-700 transition-colors" (click)="navigateBackToClient()" title="Zurück">
+        <app-icon name="arrow-left" class="w-8 h-8 flex items-center text-primary-700"></app-icon>
+      </button> -->
+      </h2>
+      <div class="mb-3 lg:hidden" *ngIf="statusFilter">
+        <div
+          class="inline-flex w-full items-center justify-between gap-3 rounded-[4px] border border-primary-200/70 bg-gradient-to-r from-white via-primary-50 to-amber-50 px-3 py-2 shadow-sm shadow-primary-100/50"
+        >
+          <div class="flex min-w-0 items-center gap-2">
+            <span class="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-primary-600 text-white shadow-inner shadow-primary-400/40">
+              <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M6 12h12M8 18h8" />
+              </svg>
+            </span>
+            <div class="min-w-0">
+              <p class="m-0 truncate text-sm font-bold text-primary-700">{{ getStatusFilterDisplay() }}</p>
+            </div>
+          </div>
+          <span class="inline-flex h-8 min-w-[2.25rem] shrink-0 items-center justify-center rounded-full bg-primary-600 px-2.5 text-xs font-bold text-white">
+            {{ getFilteredReportsCount() }}
+          </span>
+        </div>
+      </div>
+      <!-- Mobile create project button (filters via header icon + bottom sheet) -->
+      <div class="lg:hidden mb-3">
+        <a
+          class="h-[45px] w-full font-dm text-white bg-primary-500 rounded-[4px] flex space-x-[12px] items-center justify-center text-sm cursor-pointer"
+          [routerLink]="['/clients', client?.id, 'projects', 'create']"
+        >
+          <app-icon name="plus" class="w-[13.8px] h-[13.8px]" />
+          <span>Neues projekt anlegen</span>
+        </a>
+      </div>
+      <div class="hidden lg:grid mb-4 lg:mb-6 grid-cols-1 lg:grid-cols-3 xl:grid-cols-5 gap-3 lg:gap-4 items-stretch relative z-[50] rounded-lg">
+        <!-- Search Input 2 with icon -->
+        <div class="relative flex-1 min-w-0" *ngIf="projects && projects.length > 0">
+          <input
+            type="text"
+            placeholder="Projektsuche"
+            [(ngModel)]="projectSearchTerm"
+            (input)="onProjectSearch($event)"
+            class="lg:h-[54px] h-[45px] px-4 pr-10 border text-gray-600 border-gray-300 rounded-[4px] font-dm text-sm w-full focus:outline-none focus:ring-0 focus:border-primary-500"
+          />
+          <app-icon *ngIf="!projectSearchTerm || projectSearchTerm.length === 0" name="search" class="absolute right-2 top-1/2 transform -translate-y-1/2 w-[19px] h-[19px] text-gray-400" />
+          <button
+            *ngIf="projectSearchTerm && projectSearchTerm.length > 0"
+            type="button"
+            (click)="clearProjectSearch()"
+            class="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 cursor-pointer transition-colors"
+            title="Suche löschen"
+          >
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+
+        <!-- Search Input 3 with icon -->
+        <div class="relative flex-1 min-w-0" *ngIf="projects && projects.length > 0">
+          <input
+            type="text"
+            placeholder="Filialesuche"
+            [(ngModel)]="filialeSearchTerm"
+            (input)="onFilialeSearch($event)"
+            class="lg:h-[54px] h-[45px] px-4 pr-10 text-gray-600 border border-gray-300 rounded-[4px] font-dm text-sm w-full focus:outline-none focus:ring-0 focus:border-primary-500"
+          />
+          <app-icon *ngIf="!filialeSearchTerm || filialeSearchTerm.length === 0" name="search" class="absolute right-2 top-1/2 transform -translate-y-1/2 w-[19px] h-[19px] text-gray-400" />
+          <button
+            *ngIf="filialeSearchTerm && filialeSearchTerm.length > 0"
+            type="button"
+            (click)="clearFilialeSearch()"
+            class="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 cursor-pointer transition-colors"
+            title="Suche löschen"
+          >
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+
+        <!-- Date Picker with Custom Popover -->
+        <div class="flex-1 min-w-0 flex items-center relative z-20" *ngIf="projects && projects.length > 0">
+          <app-date-range-picker #dateRangePicker [(selectedRange)]="dateRange2" (rangeSelected)="onRangeSelected($event)" position="right" class="w-full"> </app-date-range-picker>
+        </div>
+
+        <!-- Clear filters button -->
+        <div class="flex-1 min-w-0 content-center" *ngIf="projects && projects.length > 0">
+          <button
+            *ngIf="
+              clientSearchTerm ||
+              projectSearchTerm ||
+              filialeSearchTerm ||
+              dateRange2.start ||
+              dateRange2.end ||
+              plannedOnDateRange.start ||
+              plannedOnDateRange.end ||
+              (projectNameFilter && projectNameFilter.length > 0) ||
+              hasProjectColumnFilters() ||
+              hasReportColumnFilters()
+            "
+            (click)="clearFilters()"
+            class="group cursor-pointer relative isolate w-full lg:w-auto inline-flex items-center justify-center gap-2.5 overflow-hidden rounded-[4px] border border-rose-200/80 bg-gradient-to-r from-white via-rose-50 to-orange-50 px-4 py-2 text-[12px] font-semibold text-rose-700 shadow-sm ring-1 ring-white/60 transition-all duration-300 hover:border-rose-300 hover:bg-white/90 hover:from-white hover:via-rose-100 hover:to-white hover:text-rose-800 hover:shadow-md hover:shadow-rose-200/40 hover:ring-rose-200/70 disabled:pointer-events-none disabled:opacity-40"
+          >
+            <span
+              class="relative flex h-6 w-6 items-center justify-center rounded-full bg-rose-500/15 ring-1 ring-rose-500/20 transition-all duration-300 group-hover:bg-rose-500/10 group-hover:ring-rose-300/50"
+            >
+              <svg class="column-filter-btn__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M6 12h12M8 18h8" />
+              </svg>
+            </span>
+            <span class="tracking-[0.01em]">Suche zurücksetzen</span>
+          </button>
+        </div>
+
+        <!-- Action Button -->
+        <div class="flex-1 min-w-0 flex items-center">
+          <a
+            class="lg:h-[54px] h-[45px] w-full font-dm text-white bg-primary-500 rounded-[4px] flex space-x-[12px] items-center justify-center text-sm cursor-pointer"
+            [routerLink]="['/clients', client?.id, 'projects', 'create']"
+          >
+            <app-icon name="plus" class="w-[13.8px] h-[13.8px]" />
+            <span>Neues projekt anlegen</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Mobile Card View -->
+      <div class="flex-1 overflow-y-auto min-h-0 relative -mx-4 px-4 sm:mx-0 sm:px-0 pb-4 pt-2">
+        <div class="lg:hidden flex flex-col" *ngIf="!isLoading">
+          <!-- Empty State -->
+          <div *ngIf="filteredProjects.length === 0" class="py-2">
+            <div class="empty-data-alert">Keine Projekte gefunden.</div>
+          </div>
+
+          <!-- Card List -->
+          <div class="flex flex-col gap-4 pb-4">
+            <div *ngFor="let project of filteredProjects" class="bg-blue-50 rounded-lg shadow-md border border-gray-200 p-4">
+              <!-- Project Header -->
+              <div class="border-b border-gray-100 pb-2 cursor-pointer min-w-0" (click)="toggleReportsSidebar(project)">
+                <div class="text-lg font-bold text-primary-700 leading-tight break-words">{{ project.name }}</div>
+                <div class="text-sm text-gray-600 mt-1">
+                  <strong>{{ project.calendarWeek }}</strong> {{ project.zeitraum }}
+                </div>
+              </div>
+
+              <!-- Project Details (Columns) -->
+              <div class="grid grid-cols-2 gap-2 text-sm mt-2 mb-2 cursor-pointer" (click)="toggleReportsSidebar(project)">
+                <div>
+                  <span class="text-gray-500 text-xs block">Stores</span>
+                  <span class="font-medium text-gray-800">{{ project._displayedFilialen }} Stores</span>
+                </div>
+                <div>
+                  <span class="text-gray-500 text-xs block">Status</span>
+                  <span class="font-medium text-gray-800">{{ project.reportedPercentage ?? 0 | number: '1.2-2' }}% reported</span>
+                </div>
+              </div>
+
+              <!-- Project actions -->
+              <div class="flex gap-3 items-center justify-end pt-2 border-t border-gray-100" (click)="$event.stopPropagation()">
+                <div *ngIf="excelUploadInProgress && excelUploadProjectId === project.id?.toString()" class="flex items-center text-primary-600 text-xs">
+                  <div class="animate-spin rounded-full h-5 w-5 border-b-2 border-primary-500"></div>
+                </div>
+                <!-- Excel Upload Button -->
+                <div class="relative flex items-center justify-center cursor-pointer h-6 w-6">
+                  <app-icon name="export-excel" class="w-5 h-5 cursor-pointer text-primary-500" title="Excel-Datei hochladen" (click)="openExcelUploader(project); $event.stopPropagation()" />
+                </div>
+                <!-- Test Excel Upload Button -->
+                <div class="relative flex items-center justify-center cursor-pointer h-6 w-6">
+                  <app-icon
+                    name="paper_plus"
+                    class="h-5 w-5 cursor-pointer text-primary-500"
+                    title="Einzelne Excel-Zeile hochladen"
+                    (click)="openExcelTestUploader(project); $event.stopPropagation()"
+                  />
+                </div>
+                <!-- Excel Download -->
+                <div class="relative flex items-center justify-center cursor-pointer h-6 w-6">
+                  <div *ngIf="downloadingExcel[project.id]" class="animate-spin rounded-full h-5 w-5 border-b-2 border-primary-500"></div>
+                  <app-icon *ngIf="!downloadingExcel[project.id]" name="paper_search" class="h-5 w-5 cursor-pointer text-blue-600" (click)="downloadProjectCsv(project)" />
+                </div>
+                <!-- Favorite -->
+                <div class="flex items-center justify-center h-6 w-6">
+                  <app-favorite-toggle
+                    [title]="project.isFavorite ? 'von favoriten entfernen' : 'als favorit hinzufügen'"
+                    class="h-5 w-5 flex-shrink-0"
+                    [isFavorite]="project.isFavorite"
+                    (favoriteChange)="onFavoriteChanged($event, project)"
+                  />
+                </div>
+              </div>
+              <!-- Mobile Reports Sidebar -->
+              <p-sidebar
+                [visible]="project.id === sidebarVisibleProjectId"
+                (visibleChange)="!$event && closeReportsSidebar()"
+                (onHide)="closeReportsSidebar()"
+                [fullScreen]="false"
+                [modal]="false"
+                position="right"
+                appendTo="body"
+                [showCloseIcon]="false"
+                [dismissible]="!showReportsMobileFilter"
+                styleClass="reports-sidebar-mobile p-0"
+              >
+                <!-- Manual Close Header -->
+                <div class="flex flex-col max-h-[90vh]">
+                  <div class="flex items-center gap-3 pb-2 border-b border-gray-100 bg-white shrink-0" *ngIf="project.id === sidebarVisibleProjectId">
+                    <button
+                      (click)="closeReportsSidebar(true)"
+                      class="inline-flex items-center justify-center w-8 h-8 rounded-[8px] border border-slate-400/25 bg-transparent text-slate-500 shrink-0 active:scale-95 transition-all hover:bg-slate-50 hover:text-slate-700 hover:border-slate-400/40"
+                    >
+                      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                      </svg>
+                    </button>
+                    <div class="flex-1 font-bold text-lg text-primary-700 leading-tight min-w-0">
+                      <div class="text-xs text-gray-500 font-medium uppercase tracking-wider mb-0.5">Projekt Aufträge</div>
+                      <div class="truncate">{{ project.name }}</div>
+                    </div>
+                    <div class="ml-auto flex-shrink-0 pr-2">
+                      <button
+                        type="button"
+                        class="relative inline-flex items-center justify-center w-8 h-8 rounded-lg bg-gradient-to-br from-[#00839b] to-[#006a7e] text-white shadow-[0_4px_8px_rgba(0,131,155,0.3)] shrink-0 active:scale-95 transition-transform"
+                        (click)="openReportsMobileFilterSheet(); $event.stopPropagation(); $event.preventDefault()"
+                      >
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" class="w-4 h-4">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M6 12h12M8 18h8" />
+                        </svg>
+                        <span *ngIf="getTotalReportsActiveFilters() > 0" class="absolute -top-[3px] -right-[3px] w-3 h-3 bg-[#00839b] border-2 border-white rounded-full z-[100]"></span>
+                      </button>
+                    </div>
+                  </div>
+
+                  <!-- Extracted Loop Start -->
+
+                  <!-- Mobile Filter Buttons for Reports -->
+                  <div
+                    *ngIf="project.id === sidebarVisibleProjectId && !loadingReports[project.id]"
+                    class="client-detail-col-filter-strip hidden gap-2 overflow-x-auto pb-2 pt-2 px-4 shadow-sm border-b border-gray-100 bg-white sticky top-0 z-10 flex-shrink-0 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent"
+                  >
+                    <!-- Status Filter -->
+                    <button
+                      type="button"
+                      class="flex items-center gap-1.5 px-3 py-2 text-xs font-medium rounded-[4px] border transition-colors flex-shrink-0"
+                      [disabled]="!canFilterStatus(project)"
+                      [class.opacity-40]="!canFilterStatus(project)"
+                      [class.cursor-not-allowed]="!canFilterStatus(project)"
+                      [class.bg-primary-100]="hasReportStatusFilter(project)"
+                      [class.border-primary-500]="hasReportStatusFilter(project)"
+                      [class.text-primary-700]="hasReportStatusFilter(project)"
+                      [class.bg-white]="!hasReportStatusFilter(project)"
+                      [class.border-gray-300]="!hasReportStatusFilter(project)"
+                      [class.text-gray-700]="!hasReportStatusFilter(project)"
+                      (click)="canFilterStatus(project) && openStatusFilter($event, project)"
+                    >
+                      <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M6 12h12M8 18h8" />
+                      </svg>
+                      Status
+                      <span *ngIf="getReportFilterSelectedCount(project, 'status') > 0" class="bg-primary-500 text-white text-[10px] px-1.5 py-0.5 rounded-full">
+                        {{ getReportFilterSelectedCount(project, 'status') }}
+                      </span>
+                    </button>
+
+                    <ng-container *ngFor="let col of _visibleReportColumns">
+                      <button
+                        *ngIf="col.field === 'plannedOn'"
+                        type="button"
+                        class="flex items-center gap-1.5 px-3 py-2 text-xs font-medium rounded-[4px] border transition-colors flex-shrink-0"
+                        [disabled]="!canFilterPlannedOn(project)"
+                        [class.opacity-40]="!canFilterPlannedOn(project)"
+                        [class.cursor-not-allowed]="!canFilterPlannedOn(project)"
+                        [class.bg-primary-100]="hasReportPlannedOnFilter(project)"
+                        [class.border-primary-500]="hasReportPlannedOnFilter(project)"
+                        [class.text-primary-700]="hasReportPlannedOnFilter(project)"
+                        [class.bg-white]="!hasReportPlannedOnFilter(project)"
+                        [class.border-gray-300]="!hasReportPlannedOnFilter(project)"
+                        [class.text-gray-700]="!hasReportPlannedOnFilter(project)"
+                        (click)="canFilterPlannedOn(project) && openPlannedOnFilter($event, project)"
+                      >
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M6 12h12M8 18h8" />
+                        </svg>
+                        {{ col.header }}
+                        <span *ngIf="getReportFilterSelectedCount(project, 'plannedOn') > 0" class="bg-primary-500 text-white text-[10px] px-1.5 py-0.5 rounded-full">
+                          {{ getReportFilterSelectedCount(project, 'plannedOn') }}
+                        </span>
+                      </button>
+
+                      <button
+                        *ngIf="col.field === 'merchandiser'"
+                        type="button"
+                        class="flex items-center gap-1.5 px-3 py-2 text-xs font-medium rounded-[4px] border transition-colors flex-shrink-0"
+                        [disabled]="!canFilterMerchandiser(project)"
+                        [class.opacity-40]="!canFilterMerchandiser(project)"
+                        [class.cursor-not-allowed]="!canFilterMerchandiser(project)"
+                        [class.bg-primary-100]="hasReportMerchandiserFilter(project)"
+                        [class.border-primary-500]="hasReportMerchandiserFilter(project)"
+                        [class.text-primary-700]="hasReportMerchandiserFilter(project)"
+                        [class.bg-white]="!hasReportMerchandiserFilter(project)"
+                        [class.border-gray-300]="!hasReportMerchandiserFilter(project)"
+                        [class.text-gray-700]="!hasReportMerchandiserFilter(project)"
+                        (click)="canFilterMerchandiser(project) && openMerchandiserFilter($event, project)"
+                      >
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M6 12h12M8 18h8" />
+                        </svg>
+                        {{ col.header }}
+                        <span *ngIf="getReportFilterSelectedCount(project, 'merchandiser') > 0" class="bg-primary-500 text-white text-[10px] px-1.5 py-0.5 rounded-full">
+                          {{ getReportFilterSelectedCount(project, 'merchandiser') }}
+                        </span>
+                      </button>
+
+                      <button
+                        *ngIf="col.field === 'branch.name'"
+                        type="button"
+                        class="flex items-center gap-1.5 px-3 py-2 text-xs font-medium rounded-[4px] border transition-colors flex-shrink-0"
+                        [disabled]="!canFilterFilialen(project)"
+                        [class.opacity-40]="!canFilterFilialen(project)"
+                        [class.cursor-not-allowed]="!canFilterFilialen(project)"
+                        [class.bg-primary-100]="hasReportFilialenFilter(project)"
+                        [class.border-primary-500]="hasReportFilialenFilter(project)"
+                        [class.text-primary-700]="hasReportFilialenFilter(project)"
+                        [class.bg-white]="!hasReportFilialenFilter(project)"
+                        [class.border-gray-300]="!hasReportFilialenFilter(project)"
+                        [class.text-gray-700]="!hasReportFilialenFilter(project)"
+                        (click)="canFilterFilialen(project) && openFilialenFilter($event, project)"
+                      >
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M6 12h12M8 18h8" />
+                        </svg>
+                        {{ col.header }}
+                        <span *ngIf="getReportFilterSelectedCount(project, 'branch.name') > 0" class="bg-primary-500 text-white text-[10px] px-1.5 py-0.5 rounded-full">
+                          {{ getReportFilterSelectedCount(project, 'branch.name') }}
+                        </span>
+                      </button>
+
+                      <button
+                        *ngIf="col.field !== 'merchandiser' && col.field !== 'plannedOn' && col.field !== 'branch.name'"
+                        type="button"
+                        class="flex items-center gap-1.5 px-3 py-2 text-xs font-medium rounded-[4px] border transition-colors flex-shrink-0"
+                        [disabled]="!canFilterGenericField(col.field, project)"
+                        [class.opacity-40]="!canFilterGenericField(col.field, project)"
+                        [class.cursor-not-allowed]="!canFilterGenericField(col.field, project)"
+                        [class.bg-primary-100]="hasReportGenericFilter(col.field, project)"
+                        [class.border-primary-500]="hasReportGenericFilter(col.field, project)"
+                        [class.text-primary-700]="hasReportGenericFilter(col.field, project)"
+                        [class.bg-white]="!hasReportGenericFilter(col.field, project)"
+                        [class.border-gray-300]="!hasReportGenericFilter(col.field, project)"
+                        [class.text-gray-700]="!hasReportGenericFilter(col.field, project)"
+                        (click)="canFilterGenericField(col.field, project) && openGenericFilter(col.field, $event, project)"
+                      >
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M6 12h12M8 18h8" />
+                        </svg>
+                        {{ col.header }}
+                        <span *ngIf="getReportFilterSelectedCount(project, col.field) > 0" class="bg-primary-500 text-white text-[10px] px-1.5 py-0.5 rounded-full">
+                          {{ getReportFilterSelectedCount(project, col.field) }}
+                        </span>
+                      </button>
+                    </ng-container>
+                  </div>
+
+                  <div
+                    *ngIf="project.id === sidebarVisibleProjectId"
+                    class="flex-1 overflow-y-auto px-2 pb-2"
+                    [attr.data-mobile-project-id]="project.id"
+                    (scroll)="onMobileReportsSidebarScroll(project.id, $event)"
+                  >
+                    <!-- Reports Section Component Duplicate from Desktop -->
+                    <div class="mt-2" *ngIf="!loadingReports[project.id] && project._filteredReports?.length > 0">
+                      <h4 class="font-semibold text-gray-700 mb-2 text-sm pt-2">Aufträge ({{ project._filteredReports?.length }})</h4>
+
+                      <div class="">
+                        <div
+                          *ngFor="let report of project._filteredReports"
+                          class="bg-white rounded p-3 border border-gray-100"
+                          [routerLink]="['/clients', report.clientCompany?.id, 'projects', report.project?.id, 'reports', report.id]"
+                        >
+                          <div class="flex justify-between items-center mb-2">
+                            <span
+                              *ngIf="report?.status"
+                              class="text-white w-[70px] h-[20px] text-[10px] font-dm font-semibold rounded-sm flex items-center justify-center uppercase"
+                              [style.background-color]="report.status?.color"
+                            >
+                              {{ report.status?.name }}
+                            </span>
+                            <div class="flex items-center gap-2">
+                              <div class="text-xs text-gray-500 mr-1">
+                                {{ report.branch?.name }}
+                              </div>
+                              <a
+                                [routerLink]="['/clients', report.clientCompany?.id, 'projects', report.project?.id, 'edit-report', report.id]"
+                                [queryParams]="getReportNavParams(report)"
+                                class="flex items-center justify-center h-5 w-5"
+                                title="Bearbeiten"
+                                (click)="rememberMobileReportsSidebarState(project.id); $event.stopPropagation()"
+                              >
+                                <app-icon name="pencil" class="w-4 h-4 cursor-pointer text-primary-500 hover:text-primary-600" />
+                              </a>
+                              <a
+                                [routerLink]="['/clients', report.clientCompany?.id, 'projects', report.project?.id, 'reports', report.id]"
+                                [queryParams]="getReportNavParams(report)"
+                                class="flex items-center justify-center h-5 w-5"
+                                title="Anzeigen"
+                                (click)="rememberMobileReportsSidebarState(project.id); $event.stopPropagation()"
+                              >
+                                <app-icon name="resizeable_eye" class="w-4 h-4 flex items-center cursor-pointer text-primary-500 hover:text-primary-600" />
+                              </a>
+                              <div class="flex items-center justify-center h-5 w-5" (click)="$event.stopPropagation()">
+                                <app-favorite-toggle
+                                  [title]="report.isFavorite ? 'von favoriten entfernen' : 'als favorit hinzufügen'"
+                                  class="h-5 w-5 flex-shrink-0"
+                                  [isFavorite]="report.isFavorite"
+                                  (favoriteChange)="onReportFavoriteChanged($event, report)"
+                                />
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="text-sm font-medium text-gray-900 mb-1">{{ report.branch?.city?.name || report.branch?.name }}</div>
+                          <div class="text-xs text-gray-500 mb-2 truncate" [title]="getReportAddress(report)">{{ getReportAddress(report) }}</div>
+
+                          <div class="grid grid-cols-2 gap-y-1 gap-x-2 text-xs">
+                            <div (click)="$event.stopPropagation()">
+                              <span class="text-gray-400 block">Geplant</span>
+                              <div class="min-h-[20px] flex items-center flex-wrap">
+                                <ng-container *ngIf="editingPlannedOnReportId !== report.id">
+                                  <span
+                                    *ngIf="report.plannedOn"
+                                    class="font-medium truncate"
+                                    [class.cursor-pointer]="!isReportClosedForEditing(report)"
+                                    [class.hover:text-primary-600]="!isReportClosedForEditing(report)"
+                                    [title]="getFormattedDateForTooltip(report.plannedOn)"
+                                    (click)="!isReportClosedForEditing(report) && startEditingPlannedOn(report); $event.stopPropagation()"
+                                    >{{ report.plannedOn | euDate }}</span
+                                  >
+                                  <span
+                                    *ngIf="!report.plannedOn"
+                                    class="inline-flex items-center justify-center px-2 py-1 text-[10px] font-semibold tracking-wide text-red-700 bg-red-50 border border-red-200 rounded-lg shadow-sm transition-all"
+                                    [class.cursor-pointer]="!isReportClosedForEditing(report)"
+                                    [class.hover:bg-red-100]="!isReportClosedForEditing(report)"
+                                    (click)="!isReportClosedForEditing(report) && startEditingPlannedOn(report); $event.stopPropagation()"
+                                    >Nicht Existiert</span
+                                  >
+                                  <app-icon *ngIf="!isReportClosedForEditing(report)" name="pencil_square" class="w-3 h-3 ml-1 text-primary-500 inline-block cursor-pointer" (click)="startEditingPlannedOn(report); $event.stopPropagation()" />
+                                </ng-container>
+
+                                <!-- Edit Mode -->
+                                <div *ngIf="editingPlannedOnReportId === report.id" class="relative flex items-center gap-1 min-h-[37px] w-full" (click)="$event.stopPropagation()">
+                                  <app-client-detail-planned-date-picker
+                                    class="flex-1 min-w-0"
+                                    [selectedDate]="editingPlannedOnDate"
+                                    (dateSelected)="onPlannedOnCalendarSelect(report, $event)"
+                                    [disabled]="savingPlannedOnReportId === report.id"
+                                    placeholder="TT.MM.JJJJ"
+                                  />
+                                  <div *ngIf="savingPlannedOnReportId === report.id" class="flex-shrink-0">
+                                    <div class="animate-spin rounded-full h-5 w-5 border-b-2 border-primary-500"></div>
+                                  </div>
+                                  <app-icon
+                                    *ngIf="savingPlannedOnReportId !== report.id"
+                                    name="save"
+                                    class="w-4 h-4 text-green-500 cursor-pointer flex-shrink-0"
+                                    (click)="savePlannedOnEdit(report); $event.stopPropagation()"
+                                    title="Speichern"
+                                  />
+                                  <i
+                                    *ngIf="savingPlannedOnReportId !== report.id"
+                                    class="pi pi-times cursor-pointer text-gray-400 hover:text-red-500 transition-colors flex-shrink-0"
+                                    (click)="cancelEditingPlannedOn(); $event.stopPropagation()"
+                                    title="Abbrechen"
+                                  ></i>
+                                </div>
+                              </div>
+                            </div>
+                            <div>
+                              <span class="text-gray-400 block">Report bis</span>
+                              <span>{{ report.reportTo | euDate }}</span>
+                            </div>
+                            <div class="col-span-2 sm:col-span-1" (click)="$event.stopPropagation()">
+                              <span class="text-gray-400 block">Merchandiser</span>
+                              <div class="min-h-[20px] flex items-center flex-wrap">
+                                <ng-container *ngIf="editingMerchandiserReportId !== report.id">
+                                  <span
+                                    *ngIf="report.merchandiser?.user"
+                                    class="truncate block max-w-full text-[12px] font-medium"
+                                    [class.cursor-pointer]="!isReportClosedForEditing(report)"
+                                    [class.hover:text-primary-600]="!isReportClosedForEditing(report)"
+                                    [title]="getReportMerchandiserName(report)"
+                                    (click)="!isReportClosedForEditing(report) && startEditingMerchandiser(report); $event.stopPropagation()"
+                                    >{{ getReportMerchandiserName(report) }}
+                                  </span>
+                                  <span
+                                    *ngIf="!report.merchandiser?.user"
+                                    class="inline-flex items-center justify-center px-2 py-1 text-[10px] font-semibold tracking-wide text-red-700 bg-red-50 border border-red-200 rounded-lg shadow-sm transition-all"
+                                    [class.cursor-pointer]="!isReportClosedForEditing(report)"
+                                    [class.hover:bg-red-100]="!isReportClosedForEditing(report)"
+                                    (click)="!isReportClosedForEditing(report) && startEditingMerchandiser(report); $event.stopPropagation()"
+                                    >Nicht Existiert</span
+                                  >
+                                  <app-icon
+                                    *ngIf="!isReportClosedForEditing(report)"
+                                    name="pencil_square"
+                                    class="w-3 h-3 ml-1 text-primary-500 inline-block cursor-pointer flex-shrink-0"
+                                    (click)="startEditingMerchandiser(report); $event.stopPropagation()"
+                                  />
+                                  <app-icon name="info" class="w-3 h-3 ml-1 text-primary-500 inline-block cursor-pointer flex-shrink-0" (click)="$event.stopPropagation(); showProvisionAlert()" />
+                                </ng-container>
+
+                                <!-- Edit Mode -->
+                                <div *ngIf="editingMerchandiserReportId === report.id" class="relative flex flex-col gap-1 min-h-[37px] w-full mt-1" (click)="$event.stopPropagation()">
+                                  <div class="flex items-center w-full min-w-0">
+                                    <div *ngIf="savingMerchandiserReportId === report.id" class="flex-shrink-0 mr-2">
+                                      <div class="animate-spin rounded-full h-5 w-5 border-b-2 border-primary-500"></div>
+                                    </div>
+                                    <p-dropdown
+                                      #merchandiserEditDropdownMobile
+                                      *ngIf="savingMerchandiserReportId !== report.id"
+                                      [options]="merchandisers"
+                                      [(ngModel)]="selectedMerchandiserId"
+                                      (onChange)="onMerchandiserChange(report, $event.value)"
+                                      optionValue="id"
+                                      dataKey="id"
+                                      [filter]="true"
+                                      filterBy="user.firstName,user.lastName,user.email"
+                                      scrollHeight="140px"
+                                      panelStyleClass="client-detail-merchandiser-dropdown-panel"
+                                      [style]="{ width: '100%' }"
+                                      class="flex-1 min-w-0 max-w-[150px]"
+                                      placeholder="Select VM"
+                                      [showClear]="!!report.merchandiser?.id"
+                                      [appendTo]="'body'"
+                                      [autofocus]="true"
+                                    >
+                                      <ng-template let-merchandiser pTemplate="selectedItem">
+                                        <div *ngIf="merchandiser" class="truncate text-[11px]">{{ getMerchandiserDisplayName(merchandiser) }}</div>
+                                        <div *ngIf="!merchandiser">-</div>
+                                      </ng-template>
+                                      <ng-template let-merchandiser pTemplate="item">
+                                        <div class="truncate min-w-0 text-[11px]">{{ getMerchandiserDisplayName(merchandiser) }}</div>
+                                      </ng-template>
+                                    </p-dropdown>
+                                  </div>
+                                  <div class="flex items-center ml-1">
+                                    <span *ngIf="savingMerchandiserReportId === report.id" class="text-xs text-gray-500 truncate mr-2">Speichert...</span>
+                                    <i
+                                      *ngIf="savingMerchandiserReportId !== report.id"
+                                      class="pi pi-times cursor-pointer text-gray-400 hover:text-red-500 transition-colors flex-shrink-0"
+                                      (click)="$event.stopPropagation(); cancelEditingMerchandiser()"
+                                      title="Abbrechen"
+                                    ></i>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div>
+                              <span class="text-gray-400 block">Feedback</span>
+                              <span>{{ report.feedback === true || report.feedback === 'true' ? 'Ja' : '' }}</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Loading Reports -->
+                    <div *ngIf="loadingReports[project.id]" class="text-center py-4 text-sm text-gray-500">
+                      <div class="animate-spin rounded-full h-6 w-6 border-b-2 border-primary-500 mx-auto mb-2"></div>
+                      Lade Aufträge...
+                    </div>
+                    <!-- No Reports -->
+                    <div *ngIf="!loadingReports[project.id] && (!project._filteredReports || project._filteredReports.length === 0)" class="py-2">
+                      <div class="empty-data-alert">Keine Aufträge gefunden.</div>
+                    </div>
+                  </div>
+                </div>
+              </p-sidebar>
+            </div>
+          </div>
+        </div>
+
+        <div
+          *ngIf="filteredProjects?.length > 0; else noDesktopProjects"
+          class="hidden lg:block mb-8 border-2 border-[#FFFFFF] rounded-lg dashboard-section overflow-hidden relative z-0 h-[calc(100dvh-270px)] min-h-[460px]"
+          [class.dashboard-section-enter]="contentAnimationReady"
+          style="animation-delay: 0.08s"
+        >
+          <ng-container *ngFor="let renderToken of [projectsTableRenderToken]; trackBy: trackByRenderToken">
+            <p-table
+              #projectsTable
+              [value]="filteredProjects"
+              styleClass="projects-table"
+              stripedRows
+              [scrollable]="true"
+              scrollHeight="flex"
+              dataKey="id"
+              [tableStyle]="getProjectsTableStyle()"
+              [expandedRowKeys]="expandedRows"
+              (onRowExpand)="onRowExpand($event)"
+              (onRowCollapse)="onRowCollapse($event)"
+              [columns]="_visibleProjectColumns"
+              [sortField]="projectSortField"
+              [sortOrder]="projectSortOrder"
+              [reorderableColumns]="true"
+              [rowHover]="true"
+              (onColReorder)="onProjectsColReorder($event)"
+            >
+              <ng-template #header let-columns>
+                <tr [class.opacity-50]="filteredProjects.length === 0" [class.text-gray-400]="filteredProjects.length === 0">
+                  <th [title]="'nach Recht oder Links verschieben'" class="rounded-l-lg hover:bg-white/10 transition-colors duration-200 min-w-[140px] xl:min-w-[200px]">
+                    <div class="flex items-center gap-2 text-[13px]">
+                      <span>Projekt</span>
+                      <app-icon
+                        name="table_sort"
+                        [class.text-primary-500]="projectSortField === 'name'"
+                        [class.text-white]="projectSortField !== 'name'"
+                        class="w-3 cursor-pointer"
+                        (click)="onProjectSort('name', $event)"
+                      />
+                      <span
+                        class="column-filter-btn"
+                        [ngClass]="{
+                          'column-filter-btn--active': projectNameFilter && projectNameFilter.length > 0,
+                          'column-filter-btn--disabled': !hasProjectColumnData('name'),
+                        }"
+                        (click)="hasProjectColumnData('name') && openProjectFilter($event); $event.stopPropagation()"
+                      >
+                        <svg class="column-filter-btn__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M6 12h12M8 18h8" />
+                        </svg>
+                        <span *ngIf="projectNameFilter?.length > 0" class="column-filter-btn__badge">
+                          {{ projectNameFilter.length }}
+                        </span>
+                      </span>
+                    </div>
+                  </th>
+                  <th
+                    [title]="'nach Recht oder Links verschieben'"
+                    *ngFor="let col of columns; trackBy: trackByColumnField"
+                    pReorderableColumn
+                    class="hover:bg-white/10 transition-colors duration-200 min-w-[250px] xl:min-w-[200px]"
+                    [ngClass]="{ 'xl:min-w-[250px]': col.field === 'merchandiser' }"
+                  >
+                    <div class="flex items-center gap-2 text-[13px]">
+                      <span>{{ col.header }}</span>
+                      <app-icon
+                        name="table_sort"
+                        [class.text-primary-500]="projectSortField === col.field"
+                        [class.text-white]="projectSortField !== col.field"
+                        class="w-3 cursor-pointer"
+                        (click)="onProjectSort(col.field, $event)"
+                      />
+                      <span
+                        class="column-filter-btn"
+                        [ngClass]="{
+                          'column-filter-btn--active': getProjectColumnFilterValue(col.field)?.length > 0,
+                          'column-filter-btn--disabled': !hasProjectColumnData(col.field),
+                        }"
+                        (click)="hasProjectColumnData(col.field) && openProjectColumnFilter(col.field, $event); $event.stopPropagation()"
+                        [title]="getColumnFilterTooltip(col.header, getProjectColumnFilterValue(col.field)?.length || 0)"
+                      >
+                        <svg class="column-filter-btn__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M6 12h12M8 18h8" />
+                        </svg>
+                        <span *ngIf="getProjectColumnFilterValue(col.field)?.length > 0" class="column-filter-btn__badge">
+                          {{ getProjectColumnFilterValue(col.field).length }}
+                        </span>
+                      </span>
+                    </div>
+                  </th>
+                  <th class="rounded-r-lg actions-header-cell" style="min-width: 180px; width: 180px">
+                    <app-settings-button [label]="'Settings'" (settingsClick)="toggleProjectSettingsPopover($event)"> </app-settings-button>
+                  </th>
+                </tr>
+              </ng-template>
+              <ng-template #body let-project let-expanded="expanded" let-columns="columns">
+                <tr
+                  [class.bg-green-100]="project.id === newlyCreatedProjectId"
+                  [class.animate-pulse]="project.id === newlyCreatedProjectId"
+                  [class.border-l-4]="project.id === newlyCreatedProjectId"
+                  [class.border-green-500]="project.id === newlyCreatedProjectId"
+                  class="cursor-pointer hover:!bg-gray-200 transition-colors duration-150"
+                  [attr.aria-expanded]="expanded"
+                  [pRowToggler]="project"
+                >
+                  <td class="rounded-l-lg font-bold text-primary-500 p-0" [class.text-green-700]="project.id === newlyCreatedProjectId">
+                    <a [href]="getProjectUrl(project)" (click)="$event.preventDefault()" class="block w-full h-full text-inherit no-underline items-center truncate content-center">
+                      <span class="truncate block max-w-full text-[12px]" [title]="project.name + ' - das ganze Projekt anzeigen'">
+                        {{ project.name }}
+                      </span>
+                    </a>
+                  </td>
+                  <td *ngFor="let col of columns; trackBy: trackByColumnField" class="p-0">
+                    <a [href]="getProjectUrl(project)" (click)="$event.preventDefault()" class="block w-full h-full text-inherit no-underline items-center truncate content-center">
+                      <ng-container [ngSwitch]="col.field">
+                        <!-- Special formatting for zeitraum -->
+                        <ng-container *ngSwitchCase="'formattedZeitraum'">
+                          <span class="truncate block max-w-full text-[12px]" [title]="'Einsatz anzeigen : ' + project.calendarWeek + ' ' + project.zeitraum">
+                            <strong>{{ project.calendarWeek }}</strong> {{ project.zeitraum }}
+                          </span>
+                        </ng-container>
+
+                        <!-- Special formatting for filialen -->
+                        <ng-container *ngSwitchCase="'filialen'">
+                          <span class="truncate block max-w-full text-[12px]" [title]="project._displayedFilialen + ' Stores'"> {{ project._displayedFilialen }} Stores </span>
+                        </ng-container>
+
+                        <!-- Special formatting for status as percentage -->
+                        <ng-container *ngSwitchCase="'status'">
+                          <span class="truncate block max-w-full text-[12px]" [title]="(project.reportedPercentage ?? 0) + '% reported'">
+                            {{ project.reportedPercentage ?? 0 | number: '1.2-2' }}% reported
+                          </span>
+                        </ng-container>
+
+                        <!-- Default formatting for other columns -->
+                        <ng-container *ngSwitchDefault>
+                          <span class="truncate block max-w-full text-[12px]" [title]="project[col.field] || ''">
+                            {{ project[col.field] }}
+                          </span>
+                        </ng-container>
+                      </ng-container>
+                    </a>
+                  </td>
+                  <td class="rounded-r-lg actions-cell">
+                    <div class="flex space-x-3 justify-end items-center actions-inner">
+                      <div *ngIf="excelUploadInProgress && excelUploadProjectId === project.id?.toString()" class="flex items-center space-x-2 text-primary-600 text-xs pr-2">
+                        <div class="animate-spin rounded-full h-5 w-5 border-b-2 border-primary-500"></div>
+                        <span>Excel wird verarbeitet...</span>
+                      </div>
+                      <!-- Excel Upload Button -->
+                      <app-icon name="export-excel" class="w-5 h-5 cursor-pointer text-primary-500" title="Excel-Datei hochladen" (click)="openExcelUploader(project); $event.stopPropagation()" />
+                      <!-- Test Excel Upload Button -->
+                      <app-icon
+                        name="paper_plus"
+                        class="h-5 w-5 cursor-pointer text-primary-500"
+                        title="Einzelne Excel-Zeile hochladen"
+                        (click)="openExcelTestUploader(project); $event.stopPropagation()"
+                      />
+                      <div class="relative flex items-center">
+                        <div *ngIf="downloadingExcel[project.id]" class="animate-spin rounded-full h-5 w-5 border-b-2 border-blue-600"></div>
+                        <app-icon
+                          *ngIf="!downloadingExcel[project.id]"
+                          name="paper_search"
+                          class="h-5 w-5 cursor-pointer text-blue-600"
+                          title="Excel herunterladen"
+                          (click)="downloadProjectCsv(project); $event.stopPropagation()"
+                        />
+                      </div>
+                      <app-favorite-toggle
+                        [title]="project.isFavorite ? 'von favoriten entfernen' : 'als favorit hinzufügen'"
+                        class="h-5 w-5 flex-shrink-0"
+                        [isFavorite]="project.isFavorite"
+                        (favoriteChange)="onFavoriteChanged($event, project)"
+                        (click)="$event.stopPropagation()"
+                      />
+                    </div>
+                  </td>
+                </tr>
+              </ng-template>
+              <ng-template #expandedrow let-project>
+                <tr class="expanded-row">
+                  <td [attr.colspan]="getProjectsExpandedColspan()" class="bg-gray-50 expanded-row-cell">
+                    <div class="reports-table-wrapper">
+                      <div class="project-loading-overlay" *ngIf="loadingReports[project.id]">
+                        <div class="flex flex-col items-center gap-3">
+                          <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-primary-500"></div>
+                          <span class="text-gray-600 text-sm">
+                            {{ getReportLoadMessage(project.id) || 'Lade Aufträge...' }}
+                          </span>
+                        </div>
+                      </div>
+
+                      <ng-container *ngIf="!loadingReports[project.id]">
+                        <div *ngIf="project._filteredReports?.length === 0" class="py-2">
+                          <div class="empty-data-alert">Es sind noch keine Aufträge für dieses Projekt vorhanden.</div>
+                        </div>
+
+                        <div *ngIf="project._filteredReports && project._filteredReports.length > 0" class="reports-table-container max-h-[50vh] overflow-hidden" [attr.data-project-id]="project.id">
+                          <ng-container *ngFor="let renderToken of [reportsTableRenderToken]; trackBy: trackByRenderToken">
+                            <p-table
+                              [value]="project._filteredReports"
+                              dataKey="id"
+                              [columns]="_visibleReportColumns"
+                              [reorderableColumns]="true"
+                              [resizableColumns]="true"
+                              columnResizeMode="expand"
+                              (onColReorder)="onReportsColReorder($event)"
+                              [tableStyle]="getReportsTableStyle()"
+                              styleClass="reports-virtual-table"
+                              [rowHover]="true"
+                              [scrollable]="true"
+                              scrollHeight="50vh"
+                            >
+                              <ng-template pTemplate="header" let-columns>
+                                <tr
+                                  class="header-visible text-white rounded-t-[10px]"
+                                  [class.opacity-50]="project._filteredReports.length === 0"
+                                  [class.text-gray-400]="project._filteredReports.length === 0"
+                                >
+                                  <th [title]="'nach Recht oder Links verschieben'" class="rounded-l-lg transition-colors duration-200 subtable-header-cell" style="min-width: 100px">
+                                    <div class="flex items-center gap-2 text-[13px]">
+                                      <span>Status</span>
+                                      <app-icon
+                                        name="table_sort"
+                                        [class.text-primary-500]="reportSortField === 'status'"
+                                        [class.text-white]="reportSortField !== 'status'"
+                                        class="w-3 cursor-pointer"
+                                        (click)="onReportSort('status', project, $event)"
+                                      />
+                                      <span
+                                        class="column-filter-btn"
+                                        [ngClass]="{
+                                          'column-filter-btn--active': hasReportStatusFilter(project),
+                                          'column-filter-btn--disabled': !canFilterStatus(project),
+                                        }"
+                                        (click)="canFilterStatus(project) && openStatusFilter($event, project); $event.stopPropagation()"
+                                        [title]="getColumnFilterTooltip('Status', getReportFilterSelectedCount(project, 'status'))"
+                                      >
+                                        <svg class="column-filter-btn__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M6 12h12M8 18h8" />
+                                        </svg>
+                                        <span *ngIf="getReportFilterSelectedCount(project, 'status') > 0" class="column-filter-btn__badge">
+                                          {{ getReportFilterSelectedCount(project, 'status') }}
+                                        </span>
+                                      </span>
+                                    </div>
+                                  </th>
+                                  <th
+                                    [title]="'nach Recht oder Links verschieben'"
+                                    *ngFor="let col of columns"
+                                    pReorderableColumn
+                                    pResizableColumn
+                                    [style.min-width]="col.field === 'reportTo' || col.field === 'plannedOn' || col.field === 'filiale' || col.field === 'note' ? '150px' : '200px'"
+                                    [class.reports-col-address]="col.field === 'address'"
+                                    class="hover:bg-white/10 transition-colors duration-200 subtable-header-cell"
+                                  >
+                                    <div class="flex items-center relative gap-2 text-[13px]" [class.space-x-2]="col.field">
+                                      <span
+                                        [class.cursor-pointer]="col.field === 'plannedOn'"
+                                        (click)="col.field === 'plannedOn' ? onPlannedOnColumnClick($event, project) : null"
+                                        [title]="col.field === 'plannedOn' ? 'Datum auswählen' : ''"
+                                        >{{ col.header }}</span
+                                      >
+                                      <app-icon
+                                        name="table_sort"
+                                        [class.text-primary-500]="reportSortField === col.field"
+                                        [class.text-white]="reportSortField !== col.field"
+                                        class="w-3 cursor-pointer"
+                                        (click)="onReportSort(col.field, project, $event); $event.stopPropagation()"
+                                      />
+                                      <span
+                                        *ngIf="col.field === 'plannedOn'"
+                                        class="column-filter-btn"
+                                        [ngClass]="{
+                                          'column-filter-btn--active': hasReportPlannedOnFilter(project),
+                                          'column-filter-btn--disabled': !canFilterPlannedOn(project),
+                                        }"
+                                        (click)="canFilterPlannedOn(project) && openPlannedOnFilter($event, project); $event.stopPropagation()"
+                                        [title]="getColumnFilterTooltip(col.header, getReportFilterSelectedCount(project, 'plannedOn'))"
+                                      >
+                                        <svg class="column-filter-btn__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M6 12h12M8 18h8" />
+                                        </svg>
+                                        <span *ngIf="getReportFilterSelectedCount(project, 'plannedOn') > 0" class="column-filter-btn__badge">
+                                          {{ getReportFilterSelectedCount(project, 'plannedOn') }}
+                                        </span>
+                                      </span>
+                                      <span
+                                        *ngIf="col.field === 'merchandiser'"
+                                        class="column-filter-btn"
+                                        [ngClass]="{
+                                          'column-filter-btn--active': hasReportMerchandiserFilter(project),
+                                          'column-filter-btn--disabled': !canFilterMerchandiser(project),
+                                        }"
+                                        (click)="canFilterMerchandiser(project) && openMerchandiserFilter($event, project); $event.stopPropagation()"
+                                        [title]="getColumnFilterTooltip(col.header, getReportFilterSelectedCount(project, 'merchandiser'))"
+                                      >
+                                        <svg class="column-filter-btn__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M6 12h12M8 18h8" />
+                                        </svg>
+                                        <span *ngIf="getReportFilterSelectedCount(project, 'merchandiser') > 0" class="column-filter-btn__badge">
+                                          {{ getReportFilterSelectedCount(project, 'merchandiser') }}
+                                        </span>
+                                      </span>
+                                      <span
+                                        *ngIf="col.field === 'branch.name'"
+                                        class="column-filter-btn"
+                                        [ngClass]="{
+                                          'column-filter-btn--active': hasReportFilialenFilter(project),
+                                          'column-filter-btn--disabled': !canFilterFilialen(project),
+                                        }"
+                                        (click)="canFilterFilialen(project) && openFilialenFilter($event, project); $event.stopPropagation()"
+                                        [title]="getColumnFilterTooltip(col.header, getReportFilterSelectedCount(project, 'branch.name'))"
+                                      >
+                                        <svg class="column-filter-btn__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M6 12h12M8 18h8" />
+                                        </svg>
+                                        <span *ngIf="getReportFilterSelectedCount(project, 'branch.name') > 0" class="column-filter-btn__badge">
+                                          {{ getReportFilterSelectedCount(project, 'branch.name') }}
+                                        </span>
+                                      </span>
+                                      <span
+                                        *ngIf="col.field !== 'merchandiser' && col.field !== 'plannedOn' && col.field !== 'branch.name'"
+                                        class="column-filter-btn"
+                                        [ngClass]="{
+                                          'column-filter-btn--active': hasReportGenericFilter(col.field, project),
+                                          'column-filter-btn--disabled': !canFilterGenericField(col.field, project),
+                                        }"
+                                        (click)="canFilterGenericField(col.field, project) && openGenericFilter(col.field, $event, project); $event.stopPropagation()"
+                                        [title]="getColumnFilterTooltip(col.header, getReportFilterSelectedCount(project, col.field))"
+                                      >
+                                        <svg class="column-filter-btn__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M6 12h12M8 18h8" />
+                                        </svg>
+                                        <span *ngIf="getReportFilterSelectedCount(project, col.field) > 0" class="column-filter-btn__badge">
+                                          {{ getReportFilterSelectedCount(project, col.field) }}
+                                        </span>
+                                      </span>
+                                    </div>
+                                  </th>
+                                  <th class="rounded-r-lg subtable-header-cell actions-header-cell" style="min-width: 180px; width: 180px">
+                                    <app-settings-button [label]="'Settings'" (settingsClick)="toggleReportSettingsPopover($event)"> </app-settings-button>
+                                  </th>
+                                </tr>
+                              </ng-template>
+                              <ng-template #body let-report let-columns="columns">
+                                <tr class="bg-white cursor-pointer hover:!bg-gray-200 transition-colors duration-200" (click)="onReportRowClick(report)">
+                                  <td class="rounded-l-lg p-0">
+                                    <a
+                                      [routerLink]="['/clients', report.clientCompany?.id, 'projects', report.project?.id, 'reports', report.id]"
+                                      [queryParams]="getReportNavParams(report)"
+                                      class="block w-full h-full text-[12px] hover:text-inherit no-underline items-center content-center"
+                                      (click)="$event.stopPropagation()"
+                                    >
+                                      <span
+                                        *ngIf="report?.status"
+                                        class="text-white w-[110px] h-[23px] text-[11px] font-dm font-semibold rounded-sm flex items-center justify-center uppercase"
+                                        [style.background-color]="report.status?.color"
+                                      >
+                                        {{ report.status?.name }}
+                                      </span>
+                                    </a>
+                                  </td>
+                                  <td
+                                    *ngFor="let col of columns"
+                                    class="p-0"
+                                    [class.reports-col-address]="col.field === 'address'"
+                                    (click)="col.field === 'plannedOn' || col.field === 'merchandiser' ? $event.stopPropagation() : null"
+                                  >
+                                    <!-- Interactive Columns (plannedOn, merchandiser) -->
+                                    <ng-container *ngIf="col.field === 'plannedOn' || col.field === 'merchandiser'">
+                                      <ng-container [ngSwitch]="col.field">
+                                        <!-- PlannedOn -->
+                                        <ng-container *ngSwitchCase="'plannedOn'">
+                                          <ng-container *ngIf="{ isNew: report | isReportNew } as reportStatus">
+                                            <div class="relative w-full h-full flex items-center text-inherit">
+                                              <!-- Display Mode -->
+                                              <div *ngIf="editingPlannedOnReportId !== report.id" class="relative flex items-center gap-2 group min-h-[37px] w-[170px]">
+                                                <span
+                                                  *ngIf="report.plannedOn"
+                                                  class="font-bold truncate block max-w-full text-[12px]"
+                                                  [class.cursor-pointer]="!isReportClosedForEditing(report)"
+                                                  [class.hover:text-primary-600]="!isReportClosedForEditing(report)"
+                                                  [class.text-primary-500]="reportStatus.isNew"
+                                                  [title]="getFormattedDateForTooltip(report.plannedOn)"
+                                                  (click)="!isReportClosedForEditing(report) && startEditingPlannedOn(report); $event.stopPropagation()"
+                                                  >{{ report.plannedOn | euDate }}</span
+                                                >
+                                                <span
+                                                  *ngIf="!report.plannedOn"
+                                                  class="inline-flex items-center justify-center px-3 py-1.5 text-xs font-semibold tracking-wide text-red-700 bg-red-50 border border-red-200 rounded-lg shadow-sm transition-all"
+                                                  [class.cursor-pointer]="!isReportClosedForEditing(report)"
+                                                  [class.hover:bg-red-100]="!isReportClosedForEditing(report)"
+                                                  (click)="!isReportClosedForEditing(report) && startEditingPlannedOn(report); $event.stopPropagation()"
+                                                  >Nicht Existiert</span
+                                                >
+                                                <app-icon
+                                                  *ngIf="!isReportClosedForEditing(report)"
+                                                  name="pencil_square"
+                                                  class="w-4 h-4 text-primary-500 flex-shrink-0 cursor-pointer"
+                                                  (click)="startEditingPlannedOn(report); $event.stopPropagation()"
+                                                />
+                                              </div>
+
+                                              <!-- Edit Mode -->
+                                              <div *ngIf="editingPlannedOnReportId === report.id" class="relative flex items-center gap-1 min-h-[37px] w-[170px]" (click)="$event.stopPropagation()">
+                                                <app-client-detail-planned-date-picker
+                                                  class="flex-1 min-w-0"
+                                                  [selectedDate]="editingPlannedOnDate"
+                                                  (dateSelected)="onPlannedOnCalendarSelect(report, $event)"
+                                                  [disabled]="savingPlannedOnReportId === report.id"
+                                                  placeholder="TT.MM.JJJJ"
+                                                />
+                                                <div *ngIf="savingPlannedOnReportId === report.id" class="flex-shrink-0">
+                                                  <div class="animate-spin rounded-full h-5 w-5 border-b-2 border-primary-500"></div>
+                                                </div>
+                                                <app-icon
+                                                  *ngIf="savingPlannedOnReportId !== report.id"
+                                                  name="save"
+                                                  class="w-4 h-4 text-green-500 cursor-pointer flex-shrink-0"
+                                                  (click)="savePlannedOnEdit(report); $event.stopPropagation()"
+                                                  title="Speichern"
+                                                />
+                                                <i
+                                                  *ngIf="savingPlannedOnReportId !== report.id"
+                                                  class="pi pi-times cursor-pointer text-gray-400 hover:text-red-500 transition-colors flex-shrink-0"
+                                                  (click)="cancelEditingPlannedOn(); $event.stopPropagation()"
+                                                  title="Abbrechen"
+                                                ></i>
+                                              </div>
+                                            </div>
+                                          </ng-container>
+                                        </ng-container>
+
+                                        <!-- Merchandiser -->
+                                        <ng-container *ngSwitchCase="'merchandiser'">
+                                          <ng-container *ngIf="{ isNew: report | isReportNew } as reportStatus">
+                                            <div class="relative w-full h-full flex items-center text-inherit">
+                                              <!-- Display Mode -->
+                                              <div *ngIf="editingMerchandiserReportId !== report.id" class="relative flex items-center gap-2 group min-h-[37px] w-[170px]">
+                                                <span
+                                                  *ngIf="report.merchandiser?.user"
+                                                  class="font-bold truncate block max-w-full text-[12px]"
+                                                  [class.cursor-pointer]="!isReportClosedForEditing(report)"
+                                                  [class.hover:text-primary-600]="!isReportClosedForEditing(report)"
+                                                  [class.text-primary-600]="reportStatus.isNew"
+                                                  [title]="getReportMerchandiserName(report)"
+                                                  (click)="!isReportClosedForEditing(report) && startEditingMerchandiser(report); $event.stopPropagation()"
+                                                  >{{ report | merchandiserName }}
+                                                </span>
+                                                <span
+                                                  *ngIf="!report.merchandiser?.user"
+                                                  class="inline-flex items-center justify-center px-3 py-1.5 text-xs font-semibold tracking-wide text-red-700 bg-red-50 border border-red-200 rounded-lg shadow-sm transition-all"
+                                                  [class.cursor-pointer]="!isReportClosedForEditing(report)"
+                                                  [class.hover:bg-red-100]="!isReportClosedForEditing(report)"
+                                                  (click)="!isReportClosedForEditing(report) && startEditingMerchandiser(report); $event.stopPropagation()"
+                                                  >Nicht Existiert</span
+                                                >
+                                                <app-icon
+                                                  *ngIf="!isReportClosedForEditing(report)"
+                                                  name="pencil_square"
+                                                  class="w-4 h-4 text-primary-500 flex-shrink-0 cursor-pointer"
+                                                  (click)="startEditingMerchandiser(report); $event.stopPropagation()"
+                                                />
+                                                <app-icon name="info" class="w-4 h-4 text-primary-500 flex-shrink-0 cursor-pointer" (click)="$event.stopPropagation(); showProvisionAlert()" />
+                                              </div>
+
+                                              <!-- Edit Mode -->
+                                              <div *ngIf="editingMerchandiserReportId === report.id" class="relative flex items-center gap-2 min-h-[37px] w-full" (click)="$event.stopPropagation()">
+                                                <div *ngIf="savingMerchandiserReportId === report.id" class="flex-shrink-0">
+                                                  <div class="animate-spin rounded-full h-5 w-5 border-b-2 border-primary-500"></div>
+                                                </div>
+                                                <p-dropdown
+                                                  #merchandiserEditDropdown
+                                                  *ngIf="savingMerchandiserReportId !== report.id"
+                                                  [options]="merchandisers"
+                                                  [(ngModel)]="selectedMerchandiserId"
+                                                  (onChange)="onMerchandiserChange(report, $event.value)"
+                                                  optionValue="id"
+                                                  dataKey="id"
+                                                  [filter]="true"
+                                                  filterBy="user.firstName,user.lastName,user.email"
+                                                  scrollHeight="140px"
+                                                  panelStyleClass="client-detail-merchandiser-dropdown-panel"
+                                                  [style]="{ width: '100%' }"
+                                                  class="flex-1 min-w-0"
+                                                  placeholder="Select VM"
+                                                  [appendTo]="'body'"
+                                                  [autofocus]="true"
+                                                >
+                                                  <ng-template let-merchandiser pTemplate="selectedItem">
+                                                    <div *ngIf="merchandiser" class="truncate">{{ getMerchandiserDisplayName(merchandiser) }}</div>
+                                                    <div *ngIf="!merchandiser">-</div>
+                                                  </ng-template>
+                                                  <ng-template let-merchandiser pTemplate="item">
+                                                    <div class="truncate min-w-0">{{ getMerchandiserDisplayName(merchandiser) }}</div>
+                                                  </ng-template>
+                                                </p-dropdown>
+                                                <span *ngIf="savingMerchandiserReportId === report.id" class="text-sm text-gray-500 truncate" style="width: 135px">Wird gespeichert...</span>
+                                                <i
+                                                  *ngIf="savingMerchandiserReportId !== report.id"
+                                                  class="pi pi-times cursor-pointer text-gray-400 hover:text-red-500 transition-colors flex-shrink-0"
+                                                  (click)="$event.stopPropagation(); cancelEditingMerchandiser()"
+                                                  title="Abbrechen"
+                                                ></i>
+                                              </div>
+                                            </div>
+                                          </ng-container>
+                                        </ng-container>
+                                      </ng-container>
+                                    </ng-container>
+
+                                    <!-- Non-Interactive Columns -->
+                                    <a
+                                      *ngIf="col.field !== 'plannedOn' && col.field !== 'merchandiser'"
+                                      [routerLink]="['/clients', report.clientCompany?.id, 'projects', report.project?.id, 'reports', report.id]"
+                                      [queryParams]="getReportNavParams(report)"
+                                      class="block w-full h-full text-[12px] hover:text-inherit no-underline items-center content-center"
+                                      (click)="$event.stopPropagation()"
+                                    >
+                                      <ng-container [ngSwitch]="col.field">
+                                        <ng-container *ngSwitchCase="'branch.name'">
+                                          <div class="min-w-[150px] max-w-[200px] truncate" [title]="getBranchDisplayName(report)">
+                                            <span class="font-medium">
+                                              {{ getBranchDisplayName(report) }}
+                                            </span>
+                                          </div>
+                                        </ng-container>
+                                        <ng-container *ngSwitchCase="'address'">
+                                          <div class="reports-address-cell text-[12px] mx-3.5" [title]="getReportAddress(report)">
+                                            {{ report | reportAddress }}
+                                          </div>
+                                        </ng-container>
+                                        <ng-container *ngSwitchCase="'note'">
+                                          <div class="min-w-[150px] max-w-[300px] truncate" [title]="report.note || ''">
+                                            {{ report.note || '' }}
+                                          </div>
+                                        </ng-container>
+                                        <ng-container *ngSwitchCase="'reportTo'">
+                                          <div class="w-[100px] truncate" [title]="getFormattedDateForTooltip(report.reportTo)">
+                                            {{ report.reportTo | euDate }}
+                                          </div>
+                                        </ng-container>
+                                        <ng-container *ngSwitchCase="'feedback'">
+                                          <div class="w-[80px] truncate" [title]="report.feedback === true || report.feedback === 'true' ? 'Ja' : ''">
+                                            {{ report.feedback === true || report.feedback === 'true' ? 'Ja' : '' }}
+                                          </div>
+                                        </ng-container>
+                                        <ng-container *ngSwitchDefault>
+                                          <div class="min-w-[200px] max-w-[300px] truncate" [title]="report[col.field]">
+                                            {{ report[col.field] }}
+                                          </div>
+                                        </ng-container>
+                                      </ng-container>
+                                    </a>
+                                  </td>
+                                  <td class="rounded-r-lg actions-cell">
+                                    <div class="flex space-x-3 justify-end items-center actions-inner">
+                                      <a
+                                        [routerLink]="['/clients', report.clientCompany?.id, 'projects', report.project?.id, 'edit-report', report.id]"
+                                        [queryParams]="getReportNavParams(report)"
+                                        class="flex items-center"
+                                        title="Bearbeiten"
+                                        (click)="$event.stopPropagation()"
+                                      >
+                                        <app-icon name="pencil" class="w-5 h-5 cursor-pointer text-primary-500 hover:text-primary-600" />
+                                      </a>
+                                      <a
+                                        [routerLink]="['/clients', report.clientCompany?.id, 'projects', report.project?.id, 'reports', report.id]"
+                                        [queryParams]="getReportNavParams(report)"
+                                        class="flex items-center"
+                                        title="Anzeigen"
+                                        (click)="$event.stopPropagation()"
+                                      >
+                                        <app-icon name="resizeable_eye" class="w-5 h-5 flex items-center cursor-pointer text-primary-500 hover:text-primary-600" />
+                                      </a>
+
+                                      <div (click)="$event.stopPropagation()">
+                                        <app-favorite-toggle
+                                          [title]="report.isFavorite ? 'von favoriten entfernen' : 'als favorit hinzufügen'"
+                                          class="h-5 w-5 flex-shrink-0"
+                                          [isFavorite]="report.isFavorite"
+                                          (favoriteChange)="onReportFavoriteChanged($event, report)"
+                                        />
+                                      </div>
+                                    </div>
+                                  </td>
+                                </tr>
+                              </ng-template>
+                            </p-table>
+                          </ng-container>
+                        </div>
+                      </ng-container>
+                    </div>
+                  </td>
+                </tr>
+              </ng-template>
+            </p-table>
+          </ng-container>
+        </div>
+
+        <ng-template #noDesktopProjects>
+          <div class="hidden lg:block mb-8">
+            <div class="empty-data-alert">Keine Projekte gefunden.</div>
+          </div>
+        </ng-template>
+
+        <p-popover #projectSettingsPopover [styleClass]="'column-filter-popover settings-popover'" appendTo="body" [dismissable]="true">
+          <div class="column-filter-popover-content settings-popover-content w-[85vw] sm:w-[20rem]">
+            <div class="column-filter-popover-header">
+              <div class="column-filter-popover-header flex items-center justify-between pb-2">
+                <div class="flex items-center gap-3">
+                  <span class="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-[4px] bg-gradient-to-br from-primary-500 to-primary-600 text-white shadow-sm" aria-hidden="true">
+                    <span class="pi pi-cog text-sm!"></span>
+                  </span>
+                  <div>
+                    <p class="m-0 text-[10px] font-bold uppercase tracking-[0.08em] text-slate-500">Columns Settings</p>
+                    <p class="m-0 font-dm text-[15px] font-bold text-slate-900">Settings</p>
+                  </div>
+                </div>
+                <div class="ml-auto flex items-center gap-2">
+                  <button
+                    type="button"
+                    class="filter-modal-clear shrink-0"
+                    [disabled]="selectedColumns?.length === cols?.length"
+                    (click)="selectedColumns = cols.slice(); onProjectsColumnsChange(selectedColumns)"
+                    aria-label="Filter zurücksetzen"
+                  >
+                    <svg class="filter-modal-clear__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                    </svg>
+                    <span>Clear</span>
+                  </button>
+                  <button type="button" (click)="onSettingsPopoverClose(projectSettingsPopover, $event)" class="filter-modal-close" aria-label="Schließen">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <p-listbox
+              [options]="cols"
+              [(ngModel)]="selectedColumns"
+              [multiple]="true"
+              [checkbox]="true"
+              [filter]="true"
+              optionLabel="header"
+              emptyMessage="Keine Daten vorhanden"
+              emptyFilterMessage="Keine Ergebnisse gefunden"
+              class="settings-listbox"
+              (onChange)="onProjectsColumnsChange($event.value)"
+            />
+            <div class="filter-modal-footer filter-modal-footer--end">
+              <button type="button" class="filter-modal-btn filter-modal-btn--compact" (click)="onSettingsPopoverClose(projectSettingsPopover, $event)">Fertig</button>
+            </div>
+          </div>
+        </p-popover>
+      </div>
+    </div>
+  </div>
+</section>
+
+<ng-template #notFound>
+  <div *ngIf="!isLoading" class="py-2">
+    <div class="empty-data-alert">Client nicht gefunden.</div>
+  </div>
+</ng-template>
+
+<!-- Add this at the bottom of your component, after the existing popover -->
+<p-popover #reportSettingsPopover [styleClass]="'column-filter-popover settings-popover'" appendTo="body" [dismissable]="true">
+  <div class="column-filter-popover-content settings-popover-content w-[85vw] sm:w-[20rem]">
+    <div class="column-filter-popover-header">
+      <div class="column-filter-popover-header flex items-center justify-between pb-2">
+        <div class="flex items-center gap-3">
+          <span class="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-[4px] bg-gradient-to-br from-primary-500 to-primary-600 text-white shadow-sm" aria-hidden="true">
+            <span class="pi pi-cog text-sm!"></span>
+          </span>
+          <div>
+            <p class="m-0 text-[10px] font-bold uppercase tracking-[0.08em] text-slate-500">Columns Settings</p>
+            <p class="m-0 font-dm text-[15px] font-bold text-slate-900">Settings</p>
+          </div>
+        </div>
+        <div class="ml-auto flex items-center gap-2">
+          <button
+            type="button"
+            class="filter-modal-clear shrink-0"
+            [disabled]="selectedReportColumns?.length === reportCols?.length"
+            (click)="selectedReportColumns = reportCols.slice(); onReportsColumnsChange(selectedReportColumns)"
+            aria-label="Filter zurücksetzen"
+          >
+            <svg class="filter-modal-clear__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+            </svg>
+            <span>Clear</span>
+          </button>
+          <button type="button" (click)="onSettingsPopoverClose(reportSettingsPopover, $event)" class="filter-modal-close" aria-label="Schließen">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+    <p-listbox
+      [options]="reportCols"
+      [(ngModel)]="selectedReportColumns"
+      [multiple]="true"
+      [checkbox]="true"
+      [filter]="true"
+      optionLabel="header"
+      emptyMessage="Keine Daten vorhanden"
+      emptyFilterMessage="Keine Ergebnisse gefunden"
+      class="settings-listbox"
+      (onChange)="onReportsColumnsChange($event.value)"
+    />
+    <div class="filter-modal-footer filter-modal-footer--end">
+      <button type="button" class="filter-modal-btn filter-modal-btn--compact" (click)="onSettingsPopoverClose(reportSettingsPopover, $event)">Fertig</button>
+    </div>
+  </div>
+</p-popover>
+<!-- Project Name Filter Popover -->
+<app-column-filter-popover
+  #projectFilterPopover
+  title="Projektname"
+  [options]="getUniqueProjectNames()"
+  [(selectedValues)]="projectNameFilter"
+  (filterChange)="onProjectNameFilterChange()"
+  (popoverHide)="onProjectNameFilterPopoverClose()"
+>
+</app-column-filter-popover>
+
+<!-- Generic Project Column Filter Popover -->
+<app-column-filter-popover
+  #projectColumnFilterPopover
+  [title]="currentProjectFilterField ? getProjectColumnHeader(currentProjectFilterField) : 'Filter'"
+  [options]="currentProjectColumnOptions"
+  [(selectedValues)]="projectColumnFilterValues[currentProjectFilterField]"
+  (filterChange)="onProjectColumnFilterChange()"
+  (popoverHide)="onProjectColumnFilterPopoverClose()"
+>
+</app-column-filter-popover>
+
+<!-- Mobile: Centered column filter modal (same as dashboard responsive behavior) -->
+<app-column-filter-dialog
+  [(visible)]="showColumnFilterModal"
+  [title]="getColumnFilterModalTitle()"
+  [hasActiveFilter]="hasColumnFilterModalSelection()"
+  (filterCleared)="onColumnFilterModalCleared()"
+  (dialogHide)="closeColumnFilterModal()"
+>
+  <ng-container *ngIf="columnFilterModalType === 'projectName'">
+    <p-listbox
+      [(ngModel)]="projectNameFilter"
+      [options]="getUniqueProjectNames()"
+      [multiple]="true"
+      [checkbox]="true"
+      [filter]="true"
+      optionLabel="label"
+      optionValue="value"
+      filterBy="label"
+      emptyMessage="Keine Daten vorhanden"
+      emptyFilterMessage="Keine Ergebnisse gefunden"
+      class="dashboard-column-filter-modal-listbox"
+      (ngModelChange)="onProjectNameFilterChange()"
+    >
+    </p-listbox>
+  </ng-container>
+  <ng-container *ngIf="columnFilterModalType === 'project'">
+    <p-listbox
+      [(ngModel)]="projectColumnFilterValues[currentProjectFilterField]"
+      [options]="currentProjectColumnOptions"
+      [multiple]="true"
+      [checkbox]="true"
+      [filter]="true"
+      optionLabel="label"
+      optionValue="value"
+      filterBy="label"
+      emptyMessage="Keine Daten vorhanden"
+      emptyFilterMessage="Keine Ergebnisse gefunden"
+      class="dashboard-column-filter-modal-listbox"
+      (onChange)="onProjectColumnFilterChange()"
+    />
+  </ng-container>
+  <ng-container *ngIf="columnFilterModalType === 'reportStatus'">
+    <p-listbox
+      [(ngModel)]="reportStatusFilter"
+      [options]="getUniqueReportStatuses()"
+      [multiple]="true"
+      [checkbox]="true"
+      [filter]="true"
+      optionLabel="label"
+      optionValue="value"
+      filterBy="label"
+      emptyMessage="Keine Daten vorhanden"
+      emptyFilterMessage="Keine Ergebnisse gefunden"
+      class="dashboard-column-filter-modal-listbox"
+      (onChange)="onReportStatusFilterChange()"
+    >
+      <ng-template let-status pTemplate="item">
+        <div class="flex items-center gap-2">
+          <span class="w-3 h-3 rounded-full" [style.background-color]="status.color"></span>
+          <span>{{ status.label }}</span>
+        </div>
+      </ng-template>
+    </p-listbox>
+  </ng-container>
+  <ng-container *ngIf="columnFilterModalType === 'reportMerchandiser'">
+    <p-listbox
+      [(ngModel)]="reportMerchandiserFilter"
+      [options]="getUniqueMerchandisers()"
+      [multiple]="true"
+      [checkbox]="true"
+      [filter]="true"
+      optionLabel="label"
+      optionValue="value"
+      filterBy="label"
+      emptyMessage="Keine Daten vorhanden"
+      emptyFilterMessage="Keine Ergebnisse gefunden"
+      class="dashboard-column-filter-modal-listbox"
+      (onChange)="onReportMerchandiserFilterChange()"
+    />
+  </ng-container>
+  <ng-container *ngIf="columnFilterModalType === 'reportFilialen'">
+    <p-listbox
+      [(ngModel)]="reportFilialenFilter"
+      [options]="getUniqueFilialen()"
+      [multiple]="true"
+      [checkbox]="true"
+      [filter]="true"
+      optionLabel="label"
+      optionValue="value"
+      filterBy="label"
+      emptyMessage="Keine Daten vorhanden"
+      emptyFilterMessage="Keine Ergebnisse gefunden"
+      class="dashboard-column-filter-modal-listbox"
+      (onChange)="onReportFilialenFilterChange()"
+    />
+  </ng-container>
+  <ng-container *ngIf="columnFilterModalType === 'reportPlannedOn'">
+    <p-listbox
+      [(ngModel)]="reportPlannedOnFilter"
+      [options]="getUniquePlannedOnDates()"
+      [multiple]="true"
+      [checkbox]="true"
+      [filter]="true"
+      optionLabel="label"
+      optionValue="value"
+      filterBy="label"
+      emptyMessage="Keine Daten vorhanden"
+      emptyFilterMessage="Keine Ergebnisse gefunden"
+      class="dashboard-column-filter-modal-listbox"
+      (onChange)="onReportPlannedOnFilterChange()"
+    >
+      <ng-template pTemplate="item" let-date>
+        <span *ngIf="date">{{ date.label | euDate }}</span>
+      </ng-template>
+    </p-listbox>
+  </ng-container>
+  <ng-container *ngIf="columnFilterModalType === 'reportGeneric'">
+    <p-listbox
+      [(ngModel)]="genericFilterValues[currentFilterField]"
+      [options]="currentGenericOptions"
+      [multiple]="true"
+      [checkbox]="true"
+      [filter]="true"
+      optionLabel="label"
+      optionValue="value"
+      filterBy="label"
+      emptyMessage="Keine Daten vorhanden"
+      emptyFilterMessage="Keine Ergebnisse gefunden"
+      class="dashboard-column-filter-modal-listbox"
+      (onChange)="onGenericFilterChange()"
+    />
+  </ng-container>
+</app-column-filter-dialog>
+
+<!-- Status Filter Popover (dashboard-style filter by column) -->
+<app-column-filter-popover
+  #statusFilterPopover
+  title="Status"
+  [options]="getUniqueReportStatuses()"
+  [(selectedValues)]="reportStatusFilter"
+  (filterChange)="onReportStatusFilterChange()"
+  (popoverHide)="onStatusFilterPopoverClose()"
+>
+  <ng-template #itemTemplate let-status>
+    <div class="flex items-center gap-2">
+      <span class="w-3 h-3 rounded-full" [style.background-color]="status.color"></span>
+      <span>{{ status.label }}</span>
+    </div>
+  </ng-template>
+</app-column-filter-popover>
+
+<!-- Merchandiser Filter Popover (dashboard-style filter by column) -->
+<app-column-filter-popover
+  #merchandiserFilterPopover
+  title="Merchandiser"
+  [options]="getUniqueMerchandisers()"
+  [(selectedValues)]="reportMerchandiserFilter"
+  (filterChange)="onReportMerchandiserFilterChange()"
+  (popoverHide)="onMerchandiserFilterPopoverClose()"
+>
+</app-column-filter-popover>
+
+<!-- Filialen Filter Popover (dashboard-style filter by column) -->
+<app-column-filter-popover
+  #filialenFilterPopover
+  title="Filiale"
+  [options]="getUniqueFilialen()"
+  [(selectedValues)]="reportFilialenFilter"
+  (filterChange)="onReportFilialenFilterChange()"
+  (popoverHide)="onFilialenFilterPopoverClose()"
+>
+</app-column-filter-popover>
+
+<!-- PlannedOn Date Filter Popover (dashboard-style filter by column) -->
+<app-column-filter-popover
+  #plannedOnFilterPopover
+  title="Geplant"
+  [options]="getUniquePlannedOnDates()"
+  [(selectedValues)]="reportPlannedOnFilter"
+  (filterChange)="onReportPlannedOnFilterChange()"
+  (popoverHide)="onPlannedOnFilterPopoverClose()"
+>
+</app-column-filter-popover>
+
+<!-- Generic Filter Popover (dashboard-style filter by column) -->
+<app-column-filter-popover
+  #genericFilterPopover
+  [title]="currentFilterField ? getColumnHeader(currentFilterField) : 'Filter'"
+  [options]="currentGenericOptions"
+  [(selectedValues)]="genericFilterValues[currentFilterField]"
+  (filterChange)="onGenericFilterChange()"
+  (popoverHide)="onGenericFilterPopoverClose()"
+>
+</app-column-filter-popover>
+
+<!-- Hidden file input for CSV upload -->
+<input #csvFileInput type="file" accept=".csv" style="display: none" (change)="handleCsvFileUpload($event)" />
+<input #excelFileInput type="file" accept=".xlsx" style="display: none" (change)="handleExcelFileUpload($event)" />
+<input #excelTestFileInput type="file" accept=".xlsx" style="display: none" (change)="handleExcelTestFileUpload($event)" />
+
+<!-- Merchandiser Change Confirmation Dialog -->
+<app-confirmation-dialog
+  [(visible)]="showMerchandiserChangeDialog"
+  [loading]="savingMerchandiserReportId !== null"
+  subtitle="Bestätigung"
+  [title]="isRemovingMerchandiser ? 'Merchandiser entfernen?' : 'Merchandiser ändern?'"
+  [message]="isRemovingMerchandiser ? 'Der Merchandiser wird von diesem Report entfernt.' : 'Der Report wird als Anfrage an den neuen Merchandiser gesendet.'"
+  confirmLabel="Bestätigen"
+  cancelLabel="Abbrechen"
+  (confirm)="confirmMerchandiserChange()"
+  (cancel)="cancelMerchandiserChange()"
+></app-confirmation-dialog>
+
+<!-- Mobile Filter Bottom Sheets for Reports inside Client Details Modal -->
+<app-mobile-filter-bottom-sheet
+  [(visible)]="showReportsMobileFilter"
+  title="Aufträge Filter"
+  [customActiveFilterCount]="getTotalReportsActiveFilters()"
+  [columns]="reportMobileColumns"
+  [filterValues]="reportMobileFilterValues"
+  [columnOptions]="reportMobileColumnOptions"
+  [canFilterMap]="reportMobileCanFilterMap"
+  (filtersChanged)="onReportsMobileFilterChanged($event)"
+  (allFiltersCleared)="onReportsMobileFilterCleared()"
+>
+</app-mobile-filter-bottom-sheet>
+
+<app-project-mobile-filter-bottom-sheet
+  [(visible)]="showMobileProjectFilters"
+  title="Projekt-Filter"
+  [clientId]="client?.id"
+  [(projectSearchTerm)]="projectSearchTerm"
+  [(filialeSearchTerm)]="filialeSearchTerm"
+  [(dateRange)]="dateRange2"
+  [columns]="projectMobileColumns"
+  [filterValues]="projectMobileFilterValues"
+  [columnOptions]="projectMobileColumnOptions"
+  [canFilterMap]="projectMobileCanFilterMap"
+  (projectSearchTermChange)="onProjectSearchTermChange($event)"
+  (filialeSearchTermChange)="onFilialeSearchTermChange($event)"
+  (dateRangeChange)="onRangeSelected($event)"
+  (columnFilterChanged)="onProjectsMobileFilterChanged($event)"
+  (allColumnFiltersCleared)="onProjectsMobileFilterCleared()"
+  (clear)="clearFilters()"
+></app-project-mobile-filter-bottom-sheet>
+
+<!-- Hidden Geplant Von–Bis picker (opened from the Geplant column header) -->
+<app-date-range-picker
+  #plannedOnDateRangePicker
+  [(selectedRange)]="plannedOnDateRange"
+  (rangeSelected)="onPlannedOnRangeSelected($event)"
+  [useViewportOverlay]="true"
+  [hideTrigger]="true"
+  position="right"
+></app-date-range-picker>

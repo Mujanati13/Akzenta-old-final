@@ -1,0 +1,140 @@
+:root {
+  --p-toggleswitch-checked-background: #ff0000;
+  --p-toggleswitch-background: #9b9b9b;
+  --p-toggleswitch-checked-hover-background: #ff0000;
+  --p-toggleswitch-hover-background: #9b9b9b;
+  --p-toggleswitch-width: 3rem;
+}
+
+/* Page content animation */
+:host section {
+  animation: pageFadeIn 0.4s ease forwards;
+}
+
+@keyframes pageFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Header animation */
+:host h2 {
+  animation: headerSlideIn 0.5s ease 0.1s both;
+}
+
+@keyframes headerSlideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Table animations */
+:host ::ng-deep .p-datatable-tbody > tr {
+  opacity: 0;
+  transform: translateX(-10px);
+  animation: tableRowSlideIn 0.4s ease forwards;
+}
+
+:host ::ng-deep .p-datatable-tbody > tr:nth-child(1) {
+  animation-delay: 0.05s;
+}
+
+:host ::ng-deep .p-datatable-tbody > tr:nth-child(2) {
+  animation-delay: 0.1s;
+}
+
+:host ::ng-deep .p-datatable-tbody > tr:nth-child(3) {
+  animation-delay: 0.15s;
+}
+
+:host ::ng-deep .p-datatable-tbody > tr:nth-child(4) {
+  animation-delay: 0.2s;
+}
+
+:host ::ng-deep .p-datatable-tbody > tr:nth-child(5) {
+  animation-delay: 0.25s;
+}
+
+:host ::ng-deep .p-datatable-tbody > tr:nth-child(n + 6) {
+  animation-delay: 0.3s;
+}
+
+@keyframes tableRowSlideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Table hover effects */
+:host ::ng-deep .p-datatable-tbody > tr {
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+:host ::ng-deep .p-datatable-tbody > tr:hover {
+  transform: translateX(2px);
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+/* Notification badge animation */
+:host .rounded-full.bg-red-600 {
+  animation: badgePop 0.4s ease 0.2s both;
+}
+
+@keyframes badgePop {
+  0% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Status dot animation */
+:host .rounded-full.w-3 {
+  animation: dotFadeIn 0.3s ease forwards;
+}
+
+@keyframes dotFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Toggle switch animation */
+:host ::ng-deep .p-toggleswitch {
+  transition: transform 0.2s ease;
+}
+
+:host ::ng-deep .p-toggleswitch:hover {
+  transform: scale(1.1);
+  transition: transform 0.2s ease;
+}

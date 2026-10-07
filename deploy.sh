@@ -1,0 +1,75 @@
+#!/usr/bin/env bash
+# Deploy the existing PostgreSQL-backed application and all three portals.
+set -Eeuo pipefail
+umask 077
+TASK_ROOT="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+cd "$TASK_ROOT"
+if [[ "${1:-}" == --help || "${1:-}" == -h ]]; then
+  printf 'Usage: bash deploy.sh YOUR_VPS_IP\nAfter the first deployment: bash deploy.sh\nRequires Linux, Docker Engine, Compose >= 2.30, curl, and Backend/.env with the existing database and SMTP configuration.\n'
+  exit 0
+fi
+[[ $# -le 1 ]] || { echo 'Expected at most one VPS IP argument' >&2; exit 1; }
+for executable in docker curl flock; do
+  command -v "$executable" >/dev/null || { printf 'Required command missing: %s\n' "$executable" >&2; exit 1; }
+done
+docker info >/dev/null 2>&1 || { echo 'Docker Engine is not running or your user cannot access it.' >&2; exit 1; }
+compose_version="$(docker compose version --short)"
+compose_version="${compose_version#v}"
+IFS=. read -r compose_major compose_minor _ <<<"$compose_version"
+[[ "$compose_major" =~ ^[0-9]+$ && "$compose_minor" =~ ^[0-9]+$ ]] || { echo 'Cannot determine Compose version' >&2; exit 1; }
+(( compose_major > 2 || (compose_major == 2 && compose_minor >= 30) )) || { echo 'Docker Compose 2.30 or later is required (raw env_file support).' >&2; exit 1; }
+mkdir -p deployment/backups
+exec 9>deployment/.deploy.lock
+flock -n 9 || { echo 'Another deployment is running.' >&2; exit 1; }
+
+# Bootstrap with Node in Docker; the host needs neither Node nor npm.
+ports="$(docker run --rm --user "$(id -u):$(id -g)" -v "$TASK_ROOT:/project" -w /project node:22-alpine node deployment/prepare-env.cjs "${1:-}")"
+read -r HEAD_OFFICE_PORT CLIENT_PORT MERCHANDISER_PORT MAPBOX_PUBLIC_TOKEN <<<"$ports"
+for port in "$HEAD_OFFICE_PORT" "$CLIENT_PORT" "$MERCHANDISER_PORT"; do
+  [[ "$port" =~ ^[0-9]+$ ]] || { echo 'Invalid portal configuration' >&2; exit 1; }
+done
+export HEAD_OFFICE_PORT CLIENT_PORT MERCHANDISER_PORT MAPBOX_PUBLIC_TOKEN
+chmod 600 .env.production
+export DEPLOY_TAG="$(date -u +%Y%m%dT%H%M%SZ)-$$"
+COMPOSE=(docker compose -p akzente -f docker-compose.production.yml)
+"${COMPOSE[@]}" config --quiet
+old_api_id="$("${COMPOSE[@]}" ps -q api)"
+old_web_id="$("${COMPOSE[@]}" ps -q web)"
+OLD_API_IMAGE=''
+OLD_WEB_IMAGE=''
+[[ -z "$old_api_id" ]] || OLD_API_IMAGE="$(docker inspect --format '{{.Config.Image}}' "$old_api_id")"
+[[ -z "$old_web_id" ]] || OLD_WEB_IMAGE="$(docker inspect --format '{{.Config.Image}}' "$old_web_id")"
+export OLD_API_IMAGE OLD_WEB_IMAGE
+switched=0
+on_failure() {
+  local status=$?
+  trap - ERR
+  echo 'Deployment failed. Existing database data was not migrated, reset, or seeded.' >&2
+  if (( switched )) && [[ -n "$OLD_API_IMAGE" && -n "$OLD_WEB_IMAGE" ]]; then
+    echo 'Restoring the previous API and frontend images...' >&2
+    printf 'services:\n  api:\n    image: $%s\n  web:\n    image: $%s\n' '{OLD_API_IMAGE}' '{OLD_WEB_IMAGE}' >deployment/.rollback.yml
+    "${COMPOSE[@]}" -f deployment/.rollback.yml up -d --no-build --wait --wait-timeout 180 api web || echo 'Automatic rollback failed; inspect docker compose logs.' >&2
+  fi
+  printf 'Inspect: docker compose -p akzente -f docker-compose.production.yml logs --tail=100 api web\n' >&2
+  exit "$status"
+}
+trap on_failure ERR
+
+printf 'Building the API and all three production portals...\n'
+"${COMPOSE[@]}" build --pull api web
+"${COMPOSE[@]}" run --rm --no-deps db-backup
+mkdir -p Backend/uploads
+"${COMPOSE[@]}" run --rm --no-deps db-check
+"${COMPOSE[@]}" run --rm --no-deps upload-init
+"${COMPOSE[@]}" run --rm --no-deps upload-backup
+
+# Only replace running services after builds, database backup and preflight pass.
+switched=1
+"${COMPOSE[@]}" up -d --no-build --wait --wait-timeout 180 api web
+for port in "$HEAD_OFFICE_PORT" "$CLIENT_PORT" "$MERCHANDISER_PORT"; do
+  curl --noproxy '*' --fail --silent --show-error --max-time 15 "http://127.0.0.1:$port/index.html" >/dev/null
+  curl --noproxy '*' --fail --silent --show-error --max-time 15 "http://127.0.0.1:$port/health" >/dev/null
+  curl --noproxy '*' --fail --silent --show-error --max-time 15 "http://127.0.0.1:$port/login" >/dev/null
+done
+printf '%s\n' "$DEPLOY_TAG" >deployment/.last-successful-tag
+printf '\nDeployment is healthy. Open the VPS IP using:\n  HeadOffice: port %s\n  Client: port %s\n  Merchandiser: port %s\nBackups: deployment/backups/\n' "$HEAD_OFFICE_PORT" "$CLIENT_PORT" "$MERCHANDISER_PORT"

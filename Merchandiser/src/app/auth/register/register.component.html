@@ -1,0 +1,510 @@
+<div
+  class="min-h-screen flex items-center justify-center bg-white relative overflow-x-hidden pt-4 lg:py-0 transition-all duration-300"
+  [ngClass]="{
+    'fixed inset-0 h-[100dvh] overflow-hidden z-20 items-start pt-0': isMobileToolbarVisible && !registrationSuccess,
+    'items-center': !isMobileToolbarVisible || registrationSuccess,
+  }"
+>
+  <!-- Registration Success Message -->
+  <div
+    *ngIf="registrationSuccess"
+    class="w-full md:w-[640px] bg-gradient-to-b from-[#F4F7FF] to-white md:rounded-2xl md:shadow-lg border border-[#E0E4F5] px-6 py-8 md:px-12 md:py-10 flex flex-col items-center relative overflow-hidden"
+  >
+    <!-- Accent background circle -->
+    <div class="pointer-events-none absolute -top-24 -right-24 w-56 h-56 bg-primary-100 rounded-full opacity-30 hidden md:block"></div>
+
+    <!-- Logo & headline -->
+    <div class="relative z-10 flex flex-col items-center gap-4 mb-6">
+      <img src="/logo.png" alt="Akzente Logo" class="h-[60px] md:h-[80px]" />
+
+      <div class="flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-50 border border-emerald-100">
+        <i class="pi pi-check-circle text-emerald-500 text-lg"></i>
+        <span class="text-xs md:text-sm font-medium text-emerald-700">Registrierung abgeschlossen</span>
+      </div>
+
+      <h2 class="text-2xl md:text-3xl font-dm font-bold text-gray-900 text-center">Registrierung erfolgreich!</h2>
+
+      <p *ngIf="confirmationEmailSent" class="text-gray-600 text-sm md:text-base text-center max-w-md">
+        Vielen Dank für Ihre Registrierung. Wir haben eine Bestätigungs-E-Mail an
+        <strong class="text-primary-500">{{ registeredEmail }}</strong>
+        gesendet.
+      </p>
+      <p *ngIf="!confirmationEmailSent" class="text-gray-600 text-sm md:text-base text-center max-w-md">
+        Ihr Konto wurde erfolgreich angelegt. Die Bestätigungs-E-Mail konnte nicht versendet werden (z.&nbsp;B. ungültige oder nicht erreichbare Adresse). Sie können auf der Login-Seite unter
+        <strong class="text-primary-500">E-Mail erneut senden</strong>
+        einen neuen Versuch starten.
+      </p>
+    </div>
+
+    <!-- Info card -->
+    <div *ngIf="confirmationEmailSent" class="relative z-10 w-full mb-6">
+      <div class="bg-white/90 border border-primary-100 rounded-xl p-4 md:p-5 flex flex-col gap-3">
+        <div class="flex items-start gap-3">
+          <div class="mt-0.5 flex h-8 w-8 items-center justify-center rounded-full bg-primary-50">
+            <i class="pi pi-envelope text-primary-500 text-base"></i>
+          </div>
+          <div class="text-sm md:text-base">
+            <p class="text-gray-900 font-medium mb-1">Bitte überprüfen Sie Ihr Postfach</p>
+            <p class="text-gray-600">Klicken Sie auf den Bestätigungslink in der E-Mail, um Ihr Konto zu aktivieren. Überprüfen Sie auch Ihren Spam-Ordner, falls Sie die E-Mail nicht finden.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Actions -->
+    <div class="relative z-10 w-full border-t border-gray-200 pt-6 flex flex-col gap-3">
+      <button
+        (click)="goToLogin()"
+        class="w-full bg-primary-500 hover:bg-primary-600 active:bg-primary-700 text-white font-dm text-[15px] rounded-[6px] py-3.5 transition-colors duration-200 cursor-pointer flex items-center justify-center gap-2"
+      >
+        <span>Zum Login</span>
+      </button>
+
+      <p *ngIf="confirmationEmailSent" class="text-xs md:text-sm text-gray-500 text-center">
+        Keine E-Mail erhalten?
+        <span class="text-primary-500 font-medium">Bitte prüfen Sie Ihre E-Mail-Adresse und Ihren Spam-Ordner.</span>
+      </p>
+      <p *ngIf="!confirmationEmailSent" class="text-xs md:text-sm text-gray-500 text-center">
+        Sobald eine Bestätigungs-E-Mail bei uns versendet werden kann, nutzen Sie bitte die Funktion auf der Login-Seite.
+      </p>
+    </div>
+  </div>
+
+  <!-- Registration Form (hidden after success) -->
+  <div
+    *ngIf="!registrationSuccess"
+    class="bg-white md:bg-[#FBFBFB] md:border md:border-[#EBEBEB] md:rounded-xl px-8 md:px-[86px] py-4 lg:py-[40px] w-full md:w-[874px] shadow-none md:shadow-sm relative flex flex-col h-full min-h-screen md:min-h-0 md:h-auto"
+    [ngClass]="{
+      'h-full overflow-y-auto pb-[80px]': isMobileToolbarVisible,
+    }"
+  >
+    <!-- Logo and Title Row -->
+    <div class="flex items-end justify-between mb-8">
+      <div class="flex items-center gap-2">
+        <app-icon name="einloggen" class="w-7 h-7 text-primary-500 flex items-center" />
+        <span class="text-xl md:text-base lg:text-[30px] font-dm font-black text-gray-700" translate>Neu registrieren</span>
+      </div>
+      <img src="/logo.png" alt="Akzente Logo" class="h-[50px] md:h-[100px] mb-1" />
+    </div>
+
+    <!-- Registration Stepper -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <form [formGroup]="userForm">
+      <p-stepper [(value)]="activeStep" class="w-full">
+        <p-step-list>
+          <p-step [value]="1" class="flex flex-row flex-auto">
+            <ng-template #content let-activateCallback="activateCallback" let-value="value">
+              <button class="bg-transparent border-0 inline-flex flex-col gap-2 items-center relative" (click)="onStepHeaderClick(value, activateCallback)">
+                <span
+                  class="rounded-full w-9 lg:w-12 h-9 lg:h-12 inline-flex items-center justify-center"
+                  [ngClass]="{
+                    'bg-primary-500 text-white border-2 border-primary-500': value === activeStep,
+                    'bg-[#E9EBFB] text-primary-500 border-2 border-primary-500': value < activeStep,
+                    'border-2 border-gray-300 text-gray-400': value > activeStep,
+                  }"
+                >
+                  <ng-container *ngIf="value < activeStep; else stepNumber">
+                    <app-icon name="stepper-check" class="text-primary-500 flex items-center h-4.5 w-4.5"></app-icon>
+                  </ng-container>
+                  <ng-template #stepNumber>
+                    {{ ('0' + value).slice(-2) }}
+                  </ng-template>
+                </span>
+                <span class="text-xs md:text-sm absolute -bottom-6 left-1/2 -translate-x-1/2 text-center font-medium whitespace-nowrap" [ngClass]="{ 'text-primary-500': value <= activeStep }"
+                  >Persönliches</span
+                >
+              </button>
+            </ng-template>
+          </p-step>
+
+          <p-step [value]="2" class="flex flex-row flex-auto">
+            <ng-template #content let-activateCallback="activateCallback" let-value="value">
+              <button class="bg-transparent border-0 inline-flex flex-col gap-2 items-center relative" (click)="onStepHeaderClick(value, activateCallback)">
+                <span
+                  class="rounded-full w-9 lg:w-12 h-9 lg:h-12 inline-flex items-center justify-center"
+                  [ngClass]="{
+                    'bg-primary-500 text-white border-2 border-primary-500': value === activeStep,
+                    'bg-[#E9EBFB] text-primary-500 border-2 border-primary-500': value < activeStep,
+                    'border-2 border-gray-300 text-gray-400': value > activeStep,
+                  }"
+                >
+                  <ng-container *ngIf="value < activeStep; else stepNumber">
+                    <app-icon name="stepper-check" class="text-primary-500 flex items-center h-4.5 w-4.5"></app-icon>
+                  </ng-container>
+                  <ng-template #stepNumber>
+                    {{ ('0' + value).slice(-2) }}
+                  </ng-template>
+                </span>
+                <span class="text-xs md:text-sm absolute -bottom-6 left-1/2 -translate-x-1/2 text-center font-medium whitespace-nowrap" [ngClass]="{ 'text-primary-500': value <= activeStep }"
+                  >Qualifikationen</span
+                >
+              </button>
+            </ng-template>
+          </p-step>
+
+          <p-step [value]="3">
+            <ng-template #content let-activateCallback="activateCallback" let-value="value">
+              <button class="bg-transparent border-0 inline-flex flex-col gap-2 items-center relative" (click)="onStepHeaderClick(value, activateCallback)">
+                <span
+                  class="rounded-full w-9 lg:w-12 h-9 lg:h-12 inline-flex items-center justify-center"
+                  [ngClass]="{
+                    'bg-primary-500 text-white border-2 border-primary-500': value === activeStep,
+                    'bg-[#E9EBFB] text-primary-500 border-2 border-primary-500': value < activeStep,
+                    'border-2 border-gray-300 text-gray-400': value > activeStep,
+                  }"
+                >
+                  <ng-container *ngIf="value < activeStep; else stepNumber">
+                    <app-icon name="stepper-check" class="text-primary-500 flex items-center h-4.5 w-4.5"></app-icon>
+                  </ng-container>
+                  <ng-template #stepNumber>
+                    {{ ('0' + value).slice(-2) }}
+                  </ng-template>
+                </span>
+                <span class="text-xs md:text-sm absolute -bottom-6 left-1/2 -translate-x-1/2 text-center font-medium whitespace-nowrap" [ngClass]="{ 'text-primary-500': value <= activeStep }"
+                  >Passwort</span
+                >
+              </button>
+            </ng-template>
+          </p-step>
+        </p-step-list>
+
+        <p-step-panels>
+          <!-- Step 1: Personal Information -->
+          <p-step-panel [value]="1">
+            <ng-template #content let-activateCallback="activateCallback">
+              <div class="min-h-[20rem] flex gap-2 flex-col justify-center">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div class="">
+                    <p-iftalabel>
+                      <input
+                        pInputText
+                        id="firstName"
+                        (focus)="onInputFocus('firstName')"
+                        formControlName="firstName"
+                        autocomplete="given-name"
+                        required
+                        class="w-full py-2 border border-gray-300 focus:outline-none text-gray-700 bg-white"
+                      />
+                      <label for="firstName">Vorname</label>
+                    </p-iftalabel>
+                    <small *ngIf="userForm.get('firstName')?.invalid && userForm.get('firstName')?.touched" class="text-red-500"> Vorname ist erforderlich </small>
+                  </div>
+
+                  <div class="">
+                    <p-iftalabel>
+                      <input
+                        pInputText
+                        id="lastName"
+                        (focus)="onInputFocus('lastName')"
+                        formControlName="lastName"
+                        autocomplete="family-name"
+                        required
+                        class="w-full py-2 border border-gray-300 focus:outline-none text-gray-700 bg-white"
+                      />
+                      <label for="lastName">Name</label>
+                    </p-iftalabel>
+                    <small *ngIf="userForm.get('lastName')?.invalid && userForm.get('lastName')?.touched" class="text-red-500"> Name ist erforderlich </small>
+                  </div>
+
+                  <div class="">
+                    <p-iftalabel>
+                      <input
+                        pInputText
+                        id="email"
+                        (focus)="onInputFocus('email')"
+                        formControlName="email"
+                        autocomplete="email"
+                        required
+                        class="w-full py-2 h-[45px] focus:outline-none text-gray-700 bg-white"
+                        [ngClass]="isEmailInputHighlighted ? 'border-2 border-red-500' : 'border border-gray-300'"
+                      />
+                      <label for="email">E-Mail</label>
+                    </p-iftalabel>
+                    <small *ngIf="emailDuplicateError" class="text-red-500">{{ emailDuplicateMessage }}</small>
+                    <small *ngIf="!emailDuplicateError && userForm.get('email')?.invalid && userForm.get('email')?.touched" class="text-red-500"> Gültige E-Mail ist erforderlich </small>
+                  </div>
+
+                  <div class="">
+                    <p-inputgroup>
+                      <p-inputgroup-addon class="p-0 border border-gray-300 border-r-0 bg-white">
+                        <p-dropdown
+                          [(ngModel)]="selectedPhoneCode"
+                          [options]="phoneCountryCodes"
+                          optionLabel="label"
+                          optionValue="code"
+                          [ngModelOptions]="{ standalone: true }"
+                          styleClass="phone-code-dropdown w-28"
+                          [panelStyle]="{ minWidth: '180px' }"
+                        ></p-dropdown>
+                      </p-inputgroup-addon>
+                      <p-iftalabel class="flex-1">
+                        <input
+                          pInputText
+                          id="phone"
+                          (focus)="onInputFocus('phone')"
+                          formControlName="phone"
+                          autocomplete="tel"
+                          inputmode="tel"
+                          class="w-full py-2 h-[45px] border border-gray-300 focus:outline-none text-gray-700 bg-white"
+                        />
+                        <label for="phone">Mobilnummer</label>
+                      </p-iftalabel>
+                    </p-inputgroup>
+                    <small *ngIf="userForm.get('phone')?.invalid && userForm.get('phone')?.touched" class="text-red-500"> Bitte geben Sie eine gültige Telefonnummer ein </small>
+                  </div>
+
+                  <!-- Location fields - PLZ, Land, City in proper grid -->
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <p-iftalabel>
+                        <input
+                          pInputText
+                          id="zipCode"
+                          (focus)="onInputFocus('zipCode')"
+                          formControlName="zipCode"
+                          autocomplete="postal-code"
+                          class="w-full py-2 h-[45px] border border-gray-300 focus:outline-none text-gray-700 bg-white"
+                        />
+                        <label for="zipCode">PLZ</label>
+                      </p-iftalabel>
+                    </div>
+                    <p-iftalabel>
+                      <p-dropdown
+                        id="country"
+                        formControlName="country"
+                        [options]="countryOptions"
+                        optionLabel="name"
+                        optionValue="id"
+                        placeholder="Land auswählen"
+                        filterPlaceholder="Suchen..."
+                        [filter]="true"
+                        filterBy="name"
+                        [showClear]="!!userForm.get('country')?.value"
+                        class="w-full h-[45px]"
+                        styleClass="register-select"
+                        panelStyleClass="register-select-panel"
+                      ></p-dropdown>
+                      <label for="country">Land*</label>
+                    </p-iftalabel>
+                  </div>
+                  <div class="mb-4 w-full">
+                    <p-iftalabel class="w-full block">
+                      <p-autocomplete
+                        id="city"
+                        formControlName="city"
+                        [suggestions]="filteredCitySuggestions"
+                        (completeMethod)="onCitySearch($event)"
+                        field="name"
+                        placeholder="Stadt eingeben oder auswählen"
+                        [minLength]="1"
+                        [delay]="300"
+                        [dropdown]="true"
+                        [forceSelection]="true"
+                        [showClear]="true"
+                        class="w-full"
+                        inputStyleClass="w-full py-2 h-[45px] border border-gray-300 focus:outline-none text-gray-700 bg-white"
+                        panelStyleClass="register-select-panel"
+                        appendTo="body"
+                      >
+                        <ng-template let-city pTemplate="item">
+                          <div class="flex items-center gap-2 p-2">
+                            <i class="pi pi-map-marker text-gray-400 text-sm"></i>
+                            <span>{{ city.name }}</span>
+                          </div>
+                        </ng-template>
+                      </p-autocomplete>
+                      <label for="city">Stadt*</label>
+                    </p-iftalabel>
+                    <small *ngIf="userForm.get('city')?.invalid && userForm.get('city')?.touched" class="text-red-500">Stadt ist erforderlich</small>
+                  </div>
+                </div>
+              </div>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <button
+                  (click)="goToStep(2)"
+                  class="w-full bg-primary-500 hover:bg-primary-700 text-white font-dm text-[14px] rounded-[4px] py-3 mt-2 transition-colors duration-200 cursor-pointer md:order-last"
+                >
+                  {{ 'Nächste' | translate }}
+                </button>
+                <button
+                  [routerLink]="['/login']"
+                  class="w-full border border-primary-500 hover:bg-primary-700/10 text-primary-500 font-dm text-[14px] rounded-[4px] py-3 mt-2 transition-colors duration-200 cursor-pointer md:order-first"
+                >
+                  {{ 'Login' | translate }}
+                </button>
+              </div>
+              <div *ngIf="stepErrors[1]" class="mt-2 text-red-600 text-sm text-center">
+                {{ stepErrors[1] }}
+              </div>
+            </ng-template>
+          </p-step-panel>
+
+          <!-- Step 2: Qualifications (Dynamic Customer Selection) -->
+          <p-step-panel [value]="2">
+            <ng-template #content let-activateCallback="activateCallback">
+              <div class="min-h-[20rem] flex flex-col justify-center">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2 mb-2" formGroupName="customers">
+                  <!-- Dynamic job types from API -->
+                  <ng-container *ngFor="let jobType of jobTypes; let i = index">
+                    <ng-container *ngIf="toCamelCase(jobType.name) as controlName">
+                      <div
+                        class="border border-[#DCDCDC] rounded-[4px] p-3 flex items-center justify-between h-[45px] cursor-pointer"
+                        [class.border-blue-600]="userForm.get('customers')?.get(controlName)?.value"
+                        [class.shadow-selected]="userForm.get('customers')?.get(controlName)?.value"
+                        (click)="toggleCustomerSelection(controlName)"
+                      >
+                        <span>{{ jobType.name }}</span>
+                        <p-checkbox [formControlName]="controlName" (click)="toggleCustomerSelection(controlName)" [binary]="true" [inputId]="controlName" (onClick)="$event.stopPropagation()">
+                        </p-checkbox>
+                      </div>
+                    </ng-container>
+                  </ng-container>
+
+                  <!-- Loading state while job types are being fetched -->
+                  <div *ngIf="isLoading" class="col-span-2 text-center py-8">
+                    <i class="pi pi-spin pi-spinner text-primary-500 text-xl"></i>
+                    <p class="text-gray-600 mt-2">Lade Qualifikationen...</p>
+                  </div>
+
+                  <!-- Fallback if no job types available -->
+                  <div *ngIf="!isLoading && jobTypes.length === 0" class="col-span-2 text-center py-8">
+                    <p class="text-gray-600">Keine Qualifikationen verfügbar.</p>
+                  </div>
+                </div>
+              </div>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <button
+                  (click)="goToStep(3)"
+                  class="w-full bg-primary-500 hover:bg-primary-700 text-white font-dm text-[14px] rounded-[4px] py-3 mt-2 transition-colors duration-200 cursor-pointer md:order-last"
+                >
+                  {{ 'Nächste' | translate }}
+                </button>
+                <button
+                  (click)="goToStep(1)"
+                  class="w-full border border-primary-500 hover:bg-primary-700/10 text-primary-500 font-dm text-[14px] rounded-[4px] py-3 mt-2 transition-colors duration-200 cursor-pointer md:order-first"
+                >
+                  {{ 'Vorherige' | translate }}
+                </button>
+              </div>
+              <div *ngIf="stepErrors[2]" class="mt-2 text-red-600 text-sm text-center">
+                {{ stepErrors[2] }}
+              </div>
+            </ng-template>
+          </p-step-panel>
+
+          <!-- Step 3: Password -->
+          <p-step-panel [value]="3">
+            <ng-template #content let-activateCallback="activateCallback">
+              <div class="min-h-[20rem] gap-2 flex flex-col justify-center">
+                <div class="">
+                  <p-inputgroup>
+                    <p-inputgroup-addon>
+                      <app-icon name="einloggen-password" class="w-5 h-5 text-primary-500 flex items-center" />
+                    </p-inputgroup-addon>
+                    <p-floatlabel variant="in">
+                      <input
+                        pInputText
+                        id="password"
+                        (focus)="onInputFocus('password')"
+                        formControlName="password"
+                        [type]="showPassword ? 'text' : 'password'"
+                        autocomplete="new-password"
+                        required
+                        class="w-full pr-10 py-3 border border-x-0 border-gray-300 focus:outline-none text-gray-700 bg-white"
+                      />
+                      <label for="password">Passwort</label>
+                    </p-floatlabel>
+                    <p-inputgroup-addon class="cursor-pointer" (click)="toggleShowPassword()">
+                      <i [ngClass]="['pi', showPassword ? 'pi-eye-slash' : 'pi-eye', 'text-gray-400']"></i>
+                    </p-inputgroup-addon>
+                  </p-inputgroup>
+                  <small *ngIf="userForm.get('password')?.invalid && userForm.get('password')?.touched" class="text-red-500"> Passwort muss mindestens 6 Zeichen lang sein </small>
+                </div>
+
+                <div class="">
+                  <p-inputgroup>
+                    <p-inputgroup-addon>
+                      <app-icon name="einloggen-password" class="w-5 h-5 text-primary-500 flex items-center" />
+                    </p-inputgroup-addon>
+                    <p-floatlabel variant="in">
+                      <input
+                        pInputText
+                        id="confirmPassword"
+                        (focus)="onInputFocus('confirmPassword')"
+                        formControlName="confirmPassword"
+                        [type]="showPassword ? 'text' : 'password'"
+                        autocomplete="new-password"
+                        required
+                        class="w-full pr-10 py-3 border border-x-0 border-gray-300 focus:outline-none text-gray-700 bg-white"
+                      />
+                      <label for="confirmPassword">Passwort bestätigen</label>
+                    </p-floatlabel>
+                    <p-inputgroup-addon class="cursor-pointer" (click)="toggleShowPassword()">
+                      <i [ngClass]="['pi', showPassword ? 'pi-eye-slash' : 'pi-eye', 'text-gray-400']"></i>
+                    </p-inputgroup-addon>
+                  </p-inputgroup>
+                  <small *ngIf="userForm.hasError('passwordMismatch') && userForm.get('confirmPassword')?.touched" class="text-red-500">Passwörter stimmen nicht überein</small>
+                </div>
+
+                <div *ngIf="loginError" class="mt-2 text-red-600 text-sm font-medium text-center">
+                  {{ loginError }}
+                </div>
+              </div>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <button
+                  (click)="register()"
+                  [disabled]="userForm.invalid || isRegistering"
+                  [class.opacity-50]="userForm.invalid || isRegistering"
+                  class="w-full bg-primary-500 hover:bg-primary-700 text-white font-dm text-[14px] rounded-[4px] py-3 mt-2 transition-colors duration-200 cursor-pointer md:order-last"
+                >
+                  <span *ngIf="!isRegistering">{{ 'Registrierung abschließen' | translate }}</span>
+                  <span *ngIf="isRegistering" class="flex items-center justify-center">
+                    <i class="pi pi-spin pi-spinner mr-2"></i>
+                    {{ 'Wird verarbeitet...' | translate }}
+                  </span>
+                </button>
+                <button
+                  (click)="goToStep(2)"
+                  class="w-full border border-primary-500 hover:bg-primary-700/10 text-primary-500 font-dm text-[14px] rounded-[4px] py-3 mt-2 transition-colors duration-200 cursor-pointer md:order-first"
+                >
+                  {{ 'Vorherige' | translate }}
+                </button>
+              </div>
+              <div *ngIf="stepErrors[3]" class="mt-2 text-red-600 text-sm text-center">
+                {{ stepErrors[3] }}
+              </div>
+            </ng-template>
+          </p-step-panel>
+        </p-step-panels>
+      </p-stepper>
+    </form>
+  </div>
+
+  <div *ngIf="!registrationSuccess" class="lang-selector absolute bottom-6 right-6 hidden md:block">
+    <app-language-selector [openAbove]="true"></app-language-selector>
+  </div>
+
+  <!-- Mobile Keyboard Toolbar -->
+  <div
+    *ngIf="isMobileToolbarVisible && !registrationSuccess"
+    class="md:hidden fixed bottom-0 left-0 right-0 z-[9999] bg-[#EBEBEB] border-t border-gray-300 p-2 flex justify-between items-center shadow-lg"
+  >
+    <div class="flex gap-2">
+      <button
+        (click)="navigateMobileInput('prev')"
+        class="bg-white hover:bg-gray-50 border border-gray-300 text-gray-700 rounded p-2 px-4 shadow-sm active:scale-95 transition-transform"
+        type="button"
+      >
+        <i class="pi pi-angle-up text-lg"></i>
+      </button>
+      <button
+        (click)="navigateMobileInput('next')"
+        class="bg-white hover:bg-gray-50 border border-gray-300 text-gray-700 rounded p-2 px-4 shadow-sm active:scale-95 transition-transform"
+        type="button"
+      >
+        <i class="pi pi-angle-down text-lg"></i>
+      </button>
+    </div>
+    <button (click)="closeMobileToolbar()" class="text-primary-500 font-bold px-4 py-2" type="button">Fertig</button>
+  </div>
+</div>

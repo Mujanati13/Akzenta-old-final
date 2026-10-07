@@ -1,0 +1,501 @@
+<section class="flex flex-col h-full w-full max-w-[100vw] overflow-hidden">
+  <div class="sticky top-0 z-20 backdrop-blur-md pb-2 -mx-2 px-2 lg:mx-0 lg:px-0 lg:pb-0 bg-white/95 lg:bg-transparent pt-2 lg:pt-0 flex-shrink-0">
+    <h2 translate class="w-full flex justify-between items-center text-primary-700 mb-4 sm:mb-6 gap-4 sm:gap-6">
+      <div class="flex gap-2 items-center">
+        <app-icon name="users" class="w-6 h-6 sm:w-8 sm:h-8 flex items-center mr-1 text-primary-700" />
+        <span class="text-2xl sm:text-[30px] font-bold font-dm">Benutzer</span>
+      </div>
+      <button
+        type="button"
+        class="lg:hidden relative inline-flex items-center justify-center w-8 h-8 rounded-[4px] bg-gradient-to-br from-[#00839b] to-[#006a7e] text-white shadow-[0_4px_8px_rgba(0,131,155,0.3)] shrink-0 active:scale-95 transition-transform"
+        (click)="openUsersMobileFilterSheet()"
+      >
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M6 12h12M8 18h8"></path>
+        </svg>
+        <span
+          *ngIf="getTotalUsersActiveFilters() > 0 || clientSearch || nameSearch || categorySearch"
+          class="absolute -top-2 -right-2 px-1.5 bg-[#00839b] text-white text-[10px] font-bold border-2 border-white rounded-full shadow-sm whitespace-nowrap z-10"
+        >
+          {{ getTotalUsersActiveFilters() + (clientSearch ? 1 : 0) + (nameSearch ? 1 : 0) + (categorySearch ? 1 : 0) }}
+        </span>
+      </button>
+    </h2>
+    <div class="hidden lg:grid mb-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-5 xl:grid-cols-5 gap-3 items-center">
+      <!-- Search Input 1 with icon -->
+      <div class="relative w-full">
+        <input
+          type="text"
+          placeholder="Kundensuche"
+          class="lg:h-[54px] h-[45px] px-4 pr-10 border border-gray-300 rounded-[4px] font-dm text-sm w-full focus:outline-none focus:ring-0 focus:border-primary-500"
+          [value]="clientSearch"
+          (input)="onClientSearchChange($any($event.target).value)"
+        />
+        <app-icon *ngIf="!clientSearch || clientSearch.length === 0" name="search" class="absolute right-2 top-1/2 transform -translate-y-1/2 w-[19px] h-[19px] text-gray-500" />
+        <button
+          *ngIf="clientSearch && clientSearch.length > 0"
+          type="button"
+          (click)="clearClientSearch()"
+          class="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 cursor-pointer transition-colors"
+          title="Suche löschen"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+
+      <!-- Search Input 2 with icon -->
+      <div class="relative w-full">
+        <input
+          type="text"
+          placeholder="Namenssuche"
+          class="lg:h-[54px] h-[45px] px-4 pr-10 border border-gray-300 rounded-[4px] font-dm text-sm w-full focus:outline-none focus:ring-0 focus:border-primary-500"
+          [value]="nameSearch"
+          (input)="onNameSearchChange($any($event.target).value)"
+        />
+        <app-icon *ngIf="!nameSearch || nameSearch.length === 0" name="search" class="absolute right-2 top-1/2 transform -translate-y-1/2 w-[19px] h-[19px] text-gray-500" />
+        <button
+          *ngIf="nameSearch && nameSearch.length > 0"
+          type="button"
+          (click)="clearNameSearch()"
+          class="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 cursor-pointer transition-colors"
+          title="Suche löschen"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+
+      <!-- Search Input 3 with icon -->
+      <div class="relative w-full">
+        <input
+          type="text"
+          placeholder="Kategoriesuche"
+          class="lg:h-[54px] h-[45px] px-4 pr-10 border border-gray-300 rounded-[4px] font-dm text-sm w-full focus:outline-none focus:ring-0 focus:border-primary-500"
+          [value]="categorySearch"
+          (input)="onCategorySearchChange($any($event.target).value)"
+        />
+        <app-icon *ngIf="!categorySearch || categorySearch.length === 0" name="search" class="absolute right-2 top-1/2 transform -translate-y-1/2 w-[19px] h-[19px] text-gray-500" />
+        <button
+          *ngIf="categorySearch && categorySearch.length > 0"
+          type="button"
+          (click)="clearCategorySearch()"
+          class="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 cursor-pointer transition-colors"
+          title="Suche löschen"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+      <!-- Clear filters button -->
+      <!-- Updated clear filters button - excludes statusFilter from query params -->
+      <div class="flex-1 min-w-0 content-center">
+        <button
+          *ngIf="clientSearch || nameSearch || categorySearch || hasUsersColumnFilters()"
+          (click)="clearFilters()"
+          class="group cursor-pointer relative isolate w-full lg:w-auto inline-flex items-center justify-center gap-2.5 overflow-hidden rounded-[4px] border border-rose-200/80 bg-gradient-to-r from-white via-rose-50 to-orange-50 px-4 py-2 text-[12px] font-semibold text-rose-700 shadow-sm ring-1 ring-white/60 transition-all duration-300 hover:border-rose-300 hover:bg-white/90 hover:from-white hover:via-rose-100 hover:to-white hover:text-rose-800 hover:shadow-md hover:shadow-rose-200/40 hover:ring-rose-200/70 disabled:pointer-events-none disabled:opacity-40"
+        >
+          <span
+            class="relative flex h-6 w-6 items-center justify-center rounded-full bg-rose-500/15 ring-1 ring-rose-500/20 transition-all duration-300 group-hover:bg-rose-500/10 group-hover:ring-rose-300/50"
+          >
+            <svg class="h-3.5 w-3.5 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h5M20 20v-5h-5M5 9a7 7 0 0111.9-4.9L19 6M5 15a7 7 0 0011.9 4.9L19 18" />
+            </svg>
+          </span>
+          <span class="tracking-[0.01em]">Suche zurücksetzen</span>
+        </button>
+      </div>
+      <!-- Action Button -->
+      <a
+        class="lg:h-[54px] h-[45px] w-full lg:w-[244px] font-dm text-white bg-primary-500 rounded-[4px] md:col-span-2 lg:col-span-1 xl:justify-self-end flex space-x-[12px] items-center justify-center text-sm cursor-pointer no-underline"
+        routerLink="/users/add"
+        (click)="rememberUsersListStateBeforeNavigate()"
+      >
+        <app-icon name="plus" class="w-[13.8px] h-[13.8px]" />
+        <span>Neuen Benutzer anlegen</span>
+      </a>
+    </div>
+  </div>
+
+  <div
+    #usersScrollContainer
+    class="flex-1 overflow-y-auto overflow-x-auto min-h-0 relative -mx-2 px-2 lg:mx-0 lg:px-0 pb-4 pt-2 w-full self-center"
+    [style.--users-sticky-offset.px]="usersStickyOffset"
+  >
+    <div *ngIf="loading" class="relative overflow-hidden">
+      <div class="absolute inset-0 bg-gradient-to-br from-primary-50/50 via-white to-amber-50/40 animate-dashboard-shimmer"></div>
+      <div class="relative z-10 space-y-4">
+        <div class="lg:hidden grid grid-cols-1 gap-2.5">
+          <div *ngFor="let _ of [1, 2, 3, 4]" class="rounded-xl border border-gray-100 bg-white/90 p-4 shadow-sm space-y-3">
+            <div class="flex items-center justify-between gap-3">
+              <div class="space-y-2 flex-1">
+                <div class="h-4 w-40 rounded bg-gray-100 animate-pulse"></div>
+                <div class="h-3 w-52 rounded bg-gray-100 animate-pulse"></div>
+              </div>
+              <div class="h-4 w-4 rounded bg-gray-100 animate-pulse"></div>
+            </div>
+            <div class="grid grid-cols-2 gap-3">
+              <div class="h-3 w-20 rounded bg-gray-100 animate-pulse"></div>
+              <div class="h-3 w-24 rounded bg-gray-100 animate-pulse"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="hidden lg:block rounded-xl border border-gray-100 bg-white/90 shadow-sm overflow-hidden">
+          <div class="grid grid-cols-12 gap-3 px-4 py-3 bg-gray-50/90 border-b border-gray-100">
+            <div class="col-span-2 h-3 rounded bg-gray-200/80 animate-pulse"></div>
+            <div class="col-span-2 h-3 rounded bg-gray-200/80 animate-pulse"></div>
+            <div class="col-span-2 h-3 rounded bg-gray-200/80 animate-pulse"></div>
+            <div class="col-span-2 h-3 rounded bg-gray-200/80 animate-pulse"></div>
+            <div class="col-span-2 h-3 rounded bg-gray-200/80 animate-pulse"></div>
+            <div class="col-span-2 h-3 rounded bg-gray-200/80 animate-pulse"></div>
+          </div>
+          <div class="divide-y divide-gray-100">
+            <div class="grid grid-cols-12 gap-3 px-4 py-4" *ngFor="let _ of [1, 2, 3, 4, 5]">
+              <div class="col-span-2 h-4 w-4/5 rounded bg-gray-100 animate-pulse"></div>
+              <div class="col-span-2 h-4 w-4/5 rounded bg-gray-100 animate-pulse"></div>
+              <div class="col-span-2 h-4 w-5/6 rounded bg-gray-100 animate-pulse"></div>
+              <div class="col-span-2 h-4 w-3/4 rounded bg-gray-100 animate-pulse"></div>
+              <div class="col-span-2 h-4 w-4/5 rounded bg-gray-100 animate-pulse"></div>
+              <div class="col-span-2 h-8 w-16 rounded-md bg-gray-100 animate-pulse"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Enhanced p-table with column reordering and visibility -->
+    <div class="w-full max-w-[100vw]" *ngIf="!loading">
+      <div *ngIf="!shouldShowUsersTable()" class="py-1">
+        <div class="empty-data-alert">Keine Benutzer gefunden.</div>
+      </div>
+      <!-- Mobile Card View -->
+      <div *ngIf="shouldShowUsersTable() && (!paginatedUsersCache || paginatedUsersCache.length === 0)" class="lg:hidden py-1">
+        <div class="empty-data-alert">Keine Ergebnisse gefunden. Bitte passen Sie Ihre Filter an.</div>
+      </div>
+      <div class="lg:hidden flex flex-col gap-2.5 pb-20" *ngIf="paginatedUsersCache && paginatedUsersCache.length > 0">
+        <a *ngFor="let user of paginatedUsersCache" [routerLink]="['/users/edit', user.id]" class="user-mobile-card" (click)="rememberUsersListStateBeforeNavigate()">
+          <!-- Top row: name + chevron -->
+          <div class="flex items-center justify-between gap-3">
+            <div class="flex-1 min-w-0">
+              <span class="block font-semibold text-sm text-gray-900 truncate"> {{ user.firstName }} {{ user.lastName }} </span>
+              <span *ngIf="user.email" class="block text-xs text-gray-400 truncate mt-0.5">{{ user.email }}</span>
+            </div>
+            <svg class="w-4 h-4 text-gray-300 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            </svg>
+          </div>
+
+          <!-- Detail rows -->
+          <div *ngIf="getUsersVisibleColumns().length > 0" class="user-mobile-card__details">
+            <ng-container *ngFor="let col of getUsersVisibleColumns()">
+              <ng-container *ngIf="col.field !== 'lastName' && col.field !== 'email'">
+                <div class="user-mobile-card__detail-row">
+                  <span class="user-mobile-card__detail-label">{{ col.header }}</span>
+                  <span class="user-mobile-card__detail-value">
+                    <ng-container [ngSwitch]="col.field">
+                      <ng-container *ngSwitchCase="'type'">
+                        <span class="user-mobile-card__type-badge">{{ user.type?.name || '–' }}</span>
+                      </ng-container>
+                      <ng-container *ngSwitchCase="'customer'">
+                        {{ getUserClientCompanies(user) || '–' }}
+                      </ng-container>
+                      <ng-container *ngSwitchDefault>
+                        {{ getUserDisplayValue(user, col.field) || '–' }}
+                      </ng-container>
+                    </ng-container>
+                  </span>
+                </div>
+              </ng-container>
+            </ng-container>
+          </div>
+        </a>
+      </div>
+
+      <!-- Table -->
+      <div class="hidden lg:block" *ngIf="shouldShowUsersTable()">
+        <p-table
+          #usersTable
+          styleClass="users-list-table w-full"
+          [value]="paginatedUsersCache"
+          stripedRows
+          dataKey="id"
+          [tableStyle]="{ width: '100%', 'min-width': '100%', 'table-layout': 'fixed' }"
+          [columns]="getUsersVisibleColumns()"
+          [sortField]="sortField"
+          [sortOrder]="sortOrder"
+          [reorderableColumns]="true"
+          [rowHover]="true"
+          (onColReorder)="onUsersColReorder($event)"
+        >
+          <ng-template pTemplate="header" let-columns>
+            <tr [class.opacity-50]="paginatedUsersCache.length === 0" [class.text-gray-400]="paginatedUsersCache.length === 0">
+              <th [title]="'nach Recht oder Links verschieben'" class="rounded-l-lg" style="width: 18%; min-width: 130px">
+                <div class="flex items-center gap-2 text-[13px]">
+                  <span>Vorname</span>
+                  <app-icon name="table_sort" class="w-3 cursor-pointer" (click)="onUserSort('firstName', $event)" />
+                  <span
+                    class="column-filter-btn"
+                    [ngClass]="{
+                      'column-filter-btn--active': getUsersColumnFilterValue('firstName')?.length > 0,
+                      'column-filter-btn--disabled': !canFilterUsersColumn('firstName'),
+                    }"
+                    (click)="canFilterUsersColumn('firstName') && openUsersColumnFilter('firstName', $event); $event.stopPropagation()"
+                  >
+                    <svg class="column-filter-btn__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M6 12h12M8 18h8" />
+                    </svg>
+                    <span *ngIf="getUsersColumnFilterValue('firstName')?.length > 0" class="column-filter-btn__badge">
+                      {{ getUsersColumnFilterValue('firstName').length }}
+                    </span>
+                  </span>
+                </div>
+              </th>
+              <th [title]="'nach Recht oder Links verschieben'" *ngFor="let col of columns" pReorderableColumn style="width: 18%; min-width: 140px">
+                <div class="flex items-center gap-2 text-[13px]">
+                  <span>{{ col.header }}</span>
+                  <app-icon name="table_sort" class="w-3 cursor-pointer" (click)="onUserSort(col.field, $event)" />
+                  <span
+                    class="column-filter-btn"
+                    [ngClass]="{
+                      'column-filter-btn--active': getUsersColumnFilterValue(col.field)?.length > 0,
+                      'column-filter-btn--disabled': !canFilterUsersColumn(col.field),
+                    }"
+                    (click)="canFilterUsersColumn(col.field) && openUsersColumnFilter(col.field, $event); $event.stopPropagation()"
+                  >
+                    <svg class="column-filter-btn__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M6 12h12M8 18h8" />
+                    </svg>
+                    <span *ngIf="getUsersColumnFilterValue(col.field)?.length > 0" class="column-filter-btn__badge">
+                      {{ getUsersColumnFilterValue(col.field).length }}
+                    </span>
+                  </span>
+                </div>
+              </th>
+              <th class="rounded-r-lg" style="width: 10%; min-width: 120px">
+                <app-settings-button [label]="'Settings'" (settingsClick)="toggleSettingsPopover(op, $event)"> </app-settings-button>
+              </th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-user let-columns="columns">
+            <tr class="hover:!bg-gray-200 transition-colors duration-150">
+              <td class="rounded-l-lg truncate p-0" style="width: 18%; min-width: 140px" [title]="user?.firstName">
+                <a
+                  [routerLink]="['/users/edit', user.id]"
+                  (click)="rememberUsersListStateBeforeNavigate()"
+                  class="block w-full h-full text-inherit no-underline items-center content-center text-[12px]"
+                >
+                  <span *ngIf="user?.firstName">{{ user.firstName }}</span>
+                </a>
+              </td>
+              <td *ngFor="let col of columns" class="truncate p-0" style="width: 18%; min-width: 140px" [title]="getTooltipValue(user, col.field)">
+                <a
+                  [routerLink]="['/users/edit', user.id]"
+                  (click)="rememberUsersListStateBeforeNavigate()"
+                  class="block w-full h-full text-inherit no-underline items-center content-center text-[12px]"
+                >
+                  <ng-container [ngSwitch]="col.field">
+                    <ng-container *ngSwitchCase="'lastName'">
+                      {{ user.lastName || '-' }}
+                    </ng-container>
+                    <ng-container *ngSwitchCase="'email'">
+                      {{ user.email || '-' }}
+                    </ng-container>
+                    <ng-container *ngSwitchCase="'type'">
+                      {{ user.type?.name || '-' }}
+                    </ng-container>
+                    <ng-container *ngSwitchCase="'customer'">
+                      {{ getUserClientCompanies(user) }}
+                    </ng-container>
+                    <ng-container *ngSwitchDefault>
+                      {{ getUserDisplayValue(user, col.field) }}
+                    </ng-container>
+                  </ng-container>
+                </a>
+              </td>
+              <td class="rounded-r-lg" style="width: 10%; min-width: 120px">
+                <div class="flex space-x-3 justify-end">
+                  <a [routerLink]="['/users/edit', user.id]" class="cursor-pointer inline-flex items-center" (click)="rememberUsersListStateBeforeNavigate()">
+                    <app-icon name="pencil" class="w-5 h-5 text-primary-500" title="Benutzer bearbeiten" />
+                  </a>
+                </div>
+              </td>
+            </tr>
+          </ng-template>
+
+          <ng-template pTemplate="emptymessage">
+            <tr>
+              <td [attr.colspan]="getUsersVisibleColumns().length + 2" class="text-center py-6">
+                <div class="empty-data-alert">Keine Ergebnisse gefunden. Bitte passen Sie Ihre Filter an.</div>
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+
+      <div class="mt-4" *ngIf="showUsersPaginator">
+        <p-paginator #usersPaginator [rows]="pageSize" [first]="paginationFirst" [totalRecords]="usersPaginatorTotalRecords" (onPage)="onPageChange($event)"></p-paginator>
+      </div>
+    </div>
+
+    <p-popover #op [styleClass]="'column-filter-popover settings-popover'" appendTo="body" [dismissable]="true">
+      <div class="column-filter-popover-content settings-popover-content w-[85vw] sm:w-[20rem]">
+        <div class="column-filter-popover-header">
+          <div class="column-filter-popover-header flex items-center justify-between pb-2">
+            <div class="flex items-center gap-3">
+              <span class="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-[4px] bg-gradient-to-br from-primary-500 to-primary-600 text-white shadow-sm" aria-hidden="true">
+                <span class="pi pi-cog text-sm!"></span>
+              </span>
+              <div>
+                <p class="m-0 text-[10px] font-bold uppercase tracking-[0.08em] text-slate-500">Columns Settings</p>
+                <p class="m-0 font-dm text-[15px] font-bold text-slate-900">Settings</p>
+              </div>
+            </div>
+            <div class="ml-auto flex items-center gap-2">
+              <button
+                type="button"
+                class="filter-modal-clear shrink-0"
+                [disabled]="selectedColumns?.length === cols?.length"
+                (click)="selectedColumns = cols.slice(); onUsersColumnsChange(selectedColumns)"
+                aria-label="Filter zurücksetzen"
+              >
+                <svg class="filter-modal-clear__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                </svg>
+                <span>Clear</span>
+              </button>
+              <button type="button" (click)="op.hide()" class="filter-modal-close" aria-label="Schließen">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+        <p-listbox
+          [options]="cols"
+          [(ngModel)]="selectedColumns"
+          [multiple]="true"
+          [checkbox]="true"
+          [filter]="true"
+          optionLabel="header"
+          emptyMessage="Keine Daten vorhanden"
+          emptyFilterMessage="Keine Ergebnisse gefunden"
+          class="settings-listbox"
+          (onChange)="onUsersColumnsChange($event.value)"
+        />
+        <div class="filter-modal-footer filter-modal-footer--end">
+          <button type="button" class="filter-modal-btn filter-modal-btn--compact" (click)="op.hide()">Fertig</button>
+        </div>
+      </div>
+    </p-popover>
+
+    <!-- Mobile: Centered column filter modal (replaces popover on small screens) -->
+    <app-column-filter-dialog
+      [(visible)]="showColumnFilterModal"
+      [title]="getColumnFilterModalTitle()"
+      [hasActiveFilter]="!!getUsersColumnFilterValue(currentUsersFilterField)?.length"
+      (filterCleared)="onUsersColumnFilterCleared()"
+      (dialogHide)="closeColumnFilterModal()"
+    >
+      <p-listbox
+        [(ngModel)]="usersColumnFilters[currentUsersFilterField]"
+        [options]="currentUsersFilterOptions"
+        [multiple]="true"
+        [checkbox]="true"
+        [filter]="true"
+        optionLabel="label"
+        optionValue="value"
+        filterBy="label"
+        emptyMessage="Keine Daten vorhanden"
+        emptyFilterMessage="Keine Ergebnisse gefunden"
+        class="dashboard-column-filter-modal-listbox"
+        (ngModelChange)="onUsersColumnFilterChange()"
+      />
+    </app-column-filter-dialog>
+
+    <!-- Users Column Filter Popover (desktop) -->
+    <app-column-filter-popover
+      #usersColumnFilterPopover
+      [title]="currentUsersFilterField ? getColumnFilterModalTitle() : 'Filter'"
+      [options]="currentUsersFilterOptions"
+      [(selectedValues)]="usersColumnFilters[currentUsersFilterField]"
+      (filterChange)="onUsersColumnFilterChange()"
+      (popoverHide)="onUsersColumnFilterPopoverClose()"
+    >
+    </app-column-filter-popover>
+
+    <app-mobile-filter-bottom-sheet
+      [(visible)]="showUsersMobileFilter"
+      title="Benutzer"
+      [columns]="getUsersMobileFilterColumns()"
+      [filterValues]="usersColumnFilters"
+      [columnOptions]="usersMobileColumnOptions"
+      [canFilterMap]="usersCanFilterMap"
+      (filtersChanged)="onUsersMobileFilterChanged($event)"
+      (allFiltersCleared)="onUsersMobileFilterCleared()"
+    >
+      <div custom-inputs class="px-4 pt-2 pb-3 border-b border-gray-100 bg-white flex flex-col gap-2.5">
+        <div class="relative w-full">
+          <input
+            type="text"
+            placeholder="Kundensuche"
+            class="h-[45px] px-4 pr-10 border border-gray-300 rounded-[4px] font-dm text-sm w-full focus:outline-none focus:ring-0 focus:border-primary-500"
+            [value]="clientSearch"
+            (input)="onClientSearchChange($any($event.target).value)"
+          />
+          <app-icon *ngIf="!clientSearch" name="search" class="absolute right-2 top-1/2 transform -translate-y-1/2 w-[19px] h-[19px] text-gray-500" />
+          <button *ngIf="clientSearch" type="button" (click)="clearClientSearch()" class="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+
+        <div class="relative w-full">
+          <input
+            type="text"
+            placeholder="Namenssuche"
+            class="h-[45px] px-4 pr-10 border border-gray-300 rounded-[4px] font-dm text-sm w-full focus:outline-none focus:ring-0 focus:border-primary-500"
+            [value]="nameSearch"
+            (input)="onNameSearchChange($any($event.target).value)"
+          />
+          <app-icon *ngIf="!nameSearch" name="search" class="absolute right-2 top-1/2 transform -translate-y-1/2 w-[19px] h-[19px] text-gray-500" />
+          <button *ngIf="nameSearch" type="button" (click)="clearNameSearch()" class="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+
+        <div class="relative w-full">
+          <input
+            type="text"
+            placeholder="Kategoriesuche"
+            class="h-[45px] px-4 pr-10 border border-gray-300 rounded-[4px] font-dm text-sm w-full focus:outline-none focus:ring-0 focus:border-primary-500"
+            [value]="categorySearch"
+            (input)="onCategorySearchChange($any($event.target).value)"
+          />
+          <app-icon *ngIf="!categorySearch" name="search" class="absolute right-2 top-1/2 transform -translate-y-1/2 w-[19px] h-[19px] text-gray-500" />
+          <button *ngIf="categorySearch" type="button" (click)="clearCategorySearch()" class="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+
+        <a
+          class="h-[45px] w-full font-dm text-white bg-primary-500 rounded-[4px] flex space-x-[12px] items-center justify-center text-sm cursor-pointer no-underline"
+          routerLink="/users/add"
+          (click)="rememberUsersListStateBeforeNavigate(); showUsersMobileFilter = false"
+        >
+          <app-icon name="plus" class="w-[13.8px] h-[13.8px]" />
+          <span>Neuen Benutzer anlegen</span>
+        </a>
+      </div>
+    </app-mobile-filter-bottom-sheet>
+  </div>
+</section>

@@ -1,0 +1,305 @@
+.p-confirmpopup {
+  margin-left: var(--p-confirmpopup-gutter);
+}
+.p-confirmpopup:after,
+.p-confirmpopup:before {
+  bottom: 100%;
+  left: 18.25rem;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+}
+
+/* Page content animation */
+:host section {
+  animation: pageFadeIn 0.4s ease forwards;
+}
+
+@keyframes pageFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Header animation */
+:host h2 {
+  animation: headerSlideIn 0.5s ease 0.1s both;
+}
+
+@keyframes headerSlideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Table animations */
+:host ::ng-deep .p-datatable-tbody > tr {
+  opacity: 0;
+  transform: translateX(-10px);
+  animation: tableRowSlideIn 0.4s ease forwards;
+}
+
+:host ::ng-deep .p-datatable-tbody > tr:nth-child(1) {
+  animation-delay: 0.05s;
+}
+
+:host ::ng-deep .p-datatable-tbody > tr:nth-child(2) {
+  animation-delay: 0.1s;
+}
+
+:host ::ng-deep .p-datatable-tbody > tr:nth-child(3) {
+  animation-delay: 0.15s;
+}
+
+:host ::ng-deep .p-datatable-tbody > tr:nth-child(4) {
+  animation-delay: 0.2s;
+}
+
+:host ::ng-deep .p-datatable-tbody > tr:nth-child(5) {
+  animation-delay: 0.25s;
+}
+
+:host ::ng-deep .p-datatable-tbody > tr:nth-child(n + 6) {
+  animation-delay: 0.3s;
+}
+
+@keyframes tableRowSlideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Table hover effects */
+:host ::ng-deep .p-datatable-tbody > tr {
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+:host ::ng-deep .p-datatable-tbody > tr:hover {
+  transform: translateX(2px);
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+/* Button animations */
+:host button {
+  transition: all 0.2s ease;
+}
+
+:host button:hover:not(:disabled) {
+  transform: translateY(-1px);
+  transition: all 0.2s ease;
+}
+
+/* Icon animations */
+:host app-icon,
+:host a {
+  transition:
+    transform 0.2s ease,
+    opacity 0.2s ease;
+}
+
+:host app-icon:hover,
+:host a:hover {
+  transform: scale(1.1);
+  transition:
+    transform 0.2s ease,
+    opacity 0.2s ease;
+}
+
+::ng-deep .p-listbox-option {
+  font-size: 13px;
+}
+
+// Column filter popover — match HeadOffice dashboard design
+::ng-deep .column-filter-popover {
+  --column-filter-popover-width: 360px;
+  --column-filter-popover-height: 480px;
+
+  &.p-popover {
+    width: min(calc(100vw - 1.5rem), var(--column-filter-popover-width));
+    max-width: min(calc(100vw - 1.5rem), var(--column-filter-popover-width));
+    height: min(calc(100vh - 1.5rem), var(--column-filter-popover-height));
+    max-height: min(calc(100vh - 1.5rem), var(--column-filter-popover-height));
+    box-sizing: border-box;
+    border: none;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow:
+      0 24px 48px rgba(0, 30, 50, 0.15),
+      0 4px 12px rgba(0, 0, 0, 0.05),
+      inset 0 1px 0 rgba(255, 255, 255, 0.8);
+
+    @media (min-width: 1024px) {
+      width: var(--column-filter-popover-width);
+      max-width: var(--column-filter-popover-width);
+      height: var(--column-filter-popover-height);
+      max-height: var(--column-filter-popover-height);
+      border-radius: 24px;
+      border: 1px solid rgba(255, 255, 255, 0.6);
+    }
+  }
+
+  .p-popover-content {
+    padding: 0 !important;
+    background: transparent;
+    height: 100%;
+    border-radius: 24px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .p-popover-content > div {
+    height: 100%;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .p-popover-arrow {
+    display: none;
+  }
+
+  .column-filter-popover-header {
+    margin-bottom: 0;
+    padding: 1.25rem;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.4));
+    border-bottom: 1px solid rgba(0, 131, 155, 0.06);
+
+    @media (min-width: 1024px) {
+      border-radius: 24px 24px 0 0;
+    }
+  }
+
+  .p-listbox {
+    width: 100% !important;
+    height: 100%;
+    max-height: 100% !important;
+    box-sizing: border-box;
+    border: none !important;
+    border-radius: 0 0 24px 24px;
+    flex: 1 1 auto;
+    min-height: 0;
+    background: transparent;
+  }
+
+  .p-listbox-filter-container {
+    padding: 1rem 1.25rem 0.5rem;
+    border-bottom: 1px solid transparent;
+    background-color: transparent;
+  }
+
+  .p-listbox-filter {
+    border-radius: 999px;
+    border: 1px solid rgba(0, 131, 155, 0.15);
+    font-size: 0.85rem;
+    padding: 0.6rem 1rem 0.6rem 2.2rem;
+    background: rgba(255, 255, 255, 0.8);
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.02);
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+
+    &:focus {
+      border-color: #00839b;
+      box-shadow: 0 0 0 4px rgba(0, 131, 155, 0.1);
+      background: #fff;
+    }
+  }
+
+  .p-listbox-filter-icon {
+    left: 1.1rem;
+    color: #94a3b8;
+  }
+
+  .p-listbox-list-container {
+    background: transparent;
+    height: 100%;
+  }
+
+  .p-listbox-option,
+  .p-listbox-item {
+    border-radius: 12px;
+    margin: 0.2rem 0.75rem;
+    font-size: 12px;
+    padding: 0.6rem 0.8rem;
+    transition: all 0.2s ease;
+    border: 1px solid transparent;
+  }
+
+  .p-listbox-option.p-listbox-option-selected,
+  .p-listbox-item.p-highlight {
+    background: linear-gradient(90deg, rgba(0, 131, 155, 0.12) 0%, rgba(0, 131, 155, 0.02) 100%);
+    border-color: rgba(0, 131, 155, 0.2);
+    color: #0f172a;
+    font-weight: 600;
+    transform: translateX(3px);
+  }
+
+  .p-listbox-option:not(.p-listbox-option-selected):hover,
+  .p-listbox-item:not(.p-highlight):hover {
+    background: rgba(15, 23, 42, 0.03);
+  }
+
+  .p-checkbox .p-checkbox-box {
+    border-radius: 6px;
+    border: 2px solid #cbd5e1;
+    transition: all 0.2s;
+  }
+
+  .p-checkbox .p-checkbox-box.p-highlight {
+    border-color: #00839b;
+    background: #00839b;
+    box-shadow: 0 4px 8px rgba(0, 131, 155, 0.25);
+  }
+
+  .p-listbox-list {
+    padding: 0.5rem 0 1rem;
+  }
+
+  .p-listbox-empty-message {
+    font-size: 12px;
+    color: #94a3b8;
+    justify-content: center;
+    padding: 2rem 1rem;
+    text-align: center;
+  }
+
+  .p-listbox-option {
+    font-size: 12px;
+  }
+}
+
+::ng-deep .settings-popover {
+  .settings-popover-content {
+    height: 100%;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .settings-listbox,
+  .p-listbox {
+    flex: 1 1 auto;
+    min-height: 0;
+  }
+}

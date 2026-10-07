@@ -1,0 +1,154 @@
+<div class="flex flex-col lg:flex-row gap-4 lg:gap-x-4">
+  <!-- Staff Grid -->
+  <div class="flex-1 order-2 lg:order-1">
+    <!-- Loading state -->
+    <div *ngIf="loading" class="flex flex-col justify-center items-center py-20">
+      <div class="animate-spin rounded-[4px] h-12 w-12 border-t-2 border-b-2 border-primary-500"></div>
+      <p class="mt-4 text-gray-600">Lade Personal...</p>
+    </div>
+
+    <!-- Empty state message -->
+    <div *ngIf="!loading && paginatedData.length === 0" class="py-2">
+      <div class="empty-data-alert">Keine Einträge gefunden.</div>
+    </div>
+
+    <!-- Staff Grid (Desktop - Paginated) -->
+    <div *ngIf="!loading && paginatedData.length > 0" class="hidden lg:grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6 mb-6">
+      <!-- Staff Item -->
+      <div
+        *ngFor="let staff of paginatedData"
+        class="group bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 ease-out flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-x-3 px-4 sm:px-5 py-4 min-h-[140px]"
+      >
+        <!-- Staff Image -->
+        <a
+          [routerLink]="['/staff', staff.id]"
+          class="w-[100px] h-[120px] sm:w-[115px] sm:h-[138px] rounded-xl overflow-hidden flex-shrink-0 bg-gray-200 border-2 border-gray-200 shadow-md cursor-pointer block self-center sm:self-auto transition-all duration-200 group-hover:shadow-lg group-hover:border-gray-300"
+        >
+          <img
+            [src]="staff?.portrait?.path || 'https://st2.depositphotos.com/1010683/7109/i/450/depositphotos_71090693-stock-photo-caucasian-handsome-man-in-grey.jpg'"
+            alt="{{ staff.firstName }} {{ staff.lastName }}"
+            class="w-full h-full object-cover object-top transition-transform duration-200 group-hover:scale-105"
+          />
+        </a>
+
+        <!-- Staff Info -->
+        <div class="flex flex-col gap-y-1 sm:gap-y-[6px] flex-1 min-w-0 w-full">
+          <div class="flex items-start mb-0.5 sm:mb-0 gap-x-1 sm:gap-x-1.5 flex-wrap">
+            <a
+              [routerLink]="['/staff', staff.id]"
+              class="text-primary-500 font-semibold text-[11px] sm:text-[12px] leading-tight cursor-pointer hover:underline truncate min-w-0 flex-1"
+              [title]="staff.firstName + ' ' + staff.lastName"
+              >{{ staff.firstName }} {{ staff.lastName }}</a
+            >
+            <span
+              class="px-2.5 sm:px-3 py-1 text-[8px] sm:text-[10px] font-semibold text-white bg-primary-500 rounded-[4px] flex-shrink-0 whitespace-nowrap leading-tight ml-auto uppercase tracking-wide"
+            >
+              {{ staff.status || 'Neu' }}
+            </span>
+          </div>
+          <div class="text-gray-500 text-[8px] sm:text-[9px] whitespace-nowrap mb-0.5 sm:mb-1">Geb. {{ staff.dateOfBirth | euDate }}</div>
+          <div class="flex flex-col gap-y-2 sm:gap-y-[18px]">
+            <div class="flex items-end text-[9px] sm:text-[10px]">
+              <div class="text-gray-700 leading-tight">
+                <p class="truncate">{{ staff.address }}</p>
+                <p class="truncate">{{ staff.postalCode }} {{ staff.city || '-' }}</p>
+                <p class="truncate">{{ staff.country }}</p>
+              </div>
+            </div>
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-y-1 sm:gap-y-0 leading-tight">
+              <div class="mt-0.5 sm:mt-1 text-gray-500 text-[9px] sm:text-[10px] leading-tight min-w-0 sm:pr-4">
+                <p class="truncate">{{ staff.email }}</p>
+                <p class="truncate">{{ staff.phone }}</p>
+              </div>
+              <div class="flex gap-x-1.5 sm:gap-x-2 flex-shrink-0">
+                <app-icon name="info" class="w-4 h-4 sm:w-5 sm:h-5 cursor-pointer text-primary-500 flex items-center" [title]="staff.qualifications?.join(', ') || 'Keine Angaben'" />
+                <a [routerLink]="['/staff', staff.id]" class="flex items-center">
+                  <app-icon name="resizeable_eye" class="w-4 h-4 sm:w-5 sm:h-5 cursor-pointer text-primary-500 flex items-center hover:text-primary-600" title="Details ansehen" />
+                </a>
+                <a [href]="'mailto:' + staff.email" title="E-Mail senden">
+                  <app-icon name="envelope" class="w-4 h-4 sm:w-5 sm:h-5 cursor-pointer text-primary-500 flex items-center" title="E-Mail senden" />
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Staff Grid (Mobile - All Items) -->
+    <div *ngIf="!loading && filteredStaffData.length > 0" class="lg:hidden grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mb-6">
+      <!-- Staff Item -->
+      <div
+        *ngFor="let staff of filteredStaffData"
+        class="group bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 ease-out flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-x-3 px-4 sm:px-5 py-4 min-h-[140px]"
+      >
+        <!-- Staff Image -->
+        <a
+          [routerLink]="['/staff', staff.id]"
+          class="w-[100px] h-[120px] sm:w-[115px] sm:h-[138px] rounded-xl overflow-hidden flex-shrink-0 bg-gray-200 border-2 border-gray-200 shadow-md cursor-pointer block self-center sm:self-auto transition-all duration-200 group-hover:shadow-lg group-hover:border-gray-300"
+        >
+          <img
+            [src]="staff?.portrait?.path || 'https://st2.depositphotos.com/1010683/7109/i/450/depositphotos_71090693-stock-photo-caucasian-handsome-man-in-grey.jpg'"
+            alt="{{ staff.firstName }} {{ staff.lastName }}"
+            class="w-full h-full object-cover object-top transition-transform duration-200 group-hover:scale-105"
+          />
+        </a>
+
+        <!-- Staff Info -->
+        <div class="flex flex-col gap-y-1 sm:gap-y-[6px] flex-1 min-w-0 w-full">
+          <div class="flex items-start mb-0.5 sm:mb-0 gap-x-1 sm:gap-x-1.5 flex-wrap">
+            <a
+              [routerLink]="['/staff', staff.id]"
+              class="text-primary-500 font-semibold text-[11px] sm:text-[12px] leading-tight cursor-pointer hover:underline truncate min-w-0 flex-1"
+              [title]="staff.firstName + ' ' + staff.lastName"
+              >{{ staff.firstName }} {{ staff.lastName }}</a
+            >
+            <span
+              class="px-2.5 sm:px-3 py-1 text-[8px] sm:text-[10px] font-semibold text-white bg-primary-500 rounded-[4px] flex-shrink-0 whitespace-nowrap leading-tight ml-auto uppercase tracking-wide"
+            >
+              {{ staff.status || 'Neu' }}
+            </span>
+          </div>
+          <div class="text-gray-500 text-[8px] sm:text-[9px] whitespace-nowrap mb-0.5 sm:mb-1">Geb. {{ staff.dateOfBirth | euDate }}</div>
+          <div class="flex flex-col gap-y-2 sm:gap-y-[18px]">
+            <div class="flex items-end text-[9px] sm:text-[10px]">
+              <div class="text-gray-700 leading-tight">
+                <p class="truncate">{{ staff.address }}</p>
+                <p class="truncate">{{ staff.postalCode }} {{ staff.city || '-' }}</p>
+                <p class="truncate">{{ staff.country }}</p>
+              </div>
+            </div>
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-y-1 sm:gap-y-0 leading-tight">
+              <div class="mt-0.5 sm:mt-1 text-gray-500 text-[9px] sm:text-[10px] leading-tight min-w-0 sm:pr-4">
+                <p class="truncate">{{ staff.email }}</p>
+                <p class="truncate">{{ staff.phone }}</p>
+              </div>
+              <div class="flex gap-x-1.5 sm:gap-x-2 flex-shrink-0">
+                <app-icon name="info" class="w-4 h-4 sm:w-5 sm:h-5 cursor-pointer text-primary-500 flex items-center" [title]="staff.qualifications?.join(', ') || 'Keine Angaben'" />
+                <a [routerLink]="['/staff', staff.id]" class="flex items-center">
+                  <app-icon name="resizeable_eye" class="w-4 h-4 sm:w-5 sm:h-5 cursor-pointer text-primary-500 flex items-center hover:text-primary-600" title="Details ansehen" />
+                </a>
+                <a [href]="'mailto:' + staff.email" title="E-Mail senden">
+                  <app-icon name="envelope" class="w-4 h-4 sm:w-5 sm:h-5 cursor-pointer text-primary-500 flex items-center" title="E-Mail senden" />
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Pagination -->
+    <div *ngIf="!loading && shouldShowPaginator && paginatedData.length > 0" class="mt-6 hidden lg:block">
+      <p-paginator
+        #paginator
+        [rows]="rows"
+        [first]="first"
+        [totalRecords]="totalRecords"
+        (onPage)="onPageChange($event)"
+        [showCurrentPageReport]="true"
+        currentPageReportTemplate="Zeige {first} bis {last} von {totalRecords} Einträgen"
+      >
+      </p-paginator>
+    </div>
+  </div>
+</div>

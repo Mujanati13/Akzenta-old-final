@@ -1,0 +1,499 @@
+import { Component, OnInit, OnDestroy, ViewEncapsulation } from '@angular/core';
+import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
+import { Router, ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
+import { HotToastService } from '@ngxpert/hot-toast';
+import { ClientCompanyService, ClientCompany } from '@app/core/services/client-company.service';
+import { ClientService, CreateClientDto } from '@app/core/services/client.service';
+import { finalize, catchError, of } from 'rxjs';
+import { ContactPersonAddStateService } from './contact-person-add-state.service';
+
+@Component({
+  selector: 'app-contact-person-add',
+  templateUrl: './contact-person-add.component.html',
+  styleUrls: ['./contact-person-add.component.scss'],
+  encapsulation: ViewEncapsulation.None,
+  standalone: false,
+})
+export class ContactPersonAddComponent implements OnInit, OnDestroy {
+  userForm: FormGroup;
+  isSubmitting = false;
+  isLoadingClient = false;
+  preSelectedClient: ClientCompany | null = null;
+  clientId: number | null = null;
+  isSuccessfulSubmission = false;
+  private previousFormState: any = null;
+
+  // Gender options (matching user-add component)
+  genderOptions = [
+    { code: 'male', name: 'Herr' },
+    { code: 'female', name: 'Frau' },
+    { code: 'other', name: 'Divers' },
+  ];
+
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+    private route: ActivatedRoute,
+    private location: Location,
+    private clientCompanyService: ClientCompanyService,
+    private clientService: ClientService,
+    private contactPersonStateService: ContactPersonAddStateService,
+    private toast: HotToastService,
+  ) {}
+
+  ngOnInit(): void {
+    this.initializeForm();
+    this.loadClientFromRoute();
+    this.restoreFormState();
+  }
+
+  private isEmailSendFailure(error: any): boolean {
+    const errors = error?.data?.errors || error?.error?.errors || {};
+    return errors.email === 'emailDeliveryFailed';
+  }
+
+  private handleEmailSendFailure(formValues: any, newContactEmail: string, newContactName: string): void {
+    this.toast.warning(
+      'Ansprechpartner wurde erstellt, aber die Zugangsdaten-E-Mail konnte nicht versendet werden. Bitte nutzen Sie in der Bearbeitungsansicht „Neues Passwort generieren und verschicken“.',
+      {
+        position: 'bottom-right',
+        duration: 8000,
+        icon: '✉️',
+      },
+    );
+
+    // Clear cached form state to avoid stale data
+    this.contactPersonStateService.clearState();
+
+    const returnToPath = (this as any).returnToPath || this.route.snapshot.queryParams['returnTo'] || (window.history as any).state?.returnTo;
+
+    const returnToType = this.route.snapshot.queryParams['returnToType'] || (window.history as any).state?.returnToType;
+
+    if (returnToPath) {
+      setTimeout(() => {
+        const stateKey = returnToType === 'client' ? 'newClientContactEmail' : 'newContactEmail';
+        const nameKey = returnToType === 'client' ? 'newClientContactName' : 'newContactName';
+        this.router.navigate([returnToPath], {
+          state: {
+            [stateKey]: newContactEmail,
+            [nameKey]: newContactName,
+            formState: this.previousFormState,
+          },
+        });
+      }, 300);
+    } else {
+      setTimeout(() => {
+        this.location.back();
+      }, 300);
+    }
+  }
+
+  ngOnDestroy(): void {
+    // Save form state when leaving the page (unless form was successfully submitted)
+    if (!this.isSubmitting && !this.isSuccessfulSubmission) {
+      this.saveCurrentFormState();
+    }
+  }
+
+  /**
+   * Save current form state to the state service
+   */
+  private saveCurrentFormState(): void {
+    const formValue = this.userForm.value;
+    this.contactPersonStateService.saveFormState({
+      gender: formValue.gender || '',
+      firstName: formValue.firstName || '',
+      lastName: formValue.lastName || '',
+      phone: formValue.phone || '',
+      email: formValue.email || '',
+    });
+  }
+
+  /**
+   * Restore form state from cache
+   */
+  private restoreFormState(): void {
+    const cachedState = this.contactPersonStateService.getState();
+
+    if (cachedState && this.contactPersonStateService.isCacheValid()) {
+      this.userForm.patchValue({
+        gender: cachedState.gender,
+        firstName: cachedState.firstName,
+        lastName: cachedState.lastName,
+        phone: cachedState.phone,
+        email: cachedState.email,
+      });
+    }
+  }
+
+  /**
+   * Initialize the reactive form
+   */
+  private initializeForm(): void {
+    this.userForm = this.fb.group({
+      gender: ['', Validators.required],
+      firstName: ['', [Validators.required, Validators.minLength(2)]],
+      lastName: ['', [Validators.required, Validators.minLength(2)]],
+      phone: ['', [Validators.pattern(/^[+]?\d{4,20}$/)]],
+      email: ['', [Validators.required, Validators.email]],
+      // Password is auto-generated by backend and sent via email
+      customers: this.fb.group({}),
+    });
+
+    // Auto-save form state on value changes (debounced)
+    let saveTimeout: any;
+    this.userForm.valueChanges.subscribe(() => {
+      clearTimeout(saveTimeout);
+      saveTimeout = setTimeout(() => {
+        if (!this.isSuccessfulSubmission) {
+          this.saveCurrentFormState();
+        }
+      }, 500); // Debounce for 500ms
+    });
+  }
+
+  /**
+   * Load client from route parameter
+   */
+  private loadClientFromRoute(): void {
+    this.route.params.subscribe((params) => {
+      const clientIdParam = params['client'];
+
+      if (clientIdParam) {
+        this.clientId = Number(clientIdParam);
+
+        if (!isNaN(this.clientId)) {
+          this.loadClientCompany(this.clientId);
+        } else {
+          console.error('❌ Invalid client ID in route:', clientIdParam);
+          this.toast.error('Ungültige Kunden-ID', {
+            position: 'bottom-right',
+            duration: 3000,
+          });
+          this.location.back();
+        }
+      } else {
+      }
+    });
+
+    // Check for returnTo in query params or state
+    this.route.queryParams.subscribe((queryParams) => {
+      if (queryParams['returnTo']) {
+        // Store returnTo in a property for later use
+        (this as any).returnToPath = queryParams['returnTo'];
+      }
+    });
+
+    // Also check navigation state
+    const navigation = this.router.getCurrentNavigation();
+    const state = navigation?.extras?.state || (window.history as any).state;
+
+    if (state) {
+      if (state.returnTo) {
+        (this as any).returnToPath = state.returnTo;
+      }
+
+      if (state.formState) {
+        this.previousFormState = state.formState;
+      }
+    }
+  }
+
+  /**
+   * Load specific client company by ID
+   */
+  private loadClientCompany(clientId: number): void {
+    this.isLoadingClient = true;
+
+    // Use getClientCompanyWithRelationships to fetch a single client directly by ID
+    // This is much faster than loading all clients and filtering
+    this.clientCompanyService
+      .getClientCompanyWithRelationships(clientId)
+      .pipe(
+        finalize(() => {
+          this.isLoadingClient = false;
+        }),
+        catchError((error) => {
+          console.error('❌ Error loading client company:', error);
+
+          this.toast.error('Fehler beim Laden des Kundenunternehmens', {
+            position: 'bottom-right',
+            duration: 4000,
+          });
+
+          return of(null);
+        }),
+      )
+      .subscribe({
+        next: (clientCompany) => {
+          if (clientCompany) {
+            this.preSelectedClient = clientCompany.clientCompany;
+            this.setupDynamicForm();
+          } else {
+            console.error('❌ Client company not found with ID:', clientId);
+            this.toast.error('Kundenunternehmen nicht gefunden', {
+              position: 'bottom-right',
+              duration: 3000,
+            });
+            this.location.back();
+          }
+        },
+      });
+  }
+
+  /**
+   * Setup form controls dynamically for the preselected client
+   */
+  private setupDynamicForm(): void {
+    if (!this.preSelectedClient) return;
+
+    const customersGroup = this.userForm.get('customers') as FormGroup;
+
+    // Clear existing controls
+    Object.keys(customersGroup.controls).forEach((key) => {
+      customersGroup.removeControl(key);
+    });
+
+    // Add control for the preselected client and set it to true and disabled
+    const controlName = this.getControlName(this.preSelectedClient);
+    customersGroup.addControl(controlName, new FormControl({ value: true, disabled: true }));
+  }
+
+  getControlName(company: ClientCompany): string {
+    return `company_${company.id}`;
+  }
+
+  /**
+   * Check if form is valid for submission
+   */
+  isFormValidForSubmission(): boolean {
+    // Form is valid if all fields are filled
+    // Client assignment is now optional
+    return this.userForm.valid;
+  }
+
+  /**
+   * Get fallback image for companies without logos
+   */
+  getFallbackImage(): string {
+    return 'images/placeholder.png';
+  }
+
+  /**
+   * Submit form and create client user
+   */
+  onSubmit(): void {
+    if (!this.isFormValidForSubmission() || this.isSubmitting) {
+      this.userForm.markAllAsTouched();
+
+      if (!this.userForm.valid) {
+        this.toast.error('Bitte füllen Sie alle erforderlichen Felder korrekt aus', {
+          position: 'bottom-right',
+          duration: 3000,
+        });
+      }
+
+      return;
+    }
+
+    this.isSubmitting = true;
+
+    const formValues = this.userForm.value;
+
+    // Create client data - include client company if pre-selected, otherwise create without assignment
+    // Password will be auto-generated by backend and sent via email
+    const createClientData: CreateClientDto = {
+      email: formValues.email,
+      // password is optional - backend will generate it automatically
+      firstName: formValues.firstName,
+      lastName: formValues.lastName,
+      gender: formValues.gender,
+      phone: formValues.phone,
+      clientCompanies: this.preSelectedClient ? [{ id: this.preSelectedClient.id }] : [],
+    };
+
+    // Show loading toast
+    const loadingToast = this.toast.loading('Erstelle Ansprechpartner...', {
+      position: 'bottom-right',
+      duration: 2000,
+    });
+
+    this.clientService
+      .createClient(createClientData)
+      .pipe(
+        finalize(() => {
+          this.isSubmitting = false;
+          loadingToast.close();
+        }),
+      )
+      .subscribe({
+        next: () => {
+          this.isSuccessfulSubmission = true;
+
+          // Get the email and name of the newly created contact
+          const newContactEmail = this.userForm.get('email')?.value;
+          const firstName = this.userForm.get('firstName')?.value || '';
+          const lastName = this.userForm.get('lastName')?.value || '';
+          const newContactName = `${firstName} ${lastName}`.trim();
+
+          // Clear form state after successful creation
+          this.contactPersonStateService.clearState();
+          this.userForm.reset(); // Explicitly reset the form to ensure it's clean for next use
+
+          this.toast.success('Ansprechpartner wurde erfolgreich erstellt! Das Passwort wurde per E-Mail versendet.', {
+            position: 'bottom-right',
+            duration: 4000,
+            icon: '✅',
+          });
+
+          // Check if we came from another page (client-add or project-create)
+          const returnToPath = (this as any).returnToPath || this.route.snapshot.queryParams['returnTo'] || (window.history as any).state?.returnTo;
+
+          // Check the returnToType to determine which state key to use
+          const returnToType = this.route.snapshot.queryParams['returnToType'] || (window.history as any).state?.returnToType;
+
+          if (returnToPath) {
+            // Navigate back to the calling page with new contact email AND previous form state
+            setTimeout(() => {
+              // Use newClientContactEmail for client contacts, newContactEmail for others
+              const stateKey = returnToType === 'client' ? 'newClientContactEmail' : 'newContactEmail';
+              const nameKey = returnToType === 'client' ? 'newClientContactName' : 'newContactName';
+              const isSalesKey = 'newClientContactIsSales';
+              const isSalesValue = this.userForm.get('isSales')?.value || false;
+              this.router.navigate([returnToPath], {
+                state: {
+                  [stateKey]: newContactEmail,
+                  [nameKey]: newContactName,
+                  [isSalesKey]: isSalesValue,
+                  formState: this.previousFormState, // Pass back the preserved state
+                },
+              });
+            }, 1000);
+          } else {
+            // Navigate back to the previous page
+            setTimeout(() => {
+              this.location.back();
+            }, 1000);
+          }
+        },
+        error: (error) => {
+          console.error('❌ Error creating contact person:', error);
+
+          if (this.isEmailSendFailure(error)) {
+            const newContactEmail = this.userForm.get('email')?.value;
+            const firstName = this.userForm.get('firstName')?.value || '';
+            const lastName = this.userForm.get('lastName')?.value || '';
+            const newContactName = `${firstName} ${lastName}`.trim();
+            this.handleEmailSendFailure(formValues, newContactEmail, newContactName);
+            return;
+          }
+
+          const errorMessage = this.getErrorMessage(error);
+          this.toast.error(errorMessage, {
+            position: 'bottom-right',
+            duration: 5000,
+            icon: '❌',
+          });
+        },
+      });
+  }
+
+  /**
+   * Extract user-friendly error message from error response
+   */
+  private getErrorMessage(error: any): string {
+    if (error?.data?.errors) {
+      const errors = error.data.errors;
+
+      if (errors.email) {
+        return 'Diese E-Mail-Adresse wird bereits verwendet.';
+      }
+
+      if (errors.clientCompanies) {
+        return 'Das ausgewählte Kundenunternehmen wurde nicht gefunden.';
+      }
+
+      if (errors.user === 'unauthorizedUserType') {
+        return 'Sie haben keine Berechtigung, Clients zu erstellen. Nur Akzente-Benutzer können Clients anlegen.';
+      }
+
+      const firstError = Object.values(errors)[0];
+      return typeof firstError === 'string' ? firstError : 'Validierungsfehler in den Eingabedaten.';
+    }
+
+    if (error?.data?.message) {
+      return error.data.message;
+    }
+
+    if (error?.message) {
+      return error.message;
+    }
+
+    if (error?.status === 401) {
+      return 'Unauthorized: Sie müssen als Akzente-Benutzer angemeldet sein.';
+    }
+
+    if (error?.status === 422) {
+      return 'Ungültige Eingabedaten. Bitte überprüfen Sie Ihre Eingaben.';
+    }
+
+    if (error?.status === 500) {
+      return 'Serverfehler. Bitte versuchen Sie es später erneut.';
+    }
+
+    return 'Ein unbekannter Fehler ist aufgetreten beim Erstellen des Ansprechpartners.';
+  }
+
+  /**
+   * Cancel and navigate back
+   */
+  cancel(): void {
+    // Don't clear state when canceling - let it persist for next visit
+    // Only clear on successful submit or explicit user action
+
+    this.toast.info('Vorgang abgebrochen', {
+      position: 'bottom-right',
+      duration: 2000,
+    });
+
+    // Check if we came from another page (client-add or project-create)
+    const returnToPath = (this as any).returnToPath || this.route.snapshot.queryParams['returnTo'] || (window.history as any).state?.returnTo;
+
+    if (returnToPath) {
+      // Navigate back to the calling page
+      // Pass back the previous form state even on cancel
+      this.router.navigate([returnToPath], {
+        state: {
+          formState: this.previousFormState,
+        },
+      });
+    } else {
+      // Just go back normally
+      this.location.back();
+    }
+  }
+
+  /**
+   * Check if form field has error
+   */
+  hasFieldError(fieldName: string): boolean {
+    const field = this.userForm.get(fieldName);
+    return !!(field && field.invalid && (field.dirty || field.touched));
+  }
+
+  /**
+   * Get field error message
+   */
+  getFieldError(fieldName: string): string {
+    const field = this.userForm.get(fieldName);
+    if (!field || !field.errors) return '';
+
+    if (field.errors['required']) return `${fieldName} ist erforderlich`;
+    if (field.errors['email']) return 'Ungültige E-Mail-Adresse';
+    if (field.errors['minlength']) return `Mindestens ${field.errors['minlength'].requiredLength} Zeichen erforderlich`;
+    if (field.errors['pattern']) return 'Ungültiges Format';
+
+    return 'Ungültige Eingabe';
+  }
+}

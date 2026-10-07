@@ -1,0 +1,17 @@
+<div class="flex items-center max-w-max text-[12px] lg:text-[13px] font-dm">
+  @for (language of displayLanguages; track language) {
+    <span
+      (click)="setLanguage(language)"
+      class="cursor-pointer px-1 transition-colors duration-200"
+      [ngClass]="{
+        'text-primary-500 font-medium': getLanguageCode(language) === currentLanguage,
+        'hover:text-primary-500': true,
+      }"
+    >
+      {{ language }}
+    </span>
+    @if (!$last) {
+      <span class="mx-1 text-gray-500">|</span>
+    }
+  }
+</div>

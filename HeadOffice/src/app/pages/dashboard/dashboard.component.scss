@@ -1,0 +1,499 @@
+// Mobile column filter modal — centered, modern
+::ng-deep .dashboard-column-filter-modal.p-dialog {
+  .p-dialog-mask {
+    background-color: rgba(15, 23, 42, 0.4);
+    backdrop-filter: blur(4px);
+  }
+
+  .p-dialog {
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow:
+      0 25px 50px -12px rgba(0, 0, 0, 0.25),
+      0 0 0 1px rgba(0, 0, 0, 0.05);
+    max-height: 85vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .p-dialog-content {
+    border-radius: 20px;
+    overflow: hidden;
+    padding: 0;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+  }
+}
+
+.dashboard-filter-modal-inner {
+  display: flex;
+  flex-direction: column;
+  min-height: 280px;
+  max-height: 75vh;
+  background: #fff;
+  border-radius: 20px;
+}
+
+.dashboard-filter-modal-body {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+
+  .p-listbox {
+    border: none !important;
+  }
+}
+
+// Padding for column filter modal content (global .dashboard-filter-modal-body sets padding: 0)
+.dashboard-filter-modal-body--dashboard-padded {
+  padding: 0.75rem !important;
+}
+
+.dashboard-column-filter-modal-listbox,
+::ng-deep .dashboard-column-filter-modal .dashboard-column-filter-modal-listbox.p-listbox {
+  width: 100% !important;
+  max-height: min(50vh, 320px) !important;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+::ng-deep .dashboard-column-filter-modal .p-listbox-list-container {
+  max-height: min(50vh, 320px);
+}
+
+::ng-deep .dashboard-column-filter-modal .p-listbox-option,
+::ng-deep .dashboard-column-filter-modal .p-listbox-item {
+  font-size: 13px !important;
+}
+
+.p-confirmpopup {
+  margin-left: var(--p-confirmpopup-gutter);
+}
+
+.p-confirmpopup:after,
+.p-confirmpopup:before {
+  bottom: 100%;
+  left: 18.25rem;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+}
+
+.p-datatable-tbody > tr > td {
+  height: 14px;
+  height: 50px;
+  --tw-border-style: none;
+  border-style: none;
+  padding: 0px;
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+// Responsive filter-by-columns popover (mobile) — modern look, smaller text
+::ng-deep .column-filter-popover {
+  --column-filter-popover-width: 360px;
+  --column-filter-popover-height: 480px;
+
+  &.p-popover {
+    width: min(calc(100vw - 1.5rem), var(--column-filter-popover-width));
+    max-width: min(calc(100vw - 1.5rem), var(--column-filter-popover-width));
+    height: min(calc(100vh - 1.5rem), var(--column-filter-popover-height));
+    max-height: min(calc(100vh - 1.5rem), var(--column-filter-popover-height));
+    box-sizing: border-box;
+    border: none;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow:
+      0 24px 48px rgba(0, 30, 50, 0.15),
+      0 4px 12px rgba(0, 0, 0, 0.05),
+      inset 0 1px 0 rgba(255, 255, 255, 0.8);
+
+    @media (min-width: 1024px) {
+      width: var(--column-filter-popover-width);
+      max-width: var(--column-filter-popover-width);
+      height: var(--column-filter-popover-height);
+      max-height: var(--column-filter-popover-height);
+      border-radius: 24px;
+      border: 1px solid rgba(255, 255, 255, 0.6);
+    }
+  }
+
+  .p-popover-content {
+    padding: 0 !important;
+    background: transparent;
+    height: 100%;
+    border-radius: 24px;
+  }
+
+  .p-popover-arrow {
+    display: none; // Hiding arrow for a cleaner floating widget look
+  }
+
+  .column-filter-popover-content {
+    width: 100%;
+    min-width: 0;
+    height: 100%;
+    box-sizing: border-box;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+
+    @media (min-width: 1024px) {
+      width: 100%;
+      min-width: 100%;
+      padding: 0;
+    }
+  }
+
+  .column-filter-popover-header {
+    margin-bottom: 0;
+    padding: 1.25rem;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.4));
+    border-bottom: 1px solid rgba(0, 131, 155, 0.06);
+
+    @media (min-width: 1024px) {
+      margin-bottom: 0;
+      border-radius: 24px 24px 0 0;
+    }
+  }
+
+  .dashboard-column-filter-listbox,
+  .p-listbox {
+    width: 100% !important;
+    height: 100%;
+    max-height: 100% !important;
+    box-sizing: border-box;
+    border: none !important;
+    border-radius: 0 0 24px 24px;
+    flex: 1 1 auto;
+    min-height: 0;
+    background: transparent;
+
+    @media (min-width: 1024px) {
+      max-height: 100% !important;
+    }
+  }
+
+  .p-listbox-filter-container {
+    padding: 1rem 1.25rem 0.5rem;
+    border-bottom: 1px solid transparent;
+    background-color: transparent;
+  }
+
+  .p-listbox-filter {
+    border-radius: 999px;
+    border: 1px solid rgba(0, 131, 155, 0.15);
+    font-size: 0.85rem;
+    padding: 0.6rem 1rem 0.6rem 2.2rem;
+    background: rgba(255, 255, 255, 0.8);
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.02);
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+
+    &:focus {
+      border-color: #00839b;
+      box-shadow: 0 0 0 4px rgba(0, 131, 155, 0.1);
+      background: #fff;
+    }
+  }
+
+  .p-listbox-filter-icon {
+    left: 1.1rem;
+    color: #94a3b8;
+  }
+
+  .p-listbox-list-container {
+    background: transparent;
+    height: 100%;
+  }
+
+  .p-listbox-option,
+  .p-listbox-item {
+    border-radius: 12px;
+    margin: 0.2rem 0.75rem;
+    font-size: 13px;
+    padding: 0.6rem 0.8rem;
+    transition: all 0.2s ease;
+    border: 1px solid transparent;
+  }
+
+  .p-listbox-option.p-listbox-option-selected,
+  .p-listbox-item.p-highlight {
+    background: linear-gradient(90deg, rgba(0, 131, 155, 0.12) 0%, rgba(0, 131, 155, 0.02) 100%);
+    border-color: rgba(0, 131, 155, 0.2);
+    color: #0f172a;
+    font-weight: 600;
+    transform: translateX(3px);
+  }
+
+  .p-listbox-option:not(.p-listbox-option-selected):hover,
+  .p-listbox-item:not(.p-highlight):hover {
+    background: rgba(15, 23, 42, 0.03);
+  }
+
+  .p-checkbox .p-checkbox-box {
+    border-radius: 6px;
+    border: 2px solid #cbd5e1;
+    transition: all 0.2s;
+  }
+
+  .p-checkbox .p-checkbox-box.p-highlight {
+    border-color: #00839b;
+    background: #00839b;
+    box-shadow: 0 4px 8px rgba(0, 131, 155, 0.25);
+  }
+
+  .p-listbox-list {
+    padding: 0.5rem 0 1rem;
+  }
+
+  .p-listbox-empty-message {
+    font-size: 13px;
+    color: #94a3b8;
+    justify-content: center;
+    padding: 2rem 1rem;
+    text-align: center;
+  }
+
+  // Smaller text for list options on mobile
+  @media (max-width: 1023px) {
+    .p-listbox-list,
+    .p-listbox-list-container .p-listbox-list {
+      font-size: 0.8125rem;
+      line-height: 1.35;
+    }
+
+    .p-listbox-item {
+      padding: 0.5rem 0.75rem;
+    }
+
+    .p-listbox-filter-container,
+    .p-listbox-filter {
+      font-size: 0.8125rem;
+      padding: 0.4rem 0.6rem;
+    }
+
+    .p-checkbox .p-checkbox-box {
+      width: 1rem;
+      height: 1rem;
+    }
+  }
+
+  .p-listbox-option {
+    font-size: 13px;
+  }
+
+  .p-ripple {
+    font-size: 13px;
+  }
+}
+
+::ng-deep .p-listbox-option {
+  font-size: 13px;
+}
+
+::ng-deep .p-listbox {
+  border: 0px;
+}
+
+::ng-deep .p-listbox-empty-message {
+  align-self: center;
+  font-size: 13px;
+}
+
+::ng-deep .settings-popover {
+  .settings-close-btn {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 999px;
+    border: 1px solid rgba(148, 163, 184, 0.25);
+    color: #64748b;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background: rgba(15, 23, 42, 0.04);
+      color: #0f172a;
+    }
+  }
+
+  .settings-clear-btn {
+    border: 1px solid rgba(0, 131, 155, 0.25);
+    background: linear-gradient(180deg, #ffffff, #f8fbfc);
+    color: #0f172a;
+    border-radius: 4px;
+    padding: 0.4rem 0.85rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    line-height: 1;
+    transition: all 0.2s ease;
+
+    &:hover:not(:disabled) {
+      background: rgba(0, 131, 155, 0.08);
+      border-color: rgba(0, 131, 155, 0.35);
+    }
+
+    &:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+    }
+  }
+
+  .settings-done-btn {
+    border: 1px solid rgba(0, 131, 155, 0.25);
+    background: linear-gradient(180deg, #ffffff, #f8fbfc);
+    color: #0f172a;
+    border-radius: 4px;
+    padding: 0.45rem 0.95rem;
+    font-size: 0.8rem;
+    font-weight: 700;
+    line-height: 1;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background: rgba(0, 131, 155, 0.08);
+      border-color: rgba(0, 131, 155, 0.35);
+    }
+  }
+
+  .dashboard-settings-footer {
+    display: flex;
+    justify-content: flex-end;
+    padding: 0.75rem 1rem 1rem;
+    border-top: 1px solid rgba(0, 131, 155, 0.08);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.65), rgba(255, 255, 255, 0.95));
+  }
+}
+
+/* No animations */
+
+// Mobile column filter modal — same as dashboard (responsive filter-by-columns)
+::ng-deep .dashboard-column-filter-modal.p-dialog {
+  .p-dialog-mask {
+    background-color: rgba(15, 23, 42, 0.4);
+    backdrop-filter: blur(4px);
+  }
+
+  .p-dialog {
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow:
+      0 25px 50px -12px rgba(0, 0, 0, 0.25),
+      0 0 0 1px rgba(0, 0, 0, 0.05);
+    max-height: 85vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .p-dialog-content {
+    border-radius: 20px;
+    overflow: hidden;
+    padding: 0;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+  }
+}
+
+.dashboard-filter-modal-inner {
+  display: flex;
+  flex-direction: column;
+  min-height: 280px;
+  max-height: 75vh;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 20px;
+  box-shadow:
+    0 10px 40px rgba(0, 30, 50, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+.dashboard-filter-modal-body {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+
+  .p-listbox {
+    border: none !important;
+  }
+}
+
+.dashboard-column-filter-modal-listbox,
+::ng-deep .dashboard-column-filter-modal .dashboard-column-filter-modal-listbox.p-listbox {
+  width: 100% !important;
+  max-height: min(50vh, 320px) !important;
+  border: 0px;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.dashboard-column-filter-modal .dashboard-column-filter-modal-listbox .p-listbox .p-listbox-empty-message {
+  font-size: 13px;
+}
+
+::ng-deep .dashboard-column-filter-modal .p-listbox-list-container {
+  max-height: min(50vh, 320px);
+}
+
+::ng-deep .dashboard-column-filter-modal .p-listbox-option,
+::ng-deep .dashboard-column-filter-modal .p-listbox-item {
+  font-size: 13px !important;
+}
+
+::ng-deep .p-listbox-option {
+  font-size: 13px;
+}
+
+::ng-deep .p-listbox {
+  border: 0px;
+}
+
+::ng-deep .p-listbox-empty-message {
+  align-self: center;
+  font-size: 13px;
+}
+
+@keyframes filter-badge-pop {
+  from {
+    transform: scale(0);
+  }
+
+  to {
+    transform: scale(1);
+  }
+}
+
+// Sticky table header for desktop
+::ng-deep .sticky-header-table {
+  .p-datatable-wrapper {
+    overflow: visible !important;
+  }
+
+  .p-datatable-thead > tr > th {
+    position: sticky;
+    top: 60px;
+    /* Adjust based on your main header height */
+    z-index: 10;
+    background: white;
+    padding: 10px 12px !important;
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.05);
+    cursor: pointer;
+  }
+}
+
+/* Keep VM dropdown overlay above sticky table/header layers */
+:host ::ng-deep .dashboard-merchandiser-dropdown-panel.p-dropdown-panel,
+:host ::ng-deep .dashboard-merchandiser-dropdown-panel.p-select-overlay {
+  z-index: 1200 !important;
+}

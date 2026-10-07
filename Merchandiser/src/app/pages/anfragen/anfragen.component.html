@@ -1,0 +1,572 @@
+<section class="h-[100dvh] xl:h-auto overflow-hidden xl:overflow-visible flex flex-col">
+  <h2 translate class="flex justify-between items-center text-primary-700 mb-2 lg:mb-4 flex-shrink-0">
+    <div class="flex items-center">
+      <app-icon name="question" class="w-5 h-5 lg:w-6 lg:h-6 mr-1 text-primary-700" />
+      <span class="text-2xl lg:text-3xl font-bold font-dm">Anfragen</span>
+    </div>
+    <button
+      *ngIf="allProjects && allProjects.length > 0"
+      type="button"
+      class="lg:hidden relative inline-flex items-center justify-center w-8 h-8 rounded-[4px] bg-gradient-to-br from-[#00839b] to-[#006a7e] text-white shadow-[0_4px_8px_rgba(0,131,155,0.3)] shrink-0 active:scale-95 transition-transform"
+      (click)="openAnfragenMobileFilterSheet()"
+    >
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M6 12h12M8 18h8" />
+      </svg>
+      <span *ngIf="getTotalAnfragenMobileColumnFilters() > 0" class="absolute -top-[3px] -right-[3px] w-3 h-3 bg-[#00839b] border-2 border-white rounded-full z-[100]"></span>
+    </button>
+  </h2>
+
+  <!-- Loading state -->
+  <div *ngIf="loading" class="animate-pulse space-y-4 pt-2">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-[15px]">
+      <div class="h-[45px] lg:h-[50px] rounded-[4px] bg-gray-100"></div>
+      <div class="h-[45px] lg:h-[50px] rounded-[4px] bg-gray-100"></div>
+      <div class="h-[45px] lg:h-[50px] rounded-[4px] bg-gray-100"></div>
+      <div class="h-[45px] lg:h-[50px] rounded-[4px] bg-gray-100"></div>
+    </div>
+    <div class="rounded-lg border-2 border-gray-100 p-4 space-y-3">
+      <div class="h-12 bg-gray-100 rounded"></div>
+      <div class="h-12 bg-gray-100 rounded"></div>
+      <div class="h-12 bg-gray-100 rounded"></div>
+    </div>
+  </div>
+
+  <!-- Error state -->
+  <div *ngIf="error" class="bg-red-50 p-4 rounded-[4px] mb-8">
+    <p class="text-red-800">Es ist ein Fehler aufgetreten beim Laden der Anfragen. Bitte versuchen Sie es später erneut.</p>
+  </div>
+
+  <!-- Main content -->
+  <div *ngIf="!loading && !error" class="flex flex-col flex-1 min-h-0">
+    <div class="sticky top-0 z-20 pb-2 -mx-4 px-4 sm:mx-0 sm:px-0 sm:pb-0">
+      <div class="hidden lg:grid">
+        <div *ngIf="allProjects && allProjects.length > 0" class="mb-2 lg:mb-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[285px_285px_285px_auto] gap-4 lg:gap-[15px] items-center flex-shrink-0">
+          <!-- Search Input for Projects -->
+          <div class="relative w-full lg:w-[285px]">
+            <input
+              type="text"
+              placeholder="Projektsuche"
+              [(ngModel)]="projectSearchTerm"
+              (input)="onProjectSearch($event)"
+              class="lg:h-[50px] h-[45px] px-4 border border-gray-300 rounded-[4px] font-dm text-sm w-full focus:outline-none focus:ring-0 focus:border-primary-500"
+            />
+            <app-icon *ngIf="!projectSearchTerm || projectSearchTerm.length === 0" name="search" class="absolute right-2 top-1/2 transform -translate-y-1/2 w-[19px] h-[19px] text-gray-500" />
+            <button
+              *ngIf="projectSearchTerm && projectSearchTerm.length > 0"
+              type="button"
+              (click)="projectSearchTerm = ''; applyFilters()"
+              class="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 cursor-pointer transition-colors"
+              title="Suche löschen"
+            >
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+
+          <!-- Search Input for Filialen -->
+          <div class="relative w-full lg:w-[285px]">
+            <input
+              type="text"
+              placeholder="Filialesuche"
+              [(ngModel)]="filialeSearchTerm"
+              (input)="onFilialeSearch($event)"
+              class="lg:h-[50px] h-[45px] px-4 border border-gray-300 rounded-[4px] font-dm text-sm w-full focus:outline-none focus:ring-0 focus:border-primary-500"
+            />
+            <app-icon *ngIf="!filialeSearchTerm || filialeSearchTerm.length === 0" name="search" class="absolute right-2 top-1/2 transform -translate-y-1/2 w-[19px] h-[19px] text-gray-500" />
+            <button
+              *ngIf="filialeSearchTerm && filialeSearchTerm.length > 0"
+              type="button"
+              (click)="filialeSearchTerm = ''; applyFilters()"
+              class="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 cursor-pointer transition-colors"
+              title="Suche löschen"
+            >
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+
+          <!-- Date Picker with Custom Popover -->
+          <app-date-range-picker [(selectedRange)]="dateRange2" (rangeSelected)="onRangeSelected($event)" position="right"></app-date-range-picker>
+          <!-- Clear filters button -->
+          <div>
+            <button
+              *ngIf="hasActiveFilters()"
+              (click)="clearFilters()"
+              class="group cursor-pointer relative isolate w-full lg:w-auto inline-flex items-center justify-center gap-2.5 overflow-hidden rounded-[4px] border border-rose-200/80 bg-gradient-to-r from-white via-rose-50 to-orange-50 px-4 py-2 text-[12px] font-semibold text-rose-700 shadow-sm ring-1 ring-white/60 transition-all duration-300 hover:border-rose-300 hover:bg-white/90 hover:from-white hover:via-rose-100 hover:to-white hover:text-rose-800 hover:shadow-md hover:shadow-rose-200/40 hover:ring-rose-200/70 disabled:pointer-events-none disabled:opacity-40"
+            >
+              <span
+                class="relative flex h-6 w-6 items-center justify-center rounded-full bg-rose-500/15 ring-1 ring-rose-500/20 transition-all duration-300 group-hover:bg-rose-500/10 group-hover:ring-rose-300/50"
+              >
+                <svg class="h-3.5 w-3.5 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h5M20 20v-5h-5M5 9a7 7 0 0111.9-4.9L19 6M5 15a7 7 0 0011.9 4.9L19 18" />
+                </svg>
+              </span>
+              <span class="tracking-[0.01em]">Suche zurücksetzen</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile / tablet card view -->
+    <div class="xl:hidden pt-2 flex flex-col flex-1 min-h-0" *ngIf="!loading && !error">
+      <!-- Mobile Filter Buttons -->
+      <div *ngIf="false" class="flex gap-2 mb-3 overflow-x-auto pb-2 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent -mx-1 px-1">
+        <!-- Project Name Filter -->
+        <button
+          type="button"
+          class="flex items-center gap-1.5 px-3 py-2 text-xs font-medium rounded-[4px] border transition-colors flex-shrink-0"
+          [class.bg-primary-100]="getProjectColumnFilterValue('name') && getProjectColumnFilterValue('name').length > 0"
+          [class.border-primary-500]="getProjectColumnFilterValue('name') && getProjectColumnFilterValue('name').length > 0"
+          [class.text-primary-700]="getProjectColumnFilterValue('name') && getProjectColumnFilterValue('name').length > 0"
+          [class.bg-white]="!getProjectColumnFilterValue('name') || getProjectColumnFilterValue('name').length === 0"
+          [class.border-gray-300]="!getProjectColumnFilterValue('name') || getProjectColumnFilterValue('name').length === 0"
+          [class.text-gray-700]="!getProjectColumnFilterValue('name') || getProjectColumnFilterValue('name').length === 0"
+          (click)="openProjectColumnFilter('name', $event)"
+        >
+          <svg class="column-filter-btn__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M6 12h12M8 18h8" />
+          </svg>
+          Projekt
+          <span *ngIf="getProjectColumnFilterValue('name') && getProjectColumnFilterValue('name').length > 0" class="bg-primary-500 text-white text-[10px] px-1.5 py-0.5 rounded-full">
+            {{ getProjectColumnFilterValue('name').length }}
+          </span>
+        </button>
+
+        <button
+          *ngFor="let col of selectedColumns"
+          type="button"
+          class="flex items-center gap-1.5 px-3 py-2 text-xs font-medium rounded-[4px] border transition-colors flex-shrink-0"
+          [class.bg-primary-100]="getProjectColumnFilterValue(col.field) && getProjectColumnFilterValue(col.field).length > 0"
+          [class.border-primary-500]="getProjectColumnFilterValue(col.field) && getProjectColumnFilterValue(col.field).length > 0"
+          [class.text-primary-700]="getProjectColumnFilterValue(col.field) && getProjectColumnFilterValue(col.field).length > 0"
+          [class.bg-white]="!getProjectColumnFilterValue(col.field) || getProjectColumnFilterValue(col.field).length === 0"
+          [class.border-gray-300]="!getProjectColumnFilterValue(col.field) || getProjectColumnFilterValue(col.field).length === 0"
+          [class.text-gray-700]="!getProjectColumnFilterValue(col.field) || getProjectColumnFilterValue(col.field).length === 0"
+          (click)="openProjectColumnFilter(col.field, $event)"
+        >
+          <svg class="column-filter-btn__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M6 12h12M8 18h8" />
+          </svg>
+          {{ col.header }}
+          <span *ngIf="getProjectColumnFilterValue(col.field) && getProjectColumnFilterValue(col.field).length > 0" class="bg-primary-500 text-white text-[10px] px-1.5 py-0.5 rounded-full">
+            {{ getProjectColumnFilterValue(col.field).length }}
+          </span>
+        </button>
+
+        <!-- Order Column Filters -->
+        <button
+          *ngFor="let col of selectedOrderColumns"
+          type="button"
+          class="flex items-center gap-1.5 px-3 py-2 text-xs font-medium rounded-[4px] border transition-colors flex-shrink-0"
+          [class.bg-primary-100]="getOrderColumnFilterValue(col.field) && getOrderColumnFilterValue(col.field).length > 0"
+          [class.border-primary-500]="getOrderColumnFilterValue(col.field) && getOrderColumnFilterValue(col.field).length > 0"
+          [class.text-primary-700]="getOrderColumnFilterValue(col.field) && getOrderColumnFilterValue(col.field).length > 0"
+          [class.bg-white]="!getOrderColumnFilterValue(col.field) || getOrderColumnFilterValue(col.field).length === 0"
+          [class.border-gray-300]="!getOrderColumnFilterValue(col.field) || getOrderColumnFilterValue(col.field).length === 0"
+          [class.text-gray-700]="!getOrderColumnFilterValue(col.field) || getOrderColumnFilterValue(col.field).length === 0"
+          (click)="openOrderColumnFilter(col.field, $event)"
+        >
+          <svg class="column-filter-btn__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M6 12h12M8 18h8" />
+          </svg>
+          {{ col.header }}
+          <span *ngIf="getOrderColumnFilterValue(col.field) && getOrderColumnFilterValue(col.field).length > 0" class="bg-primary-500 text-white text-[10px] px-1.5 py-0.5 rounded-full">
+            {{ getOrderColumnFilterValue(col.field).length }}
+          </span>
+        </button>
+      </div>
+
+      <div class="flex flex-col gap-4 flex-1 min-h-0 overflow-y-auto pb-4">
+        <!-- Empty State -->
+        <div *ngIf="!projects || projects.length === 0" class="py-2">
+          <div class="bg-[#FDECEC] border border-[#F5C2C7] rounded-[4px] px-4 py-2 text-[#842029] text-sm">
+            <p>Keine Projekte gefunden.</p>
+          </div>
+        </div>
+
+        <div *ngFor="let project of projects" class="!bg-gray-100 rounded-lg shadow-md border border-gray-200 p-4">
+          <!-- Project Header -->
+          <div class="flex justify-between items-start mb-3 border-b border-gray-100 pb-2">
+            <div class="flex-1 pr-2">
+              <div class="text-lg font-bold text-primary-700">{{ project.name }}</div>
+              <div class="text-sm text-gray-600 mt-1">
+                <strong>{{ project.calendarWeek }}</strong> {{ project.zeitraum }}
+              </div>
+            </div>
+            <div class="flex gap-2 items-center flex-shrink-0">
+              <div class="relative flex items-center justify-center cursor-pointer h-5 w-5">
+                <div *ngIf="downloadingExcel[project.id]" class="animate-spin rounded-full h-5 w-5 border-b-2 border-blue-600"></div>
+                <app-icon *ngIf="!downloadingExcel[project.id]" name="paper_search" class="h-5 w-5 cursor-pointer text-blue-600" title="Excel herunterladen" (click)="downloadProjectCsv(project)" />
+              </div>
+              <app-favorite-toggle
+                [title]="project.isFavorite ? 'von favoriten entfernen' : 'als favorit hinzufügen'"
+                class="h-5 w-5 flex-shrink-0"
+                [iconSize]="'h-5 w-5'"
+                [isFavorite]="project.isFavorite"
+                (favoriteChange)="onFavoriteChanged($event, project)"
+              />
+            </div>
+          </div>
+
+          <!-- Dynamic Columns -->
+          <div class="grid grid-cols-2 gap-2 text-sm mb-4" *ngIf="selectedColumns && selectedColumns.length > 0">
+            <ng-container *ngFor="let col of selectedColumns">
+              <div *ngIf="col.field !== 'formattedZeitraum'" class="flex flex-col">
+                <span class="text-gray-500 text-xs">{{ col.header }}</span>
+                <span class="font-medium text-gray-800 break-words">{{ project[col.field] }}</span>
+              </div>
+            </ng-container>
+          </div>
+
+          <!-- Orders List -->
+          <div class="mt-2 text-sm">
+            <h4 class="font-semibold text-gray-700 mb-2">Anfragen ({{ project.orders?.length || 0 }})</h4>
+
+            <div *ngIf="!project.orders || project.orders.length === 0" class="text-gray-400 italic text-xs">Keine Anfragen.</div>
+
+            <div *ngFor="let order of project.orders" class="bg-white rounded p-3 mb-2 border border-gray-200">
+              <div class="flex justify-between items-start mb-2">
+                <span class="bg-[#00A8E9] text-white text-[10px] font-bold py-1 px-2 rounded uppercase"> ANFRAGE </span>
+                <span class="text-gray-700 font-medium text-xs">{{ order.kunde || 'Kein Kunde' }}</span>
+              </div>
+
+              <div class="space-y-1 mb-3">
+                <div class="font-medium text-gray-900"><span class="text-gray-500 font-normal">{{ order.geplant }}</span> {{ order.merchandiser }}</div>
+                <div class="text-gray-700">{{ order.filiale }}</div>
+                <div class="text-gray-500 text-xs">{{ order.adresse }}</div>
+                <div *ngIf="order.notiz" class="text-gray-500 text-xs mt-1 italic">{{ order.notiz }}</div>
+              </div>
+
+              <div class="grid grid-cols-2 gap-2">
+                <button (click)="acceptOrder(order, project)" class="cursor-pointer bg-[#6FCC08] hover:bg-green-600 text-white text-xs font-medium py-2 px-2 rounded text-center transition-colors">
+                  Annehmen
+                </button>
+                <button (click)="rejectOrder(order, project)" class="cursor-pointer bg-[#D10003] hover:bg-red-700 text-white text-xs font-medium py-2 px-2 rounded text-center transition-colors">
+                  Ablehnen
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Desktop projects table (wide screens only) -->
+    <p-table
+      class="hidden xl:block w-full"
+      *ngIf="projects && projects.length > 0"
+      [value]="projects"
+      styleClass="anfragen-projects-table"
+      [scrollable]="true"
+      scrollHeight="78vh"
+      dataKey="id"
+      [tableStyle]="{ 'min-width': '60rem', 'table-layout': 'fixed' }"
+      [columns]="getProjectsVisibleColumns()"
+      [reorderableColumns]="true"
+      (onColReorder)="onProjectsColReorder($event)"
+    >
+      <ng-template #header let-columns>
+        <tr [class.hidden]="projects.length === 0" [class.opacity-50]="projects.length === 0" [class.text-gray-400]="projects.length === 0">
+          <th class="rounded-l-lg col-projekt">
+            <div class="flex items-center gap-1 text-[13px]">
+              <span>Projekt</span>
+              <div class="flex items-center gap-1 mt-1">
+                <app-icon name="table_sort" class="w-3 cursor-pointer" (click)="onProjectSort('name')" />
+                <span
+                  class="column-filter-btn"
+                  [ngClass]="{
+                    'column-filter-btn--active': getProjectColumnFilterValue('name')?.length > 0,
+                  }"
+                  (click)="openProjectColumnFilter('name', $event); $event.stopPropagation()"
+                >
+                  <svg class="column-filter-btn__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M6 12h12M8 18h8" />
+                  </svg>
+                  <span *ngIf="getProjectColumnFilterValue('name')?.length > 0" class="column-filter-btn__badge">
+                    {{ getProjectColumnFilterValue('name').length }}
+                  </span>
+                </span>
+              </div>
+            </div>
+          </th>
+          <th *ngFor="let col of columns" pReorderableColumn [ngClass]="'col-' + col.field">
+            <div class="flex items-center gap-1 text-[13px]">
+              <span [class.ml-4]="col.field === 'clientName'">{{ col.header }}</span>
+              <div class="flex items-center gap-1 mt-1">
+                <app-icon name="table_sort" class="w-3 cursor-pointer" (click)="onProjectSort(col.field)" />
+                <span
+                  class="column-filter-btn"
+                  [ngClass]="{
+                    'column-filter-btn--active': getProjectColumnFilterValue(col.field)?.length > 0,
+                  }"
+                  (click)="openProjectColumnFilter(col.field, $event); $event.stopPropagation()"
+                >
+                  <svg class="column-filter-btn__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M6 12h12M8 18h8" />
+                  </svg>
+                  <span *ngIf="getProjectColumnFilterValue(col.field)?.length > 0" class="column-filter-btn__badge">
+                    {{ getProjectColumnFilterValue(col.field).length }}
+                  </span>
+                </span>
+              </div>
+            </div>
+          </th>
+          <th class="rounded-r-lg">
+            <!-- <div class="flex space-x-2 items-center text-[13px] justify-end cursor-pointer">
+              <span (click)="op.toggle($event)"> Settings</span> <span class="pi pi-cog text-sm!" (click)="op.toggle($event)"></span>
+            </div> -->
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template #body let-project let-columns="columns">
+        <tr class="project-row !bg-gray-100 !pt-2 !mr-2 !ml-2 !pb-2" >
+            <td class="rounded-l-lg pl-2 font-bold text-primary-500 col-projekt" [title]="project.name + ' - das ganze Projekt anzeigen'">
+            <div class="pl-2 text-[12px]">{{ project.name }}</div>
+          </td>
+          <td *ngFor="let col of columns" [ngClass]="'col-' + col.field" [title]="col.field === 'formattedZeitraum' ? 'Einsatz anzeigen : ' + project.calendarWeek + ' ' + project.zeitraum : project[col.field]">
+            <ng-container [ngSwitch]="col.field">
+              <!-- Special formatting for zeitraum -->
+              <ng-container *ngSwitchCase="'formattedZeitraum'">
+                <span class="mx-1 text-[12px]"
+                  ><strong>{{ project.calendarWeek }}</strong> {{ project.zeitraum }}</span
+                >
+              </ng-container>
+
+              <!-- Default formatting for other columns -->
+              <ng-container *ngSwitchDefault>
+                  <span [class.ml-4]="col.field === 'clientName'">{{ project[col.field] }}</span>
+              </ng-container>
+            </ng-container>
+          </td>
+          <td class="rounded-r-lg">
+            <div class="flex space-x-2 justify-end pr-2">
+              <div class="relative flex items-center cursor-pointer">
+                <div *ngIf="downloadingExcel[project.id]" class="animate-spin rounded-full h-5 w-5 border-b-2 border-blue-600"></div>
+                <app-icon *ngIf="!downloadingExcel[project.id]" name="paper_search" class="h-5 w-5 cursor-pointer text-blue-600" title="Excel herunterladen" (click)="downloadProjectCsv(project)" />
+              </div>
+              <app-favorite-toggle
+                [title]="project.isFavorite ? 'von favoriten entfernen' : 'als favorit hinzufügen'"
+                class="h-5 w-5 flex-shrink-0"
+                [isFavorite]="project.isFavorite"
+                (favoriteChange)="onFavoriteChanged($event, project)"
+              />
+            </div>
+          </td>
+        </tr>
+        <!-- Nested table row - always visible -->
+        <tr class="expanded-row">
+          <td [attr.colspan]="getProjectsExpandedColspan()" class="expanded-row-cell">
+            <div class="orders-table-wrapper">
+              <div class="anfragen-orders-list" *ngIf="project.orders?.length; else noProjectOrders">
+                <div *ngFor="let order of project.orders" class="anfragen-order-row">
+                  <div class="anfragen-order-cell anfragen-order-cell--status" [title]="'Anfrage Status'">
+                    <span class="anfragen-status-badge">ANFRAGE</span>
+                  </div>
+                  <div class="anfragen-order-cell anfragen-order-cell--kunde" [title]="order.kunde">
+                    {{ order.kunde || '-' }}
+                  </div>
+                  <div class="anfragen-order-cell anfragen-order-cell--merchandiser" [title]="(order.geplant ? order.geplant + ' - ' : '') + order.merchandiser">
+                    <span class="text-gray-500 mr-1">{{ order.geplant }}</span>{{ order.merchandiser }}
+                  </div>
+                  <div class="anfragen-order-cell anfragen-order-cell--filiale" [title]="order.filiale">
+                    {{ order.filiale }}
+                  </div>
+                  <div class="anfragen-order-cell anfragen-order-cell--adresse" [title]="order.adresse">
+                    {{ order.adresse }}
+                  </div>
+                  <div class="anfragen-order-cell anfragen-order-cell--notiz" [title]="order.notiz || '-'">
+                    {{ order.notiz || '-' }}
+                  </div>
+                  <div class="anfragen-order-cell anfragen-order-cell--actions">
+                    <button type="button" (click)="acceptOrder(order, project)" class="anfragen-action-btn anfragen-action-btn--accept" title="Auftrag annehmen">Auftrag annehmen</button>
+                    <button type="button" (click)="rejectOrder(order, project)" class="anfragen-action-btn anfragen-action-btn--reject" title="Auftrag ablehnen">Auftrag ablehnen</button>
+                  </div>
+                </div>
+              </div>
+              <ng-template #noProjectOrders>
+                <div class="anfragen-orders-empty">Es sind noch keine Anfragen für dieses Projekt vorhanden.</div>
+              </ng-template>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+
+    <div *ngIf="!projects || projects.length === 0" class="hidden xl:block pt-4">
+      <div class="bg-[#FDECEC] border border-[#F5C2C7] rounded-[4px] px-4 py-2 text-[#842029] text-sm">
+        <p>Keine Afragen gefunden.</p>
+      </div>
+    </div>
+
+    <p-popover #op>
+      <p-multiselect
+        display="chip"
+        [options]="cols"
+        [(ngModel)]="selectedColumns"
+        (onChange)="onProjectsColumnsChange($event.value)"
+        optionLabel="header"
+        selectedItemsLabel="{0} columns selected"
+        [style]="{ 'min-width': '200px' }"
+        placeholder="Choose Columns"
+      />
+    </p-popover>
+
+    <!-- Mobile: Centered column filter modal (replaces popover on small screens) -->
+    <app-column-filter-dialog
+      [(visible)]="showColumnFilterModal"
+      [title]="getColumnFilterModalTitle()"
+      [hasActiveFilter]="hasColumnFilterModalSelection()"
+      (filterCleared)="clearCurrentColumnFilterModal()"
+      (dialogHide)="closeColumnFilterModal()"
+    >
+      <ng-container *ngIf="columnFilterModalType === 'project'">
+        <p-listbox
+          [options]="currentProjectColumnOptions"
+          [(ngModel)]="projectColumnFilters[currentProjectFilterField]"
+          [multiple]="true"
+          [checkbox]="true"
+          [filter]="true"
+          optionLabel="label"
+          optionValue="value"
+          emptyMessage="Keine Daten vorhanden"
+          emptyFilterMessage="Keine Ergebnisse gefunden"
+          class="dashboard-column-filter-modal-listbox"
+          (onChange)="onProjectColumnFilterChange()"
+        />
+      </ng-container>
+      <ng-container *ngIf="columnFilterModalType === 'order'">
+        <p-listbox
+          [options]="currentOrderColumnOptions"
+          [(ngModel)]="orderColumnFilters[currentOrderFilterField]"
+          [multiple]="true"
+          [checkbox]="true"
+          [filter]="true"
+          optionLabel="label"
+          optionValue="value"
+          emptyMessage="Keine Daten vorhanden"
+          emptyFilterMessage="Keine Ergebnisse gefunden"
+          class="dashboard-column-filter-modal-listbox"
+          (onChange)="onOrderColumnFilterChange()"
+        />
+      </ng-container>
+    </app-column-filter-dialog>
+
+    <!-- Project Column Filter Popover -->
+    <app-column-filter-popover
+      #projectColumnFilterPopover
+      [title]="currentProjectFilterField ? getProjectColumnHeader(currentProjectFilterField) : 'Filter'"
+      [options]="currentProjectColumnOptions"
+      [(selectedValues)]="projectColumnFilters[currentProjectFilterField]"
+      (filterChange)="onProjectColumnFilterChange()"
+    >
+    </app-column-filter-popover>
+
+    <!-- Order Column Filter Popover -->
+    <app-column-filter-popover
+      #orderColumnFilterPopover
+      [title]="currentOrderFilterField ? getOrderColumnHeader(currentOrderFilterField) : 'Filter'"
+      [options]="currentOrderColumnOptions"
+      [(selectedValues)]="orderColumnFilters[currentOrderFilterField]"
+      (filterChange)="onOrderColumnFilterChange()"
+    >
+    </app-column-filter-popover>
+
+    <app-mobile-filter-sheet
+      [(visible)]="showAnfragenMobileFilters"
+      filterMode="project"
+      title="Anfragen-Filter"
+      [projectSearchTerm]="projectSearchTerm"
+      [filialeSearchTerm]="filialeSearchTerm"
+      [dateRange]="dateRange2"
+      [columns]="anfragenMobileColumns"
+      [filterValues]="anfragenMobileFilterValues"
+      [columnOptions]="anfragenMobileColumnOptions"
+      [canFilterMap]="anfragenMobileCanFilterMap"
+      (projectSearchTermChange)="onAnfragenProjectSearchFromSheet($event)"
+      (filialeSearchTermChange)="onAnfragenFilialeSearchFromSheet($event)"
+      (dateRangeChange)="onRangeSelected($event)"
+      (columnFilterChanged)="onAnfragenMobileFilterChanged($event)"
+      (allColumnFiltersCleared)="onAnfragenMobileColumnFiltersCleared()"
+      (clear)="clearFilters()"
+    >
+    </app-mobile-filter-sheet>
+  </div>
+</section>
+
+<!-- Add this at the bottom of your component, after the existing popover -->
+<p-popover #orderColumnsPopover>
+  <p-multiselect
+    display="chip"
+    [options]="orderCols"
+    [(ngModel)]="selectedOrderColumns"
+    (onChange)="onOrdersColumnsChange($event.value)"
+    optionLabel="header"
+    selectedItemsLabel="{0} columns selected"
+    [style]="{ 'min-width': '200px' }"
+    placeholder="Choose Columns"
+  />
+</p-popover>
+
+<!-- Accept Success Modal -->
+<app-confirmation-dialog
+  [(visible)]="successModalVisible"
+  subtitle="Bestätigung"
+  title="Auftrag erfolgreich angenommen"
+  message="Der Auftrag wurde gespeichert und aus der Anfragen-Liste entfernt."
+  confirmLabel="Zum Report"
+  cancelLabel="Schließen"
+  [success]="true"
+  (confirm)="goToReport()"
+  (cancel)="closeModal()"
+></app-confirmation-dialog>
+
+<!-- Confirm Reject Modal -->
+<app-confirmation-dialog
+  [(visible)]="confirmRejectModalVisible"
+  subtitle="Bestätigung"
+  title="Auftrag wirklich ablehnen?"
+  confirmLabel="Ablehnen"
+  cancelLabel="Abbrechen"
+  [danger]="true"
+  (confirm)="confirmReject()"
+  (cancel)="cancelReject()"
+>
+  <p class="text-sm text-gray-700 leading-relaxed">Möchten Sie diesen Auftrag wirklich ablehnen?</p>
+</app-confirmation-dialog>
+
+<!-- Reject Success Modal -->
+<p-dialog
+  [(visible)]="rejectSuccessModalVisible"
+  [modal]="true"
+  [draggable]="false"
+  [resizable]="false"
+  [style]="{ width: '90%', maxWidth: '290px' }"
+  [contentStyle]="{ padding: '1.5rem', borderRadius: '8px', textAlign: 'center' }"
+  [showHeader]="false"
+  [closeOnEscape]="true"
+  [dismissableMask]="true"
+>
+  <div class="flex flex-col items-center">
+    <!-- Success Icon -->
+    <div class="w-[71px] h-[71px] rounded-full border-2 border-[#007296] flex items-center justify-center mb-6 bg-[#EFF6FF]">
+      <app-icon name="modal-check"></app-icon>
+    </div>
+
+    <!-- Success Message -->
+    <h2 class="text-[14px] font-medium mb-4">Auftrag erfolgreich abgelehnt</h2>
+
+    <!-- Divider -->
+    <hr class="w-full border-t border-gray-200 mb-4" />
+
+    <div class="flex items-center justify-center">
+      <!-- Close button -->
+      <button (click)="closeRejectSuccessModal()" class="w-full sm:w-auto bg-[#007296] hover:bg-[#005d7a] text-white text-[14px] rounded-[4px] transition-colors px-4 h-[37px] cursor-pointer">
+        <span>Schließen</span>
+      </button>
+    </div>
+  </div>
+</p-dialog>

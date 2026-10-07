@@ -1,0 +1,16 @@
+# Ensure German and other non-ASCII characters render correctly in HTML/JS/CSS.
+AddDefaultCharset UTF-8
+AddCharset UTF-8 .html .htm .js .css .json .webmanifest
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+
+  # Serve existing files/directories as-is
+  RewriteCond %{REQUEST_FILENAME} -f [OR]
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteRule ^ - [L]
+
+  # Angular SPA: all other routes (e.g. /password-change) -> index.html
+  RewriteRule ^ index.html [L]
+</IfModule>

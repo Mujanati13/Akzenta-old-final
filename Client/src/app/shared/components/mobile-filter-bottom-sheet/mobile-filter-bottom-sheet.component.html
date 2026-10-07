@@ -1,0 +1,103 @@
+﻿<ng-container *ngIf="visible">
+  <!-- Backdrop -->
+  <div class="mobile-filter-sheet-backdrop" (click)="onBackdropClick()" @backdropAnim></div>
+
+  <!-- Sheet -->
+  <div class="mobile-filter-sheet" @sheetAnim #sheet>
+    <div
+      class="mobile-filter-sheet__handle-bar cursor-pointer"
+      (touchstart)="onTouchStart($event)"
+      (touchmove)="onTouchMove($event)"
+      (touchend)="onTouchEnd($event)"
+      (click)="triggerSheetClose()"
+    ></div>
+    <!-- Header -->
+    <div class="mobile-filter-sheet__header mt-1 cursor-pointer" (touchstart)="onTouchStart($event)" (touchmove)="onTouchMove($event)" (touchend)="onTouchEnd($event)" (click)="triggerSheetClose()">
+      <div class="flex items-center gap-3">
+        <div class="relative inline-flex">
+          <span class="mobile-filter-sheet__header-icon">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" class="w-4 h-4">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M6 12h12M8 18h8" />
+            </svg>
+          </span>
+          <span
+            *ngIf="totalActiveFilters > 0"
+            class="absolute -top-2 -right-2 px-1.5 bg-[#00839b] text-white text-[10px] font-bold border-2 border-white rounded-full shadow-sm whitespace-nowrap z-10"
+          >
+            {{ totalActiveFilters }}
+          </span>
+        </div>
+        <div>
+          <p class="mobile-filter-sheet__label">Filter</p>
+          <p class="mobile-filter-sheet__title">{{ title }}</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-2">
+        <button type="button" class="filter-modal-clear shrink-0" (click)="clearAll($event)" aria-label="Filter zurücksetzen">
+          <svg class="filter-modal-clear__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+          </svg>
+          <span>Clear</span>
+        </button>
+        <button type="button" (click)="close()" class="mobile-filter-sheet__icon-btn" [attr.aria-label]="'COMMON.CLOSE' | translate">
+          <svg class="w-4.5 h-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <div class="mobile-filter-sheet__scroll">
+      <!-- Custom injected content like search inputs -->
+      <ng-content select="[custom-inputs]"></ng-content>
+
+      <!-- Column Tabs -->
+      <div class="mobile-filter-sheet__tabs-wrap" *ngIf="columns && columns.length > 0">
+        <div class="mobile-filter-sheet__tabs">
+          <button
+            *ngFor="let col of columns"
+            type="button"
+            class="mobile-filter-sheet__tab"
+            [class.mobile-filter-sheet__tab--active]="activeTab === col.field"
+            [class.mobile-filter-sheet__tab--disabled]="!canFilter(col.field)"
+            (click)="selectTab(col.field)"
+          >
+            {{ col.header }}
+            <span *ngIf="getFieldActiveCount(col.field) > 0" class="mobile-filter-sheet__tab-badge">
+              {{ getFieldActiveCount(col.field) }}
+            </span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Options List -->
+      <div class="mobile-filter-sheet__content p-0" *ngIf="columns && columns.length > 0">
+        <p-listbox
+          [(ngModel)]="localValues"
+          [options]="activeOptions"
+          [multiple]="true"
+          [checkbox]="true"
+          [filter]="true"
+          optionLabel="label"
+          optionValue="value"
+          filterBy="label"
+          emptyMessage="Keine Daten vorhanden"
+          emptyFilterMessage="Keine Ergebnisse gefunden"
+          class="mobile-filter-sheet-listbox"
+          (onChange)="onSelectionChange()"
+        />
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="mobile-filter-sheet__footer">
+      <button type="button" class="mobile-filter-sheet__footer-secondary" (click)="close()">Abbrechen</button>
+      <button type="button" class="mobile-filter-sheet__footer-done" (click)="close()">
+        Fertig
+        <span *ngIf="totalActiveFilters > 0" class="mobile-filter-sheet__footer-done-badge">
+          {{ totalActiveFilters }}
+        </span>
+      </button>
+    </div>
+  </div>
+</ng-container>

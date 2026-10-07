@@ -1,0 +1,104 @@
+<div class="email-templates-page p-4 md:p-6 max-w-[1600px] mx-auto">
+  <div class="mb-6">
+    <div class="flex flex-wrap items-start justify-between gap-4">
+      <div>
+        <p class="text-xs font-semibold uppercase tracking-wide text-teal-700 mb-1">Development</p>
+        <h1 class="text-2xl font-bold text-gray-900">E-Mail-Vorlagen</h1>
+        <p class="text-sm text-gray-600 mt-1 max-w-2xl">
+          Vorschau aller Handlebars-Vorlagen aus dem Backend mit Mock-Daten. Nach Änderungen an
+          <code class="text-xs bg-gray-100 px-1 py-0.5 rounded">Backend/src/mail/mail-templates/</code>
+          auf „Aktualisieren“ klicken.
+        </p>
+      </div>
+
+      <div class="flex items-center gap-2">
+        <button
+          type="button"
+          class="inline-flex items-center gap-2 px-3 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-200 rounded-lg hover:bg-gray-50"
+          (click)="loadTemplates(false)"
+        >
+          <app-icon name="search" class="w-4 h-4"></app-icon>
+          Liste neu laden
+        </button>
+        <button
+          type="button"
+          class="inline-flex items-center gap-2 px-3 py-2 text-sm font-medium text-white bg-teal-700 rounded-lg hover:bg-teal-800 disabled:opacity-50"
+          [disabled]="!selectedTemplateId || loadingPreview"
+          (click)="refreshPreview()"
+        >
+          <app-icon name="upload" class="w-4 h-4"></app-icon>
+          Aktualisieren
+        </button>
+        <button
+          type="button"
+          class="inline-flex items-center gap-2 px-3 py-2 text-sm font-medium text-teal-800 bg-teal-50 border border-teal-100 rounded-lg hover:bg-teal-100 disabled:opacity-50"
+          [disabled]="!selectedTemplateId"
+          (click)="openInNewTab()"
+        >
+          <app-icon name="see_all" class="w-4 h-4"></app-icon>
+          In neuem Tab
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="error" class="mb-4 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+    {{ error }}
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-[320px_minmax(0,1fr)] gap-4 min-h-[70vh]">
+    <aside class="bg-white border border-gray-200 rounded-xl overflow-hidden">
+      <div class="px-4 py-3 border-b border-gray-100 bg-gray-50">
+        <h2 class="text-sm font-semibold text-gray-800">Vorlagen ({{ templates.length }})</h2>
+      </div>
+
+      <div class="p-2 max-h-[70vh] overflow-y-auto" *ngIf="!loadingList; else loadingListTpl">
+        <button
+          type="button"
+          *ngFor="let template of templates"
+          class="w-full text-left rounded-lg px-3 py-3 mb-1 transition-colors border"
+          [ngClass]="selectedTemplateId === template.id ? 'bg-teal-50 border-teal-200' : 'bg-white border-transparent hover:bg-gray-50'"
+          (click)="selectTemplate(template.id)"
+        >
+          <div class="text-sm font-semibold text-gray-900">{{ template.name }}</div>
+          <div class="text-xs text-gray-500 mt-0.5 font-mono">{{ template.filename }}</div>
+          <div class="text-xs text-gray-600 mt-2 line-clamp-2">{{ template.description }}</div>
+        </button>
+
+        <p *ngIf="templates.length === 0" class="px-3 py-6 text-sm text-gray-500 text-center">Keine Vorlagen gefunden.</p>
+      </div>
+    </aside>
+
+    <section class="flex flex-col min-h-[70vh]">
+      <div class="bg-white border border-gray-200 rounded-xl p-4 mb-4" *ngIf="selectedTemplate">
+        <div class="flex flex-wrap items-center justify-between gap-3">
+          <div>
+            <h2 class="text-lg font-semibold text-gray-900">{{ selectedTemplate.name }}</h2>
+            <p class="text-sm text-gray-600 mt-1">
+              Betreff: <span class="font-medium">{{ preview?.subject || selectedTemplate.subject }}</span>
+            </p>
+            <p class="text-xs text-gray-500 mt-1 font-mono">{{ selectedTemplate.sourcePath }}</p>
+          </div>
+
+          <button type="button" class="text-sm text-teal-700 hover:text-teal-900 font-medium" (click)="showMockData = !showMockData">
+            {{ showMockData ? 'Mock-Daten ausblenden' : 'Mock-Daten anzeigen' }}
+          </button>
+        </div>
+
+        <pre *ngIf="showMockData && preview" class="mt-4 text-xs bg-gray-900 text-gray-100 rounded-lg p-4 overflow-x-auto">{{ mockContextJson }}</pre>
+      </div>
+
+      <div class="flex-1 bg-gray-100 border border-gray-200 rounded-xl overflow-hidden relative">
+        <div *ngIf="loadingPreview" class="absolute inset-0 flex items-center justify-center bg-white/70 z-10 text-sm text-gray-600">Vorlage wird gerendert…</div>
+
+        <iframe *ngIf="previewFrameUrl as frameUrl" class="w-full h-full min-h-[60vh] bg-white" [src]="frameUrl" title="E-Mail-Vorschau" sandbox="allow-same-origin"></iframe>
+
+        <div *ngIf="!loadingPreview && !preview" class="h-full min-h-[60vh] flex items-center justify-center text-sm text-gray-500">Wählen Sie eine Vorlage aus der Liste.</div>
+      </div>
+    </section>
+  </div>
+</div>
+
+<ng-template #loadingListTpl>
+  <div class="p-6 text-sm text-gray-500 text-center">Vorlagen werden geladen…</div>
+</ng-template>

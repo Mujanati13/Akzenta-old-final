@@ -1,0 +1,414 @@
+<section class="min-h-[calc(100vh-95px)] flex flex-col">
+  <div class="flex-1">
+    <h2 class="w-full flex justify-between items-center text-primary-700 mb-4 flex-shrink-0">
+      <div class="flex items-start sm:items-center gap-2">
+        <app-icon name="projects" class="w-5 h-5 lg:w-6 lg:h-6 mr-1 text-primary-700" />
+        <span class="text-2xl lg:text-3xl font-bold font-dm">
+          Projekte<span *ngIf="clientCompanyName"> / {{ clientCompanyName }}</span>
+        </span>
+      </div>
+      <button
+        type="button"
+        class="cursor-pointer self-end sm:self-auto pr-0 sm:pr-6 flex items-center justify-center text-primary-600 hover:text-primary-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+        (click)="navigateBack()"
+        [disabled]="isSubmitting"
+        title="Zurück"
+      >
+        <app-icon name="arrow-left" class="w-8 h-8 flex items-center text-primary-700"></app-icon>
+      </button>
+    </h2>
+
+    <!-- Loading state -->
+    <div *ngIf="isLoading" class="relative mb-6 overflow-hidden">
+      <div class="absolute inset-0 bg-gradient-to-br from-primary-50/50 via-white to-amber-50/40 animate-dashboard-shimmer"></div>
+      <div class="relative z-10 p-5 sm:p-6 space-y-5">
+        <div class="rounded-xl border border-gray-100 bg-white/90 p-4 sm:p-5 shadow-sm space-y-5">
+          <div class="space-y-3">
+            <div class="h-3 w-20 rounded bg-gray-100 animate-pulse"></div>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+              <div class="h-[47px] w-full rounded-[4px] bg-gray-100 animate-pulse"></div>
+              <div class="h-[47px] w-full rounded-[4px] bg-gray-100 animate-pulse"></div>
+            </div>
+          </div>
+
+          <div class="space-y-3">
+            <div class="h-3 w-52 rounded bg-gray-100 animate-pulse"></div>
+            <div class="flex flex-col sm:flex-row gap-3">
+              <div class="h-[47px] w-full sm:w-[339px] rounded-[4px] bg-gray-100 animate-pulse"></div>
+              <div class="h-[47px] w-full sm:w-[246px] rounded-[4px] bg-gray-100 animate-pulse"></div>
+            </div>
+            <div class="flex flex-wrap gap-2">
+              <div class="h-7 w-28 rounded-full bg-primary-100/70 animate-pulse"></div>
+              <div class="h-7 w-24 rounded-full bg-primary-100/70 animate-pulse"></div>
+            </div>
+          </div>
+
+          <div class="space-y-3">
+            <div class="h-3 w-48 rounded bg-gray-100 animate-pulse"></div>
+            <div class="h-[47px] w-full rounded-[4px] bg-gray-100 animate-pulse"></div>
+            <div class="h-[90px] w-full rounded-[8px] bg-gray-100 animate-pulse"></div>
+          </div>
+
+          <div class="flex justify-end gap-2 pt-2">
+            <div class="h-10 w-24 rounded-[4px] bg-gray-100 animate-pulse"></div>
+            <div class="h-10 w-32 rounded-[4px] bg-primary-100/70 animate-pulse"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <form [formGroup]="projectForm" (ngSubmit)="onSubmit()" class="flex-1 pb-24" *ngIf="!isLoading" id="projectForm">
+      <!-- Projekt Section -->
+      <p-accordion multiple="true" [(value)]="activeAccordionValue" styleClass="mb-6">
+        <p-accordion-panel value="0">
+          <p-accordion-header>Projekt</p-accordion-header>
+          <p-accordion-content [ngStyle]="{ overflow: 'visible' }">
+            <div class="flex flex-col lg:flex-row gap-4 mb-6">
+              <div>
+                <p-floatlabel variant="in">
+                  <input pInputText id="projectName" formControlName="projectName" class="w-full sm:w-[386px] max-w-full h-[47px] border border-gray-300 focus:outline-none text-gray-700 bg-white" />
+                  <label for="projectName">Projekt Name</label>
+                </p-floatlabel>
+              </div>
+              <!-- Pass the height directly as a property -->
+              <app-date-range-picker [(selectedRange)]="dateRange2" (rangeSelected)="onRangeSelected($event)" class="w-full sm:w-[276px] max-w-full" position="left" height="h-[47px]">
+              </app-date-range-picker>
+            </div>
+
+            <!-- Ansprechpartner Kunde -->
+            <div class="mb-6 flex flex-col xl:flex-row gap-6">
+              <div>
+                <label class="block text-[14px] font-bold text-primary-500 mb-2">
+                  Ansprechpartner Kunde Zugeordnet
+                  <span class="text-gray-400 font-normal ml-2">({{ allClientContacts.length }} verfügbar)</span>
+                </label>
+
+                <!-- PrimeNG Autocomplete with multiple selection -->
+                <div class="flex flex-col sm:flex-row gap-3 sm:gap-4 items-stretch sm:items-end">
+                  <p-autocomplete
+                    [(ngModel)]="clientContactValue"
+                    [ngModelOptions]="{ standalone: true }"
+                    [suggestions]="filteredClientContacts"
+                    [dropdown]="true"
+                    (completeMethod)="searchClientContacts($event)"
+                    (onSelect)="onClientContactsChanged()"
+                    (onUnselect)="onClientContactsChanged()"
+                    (onChange)="onClientContactsChanged()"
+                    [multiple]="true"
+                    placeholder="Kontakte suchen"
+                    [styleClass]="'w-full sm:w-[339px] min-h-[46px]'"
+                  ></p-autocomplete>
+                  <button
+                    type="button"
+                    (click)="navigateToCreateClientContact()"
+                    class="cursor-pointer self-start px-3 py-1 bg-primary-500 text-white rounded-md font-dm text-[14px] h-[46px] w-full sm:w-[246px]"
+                  >
+                    Neuen Ansprechpartner anlegen
+                  </button>
+                </div>
+              </div>
+              <div>
+                <label class="block text-[14px] font-bold text-primary-500 mb-2">
+                  Ansprechpartner Sales Für Dieses Projekt Zugeordnet
+                  <span class="text-gray-400 font-normal ml-2">({{ allSalesContacts.length }} verfügbar)</span>
+                </label>
+
+                <!-- PrimeNG Autocomplete with multiple selection -->
+                <div class="flex flex-col sm:flex-row gap-3 sm:gap-4 items-stretch sm:items-end">
+                  <p-autocomplete
+                    [(ngModel)]="salesContactValue"
+                    [ngModelOptions]="{ standalone: true }"
+                    [suggestions]="filteredSalesContacts"
+                    [dropdown]="true"
+                    (completeMethod)="searchSalesContacts($event)"
+                    (onSelect)="onSalesContactsChanged()"
+                    (onUnselect)="onSalesContactsChanged()"
+                    (onChange)="onSalesContactsChanged()"
+                    [multiple]="true"
+                    placeholder="Sales Kontakte suchen"
+                    [styleClass]="'w-full sm:w-[369px] min-h-[46px]'"
+                  ></p-autocomplete>
+                  <button
+                    type="button"
+                    (click)="navigateToCreateContact()"
+                    class="cursor-pointer self-start px-3 py-1 bg-primary-500 text-white rounded-md font-dm text-[14px] h-[46px] w-full sm:w-[360px] cursor-pointer"
+                  >
+                    Neuen Ansprechpartner Sales anlegen
+                  </button>
+                </div>
+              </div>
+            </div>
+          </p-accordion-content>
+        </p-accordion-panel>
+
+        <!-- Details Report Section -->
+        <p-accordion-panel value="1">
+          <p-accordion-header>Details Report</p-accordion-header>
+          <p-accordion-content [ngStyle]="{ overflow: 'visible' }">
+            <!-- Questions -->
+            <div formArrayName="questions">
+              <div *ngFor="let question of questions.controls; let i = index; let isLast = last" [formGroupName]="i" class="mb-6">
+                <div class="flex gap-x-2 items-center mb-2">
+                  <label class="block text-[14px] font-bold text-primary-500 leading-none">Frage {{ i + 1 }}</label>
+                  <button *ngIf="i > 0" type="button" (click)="removeQuestion(i)" class="text-red-500 hover:text-red-700" aria-label="Remove photo section">
+                    <i class="pi pi-trash"></i>
+                  </button>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-3">
+                  <input type="text" formControlName="text" placeholder="Text ..." class="w-full h-[46px] px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-primary-500" />
+                  <div class="flex items-center gap-3 w-full">
+                    <p-dropdown
+                      formControlName="answerType"
+                      [options]="answerTypes"
+                      placeholder="Antwort: 'Vorauswahl' oder 'Textfeld' oder 'Mehrfachauswahl'"
+                      styleClass="w-full h-[46px]"
+                      (onChange)="onAnswerTypeChanged(i)"
+                    ></p-dropdown>
+                    <!-- Only show the add button on the last question -->
+                    <button
+                      *ngIf="isLast; else emptyPlus"
+                      type="button"
+                      (click)="addQuestion()"
+                      class="bg-primary-500 text-white w-[28px] h-[28px] rounded-[6px] flex items-center justify-center shrink-0"
+                    >
+                      <i class="pi pi-plus" style="font-size: 13px"></i>
+                    </button>
+                    <ng-template #emptyPlus>
+                      <div class="w-[28px] h-[28px]"></div>
+                    </ng-template>
+                  </div>
+                </div>
+
+                <!-- Options for SELECT or MULTISELECT -->
+                <div *ngIf="question.get('answerType').value === AnswerTypeEnum.SELECT || question.get('answerType').value === AnswerTypeEnum.MULTISELECT" class="mb-3">
+                  <label class="block text-[14px] font-bold text-primary-500 mb-2">Antwortoptionen</label>
+                  <div [formArrayName]="'options'">
+                    <div *ngFor="let optionCtrl of getOptionsArray(i).controls; let j = index" class="flex items-center gap-2 mb-2">
+                      <input [formControl]="optionCtrl" type="text" placeholder="Option {{ j + 1 }}" class="w-full sm:w-[300px] max-w-full h-[36px] border border-gray-300 rounded px-2" />
+                      <button type="button" (click)="removeOption(i, j)" *ngIf="getOptionsArray(i).length > 1" class="text-red-500"><i class="pi pi-trash"></i></button>
+                    </div>
+                    <button type="button" (click)="addOption(i)" class="bg-primary-500 text-white px-2 py-1 rounded text-sm"><i class="pi pi-plus"></i> Option hinzufügen</button>
+                  </div>
+                </div>
+
+                <div class="flex flex-col sm:flex-row sm:flex-wrap gap-3 sm:gap-6">
+                  <div class="flex items-center gap-x-2">
+                    <p-toggleswitch formControlName="required" styleClass="green-toggle" />
+                    <span class="text-sm">Pflichtantwort</span>
+                  </div>
+                  <div class="flex items-center gap-x-2">
+                    <p-toggleswitch formControlName="visibleToClient" styleClass="green-toggle" />
+                    <span class="text-sm">Sichtbar für Kunden</span>
+                  </div>
+                  <div class="flex items-center gap-x-2">
+                    <p-toggleswitch formControlName="showInOverview" styleClass="green-toggle" />
+                    <span class="text-sm">In Übersicht anzeigen</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </p-accordion-content>
+        </p-accordion-panel>
+
+        <!-- Photos Section -->
+        <p-accordion-panel value="2">
+          <p-accordion-header>Fotos</p-accordion-header>
+          <p-accordion-content>
+            <div class="mb-4">
+              <div class="flex items-center gap-x-2 mb-3">
+                <p-toggleswitch formControlName="photosConfigEnabled" styleClass="green-toggle" (onChange)="onPhotosConfigEnabledChanged()" />
+                <span class="text-sm font-medium">Foto-Konfiguration aktiv</span>
+              </div>
+
+              <ng-container *ngIf="projectForm.get('photosConfigEnabled')?.value">
+                <div class="flex items-center gap-x-2 mb-3">
+                  <p-toggleswitch formControlName="photosVisibleInReport" styleClass="green-toggle" />
+                  <span class="text-sm">Sichtbar im Report</span>
+                </div>
+
+                <div class="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-x-4 mb-3" role="radiogroup" aria-labelledby="photo-style-label">
+                  <span id="photo-style-label" class="sr-only">Photo Style</span>
+                  <div
+                    class="flex items-center gap-x-1 cursor-pointer"
+                    (click)="togglePhotoStyle('before-after')"
+                    role="radio"
+                    [attr.aria-checked]="projectForm.get('photoStyle').value === 'before-after'"
+                    tabindex="0"
+                    (keydown.space)="$event.preventDefault(); togglePhotoStyle('before-after')"
+                  >
+                    <span class="flex items-center justify-center w-5 h-5">
+                      <app-icon *ngIf="projectForm.get('photoStyle').value === 'before-after'" name="radio_checked" />
+                      <app-icon *ngIf="projectForm.get('photoStyle').value !== 'before-after'" name="radio_unchecked" />
+                    </span>
+                    <label class="text-sm cursor-pointer">Vorher / Nachher</label>
+                  </div>
+                  <div
+                    class="flex items-center gap-x-1 cursor-pointer"
+                    (click)="togglePhotoStyle('after')"
+                    role="radio"
+                    [attr.aria-checked]="projectForm.get('photoStyle').value === 'after'"
+                    tabindex="0"
+                    (keydown.space)="$event.preventDefault(); togglePhotoStyle('after')"
+                  >
+                    <span class="flex items-center justify-center w-5 h-5">
+                      <app-icon *ngIf="projectForm.get('photoStyle').value === 'after'" name="radio_checked" />
+                      <app-icon *ngIf="projectForm.get('photoStyle').value !== 'after'" name="radio_unchecked" />
+                    </span>
+                    <label class="text-sm cursor-pointer">Nachher</label>
+                  </div>
+                </div>
+
+                <div *ngIf="projectForm.get('photoStyle')?.value" class="space-y-4 mb-4 p-4 border border-gray-200 rounded-lg bg-gray-50/50">
+                  <p class="text-sm text-gray-600" *ngIf="projectForm.get('photoStyle')?.value === 'before-after'">1 Vorher-Bild und 1 Nachher-Bild pro Filiale</p>
+                  <p class="text-sm text-gray-600" *ngIf="projectForm.get('photoStyle')?.value === 'after'">1 Nachher-Bild pro Filiale</p>
+                </div>
+              </ng-container>
+            </div>
+          </p-accordion-content>
+        </p-accordion-panel>
+
+        <!-- Extended Photo Options -->
+        <p-accordion-panel value="3">
+          <p-accordion-header>Fotos - Erweiterte Option</p-accordion-header>
+          <p-accordion-content>
+            <div class="mb-4">
+              <div class="flex items-center gap-x-2 mb-3">
+                <p-toggleswitch formControlName="extendedPhotosVisibleInReport" styleClass="green-toggle" />
+                <span class="text-sm">Sichtbar im Report</span>
+              </div>
+
+              <!-- Photo Sections -->
+              <div formArrayName="photoSections">
+                <div *ngFor="let section of photoSections.controls; let i = index" [formGroupName]="i" class="mb-6">
+                  <div class="flex gap-x-2 items-center mb-2">
+                    <label class="block text-[14px] font-bold text-primary-500 leading-none">Fotos {{ i + 1 }}</label>
+                    <button *ngIf="i > 0" type="button" (click)="removePhotoSection(i)" class="text-red-500 hover:text-red-700" aria-label="Remove photo section">
+                      <i class="pi pi-trash"></i>
+                    </button>
+                  </div>
+
+                  <div class="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-x-4 mb-3" role="radiogroup" [attr.aria-labelledby]="'photo-section-' + i + '-label'">
+                    <span [id]="'photo-section-' + i + '-label'" class="sr-only">Photo Section Style</span>
+                    <div
+                      class="flex items-center gap-x-1 cursor-pointer"
+                      (click)="togglePhotoSectionType(i, 'before-after')"
+                      role="radio"
+                      [attr.aria-checked]="getPhotoTypeControl(i).value === 'before-after'"
+                      tabindex="0"
+                      (keydown.space)="$event.preventDefault(); togglePhotoSectionType(i, 'before-after')"
+                    >
+                      <span class="flex items-center justify-center w-5 h-5">
+                        <app-icon *ngIf="getPhotoTypeControl(i).value === 'before-after'" name="radio_checked" />
+                        <app-icon *ngIf="getPhotoTypeControl(i).value !== 'before-after'" name="radio_unchecked" />
+                      </span>
+                      <label class="text-sm cursor-pointer">Vorher / Nachher</label>
+                    </div>
+                    <div
+                      class="flex items-center gap-x-1 cursor-pointer"
+                      (click)="togglePhotoSectionType(i, 'after')"
+                      role="radio"
+                      [attr.aria-checked]="getPhotoTypeControl(i).value === 'after'"
+                      tabindex="0"
+                      (keydown.space)="$event.preventDefault(); togglePhotoSectionType(i, 'after')"
+                    >
+                      <span class="flex items-center justify-center w-5 h-5">
+                        <app-icon *ngIf="getPhotoTypeControl(i).value === 'after'" name="radio_checked" />
+                        <app-icon *ngIf="getPhotoTypeControl(i).value !== 'after'" name="radio_unchecked" />
+                      </span>
+                      <label class="text-sm cursor-pointer">Nachher</label>
+                    </div>
+                  </div>
+
+                  <p class="text-sm text-gray-600 mb-3" *ngIf="getPhotoTypeControl(i).value === 'before-after'">1 Vorher-Bild und 1 Nachher-Bild pro Filiale</p>
+                  <p class="text-sm text-gray-600 mb-3" *ngIf="getPhotoTypeControl(i).value === 'after'">1 Nachher-Bild pro Filiale</p>
+
+                  <div class="flex flex-col sm:flex-row gap-3 sm:gap-x-4 items-stretch sm:items-center">
+                    <div *ngFor="let desc of getDescriptionControls(i); let j = index" class="relative w-full sm:w-auto">
+                      <input
+                        type="text"
+                        [formControl]="desc"
+                        [placeholder]="'Bezeichnung ' + (j + 1)"
+                        class="w-full sm:w-[261px] max-w-full h-[46px] px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-primary-500"
+                      />
+                      <button
+                        *ngIf="j + 1 > 1"
+                        type="button"
+                        (click)="removeDescription(i, j)"
+                        class="absolute right-2 top-1/2 -translate-y-1/2 text-red-500 hover:text-red-700"
+                        aria-label="Remove description"
+                      >
+                        <i class="pi pi-times"></i>
+                      </button>
+                    </div>
+                    <button
+                      *ngIf="getDescriptionControls(i).length < 3"
+                      type="button"
+                      (click)="addDescription(i)"
+                      class="bg-primary-500 text-white w-[28px] h-[28px] rounded-[6px] flex items-center justify-center"
+                    >
+                      <i class="pi pi-plus" style="font-size: 13px"></i>
+                    </button>
+                  </div>
+                </div>
+                <button
+                  *ngIf="photoSections.length < 3"
+                  type="button"
+                  (click)="addPhotoSection()"
+                  type="button"
+                  class="bg-primary-500 text-white h-[28px] rounded-[6px] px-2 flex items-center justify-center gap-2"
+                >
+                  <i class="pi pi-plus" style="font-size: 13px"></i> Fotos hinzufügen
+                </button>
+              </div>
+            </div>
+          </p-accordion-content>
+        </p-accordion-panel>
+      </p-accordion>
+    </form>
+  </div>
+
+  <!-- Submit Button Section -->
+  <div class="sticky bottom-0 bg-white/95 backdrop-blur-sm py-4 px-0 sm:pl-6 z-10 border-t border-gray-100">
+    <div class="flex justify-end gap-4">
+      <button
+        type="submit"
+        id="submitBtn"
+        (click)="$event.stopPropagation(); onSubmit()"
+        [disabled]="projectForm.invalid || isSubmitting"
+        class="px-4 py-2 bg-[#66BC06] inline-flex items-center justify-center gap-x-[8px] hover:bg-green-600 text-white font-dm cursor-pointer text-[14px] rounded-md transition-colors duration-200 disabled:bg-gray-300 h-[35px] w-full sm:w-[296px] leading-none"
+      >
+        <app-icon name="save" class="text-white w-[11px] h-[11px] shrink-0" />
+        <span>Projekt speichern & Excel generieren</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Success Modal -->
+  <p-dialog
+    [(visible)]="successModalVisible"
+    [modal]="true"
+    [draggable]="false"
+    [resizable]="false"
+    [style]="{ width: '329px' }"
+    [contentStyle]="{ padding: '2rem', borderRadius: '8px', textAlign: 'center' }"
+    [showHeader]="false"
+    [closeOnEscape]="true"
+    [dismissableMask]="true"
+  >
+    <div class="flex flex-col items-center">
+      <!-- Success Icon -->
+      <div class="w-[71px] h-[71px] rounded-full border-2 border-[#007296] flex items-center justify-center mb-6 bg-[#EFF6FF]">
+        <app-icon name="modal-check" class="" />
+      </div>
+
+      <!-- Success Message -->
+      <h2 class="text-[14px] font-medium mb-4">Änderungen, erfolgreich gespeichert</h2>
+
+      <!-- Divider -->
+      <hr class="w-full border-t border-gray-200 mb-4" />
+
+      <!-- Remove CSV Download Button -->
+    </div>
+  </p-dialog>
+</section>

@@ -1,0 +1,4 @@
+// So the file placeholder icon inherits text color (SVG may not use currentColor by default)
+.file-placeholder ::ng-deep svg {
+  fill: currentColor;
+}

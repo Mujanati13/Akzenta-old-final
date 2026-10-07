@@ -1,0 +1,300 @@
+<section class="flex flex-col h-full">
+  <!-- Sticky header and filters for mobile -->
+  <div class="sticky top-0 z-20 pt-3 pb-2 -mx-4 px-4 sm:mx-0 sm:px-0 sm:pb-0 sm:pt-0 sm:bg-transparent">
+    <h2 translate class="w-full flex justify-between items-center text-primary-700 mb-4 flex-shrink-0">
+      <div class="flex items-center">
+        <app-icon name="clients" class="w-5 h-5 lg:w-6 lg:h-6 mr-1 text-primary-700" />
+        <span class="text-2xl lg:text-3xl font-bold font-dm">Kunden</span>
+      </div>
+      <!-- Toggle filters on mobile button -->
+      <button
+        type="button"
+        class="lg:hidden relative inline-flex items-center justify-center w-8 h-8 rounded-[4px] bg-gradient-to-br from-[#00839b] to-[#006a7e] text-white shadow-[0_4px_8px_rgba(0,131,155,0.3)] shrink-0 active:scale-95 transition-transform"
+        (click)="showMobileFilters = true"
+      >
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M6 12h12M8 18h8" />
+        </svg>
+        <span
+          *ngIf="getActiveFilterCount() > 0"
+          class="absolute -top-2 -right-2 px-1.5 bg-[#00839b] text-white text-[10px] font-bold border-2 border-white rounded-full shadow-sm whitespace-nowrap z-[100]"
+        >
+          {{ getActiveFilterCount() }}
+        </span>
+      </button>
+      <!-- <button type="button" class="ml-auto cursor-pointer flex items-center justify-center text-primary-600 hover:text-primary-700 transition-colors" (click)="navigateBack()" title="Zurück">
+        <app-icon name="arrow-left" class="w-8 h-8 flex items-center text-primary-700"></app-icon>
+      </button> -->
+    </h2>
+
+    <!-- Fragments for layout -->
+    <ng-template #tplMeine
+      ><!-- Meine Kunden button -->
+      <a
+        class="lg:h-[50px] min-h-[40px] sm:min-h-[40px] flex-1 min-w-0 font-dm font-bold text-primary-500 rounded-[4px] transition-all duration-300 ease-out cursor-pointer hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center no-underline col-span-full md:col-span-full lg:col-span-1"
+        [class.opacity-50]="isLoading && allCards.length === 0"
+        [class.cursor-not-allowed]="isLoading && allCards.length === 0"
+        [class.pointer-events-none]="isLoading && allCards.length === 0"
+        [routerLink]="[]"
+        [queryParams]="{ filter: 'my-clients', search: null }"
+        queryParamsHandling="merge"
+        [ngStyle]="{
+          'box-shadow': activeFilter === 'my-clients' ? '0 0 0 3px rgba(0, 111, 155, 0.7)' : '0 0 0 3px rgba(0, 0, 0, 0.09)',
+        }"
+        (click)="toggleMyClientsFilter()"
+      >
+        Meine Kunden
+      </a>
+    </ng-template>
+    <ng-template #tplAlle
+      ><!-- Alle Kunden button -->
+      <a
+        class="lg:h-[50px] min-h-[40px] sm:min-h-[40px] flex-1 min-w-0 font-dm font-bold text-primary-500 rounded-[4px] transition-all duration-300 ease-out cursor-pointer hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center no-underline col-span-full md:col-span-full lg:col-span-1"
+        [class.opacity-50]="isLoading && allCards.length === 0"
+        [class.cursor-not-allowed]="isLoading && allCards.length === 0"
+        [class.pointer-events-none]="isLoading && allCards.length === 0"
+        [routerLink]="[]"
+        [queryParams]="{ filter: 'all', search: null }"
+        queryParamsHandling="merge"
+        [ngStyle]="{
+          'box-shadow': activeFilter === 'all' ? '0 0 0 3px rgba(0, 111, 155, 0.7)' : '0 0 0 3px rgba(0, 0, 0, 0.09)',
+        }"
+        (click)="showAllClients()"
+      >
+        Alle Kunden
+      </a>
+    </ng-template>
+    <ng-template #tplSearch
+      ><!-- Search input with icon inside -->
+      <div class="relative w-full col-span-full md:col-span-full lg:col-span-2">
+        <input
+          type="text"
+          placeholder="Suche nach Kunden"
+          [class]="
+            'lg:h-[50px] h-[45px] px-4 border border-gray-300 rounded-[4px] font-dm text-sm lg:text-sm w-full focus:outline-none focus:ring-0 focus:border-primary-500 disabled:bg-gray-100 disabled:cursor-not-allowed' +
+            (searchTerm && searchTerm.length > 0 ? ' pr-10' : '')
+          "
+          [value]="searchTerm"
+          [disabled]="isLoading && allCards.length === 0"
+          (input)="onSearchInput($event)"
+        />
+        <app-icon *ngIf="!searchTerm || searchTerm.length === 0" name="search" class="absolute right-2 top-1/2 transform -translate-y-1/2 w-[19px] h-[19px] text-gray-500" />
+        <button
+          *ngIf="searchTerm && searchTerm.length > 0"
+          type="button"
+          (click)="clearSearch()"
+          class="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 cursor-pointer transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          title="Suche löschen"
+          [disabled]="isLoading && allCards.length === 0"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+    </ng-template>
+    <ng-template #tplClear
+      ><!-- Clear filters button -->
+      <div class="place-content-center cursor-pointer col-span-full md:col-span-full lg:col-span-1" *ngIf="hasActiveFilters()">
+        <button
+          (click)="clearFilters()"
+          class="group cursor-pointer relative isolate w-full lg:w-auto inline-flex items-center justify-center gap-2.5 overflow-hidden rounded-[4px] border border-rose-200/80 bg-gradient-to-r from-white via-rose-50 to-orange-50 px-4 py-2 text-[12px] font-semibold text-rose-700 shadow-sm ring-1 ring-white/60 transition-all duration-300 hover:border-rose-300 hover:bg-white/90 hover:from-white hover:via-rose-100 hover:to-white hover:text-rose-800 hover:shadow-md hover:shadow-rose-200/40 hover:ring-rose-200/70 disabled:pointer-events-none disabled:opacity-40"
+          [disabled]="isLoading && allCards.length === 0"
+        >
+          <span
+            class="relative flex h-6 w-6 items-center justify-center rounded-full bg-rose-500/15 ring-1 ring-rose-500/20 transition-all duration-300 group-hover:bg-rose-500/10 group-hover:ring-rose-300/50"
+          >
+            <svg class="h-3.5 w-3.5 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h5M20 20v-5h-5M5 9a7 7 0 0111.9-4.9L19 6M5 15a7 7 0 0011.9 4.9L19 18" />
+            </svg>
+          </span>
+          <span class="tracking-[0.01em]">Suche zurücksetzen</span>
+        </button>
+      </div>
+    </ng-template>
+    <ng-template #tplNew
+      ><div class="w-full flex items-center col-span-full md:col-span-full lg:col-span-1">
+        <a
+          class="lg:h-[50px] h-[45px] w-full font-dm text-white bg-primary-500 rounded-[4px] flex space-x-[12px] items-center justify-center text-sm cursor-pointer no-underline hover:text-white"
+          [class.opacity-50]="isLoading && allCards.length === 0"
+          [class.pointer-events-none]="isLoading && allCards.length === 0"
+          [routerLink]="['/clients/add']"
+          queryParamsHandling="preserve"
+        >
+          <app-icon name="plus" class="w-[13.8px] h-[13.8px]" />
+          <span>Neuen kunden anlegen</span>
+        </a>
+      </div></ng-template
+    >
+
+    <!-- Mobile always-visible filter buttons -->
+    <div class="lg:hidden flex flex-col gap-3 mb-4">
+      <ng-container *ngTemplateOutlet="tplMeine"></ng-container>
+      <ng-container *ngTemplateOutlet="tplAlle"></ng-container>
+    </div>
+
+    <!-- Desktop filters -->
+    <div class="hidden lg:grid mb-4 lg-mb-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-3 lg:gap-4 items-center bg-white sm:bg-transparent rounded-lg">
+      <ng-container *ngTemplateOutlet="tplMeine"></ng-container>
+      <ng-container *ngTemplateOutlet="tplAlle"></ng-container>
+      <ng-container *ngTemplateOutlet="tplSearch"></ng-container>
+      <ng-container *ngTemplateOutlet="tplClear"></ng-container>
+      <ng-container *ngTemplateOutlet="tplNew"></ng-container>
+    </div>
+
+    <!-- Mobile filters Modal -->
+    <app-mobile-filter-bottom-sheet [(visible)]="showMobileFilters" title="Kunden Filter" [customActiveFilterCount]="getActiveFilterCount()" (allFiltersCleared)="clearFilters()">
+      <div custom-inputs class="p-4 pb-2">
+        <div class="flex flex-col gap-4">
+          <ng-container *ngTemplateOutlet="tplSearch"></ng-container>
+          <ng-container *ngTemplateOutlet="tplNew"></ng-container>
+        </div>
+      </div>
+    </app-mobile-filter-bottom-sheet>
+  </div>
+
+  <!-- Loading state -->
+  <div class="flex-1 overflow-y-auto min-h-0 relative -mx-4 px-4 sm:mx-0 sm:px-0 pb-4">
+    <div *ngIf="isLoading && cards.length === 0" class="relative overflow-hidden bg-white/80 backdrop-blur-sm p-5 sm:p-6 rounded-2xl">
+      <div class="absolute inset-0 bg-gradient-to-br from-primary-50/50 via-white to-amber-50/40 animate-dashboard-shimmer"></div>
+      <div class="relative z-10 space-y-4">
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3 lg:gap-6">
+          <div *ngFor="let _ of [1, 2, 3, 4, 5, 6, 7, 8]" class="rounded-[20px] border border-gray-100 bg-white/90 p-4 lg:p-5 shadow-sm space-y-4">
+            <div class="flex justify-between items-start">
+              <div class="h-10 w-24 rounded-lg bg-gray-100 animate-pulse"></div>
+              <div class="h-6 w-6 rounded bg-gray-100 animate-pulse"></div>
+            </div>
+            <div class="space-y-2">
+              <div class="h-4 w-4/5 rounded bg-gray-100 animate-pulse"></div>
+              <div class="h-3 w-3/5 rounded bg-gray-100 animate-pulse"></div>
+            </div>
+            <div class="grid grid-cols-2 gap-3 pt-1">
+              <div class="space-y-1">
+                <div class="h-3 w-12 rounded bg-gray-100 animate-pulse"></div>
+                <div class="h-4 w-10 rounded bg-gray-100 animate-pulse"></div>
+              </div>
+              <div class="space-y-1">
+                <div class="h-3 w-14 rounded bg-gray-100 animate-pulse"></div>
+                <div class="h-4 w-10 rounded bg-gray-100 animate-pulse"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="!isLoading && cards.length === 0" class="py-2">
+      <div class="empty-data-alert">
+        <p>Keine Kunden gefunden.</p>
+      </div>
+    </div>
+    <!-- Client cards grid -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3 lg:gap-6" *ngIf="cards.length > 0">
+      <!-- Client cards: outer link is a div+routerLink (not <a>) so inner edit/report links are not nested anchors — nested <a> breaks edit navigation in browsers. -->
+      <div
+        *ngFor="let item of cards; let i = index; trackBy: trackByCard"
+        [id]="'client-card-' + item.id"
+        [routerLink]="['/clients', item.id]"
+        [ngClass]="{
+          'bg-green-50 border-2 border-green-500': item.isMyClient,
+          'bg-white border border-[#DEE2E6]': !item.isMyClient,
+        }"
+        [ngStyle]="{
+          'box-shadow': item.isMyClient ? '0px 0px 3.5px 3px rgba(0, 128, 0, 0.13)' : '0px 0px 3.5px 3px rgba(0, 0, 0, 0.13)',
+          'animation-delay': (i % 20) * 0.05 + 's',
+        }"
+        class="client-card rounded-[20px] lg:px-[30px] lg:pt-[21px] lg:pb-[16px] px-6 py-4 flex flex-col space-y-4 hover:shadow-lg transition-shadow cursor-pointer"
+      >
+        <div class="flex justify-between items-start lg:h-[78px] h-[68px]">
+          <!-- Company logo (no inner link — card div already navigates to detail) -->
+          <div class="max-w-[72%] flex items-center">
+            <div class="flex items-center gap-3 rounded-[6px] py-2">
+              <div class="h-[42px] w-[119px] rounded-xl border border-white/80 bg-white/95 flex items-center justify-center overflow-hidden">
+                <img
+                  *ngIf="item.logo?.path; else defaultLogo"
+                  [src]="item.logo.path"
+                  [alt]="item.name"
+                  class="max-h-[32px] max-w-[60px] object-contain"
+                  (error)="$event.target.style.display = 'none'"
+                />
+                <ng-template #defaultLogo>
+                  <div class="h-full w-full bg-gray-100 rounded-xl flex items-center justify-center">
+                    <span class="text-gray-500 text-sm font-bold">{{ item.name.charAt(0) }}</span>
+                  </div>
+                </ng-template>
+              </div>
+              <div class="min-w-0">
+                <p class="text-[10px] uppercase tracking-[0.12em] text-primary-300 font-semibold leading-none mb-1">Kunde</p>
+                <p class="text-primary-700 font-dm font-bold text-sm lg:text-base leading-tight break-words line-clamp-2">
+                  {{ item.name }}
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="flex items-center space-x-2">
+            <a [routerLink]="['/clients', item.id, 'edit']" [queryParams]="{ referrer: 'clients-list' }" (click)="$event.stopPropagation()" class="cursor-pointer inline-flex items-center">
+              <app-icon name="pencil" class="w-6 h-6 text-primary-500" title="Bearbeiten" />
+            </a>
+            <app-favorite-toggle
+              iconSize="w-6 h-6"
+              [title]="item.isFavorite ? 'von favoriten entfernen' : 'als favorit hinzufügen'"
+              class="h-6 w-6 flex-shrink-0"
+              [isFavorite]="item.isFavorite"
+              (favoriteChange)="onFavoriteChanged($event, item)"
+              (contextmenu)="onFavoriteContextMenu($event, item.id)"
+              (click)="$event.stopPropagation(); $event.preventDefault()"
+            />
+          </div>
+        </div>
+
+        <!-- Stats -->
+        <ul class="text-sm text-primary-200 space-y-2">
+          <li>
+            <a *ngIf="(item.reportCounts?.newReports || 0) > 0" [routerLink]="['/clients', item.id]" [queryParams]="{ status: 'new' }" (click)="$event.stopPropagation()" class="block">
+              <span class="border rounded-full aspect-square px-1 text-black">{{ item.reportCounts?.newReports || 0 }}</span>
+              <span class="text-primary-500">neue Reports</span>
+            </a>
+            <span *ngIf="(item.reportCounts?.newReports || 0) === 0" class="block cursor-default">
+              <span class="border rounded-full aspect-square px-1 text-black">{{ item.reportCounts?.newReports || 0 }}</span>
+              <span class="text-primary-500">neue Reports</span>
+            </span>
+          </li>
+          <li>
+            <a *ngIf="(item.reportCounts?.ongoingReports || 0) > 0" [routerLink]="['/clients', item.id]" [queryParams]="{ status: 'ongoing' }" (click)="$event.stopPropagation()" class="block">
+              <span class="border rounded-full aspect-square px-1 text-black">{{ item.reportCounts?.ongoingReports || 0 }}</span>
+              <span class="text-primary-500">offene Reports</span>
+            </a>
+            <span *ngIf="(item.reportCounts?.ongoingReports || 0) === 0" class="block cursor-default">
+              <span class="border rounded-full aspect-square px-1 text-black">{{ item.reportCounts?.ongoingReports || 0 }}</span>
+              <span class="text-primary-500">offene Reports</span>
+            </span>
+          </li>
+          <li>
+            <a *ngIf="(item.reportCounts?.completedReports || 0) > 0" [routerLink]="['/clients', item.id]" [queryParams]="{ status: 'completed' }" (click)="$event.stopPropagation()" class="block">
+              <span class="border rounded-full aspect-square px-1 text-black">{{ item.reportCounts?.completedReports || 0 }}</span>
+              <span class="text-primary-500">abgeschlossene Reports</span>
+            </a>
+            <span *ngIf="(item.reportCounts?.completedReports || 0) === 0" class="block cursor-default">
+              <span class="border rounded-full aspect-square px-1 text-black">{{ item.reportCounts?.completedReports || 0 }}</span>
+              <span class="text-primary-500">abgeschlossene Reports</span>
+            </span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Load more button -->
+    <div class="text-center mt-8" *ngIf="hasNextPage && !isLoading">
+      <button
+        class="px-6 py-3 bg-gray-100 text-gray-700 rounded-[4px] hover:bg-gray-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+        [disabled]="isLoadingMore"
+        (click)="loadMore()"
+      >
+        <span *ngIf="!isLoadingMore">Weitere Kunden laden</span>
+        <span *ngIf="isLoadingMore" class="flex items-center gap-2">
+          <div class="inline-block animate-spin rounded-full h-4 w-4 border-b-2 border-gray-500"></div>
+          Lade...
+        </span>
+      </button>
+    </div>
+  </div>
+</section>

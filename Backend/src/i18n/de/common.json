@@ -1,0 +1,16 @@
+{
+  "email": "E-Mail",
+  "password": "Passwort",
+  "confirmPassword": "Passwort bestätigen",
+  "confirmEmail": "E-Mail bestätigen",
+  "resetPassword": "Passwort zurücksetzen",
+  "login": "Anmelden",
+  "register": "Registrieren",
+  "logout": "Abmelden",
+  "forgotPassword": "Passwort vergessen?",
+  "sendResetLink": "Link zum Zurücksetzen des Passworts senden",
+  "resetLinkSent": "Link zum Zurücksetzen des Passworts gesendet",
+  "passwordResetSuccess": "Passwort erfolgreich zurückgesetzt",
+  "emailVerificationRequired": "E-Mail-Verifizierung erforderlich",
+  "emailVerified": "E-Mail erfolgreich verifiziert"
+}

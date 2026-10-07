@@ -1,0 +1,56 @@
+.p-inputgroupaddon:first-child,
+.p-inputgroupaddon + .p-inputgroupaddon {
+  border-radius: 4px 0 0 6px;
+  min-width: auto;
+  padding-right: 0px;
+  height: 60px;
+}
+
+// Fix the text alignment
+.p-inputtext,
+.p-select-label {
+  font-family: var(--font-dm);
+  font-size: 11px;
+  line-height: 1.2;
+  display: flex;
+  align-items: center;
+}
+
+.shadow-selected {
+  box-shadow: 0 0 0 4px var(--primary-500, #00709b);
+}
+
+// Responsive tabs - stack vertically on mobile
+::ng-deep .p-tablist-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  @media (min-width: 640px) {
+    flex-direction: row;
+    gap: 0;
+  }
+}
+
+.p-tab {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  padding: 8px 0;
+  width: 100%;
+
+  @media (min-width: 640px) {
+    width: 309px;
+  }
+}
+
+.p-tab-active {
+  border-width: 0 0 2px 0;
+}
+
+.p-tabpanels {
+  padding: 0px;
+  margin: 0px;
+  border: none;
+  background-color: transparent;
+}

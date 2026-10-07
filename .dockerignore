@@ -1,0 +1,17 @@
+**/node_modules
+**/dist
+**/.angular
+**/.git
+**/.env
+**/.env.*
+!**/src/environments/.env.ts
+**/uploads
+**/exports
+**/*.log
+.verification
+deployment/backups
+.env.production
+
+deployment/.deploy.lock
+deployment/.rollback.yml
+deployment/.last-successful-tag

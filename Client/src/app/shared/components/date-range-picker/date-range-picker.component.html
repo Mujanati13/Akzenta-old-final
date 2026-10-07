@@ -1,0 +1,282 @@
+<!-- date-range-picker.component.html -->
+<div class="relative">
+  <div class="relative">
+    <!-- Input trigger - replace fixed height with dynamic height from input -->
+    <div
+      class="lg:h-[50px] h-[40px] px-4 border border-gray-300 rounded-[4px] font-dm text-sm w-full text-gray-600 focus:outline-none focus:ring-0 focus:border-primary-500 flex items-center justify-between cursor-pointer hover:border-primary-400 transition-colors"
+      (click)="togglePicker()"
+    >
+      <span *ngIf="!selectedRange?.start || !selectedRange?.end" class="text-gray-400 truncate mr-2"> Startdatum & Enddatum </span>
+      <span *ngIf="selectedRange?.start && selectedRange?.end" class="text-gray-700 truncate mr-2"> {{ selectedRange.start | euDate }} - {{ selectedRange.end | euDate }} </span>
+      <div class="flex items-center gap-2">
+        <button
+          *ngIf="selectedRange?.start && selectedRange?.end"
+          type="button"
+          (click)="clearRange($event)"
+          class="text-gray-400 hover:text-red-500 cursor-pointer transition-colors"
+          title="Datum löschen"
+        >
+          <svg class="w-4 h-4 lg:w-5 lg:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+        <app-icon name="calendar" class="lg:w-[19px] lg:h-[19px] w-[16px] h-[16px] text-primary-500" />
+      </div>
+    </div>
+
+    <!-- Backdrop for closing on outside click (desktop only) -->
+    <div *ngIf="showPicker" class="hidden lg:block fixed inset-0 z-40" (click)="closePicker()"></div>
+
+    <!-- Picker dropdown -->
+    <div
+      *ngIf="showPicker"
+      class="fixed lg:absolute inset-0 lg:inset-auto z-[999] lg:z-50 lg:mt-2 bg-white lg:border lg:border-gray-200 lg:rounded-lg lg:shadow-xl w-full h-full lg:w-auto lg:h-auto flex flex-col lg:block overflow-hidden lg:overflow-auto"
+      [ngClass]="position === 'left' ? 'lg:left-0' : 'lg:right-0'"
+      #pickerDropdown
+    >
+      <!-- Header with close button - Blue background -->
+      <div class="flex items-center justify-between px-3 py-2 sticky top-0 bg-primary-500 z-10 lg:rounded-t-sm">
+        <span class="text-sm font-semibold text-white">Datum auswählen</span>
+        <button type="button" (click)="closePicker()" class="focus:outline-none text-white/80 hover:text-white hover:bg-white/20 transition-all cursor-pointer p-1.5 rounded-full" title="Schließen">
+          <svg class="w-4 h-4 lg:w-5 lg:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+
+      <!-- Selected range display -->
+      <div class="px-3 py-2 bg-primary-50 border-b border-primary-100">
+        <div class="flex flex-col items-center gap-1 text-xs">
+          <div class="flex items-center justify-center gap-2">
+            <div class="flex items-center gap-1">
+              <span class="text-gray-500">Von:</span>
+              <span class="font-medium text-primary-700">{{ selectedRange?.start ? (selectedRange.start | euDate) : '---' }}</span>
+            </div>
+            <svg class="w-3 h-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+            </svg>
+            <div class="flex items-center gap-1">
+              <span class="text-gray-500">Bis:</span>
+              <span class="font-medium text-primary-700">{{ selectedRange?.end ? (selectedRange.end | euDate) : '---' }}</span>
+            </div>
+          </div>
+          <div class="text-[11px] text-gray-500">
+            Heute:
+            <span class="font-medium text-primary-700">{{ today | euDate }}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex-1 flex gap-3 justify-center p-3 lg:p-4 overflow-auto">
+        <!-- Calendars column -->
+        <div class="flex flex-col lg:flex-row lg:gap-4 gap-4 w-full lg:w-auto">
+          <!-- Current month calendar -->
+          <div class="bg-white rounded-lg">
+            <!-- Month header -->
+            <div class="flex items-center justify-between mb-3 pb-2 border-b border-gray-100">
+              <div class="flex items-center gap-1">
+                <div class="relative">
+                  <select
+                    class="text-xs appearance-none bg-gray-50 hover:bg-gray-100 rounded-[4px] pr-6 pl-2 py-1.5 text-gray-700 font-medium focus:outline-none focus:ring-2 focus:ring-primary-200 cursor-pointer transition-colors"
+                    [ngModel]="currentMonth.getMonth()"
+                    (ngModelChange)="changeCurrentMonth($event)"
+                  >
+                    <option *ngFor="let month of months" [value]="month.value">{{ month.name }}</option>
+                  </select>
+                  <div class="absolute right-1 top-1/2 -translate-y-1/2 pointer-events-none">
+                    <svg class="w-3 h-3 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                  </div>
+                </div>
+
+                <div class="relative">
+                  <select
+                    class="text-xs appearance-none bg-gray-50 hover:bg-gray-100 rounded-[4px] pr-6 pl-2 py-1.5 text-gray-700 font-medium focus:outline-none focus:ring-2 focus:ring-primary-200 cursor-pointer transition-colors"
+                    [ngModel]="currentMonth.getFullYear()"
+                    (ngModelChange)="changeCurrentYear($event)"
+                  >
+                    <option *ngFor="let year of years" [value]="year">{{ year }}</option>
+                  </select>
+                  <div class="absolute right-1 top-1/2 -translate-y-1/2 pointer-events-none">
+                    <svg class="w-3 h-3 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+              <div class="flex gap-0.5">
+                <button class="p-1.5 rounded-[4px] hover:bg-gray-100 transition-colors cursor-pointer" (click)="navigateMonth('current', -1)">
+                  <svg class="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                  </svg>
+                </button>
+                <button class="p-1.5 rounded-[4px] hover:bg-gray-100 transition-colors cursor-pointer" (click)="navigateMonth('current', 1)">
+                  <svg class="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            <table class="w-full">
+              <thead>
+                <tr>
+                  <th class="w-8 h-8 text-[10px] font-semibold text-gray-400 uppercase">Mo</th>
+                  <th class="w-8 h-8 text-[10px] font-semibold text-gray-400 uppercase">Di</th>
+                  <th class="w-8 h-8 text-[10px] font-semibold text-gray-400 uppercase">Mi</th>
+                  <th class="w-8 h-8 text-[10px] font-semibold text-gray-400 uppercase">Do</th>
+                  <th class="w-8 h-8 text-[10px] font-semibold text-gray-400 uppercase">Fr</th>
+                  <th class="w-8 h-8 text-[10px] font-semibold text-gray-400 uppercase">Sa</th>
+                  <th class="w-8 h-8 text-[10px] font-semibold text-gray-400 uppercase">So</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let week of getWeeksForMonth(currentMonth.getFullYear(), currentMonth.getMonth()); let i = index; trackBy: trackByWeekIndex">
+                  <td *ngFor="let day of week; let j = index; trackBy: trackByDayIndex" class="text-center p-0">
+                    <button
+                      *ngIf="day; else emptyDay"
+                      class="w-8 h-8 text-xs flex items-center justify-center cursor-pointer transition-all duration-150"
+                      [ngClass]="{
+                        'bg-primary-500 text-white rounded-full shadow-sm': isDateStart(day) || isDateEnd(day),
+                        'bg-primary-100 text-primary-700': isDateInRange(day) && !isDateStart(day) && !isDateEnd(day),
+                        'hover:bg-gray-100 rounded-full': !isDateStart(day) && !isDateEnd(day) && !isDateInRange(day) && !isToday(day),
+                        'font-medium text-gray-800': day.getMonth() === currentMonth.getMonth(),
+                        'text-gray-300': day.getMonth() !== currentMonth.getMonth(),
+                        'bg-primary-50 rounded-full': isHoveredInRange(day) && !isDateInRange(day) && !isToday(day),
+                        'bg-primary-500/70 text-white rounded-full shadow-sm': isToday(day) && !isDateInRange(day) && !isDateStart(day) && !isDateEnd(day),
+                        'rounded-l-full': isDateStart(day),
+                        'rounded-r-full': isDateEnd(day),
+                      }"
+                      (click)="handleDateClick(day)"
+                      (mouseenter)="hoverDate = day"
+                      (mouseleave)="hoverDate = null"
+                      [attr.data-date]="day.toISOString()"
+                    >
+                      {{ day.getDate() }}
+                    </button>
+                    <ng-template #emptyDay>
+                      <div class="w-8 h-8"></div>
+                    </ng-template>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Divider for desktop -->
+          <div class="hidden lg:block w-px bg-gray-200"></div>
+
+          <!-- Next month calendar -->
+          <div class="bg-white rounded-lg flex-1 lg:flex-none flex flex-col">
+            <!-- Month header -->
+            <div class="flex items-center justify-between mb-3 pb-2 border-b border-gray-100">
+              <div class="flex items-center gap-1">
+                <div class="relative">
+                  <select
+                    class="text-xs appearance-none bg-gray-50 hover:bg-gray-100 rounded-[4px] pr-6 pl-2 py-1.5 text-gray-700 font-medium focus:outline-none focus:ring-2 focus:ring-primary-200 cursor-pointer transition-colors"
+                    [ngModel]="nextMonth.getMonth()"
+                    (ngModelChange)="changeNextMonth($event)"
+                  >
+                    <option *ngFor="let month of months" [value]="month.value">{{ month.name }}</option>
+                  </select>
+                  <div class="absolute right-1 top-1/2 -translate-y-1/2 pointer-events-none">
+                    <svg class="w-3 h-3 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                  </div>
+                </div>
+
+                <div class="relative">
+                  <select
+                    class="text-xs appearance-none bg-gray-50 hover:bg-gray-100 rounded-[4px] pr-6 pl-2 py-1.5 text-gray-700 font-medium focus:outline-none focus:ring-2 focus:ring-primary-200 cursor-pointer transition-colors"
+                    [ngModel]="nextMonth.getFullYear()"
+                    (ngModelChange)="changeNextYear($event)"
+                  >
+                    <option *ngFor="let year of years" [value]="year">{{ year }}</option>
+                  </select>
+                  <div class="absolute right-1 top-1/2 -translate-y-1/2 pointer-events-none">
+                    <svg class="w-3 h-3 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+              <div class="flex gap-0.5">
+                <button class="p-1.5 rounded-[4px] hover:bg-gray-100 transition-colors cursor-pointer" (click)="navigateMonth('next', -1)">
+                  <svg class="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                  </svg>
+                </button>
+                <button class="p-1.5 rounded-[4px] hover:bg-gray-100 transition-colors cursor-pointer" (click)="navigateMonth('next', 1)">
+                  <svg class="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            <table class="w-full">
+              <thead>
+                <tr>
+                  <th class="w-8 h-8 text-[10px] font-semibold text-gray-400 uppercase">Mo</th>
+                  <th class="w-8 h-8 text-[10px] font-semibold text-gray-400 uppercase">Di</th>
+                  <th class="w-8 h-8 text-[10px] font-semibold text-gray-400 uppercase">Mi</th>
+                  <th class="w-8 h-8 text-[10px] font-semibold text-gray-400 uppercase">Do</th>
+                  <th class="w-8 h-8 text-[10px] font-semibold text-gray-400 uppercase">Fr</th>
+                  <th class="w-8 h-8 text-[10px] font-semibold text-gray-400 uppercase">Sa</th>
+                  <th class="w-8 h-8 text-[10px] font-semibold text-gray-400 uppercase">So</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let week of getWeeksForMonth(nextMonth.getFullYear(), nextMonth.getMonth()); let i = index; trackBy: trackByWeekIndex">
+                  <td *ngFor="let day of week; let j = index; trackBy: trackByDayIndex" class="text-center p-0">
+                    <button
+                      *ngIf="day; else emptyDay"
+                      class="w-8 h-8 text-xs flex items-center justify-center cursor-pointer transition-all duration-150"
+                      [ngClass]="{
+                        'bg-primary-500 text-white rounded-full shadow-sm': isDateStart(day) || isDateEnd(day),
+                        'bg-primary-100 text-primary-700': isDateInRange(day) && !isDateStart(day) && !isDateEnd(day),
+                        'hover:bg-gray-100 rounded-full': !isDateStart(day) && !isDateEnd(day) && !isDateInRange(day) && !isToday(day),
+                        'font-medium text-gray-800': day.getMonth() === nextMonth.getMonth(),
+                        'text-gray-300': day.getMonth() !== nextMonth.getMonth(),
+                        'bg-primary-50 rounded-full': isHoveredInRange(day) && !isDateInRange(day) && !isToday(day),
+                        'bg-primary-500/70 text-white rounded-full shadow-sm': isToday(day) && !isDateInRange(day) && !isDateStart(day) && !isDateEnd(day),
+                        'rounded-l-full': isDateStart(day),
+                        'rounded-r-full': isDateEnd(day),
+                      }"
+                      (click)="handleDateClick(day)"
+                      (mouseenter)="hoverDate = day"
+                      (mouseleave)="hoverDate = null"
+                      [attr.data-date]="day.toISOString()"
+                    >
+                      {{ day.getDate() }}
+                    </button>
+                    <ng-template #emptyDay>
+                      <div class="w-8 h-8"></div>
+                    </ng-template>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer with actions -->
+      <div class="flex items-center justify-between px-3 py-2 border-t border-gray-100 bg-gray-50 sticky bottom-0">
+        <button
+          type="button"
+          (click)="clearRange($event)"
+          class="px-3 py-1.5 cursor-pointer text-xs font-medium text-gray-600 hover:text-gray-800 hover:bg-gray-200 rounded-[4px] transition-colors cursor-pointer"
+          [class.invisible]="!selectedRange?.start && !selectedRange?.end"
+        >
+          Zurücksetzen
+        </button>
+        <button type="button" (click)="closePicker()" class="px-8 py-2.5 text-sm font-medium text-white bg-primary-500 hover:bg-primary-600 rounded-[4px] transition-colors cursor-pointer shadow-sm">
+          Fertig
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

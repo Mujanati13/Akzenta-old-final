@@ -1,0 +1,316 @@
+<!-- Mobile Card View -->
+<div class="lg:hidden flex flex-col gap-4 pb-20" *ngIf="!loading">
+  <div class="flex justify-end mb-1">
+    <button
+      [class.hidden]="getFilteredStaffData().length === 0 && getTotalStaffActiveFilters() === 0"
+      type="button"
+      class="relative inline-flex items-center justify-center w-8 h-8 rounded-[4px] bg-gradient-to-br from-[#00839b] to-[#006a7e] text-white shadow-[0_4px_8px_rgba(0,131,155,0.3)] shrink-0 active:scale-95 transition-transform"
+      (click)="openStaffMobileFilterSheet()"
+    >
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M6 12h12M8 18h8"></path>
+      </svg>
+      <span
+        *ngIf="getTotalStaffActiveFilters() > 0"
+        class="absolute -top-2 -right-2 px-1.5 bg-[#00839b] text-white text-[10px] font-bold border-2 border-white rounded-full shadow-sm whitespace-nowrap z-10"
+      >
+        {{ getTotalStaffActiveFilters() }}
+      </span>
+    </button>
+  </div>
+
+  <!-- Mobile Staff Cards -->
+  <div *ngFor="let staff of getPaginatedStaffData()" class="staff-mobile-card">
+    <a [routerLink]="['/staff', staff.id]" class="staff-mobile-card__link" (click)="rememberStaffStateBeforeNavigate()">
+      <!-- Top row: name + chevron -->
+      <div class="flex items-center justify-between gap-3">
+        <div class="flex-1 min-w-0">
+          <span class="block font-semibold text-sm text-gray-900 truncate"> {{ staff.firstName }} {{ staff.lastName }} </span>
+          <span *ngIf="staff.status" class="staff-mobile-card__status-badge">{{ staff.status }}</span>
+        </div>
+        <svg class="w-4 h-4 text-gray-300 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+        </svg>
+      </div>
+
+      <!-- Detail rows -->
+      <div *ngIf="getStaffVisibleColumns().length > 0" class="staff-mobile-card__details">
+        <ng-container *ngFor="let col of getStaffVisibleColumns()">
+          <ng-container *ngIf="col.field !== 'lastName' && col.field !== 'status'">
+            <div class="staff-mobile-card__detail-row">
+              <span class="staff-mobile-card__detail-label">{{ col.header }}</span>
+              <span class="staff-mobile-card__detail-value">
+                <ng-container [ngSwitch]="col.field">
+                  <ng-container *ngSwitchCase="'qualifications'">
+                    {{ staff.qualifications?.join(', ') || '–' }}
+                  </ng-container>
+                  <ng-container *ngSwitchDefault>
+                    {{ staff[col.field] || '–' }}
+                  </ng-container>
+                </ng-container>
+              </span>
+            </div>
+          </ng-container>
+        </ng-container>
+      </div>
+    </a>
+    <!-- Actions row -->
+    <div class="staff-mobile-card__actions">
+      <a [routerLink]="['/staff', staff.id, 'edit']" class="staff-mobile-card__edit" title="Bearbeiten" (click)="rememberStaffStateBeforeNavigate()">
+        <app-icon name="pencil" class="w-4 h-4" />
+      </a>
+      <app-favorite-toggle
+        [title]="staff.isFavorite ? 'von favoriten entfernen' : 'als favorit hinzufügen'"
+        class="w-4 h-4 flex-shrink-0"
+        [iconSize]="'w-4 h-4'"
+        [isFavorite]="staff.isFavorite"
+        (favoriteChange)="onFavoriteChanged($event, staff)"
+        (click)="onFavoriteClick($event)"
+      />
+    </div>
+  </div>
+</div>
+
+<!-- Desktop Table View -->
+<div class="hidden lg:block overflow-x-auto">
+  <p-table
+    class="w-full"
+    [value]="getPaginatedStaffData()"
+    stripedRows
+    dataKey="id"
+    [tableStyle]="{ 'min-width': '100%' }"
+    [expandedRowKeys]="expandedRows"
+    [columns]="staffOrderedColumns"
+    [sortField]="sortField"
+    [sortOrder]="sortOrder"
+    [reorderableColumns]="true"
+    (onColReorder)="onColReorder($event)"
+    [paginator]="false"
+    [scrollable]="true"
+    [scrollHeight]="'500px'"
+    [rowHover]="true"
+  >
+    <ng-template pTemplate="header">
+      <tr [class.opacity-50]="getFilteredStaffData().length === 0" [class.text-gray-400]="getFilteredStaffData().length === 0">
+        <th [title]="'nach Recht oder Links verschieben'" class="rounded-l-lg" style="min-width: 150px">
+          <div class="flex items-center gap-2 text-[13px]">
+            <span>Vorname</span>
+            <app-icon
+              name="table_sort"
+              class="w-3 cursor-pointer"
+              [ngClass]="{ 'text-primary-500': sortField === 'firstName' }"
+              (click)="onSort('firstName', $event)"
+              [title]="sortField === 'firstName' ? (sortOrder === 1 ? 'Aufsteigend sortiert' : 'Absteigend sortiert') : 'Sortieren'"
+            />
+            <span
+              class="column-filter-btn"
+              [ngClass]="{
+                'column-filter-btn--active': getStaffColumnFilterValue('firstName')?.length > 0,
+                'column-filter-btn--disabled': !canFilterStaffColumn('firstName'),
+              }"
+              (click)="canFilterStaffColumn('firstName') && openStaffColumnFilter('firstName', $event); $event.stopPropagation()"
+            >
+              <svg class="column-filter-btn__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M6 12h12M8 18h8" />
+              </svg>
+              <span *ngIf="getStaffColumnFilterValue('firstName')?.length > 0" class="column-filter-btn__badge">
+                {{ getStaffColumnFilterValue('firstName').length }}
+              </span>
+            </span>
+          </div>
+        </th>
+        <th [title]="'nach Recht oder Links verschieben'" *ngFor="let col of staffOrderedColumns" [class.hidden]="!staffVisibleColumns[col.field]" pReorderableColumn style="min-width: 150px">
+          <div class="flex items-center gap-2 text-[13px]">
+            <span>{{ col.header }}</span>
+            <app-icon name="table_sort" class="w-3 cursor-pointer" [ngClass]="{ 'text-primary-500': sortField === col.field }" (click)="onSort(col.field, $event)" />
+            <span
+              class="column-filter-btn"
+              [ngClass]="{
+                'column-filter-btn--active': getStaffColumnFilterValue(col.field)?.length > 0,
+                'column-filter-btn--disabled': !canFilterStaffColumn(col.field),
+              }"
+              (click)="canFilterStaffColumn(col.field) && openStaffColumnFilter(col.field, $event); $event.stopPropagation()"
+            >
+              <svg class="column-filter-btn__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M6 12h12M8 18h8" />
+              </svg>
+              <span *ngIf="getStaffColumnFilterValue(col.field)?.length > 0" class="column-filter-btn__badge">
+                {{ getStaffColumnFilterValue(col.field).length }}
+              </span>
+            </span>
+          </div>
+        </th>
+        <th class="rounded-r-lg" style="min-width: 150px">
+          <app-settings-button [label]="'Settings'" (settingsClick)="toggleStaffSettingsPopover($event)"> </app-settings-button>
+        </th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-staff>
+      <tr class="hover:!bg-gray-200 transition-colors duration-150">
+        <td class="rounded-l-lg p-0" [title]="staff?.firstName || ''">
+          <a [routerLink]="['/staff', staff.id]" (click)="rememberStaffStateBeforeNavigate()" class="block w-full h-full text-inherit no-underline items-center content-center text-[12px]">
+            <span *ngIf="staff?.firstName" class="text-[12px]">{{ staff.firstName }}</span>
+          </a>
+        </td>
+        <td *ngFor="let col of staffOrderedColumns" [class.hidden]="!staffVisibleColumns[col.field]" class="truncate p-0" [title]="getTooltipValue(staff, col.field)">
+          <a [routerLink]="['/staff', staff.id]" (click)="rememberStaffStateBeforeNavigate()" class="block w-full h-full text-inherit no-underline items-center truncate content-center">
+            <ng-container [ngSwitch]="col.field">
+              <ng-container *ngSwitchCase="'qualifications'">
+                <span class="text-[12px]">{{ staff.qualifications?.join(', ') || '-' }}</span>
+              </ng-container>
+              <ng-container *ngSwitchCase="'status'">
+                <span class="text-[12px]">{{ staff.status }}</span>
+              </ng-container>
+              <ng-container *ngSwitchDefault>
+                <span class="text-[12px]">{{ staff[col.field] || '-' }}</span>
+              </ng-container>
+            </ng-container>
+          </a>
+        </td>
+        <td class="rounded-r-lg">
+          <div class="flex space-x-3 justify-end px-4">
+            <a [routerLink]="['/staff', staff.id, 'edit']" class="flex items-center" (click)="rememberStaffStateBeforeNavigate()">
+              <app-icon name="pencil" class="w-5 h-5 cursor-pointer text-primary-500 hover:text-primary-600" title="Bearbeiten" />
+            </a>
+            <app-favorite-toggle
+              [title]="staff.isFavorite ? 'von favoriten entfernen' : 'als favorit hinzufügen'"
+              class="h-5 w-5 flex-shrink-0"
+              [isFavorite]="staff.isFavorite"
+              (favoriteChange)="onFavoriteChanged($event, staff)"
+              (click)="onFavoriteClick($event)"
+            />
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td [attr.colspan]="getStaffVisibleColumns().length + 2" class="text-center py-10">
+          <!-- Loading indicator -->
+          <div *ngIf="loading && staffData.length === 0" class="flex justify-center items-center">
+            <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-500"></div>
+            <span class="ml-2 text-gray-600">Lade Personal...</span>
+          </div>
+          <!-- Empty message (only show when not loading) -->
+          <div *ngIf="!loading || staffData.length > 0" class="py-2">
+            <div class="empty-data-alert">Keine Einträge gefunden.</div>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+
+<div *ngIf="showPaginator" class="hidden lg:block mt-4">
+  <p-paginator
+    #paginator
+    [rows]="rows"
+    [first]="first"
+    [totalRecords]="paginatorTotalRecords"
+    (onPage)="onPageChange($event)"
+    [showCurrentPageReport]="true"
+    currentPageReportTemplate="Zeige {first} bis {last} von {totalRecords} Einträgen"
+  >
+  </p-paginator>
+</div>
+
+<!-- Column selector popover -->
+<p-popover #staffSettingsPopover [styleClass]="'column-filter-popover settings-popover'" appendTo="body" [dismissable]="true" (onHide)="onStaffSettingsPopoverClose()">
+    <div class="column-filter-popover-content settings-popover-content w-[85vw] sm:w-[20rem]">
+    <div class="column-filter-popover-header">
+      <div class="column-filter-popover-header flex items-center justify-between pb-2">
+        <div class="flex items-center gap-3">
+          <span class="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-[4px] bg-gradient-to-br from-primary-500 to-primary-600 text-white shadow-sm" aria-hidden="true">
+            <span class="pi pi-cog text-sm!"></span>
+          </span>
+          <div>
+            <p class="m-0 text-[10px] font-bold uppercase tracking-[0.08em] text-slate-500">Columns Settings</p>
+            <p class="m-0 font-dm text-[15px] font-bold text-slate-900">Settings</p>
+          </div>
+        </div>
+        <div class="ml-auto flex items-center gap-2">
+          <button
+            type="button"
+            class="filter-modal-clear shrink-0"
+            [disabled]="selectedColumns?.length === cols?.length"
+            (click)="selectedColumns = cols.slice(); onColumnsChange(selectedColumns)"
+            aria-label="Filter zurücksetzen"
+          >
+            <svg class="filter-modal-clear__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+            </svg>
+            <span>Clear</span>
+          </button>
+          <button type="button" (click)="onStaffSettingsPopoverClose($event)" class="filter-modal-close" aria-label="Schließen">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+    <p-listbox
+      [options]="cols"
+      [(ngModel)]="selectedColumns"
+      [multiple]="true"
+      [checkbox]="true"
+      [filter]="true"
+      optionLabel="header"
+      emptyMessage="Keine Daten vorhanden"
+      emptyFilterMessage="Keine Ergebnisse gefunden"
+      class="settings-listbox"
+      (onChange)="onColumnsChange($event.value)"
+    />
+    <div class="filter-modal-footer filter-modal-footer--end">
+      <button type="button" class="filter-modal-btn filter-modal-btn--compact" (click)="onStaffSettingsPopoverClose($event)">Fertig</button>
+    </div>
+  </div>
+</p-popover>
+
+<!-- Mobile: Centered column filter modal (replaces popover on small screens) -->
+<app-column-filter-dialog
+  [(visible)]="showColumnFilterModal"
+  [title]="getColumnFilterModalTitle()"
+  [hasActiveFilter]="!!getStaffColumnFilterValue(currentStaffFilterField)?.length"
+  (filterCleared)="onStaffColumnFilterCleared()"
+  (dialogHide)="closeColumnFilterModal()"
+>
+  <p-listbox
+    [(ngModel)]="staffColumnFilters[currentStaffFilterField]"
+    [options]="currentStaffFilterOptions"
+    [multiple]="true"
+    [checkbox]="true"
+    [filter]="true"
+    optionLabel="label"
+    optionValue="value"
+    filterBy="label"
+    emptyMessage="Keine Daten vorhanden"
+    emptyFilterMessage="Keine Ergebnisse gefunden"
+    class="dashboard-column-filter-modal-listbox"
+    (ngModelChange)="onFilterChange()"
+  />
+</app-column-filter-dialog>
+
+<!-- Staff Column Filter Popover -->
+<app-column-filter-popover
+  #staffColumnFilterPopover
+  [title]="currentStaffFilterField ? getColumnFilterModalTitle() : 'Filter'"
+  [options]="currentStaffFilterOptions"
+  [(selectedValues)]="staffColumnFilters[currentStaffFilterField]"
+  (filterChange)="onFilterChange()"
+  (popoverHide)="onStaffColumnFilterPopoverClose()"
+>
+</app-column-filter-popover>
+
+<app-mobile-filter-bottom-sheet
+  [(visible)]="showStaffMobileFilter"
+  title="Personal"
+  [columns]="getStaffMobileFilterColumns()"
+  [filterValues]="staffColumnFilters"
+  [columnOptions]="staffMobileColumnOptions"
+  [canFilterMap]="staffCanFilterMap"
+  (filtersChanged)="onStaffMobileFilterChanged($event)"
+  (allFiltersCleared)="onStaffMobileFilterCleared()"
+>
+</app-mobile-filter-bottom-sheet>

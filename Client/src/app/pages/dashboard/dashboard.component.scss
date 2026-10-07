@@ -1,0 +1,28 @@
+.p-confirmpopup {
+  margin-left: var(--p-confirmpopup-gutter);
+}
+.p-confirmpopup:after,
+.p-confirmpopup:before {
+  bottom: 100%;
+  left: 18.25rem;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+}
+
+@media (max-width: 1023px) {
+  .dashboard-filters-wrapper {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    background: #fff;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+  }
+
+  .dashboard-filters {
+    background: #fff;
+  }
+}

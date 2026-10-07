@@ -1,0 +1,1014 @@
+<section class="flex flex-col h-full w-full max-w-[100vw]" [class.filiale-suchen--filter-modal-open]="showColumnFilterModal">
+  <!-- Sticky header and filters for mobile -->
+  <div class="sticky top-0 z-20 backdrop-blur-md pb-2 -mx-2 px-2 lg:mx-0 lg:px-0 lg:pb-0 bg-white/95 lg:bg-transparent pt-2 lg:pt-0 flex-shrink-0">
+    <h2 translate class="flex justify-between items-center text-primary-700 mb-4 flex-shrink-0">
+      <div class="flex gap-x-2 items-center">
+        <app-icon name="search" class="w-5 h-5 lg:w-6 lg:h-6 mr-1 text-primary-700" />
+        <span class="text-2xl lg:text-3xl font-bold font-dm"> Filiale suchen </span>
+      </div>
+      <!-- Toggle filters on mobile button (opens bottom sheet) -->
+      <button
+        type="button"
+        class="lg:hidden relative inline-flex items-center justify-center w-8 h-8 rounded-[4px] bg-gradient-to-br from-[#00839b] to-[#006a7e] text-white shadow-sm active:scale-95 transition-transform"
+        (click)="openFilialeMobileFilter()"
+      >
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M6 12h12M8 18h8" />
+        </svg>
+      </button>
+    </h2>
+    <!-- Search section (desktop only — mobile uses the bottom sheet) -->
+    <div class="hidden lg:flex flex-col gap-y-4 sm:gap-y-6">
+      <div class="mb-4 lg:mb-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-3 lg:gap-4 items-center">
+        <!-- how All Stores Button -->
+
+        <a
+          class="lg:h-[50px] h-[40px] mx-1 flex-1 min-w-0 font-dm font-bold text-primary-500 rounded-[4px] transition-all duration-300 ease-out cursor-pointer hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center no-underline col-span-full md:col-span-full lg:col-span-1"
+          [routerLink]="[]"
+          [queryParams]="{ filter: 'my-clients', search: null }"
+          queryParamsHandling="merge"
+          [ngStyle]="{
+            'box-shadow': showAllFiliales ? '0 0 0 3px rgba(0, 111, 155, 0.7)' : '0 0 0 3px rgba(0, 0, 0, 0.09)',
+          }"
+        >
+          Alle Filialen anzeigen
+        </a>
+        <div class="relative w-full min-w-0 max-w-full lg:w-96 overflow-hidden">
+          <input
+            type="text"
+            [(ngModel)]="searchQuery"
+            (input)="filterFilialen()"
+            placeholder="Suche z.B. nach Frankfurt oder München"
+            class="lg:h-[54px] h-[45px] px-4 pr-10 border border-gray-300 rounded-[4px] font-dm text-sm w-full focus:outline-none focus:ring-0 focus:border-primary-500"
+          />
+          <app-icon name="search" class="absolute right-2 top-1/2 -translate-y-1/2 w-[19px] h-[19px] text-gray-500 pointer-events-none" />
+        </div>
+
+        <!-- Updated clear filters button - excludes statusFilter from query params -->
+        <div class="flex-1 min-w-0 content-center">
+          <button
+            *ngIf="hasFilters()"
+            (click)="clearFilters()"
+            class="group cursor-pointer relative isolate w-full lg:w-auto inline-flex items-center justify-center gap-2.5 overflow-hidden rounded-[4px] border border-rose-200/80 bg-gradient-to-r from-white via-rose-50 to-orange-50 px-4 py-2 text-[12px] font-semibold text-rose-700 shadow-sm ring-1 ring-white/60 transition-all duration-300 hover:border-rose-300 hover:bg-white/90 hover:from-white hover:via-rose-100 hover:to-white hover:text-rose-800 hover:shadow-md hover:shadow-rose-200/40 hover:ring-rose-200/70 disabled:pointer-events-none disabled:opacity-40"
+          >
+            <span
+              class="relative flex h-6 w-6 items-center justify-center rounded-full bg-rose-500/15 ring-1 ring-rose-500/20 transition-all duration-300 group-hover:bg-rose-500/10 group-hover:ring-rose-300/50"
+            >
+              <svg class="column-filter-btn__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M6 12h12M8 18h8" />
+              </svg>
+            </span>
+            <span class="tracking-[0.01em]">Suche zurücksetzen</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scrollable list area -->
+  <div class="flex-1 overflow-y-auto min-h-0 relative -mx-2 px-2 lg:mx-0 lg:px-0 pb-4 pt-2 w-full self-center">
+    <!-- Loading indicator for main data -->
+    <div *ngIf="loading" class="relative overflow-hidden p-5 sm:p-6">
+      <div class="absolute inset-0 bg-gradient-to-br from-primary-50/50 via-white to-amber-50/40 animate-dashboard-shimmer"></div>
+      <div class="relative z-10 space-y-4">
+        <div class="flex items-center justify-between">
+          <div class="h-6 w-40 rounded-md bg-primary-100/70 animate-pulse"></div>
+        </div>
+        <div class="lg:hidden grid grid-cols-1 gap-3">
+          <div *ngFor="let _ of [1, 2, 3, 4]" class="rounded-lg border border-gray-100 bg-white/90 p-4 shadow-sm space-y-3">
+            <div class="flex items-start justify-between">
+              <div class="flex items-start gap-3">
+                <div class="h-5 w-5 rounded bg-primary-100/70 animate-pulse mt-0.5"></div>
+                <div class="space-y-2">
+                  <div class="h-4 w-36 rounded bg-gray-100 animate-pulse"></div>
+                  <div class="h-3 w-28 rounded bg-gray-100 animate-pulse"></div>
+                </div>
+              </div>
+              <div class="h-6 w-6 rounded bg-gray-100 animate-pulse"></div>
+            </div>
+            <div class="h-8 w-full rounded-md bg-gray-100 animate-pulse"></div>
+          </div>
+        </div>
+
+        <div class="hidden lg:block rounded-xl border border-gray-100 bg-white/90 shadow-sm overflow-hidden">
+          <div class="grid grid-cols-12 gap-3 px-4 py-3 bg-gray-50/90 border-b border-gray-100">
+            <div class="col-span-4 h-3 rounded bg-gray-200/80 animate-pulse"></div>
+            <div class="col-span-3 h-3 rounded bg-gray-200/80 animate-pulse"></div>
+            <div class="col-span-3 h-3 rounded bg-gray-200/80 animate-pulse"></div>
+            <div class="col-span-2 h-3 rounded bg-gray-200/80 animate-pulse"></div>
+          </div>
+          <div class="divide-y divide-gray-100">
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-3 px-4 py-4" *ngFor="let _ of [1, 2, 3, 4]">
+              <div class="md:col-span-4 h-4 w-4/5 rounded bg-gray-100 animate-pulse"></div>
+              <div class="md:col-span-3 h-4 w-2/3 rounded bg-gray-100 animate-pulse"></div>
+              <div class="md:col-span-3 h-4 w-2/3 rounded bg-gray-100 animate-pulse"></div>
+              <div class="md:col-span-2 h-8 w-20 rounded-md bg-gray-100 animate-pulse"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Enhanced p-table with column reordering and visibility -->
+    <div class="w-full">
+      <!-- Mobile Card View -->
+      <div class="lg:hidden flex flex-col gap-3 pb-4 items-center" *ngIf="!loading">
+        <div
+          *ngFor="let filiale of paginatedMobileFilialen"
+          class="w-full mx-auto bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden cursor-pointer active:bg-gray-50 transition-colors"
+          (click)="openFilialeModal(filiale)"
+        >
+          <div class="p-4 flex justify-between items-start">
+            <div class="flex items-start gap-3">
+              <app-icon name="location" class="w-5 h-5 text-red-600 mt-1 flex-shrink-0" />
+              <div class="truncate max-w-[200px] sm:max-w-none">
+                <h3 class="font-bold text-gray-900 truncate">{{ filiale.name }}</h3>
+                <div class="text-sm text-gray-600 mt-1 whitespace-normal break-words">
+                  {{ filiale.strasse }}<br />
+                  {{ filiale.plz }} {{ filiale.ort }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p-paginator
+          #filialenMobilePaginator
+          *ngIf="showFilialenPaginator"
+          class="w-full mt-2 mb-16"
+          [rows]="pageSize"
+          [first]="paginationFirst"
+          [totalRecords]="paginatorTotalRecords"
+          [rowsPerPageOptions]="[10, 25, 50, 100]"
+          (onPage)="onPageChange($event)"
+        ></p-paginator>
+      </div>
+
+      <div class="hidden lg:block">
+        <p-table
+          #dt
+          *ngIf="!loading"
+          styleClass="filialen-main-table"
+          [value]="displayedFilialen"
+          stripedRows
+          [paginator]="false"
+          [scrollable]="true"
+          scrollHeight="68vh"
+          dataKey="id"
+          [tableStyle]="{ 'min-width': '60rem', 'max-width': '100%', 'table-layout': 'fixed' }"
+          [expandedRowKeys]="expandedRows"
+          (onRowExpand)="onRowExpand($event)"
+          (onRowCollapse)="onRowCollapse($event)"
+          [columns]="getFilialenVisibleColumns()"
+          [reorderableColumns]="true"
+          [rowHover]="true"
+          (onColReorder)="onFilialenColReorder($event)"
+        >
+          <ng-template #header let-columns>
+            <tr [class.opacity-50]="filialen.length === 0" [class.text-gray-400]="filialen.length === 0">
+              <th [title]="'nach Recht oder Links verschieben'" class="rounded-l-lg" style="width: 24%; min-width: 220px">
+                <div class="flex items-center gap-2 pl-2 text-[13px]">
+                  <span>Filiale</span>
+                  <app-icon name="table_sort" class="w-3 cursor-pointer" [class.text-primary-500]="sortField === 'name'" (click)="onSort('name')" />
+                  <span
+                    class="column-filter-btn column-filter-trigger"
+                    [ngClass]="{
+                      'column-filter-btn--active': getFilialenColumnFilterValue('name')?.length > 0,
+                      'column-filter-btn--disabled': !hasFilialenColumnData('name'),
+                    }"
+                    (click)="hasFilialenColumnData('name') && openFilialenColumnFilter('name', $event); $event.stopPropagation()"
+                  >
+                    <svg class="column-filter-btn__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M6 12h12M8 18h8" />
+                    </svg>
+                    <span *ngIf="getFilialenColumnFilterValue('name')?.length > 0" class="column-filter-btn__badge">
+                      {{ getFilialenColumnFilterValue('name').length }}
+                    </span>
+                  </span>
+                </div>
+              </th>
+              <th [title]="'nach Recht oder Links verschieben'" *ngFor="let col of columns" pReorderableColumn style="width: 16%; min-width: 160px">
+                <div class="flex items-center gap-2 text-[13px]">
+                  <span>{{ col.header }}</span>
+                  <app-icon name="table_sort" class="w-3 cursor-pointer" [class.text-primary-500]="sortField === col.field" (click)="onSort(col.field)" />
+                  <span
+                    class="column-filter-btn column-filter-trigger"
+                    [ngClass]="{
+                      'column-filter-btn--active': getFilialenColumnFilterValue(col.field)?.length > 0,
+                      'column-filter-btn--disabled': !hasFilialenColumnData(col.field),
+                    }"
+                    (click)="hasFilialenColumnData(col.field) && openFilialenColumnFilter(col.field, $event); $event.stopPropagation()"
+                  >
+                    <svg class="column-filter-btn__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M6 12h12M8 18h8" />
+                    </svg>
+                    <span *ngIf="getFilialenColumnFilterValue(col.field)?.length > 0" class="column-filter-btn__badge">
+                      {{ getFilialenColumnFilterValue(col.field).length }}
+                    </span>
+                  </span>
+                </div>
+              </th>
+              <th class="rounded-r-lg" style="width: 100px; min-width: 100px">
+                <div class="flex gap-x-2 items-center justify-end gap-3">
+                  <span class="flex gap-x-2 items-center cursor-pointer gap-1 p-2" (click)="toggleFilialenSettings(filialenColumnsPopover, $event)">
+                    <span>Settings</span>
+                    <span class="pi pi-cog text-sm!"></span>
+                  </span>
+                </div>
+              </th>
+            </tr>
+          </ng-template>
+
+          <ng-template #body let-filiale let-expanded="expanded" let-columns="columns">
+            <tr class="hover:!bg-gray-200 transition-colors duration-150">
+              <td class="cursor-pointer rounded-l-lg truncate p-0" style="width: 24%; min-width: 220px">
+                <a
+                  [href]="getFilialeUrl(filiale)"
+                  (click)="onFilialeClick($event, filiale)"
+                  [title]="filiale.name || ''"
+                  class="flex gap-x-2 items-center w-full h-full py-3 text-inherit text-[12px] no-underline"
+                >
+                  <app-icon name="location" class="w-4 h-4 text-red-600 mr-2" />
+                  <span>{{ filiale.name }}</span>
+                </a>
+              </td>
+              <td class="cursor-pointer truncate p-0" *ngFor="let col of columns" style="width: 16%; min-width: 160px">
+                <a
+                  [href]="getFilialeUrl(filiale)"
+                  (click)="onFilialeClick($event, filiale)"
+                  [title]="getFilialeTooltipValue(filiale, col.field)"
+                  class="block w-full h-full py-3 text-inherit no-underline text-[12px]"
+                >
+                  {{ filiale[col.field] }}
+                </a>
+              </td>
+              <td class="cursor-pointer rounded-r-lg p-0" style="width: 100px; min-width: 100px">
+                <a [href]="getFilialeUrl(filiale)" (click)="onFilialeClick($event, filiale)" class="block w-full h-full py-3 text-inherit no-underline text-[12px]">
+                  <!-- Actions column can be added here if needed -->
+                </a>
+              </td>
+            </tr>
+          </ng-template>
+
+          <ng-template #expandedrow let-filiale>
+            <tr class="expanded-row">
+              <td [attr.colspan]="getFilialenVisibleColumns().length + 2" class="bg-gray-50 px-2! expanded-row-cell">
+                <div *ngIf="loadingReports[filiale.id] && (!filiale.projekte || filiale.projekte.length === 0)" class="flex justify-center items-center py-8">
+                  <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-500"></div>
+                  <span class="ml-2 text-gray-600">Lade Projekte...</span>
+                </div>
+
+                <div class="projekte-table-wrapper reports-table-wrapper">
+                  <div *ngIf="!loadingReports[filiale.id] && (filiale._filteredProjekte ?? getFilteredProjekte(filiale)).length === 0" class="py-2">
+                    <div class="empty-data-alert">Es sind keine Projekte für diese Filiale vorhanden.</div>
+                  </div>
+
+                  <p-table
+                    *ngIf="(filiale._filteredProjekte ?? getFilteredProjekte(filiale)).length > 0"
+                    styleClass="reports-virtual-table"
+                    [value]="filiale._filteredProjekte ?? getFilteredProjekte(filiale)"
+                    dataKey="id"
+                    [columns]="getProjekteVisibleColumns()"
+                    [reorderableColumns]="true"
+                    (onColReorder)="onProjekteColReorder($event)"
+                    [tableStyle]="{ 'min-width': '60rem' }"
+                    [rowHover]="true"
+                    [scrollable]="true"
+                    scrollHeight="300px"
+                  >
+                    <ng-template #header let-columns>
+                      <tr
+                        class="header-visible text-white rounded-t-[10px]"
+                        [class.opacity-50]="(filiale._filteredProjekte ?? getFilteredProjekte(filiale)).length === 0"
+                        [class.text-gray-400]="(filiale._filteredProjekte ?? getFilteredProjekte(filiale)).length === 0"
+                      >
+                        <th class="rounded-l-lg subtable-header-cell">
+                          <div class="flex items-center gap-2 text-[13px]">
+                            <span>Projekt</span>
+                            <app-icon name="table_sort" class="w-3 cursor-pointer" [class.text-primary-500]="projektSortField === filiale.id + '_name'" (click)="onProjektSort('name', filiale)" />
+                            <span
+                              class="column-filter-btn column-filter-trigger"
+                              [ngClass]="{
+                                'column-filter-btn--active': getProjekteColumnFilterValue('name', filiale.id)?.length > 0,
+                                'column-filter-btn--disabled': !hasProjekteColumnData('name', filiale),
+                              }"
+                              (click)="hasProjekteColumnData('name', filiale) && openProjekteColumnFilter('name', filiale, $event); $event.stopPropagation()"
+                            >
+                              <svg class="column-filter-btn__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M6 12h12M8 18h8" />
+                              </svg>
+                              <span *ngIf="getProjekteColumnFilterValue('name', filiale.id)?.length > 0" class="column-filter-btn__badge">
+                                {{ getProjekteColumnFilterValue('name', filiale.id).length }}
+                              </span>
+                            </span>
+                          </div>
+                        </th>
+                        <th *ngFor="let col of columns" pReorderableColumn class="subtable-header-cell">
+                          <div class="flex items-center gap-2 text-[13px]">
+                            <span>{{ col.header }}</span>
+                            <app-icon
+                              name="table_sort"
+                              class="w-3 cursor-pointer"
+                              [class.text-primary-500]="projektSortField === filiale.id + '_' + col.field"
+                              (click)="onProjektSort(col.field, filiale)"
+                            />
+                            <span
+                              class="column-filter-btn column-filter-trigger"
+                              [ngClass]="{
+                                'column-filter-btn--active': getProjekteColumnFilterValue(col.field, filiale.id)?.length > 0,
+                                'column-filter-btn--disabled': !hasProjekteColumnData(col.field, filiale),
+                              }"
+                              (click)="hasProjekteColumnData(col.field, filiale) && openProjekteColumnFilter(col.field, filiale, $event); $event.stopPropagation()"
+                            >
+                              <svg class="column-filter-btn__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M6 12h12M8 18h8" />
+                              </svg>
+                              <span *ngIf="getProjekteColumnFilterValue(col.field, filiale.id)?.length > 0" class="column-filter-btn__badge">
+                                {{ getProjekteColumnFilterValue(col.field, filiale.id).length }}
+                              </span>
+                            </span>
+                          </div>
+                        </th>
+                        <th class="rounded-r-lg subtable-header-cell">
+                          <div class="flex gap-x-2 items-center justify-end gap-3">
+                            <span class="flex gap-x-2 items-center cursor-pointer gap-1 p-2" (click)="toggleProjekteSettings(projekteColumnsPopover, $event)">
+                              <span>Settings</span>
+                              <span class="pi pi-cog text-sm!"></span>
+                            </span>
+                          </div>
+                        </th>
+                      </tr>
+                    </ng-template>
+
+                    <ng-template #body let-projekt let-columns="columns">
+                      <tr class="bg-white hover:!bg-gray-200 transition-colors duration-150">
+                        <td class="rounded-l-lg truncate p-0">
+                          <a
+                            [routerLink]="['/projects', projekt.projectId]"
+                            [queryParams]="{ referrer: 'filiale-suchen' }"
+                            [title]="projekt.name"
+                            class="block w-full h-full font-bold text-inherit no-underline items-center truncate content-center px-4 text-[12px]"
+                          >
+                            {{ projekt.name }}
+                          </a>
+                        </td>
+                        <td *ngFor="let col of columns" class="truncate p-0">
+                          <a
+                            [routerLink]="['/projects', projekt.projectId, 'reports', projekt.id]"
+                            [queryParams]="{ referrer: 'filiale-suchen' }"
+                            [title]="getProjektTooltipValue(projekt, col.field)"
+                            class="block w-full h-full text-inherit no-underline items-center truncate content-center text-[12px]"
+                          >
+                            <ng-container [ngSwitch]="col.field">
+                              <ng-container *ngSwitchCase="'zeitraum'">
+                                <span
+                                  ><strong>{{ projekt.calendarWeek }}</strong> {{ projekt.zeitraum }}</span
+                                >
+                              </ng-container>
+                              <ng-container *ngSwitchCase="'status'">
+                                <span
+                                  *ngIf="projekt?.status?.name"
+                                  class="text-white w-[110px] h-[23px] text-[11px] font-dm font-semibold rounded-sm flex items-center justify-center uppercase"
+                                  [style.background-color]="projekt.status?.color"
+                                >
+                                  {{ projekt.status?.akzenteName }}
+                                </span>
+                              </ng-container>
+                              <ng-container *ngSwitchCase="'kunde'">
+                                <span class="font-bold text-primary-700">{{ projekt.kunde?.name }}</span>
+                              </ng-container>
+                              <ng-container *ngSwitchCase="'merchandiser'">
+                                <span>{{ projekt.merchandiserName || '---' }}</span>
+                              </ng-container>
+                              <ng-container *ngSwitchDefault>{{ projekt[col.field] }}</ng-container>
+                            </ng-container>
+                          </a>
+                        </td>
+                        <td class="rounded-r-lg">
+                          <div class="flex space-x-3 justify-end pr-3">
+                            <a [routerLink]="['/projects', projekt.projectId, 'reports', projekt.id]" [queryParams]="{ referrer: 'filiale-suchen' }" title="Anzeigen">
+                              <app-icon name="resizeable_eye" class="w-5 h-5 cursor-pointer text-primary-500 hover:text-primary-600" />
+                            </a>
+                            <app-favorite-toggle
+                              [title]="projekt.isFavorite ? 'von favoriten entfernen' : 'als favorit hinzufügen'"
+                              class="h-5 w-5 flex-shrink-0"
+                              [isFavorite]="projekt.isFavorite"
+                              (favoriteChange)="onFavoriteChanged($event, projekt)"
+                              (click)="$event.stopPropagation()"
+                            />
+                          </div>
+                        </td>
+                      </tr>
+                    </ng-template>
+                  </p-table>
+                </div>
+              </td>
+            </tr>
+          </ng-template>
+
+          <ng-template #emptymessage>
+            <tr>
+              <td colspan="5" class="text-center p-4">Keine Filialen gefunden. Bitte passen Sie Ihre Suche an oder klicken Sie auf 'Alle Filialen anzeigen'.</td>
+            </tr>
+          </ng-template>
+        </p-table>
+        <p-paginator
+          #filialenDesktopPaginator
+          *ngIf="showFilialenPaginator"
+          class="mt-3"
+          [rows]="pageSize"
+          [first]="paginationFirst"
+          [totalRecords]="paginatorTotalRecords"
+          [rowsPerPageOptions]="[10, 25, 50, 100]"
+          (onPage)="onPageChange($event)"
+        ></p-paginator>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- ===================== Filiale Detail Modal ===================== -->
+<p-sidebar
+  [(visible)]="showFilialeModal"
+  (onHide)="closeFilialeModal()"
+  [fullScreen]="false"
+  [modal]="false"
+  position="right"
+  appendTo="body"
+  [showCloseIcon]="false"
+  [dismissible]="!showProjekteMobileFilter"
+  styleClass="filiale-detail-fullscreen-dialog p-0"
+>
+  <div class="flex flex-col max-h-[90vh] overflow-hidden">
+    <!-- Modal Header -->
+    <div class="flex items-center gap-3 px-3 pt-3 pb-2 border-b border-gray-100 bg-white shrink-0">
+      <button
+        type="button"
+        (click)="closeFilialeModal()"
+        class="inline-flex items-center justify-center w-8 h-8 rounded-[8px] border border-slate-400/25 bg-transparent text-slate-500 shrink-0 active:scale-95 transition-all hover:bg-slate-50 hover:text-slate-700 hover:border-slate-400/40"
+      >
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+        </svg>
+      </button>
+      <div class="flex-1 font-bold text-lg text-primary-700 leading-tight min-w-0">
+        <div class="text-xs text-gray-500 font-medium uppercase tracking-wider mb-0.5">Filiale</div>
+        <div class="truncate">{{ selectedFilialeForModal?.name }}</div>
+      </div>
+      <div class="ml-auto flex items-center gap-2 flex-shrink-0 pr-1">
+        <button
+          type="button"
+          class="relative inline-flex items-center justify-center w-8 h-8 rounded-lg bg-gradient-to-br from-[#00839b] to-[#006a7e] text-white shadow-[0_4px_8px_rgba(0,131,155,0.3)] shrink-0 active:scale-95 transition-transform"
+          (click)="openProjekteModalFilter(); $event.stopPropagation(); $event.preventDefault()"
+        >
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M6 12h12M8 18h8" />
+          </svg>
+          <span *ngIf="getTotalProjekteActiveFilters() > 0" class="absolute -top-2 -right-2 px-1.5 bg-[#00839b] text-white text-[10px] font-bold border-2 border-white rounded-full shadow-sm z-10">
+            {{ getTotalProjekteActiveFilters() }}
+          </span>
+        </button>
+        <!-- Clear projekts filters -->
+        <button
+          *ngIf="hasProjekteColumnFilters()"
+          type="button"
+          (click)="clearProjekteModalFilters()"
+          class="group cursor-pointer inline-flex items-center gap-1.5 rounded-[4px] border border-rose-200/80 bg-gradient-to-r from-white via-rose-50 to-orange-50 px-3 py-1.5 text-[11px] font-semibold text-rose-700 shadow-sm transition-all duration-300 hover:border-rose-300 hover:text-rose-800"
+        >
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M6 12h12M8 18h8" />
+          </svg>
+          Filter zurücksetzen
+        </button>
+      </div>
+    </div>
+
+    <!-- Filter bar (desktop: search + column filter buttons) -->
+    <div *ngIf="selectedFilialeForModal && !loadingReports[selectedFilialeForModal.id]" class="hidden items-center gap-2 px-4 py-2.5 bg-gray-50 border-b border-gray-200 overflow-x-auto flex-shrink-0">
+      <!-- Search -->
+      <div class="relative flex-shrink-0">
+        <input
+          type="text"
+          [(ngModel)]="projekteModalSearchQuery"
+          (ngModelChange)="onProjekteModalSearchChange($event)"
+          placeholder="Projekt suchen..."
+          class="h-[34px] pl-3 pr-8 border border-gray-300 rounded-[4px] text-xs w-52 focus:outline-none focus:ring-0 focus:border-primary-500"
+        />
+        <app-icon name="search" class="absolute right-2 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gray-400 pointer-events-none" />
+      </div>
+      <!-- Separator -->
+      <div class="h-5 w-px bg-gray-300 flex-shrink-0"></div>
+      <!-- Projekt name filter -->
+      <button
+        type="button"
+        class="column-filter-trigger flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-[4px] border transition-colors flex-shrink-0"
+        [class.opacity-40]="!hasProjekteColumnData('name', selectedFilialeForModal)"
+        [class.cursor-not-allowed]="!hasProjekteColumnData('name', selectedFilialeForModal)"
+        [class.bg-primary-100]="getProjekteColumnFilterValue('name', selectedFilialeForModal.id).length > 0"
+        [class.border-primary-500]="getProjekteColumnFilterValue('name', selectedFilialeForModal.id).length > 0"
+        [class.text-primary-700]="getProjekteColumnFilterValue('name', selectedFilialeForModal.id).length > 0"
+        [class.bg-white]="!getProjekteColumnFilterValue('name', selectedFilialeForModal.id).length"
+        [class.border-gray-300]="!getProjekteColumnFilterValue('name', selectedFilialeForModal.id).length"
+        [class.text-gray-700]="!getProjekteColumnFilterValue('name', selectedFilialeForModal.id).length"
+        (click)="hasProjekteColumnData('name', selectedFilialeForModal) && openProjekteColumnFilter('name', selectedFilialeForModal, $event); $event.stopPropagation()"
+      >
+        <svg class="column-filter-btn__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M6 12h12M8 18h8" />
+        </svg>
+        Projekt
+        <span *ngIf="getProjekteColumnFilterValue('name', selectedFilialeForModal.id).length > 0" class="bg-primary-500 text-white text-[10px] px-1.5 py-0.5 rounded-full">
+          {{ getProjekteColumnFilterValue('name', selectedFilialeForModal.id).length }}
+        </span>
+      </button>
+      <!-- Dynamic column filter buttons -->
+      <button
+        *ngFor="let col of getProjekteVisibleColumns()"
+        type="button"
+        class="column-filter-trigger flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-[4px] border transition-colors flex-shrink-0"
+        [class.opacity-40]="!hasProjekteColumnData(col.field, selectedFilialeForModal)"
+        [class.cursor-not-allowed]="!hasProjekteColumnData(col.field, selectedFilialeForModal)"
+        [class.bg-primary-100]="getProjekteColumnFilterValue(col.field, selectedFilialeForModal.id).length > 0"
+        [class.border-primary-500]="getProjekteColumnFilterValue(col.field, selectedFilialeForModal.id).length > 0"
+        [class.text-primary-700]="getProjekteColumnFilterValue(col.field, selectedFilialeForModal.id).length > 0"
+        [class.bg-white]="!getProjekteColumnFilterValue(col.field, selectedFilialeForModal.id).length"
+        [class.border-gray-300]="!getProjekteColumnFilterValue(col.field, selectedFilialeForModal.id).length"
+        [class.text-gray-700]="!getProjekteColumnFilterValue(col.field, selectedFilialeForModal.id).length"
+        (click)="hasProjekteColumnData(col.field, selectedFilialeForModal) && openProjekteColumnFilter(col.field, selectedFilialeForModal, $event); $event.stopPropagation()"
+      >
+        <svg class="column-filter-btn__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M6 12h12M8 18h8" />
+        </svg>
+        {{ col.header }}
+        <span *ngIf="getProjekteColumnFilterValue(col.field, selectedFilialeForModal.id).length > 0" class="bg-primary-500 text-white text-[10px] px-1.5 py-0.5 rounded-full">
+          {{ getProjekteColumnFilterValue(col.field, selectedFilialeForModal.id).length }}
+        </span>
+      </button>
+    </div>
+
+    <!-- Loading state -->
+    <div *ngIf="selectedFilialeForModal && loadingReports[selectedFilialeForModal.id]" class="flex flex-col items-center justify-center gap-3 flex-1">
+      <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-primary-500"></div>
+      <p class="text-sm text-gray-500">Lade Projekte...</p>
+    </div>
+
+    <!-- Projects content -->
+    <div
+      *ngIf="selectedFilialeForModal && !loadingReports[selectedFilialeForModal.id]"
+      class="flex-1 min-h-0 overflow-y-auto"
+      [attr.data-filiale-modal-scroll-id]="selectedFilialeForModal.id"
+      (scroll)="onFilialeModalScroll($event)"
+    >
+      <!-- Empty state -->
+      <div *ngIf="getFilteredProjekteForModal().length === 0" class="py-2 px-4">
+        <div *ngIf="!selectedFilialeForModal?.projekte?.length" class="empty-data-alert">Es sind keine Projekte für diese Filiale vorhanden.</div>
+        <div *ngIf="selectedFilialeForModal?.projekte?.length" class="empty-data-alert">Keine Projekte gefunden. Bitte passen Sie Ihre Filter an.</div>
+      </div>
+
+      <!-- Mobile: project cards -->
+      <div class="flex flex-col gap-3 py-2 px-3">
+        <div *ngFor="let projekt of getFilteredProjekteForModal()" class="bg-white p-3 rounded border border-gray-200 shadow-sm">
+          <div class="flex justify-between items-start mb-2">
+            <span class="font-bold text-primary-700 break-words max-w-[65%] text-sm">{{ projekt.name }}</span>
+            <div class="flex flex-col items-end gap-2 flex-shrink-0">
+              <span
+                *ngIf="projekt.status"
+                class="text-white w-[70px] h-[20px] text-[10px] font-dm font-semibold rounded-sm flex items-center justify-center uppercase"
+                [style.background-color]="projekt.status?.color || '#6B7280'"
+              >
+                {{ projekt.status?.akzenteName || projekt.status?.name }}
+              </span>
+              <div class="flex gap-x-2 items-center">
+                <a
+                  [routerLink]="['/projects', projekt.projectId, 'reports', projekt.id]"
+                  [queryParams]="{ referrer: 'filiale-suchen' }"
+                  title="Anzeigen"
+                  (click)="rememberFilialeModalStateBeforeNavigate()"
+                >
+                  <app-icon name="resizeable_eye" class="w-5 h-5 text-primary-500 hover:text-primary-600" />
+                </a>
+                <app-favorite-toggle
+                  [title]="projekt.isFavorite ? 'von favoriten entfernen' : 'als favorit hinzufügen'"
+                  class="h-5 w-5 cursor-pointer"
+                  [isFavorite]="projekt.isFavorite"
+                  (favoriteChange)="onFavoriteChanged($event, projekt)"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="grid grid-cols-1 gap-1 text-sm text-gray-600">
+            <div *ngIf="projekt.zeitraum"><span class="font-semibold text-xs">Zeitraum:</span> {{ projekt.zeitraum }}</div>
+            <div *ngIf="projekt.calendarWeek"><span class="font-semibold text-xs">KW:</span> {{ projekt.calendarWeek }}</div>
+            <div *ngIf="projekt.kunde?.name"><span class="font-semibold text-xs">Kunde:</span> {{ projekt.kunde.name }}</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Desktop: project table -->
+      <div *ngIf="getFilteredProjekteForModal().length > 0" class="hidden px-4 pb-4 pt-3">
+        <p-table
+          styleClass="reports-virtual-table"
+          [value]="getFilteredProjekteForModal()"
+          dataKey="id"
+          [columns]="getProjekteVisibleColumns()"
+          [reorderableColumns]="true"
+          (onColReorder)="onProjekteColReorder($event)"
+          [tableStyle]="{ 'min-width': '60rem' }"
+          [rowHover]="true"
+          [scrollable]="true"
+          scrollHeight="calc(100vh - 160px)"
+        >
+          <ng-template #header let-columns>
+            <tr class="header-visible text-white rounded-t-[10px]" [class.opacity-50]="getFilteredProjekteForModal().length === 0" [class.text-gray-400]="getFilteredProjekteForModal().length === 0">
+              <th class="rounded-l-lg subtable-header-cell">
+                <div class="flex items-center gap-2 text-[13px]">
+                  <span>Projekt</span>
+                  <app-icon
+                    name="table_sort"
+                    class="w-3 cursor-pointer"
+                    [class.text-primary-500]="projektSortField === selectedFilialeForModal.id + '_name'"
+                    (click)="onProjektSort('name', selectedFilialeForModal)"
+                  />
+                  <span
+                    class="column-filter-btn column-filter-trigger"
+                    [ngClass]="{
+                      'column-filter-btn--active': getProjekteColumnFilterValue('name', selectedFilialeForModal.id)?.length > 0,
+                      'column-filter-btn--disabled': !hasProjekteColumnData('name', selectedFilialeForModal),
+                    }"
+                    (click)="hasProjekteColumnData('name', selectedFilialeForModal) && openProjekteColumnFilter('name', selectedFilialeForModal, $event); $event.stopPropagation()"
+                  >
+                    <svg class="column-filter-btn__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M6 12h12M8 18h8" />
+                    </svg>
+                    <span *ngIf="getProjekteColumnFilterValue('name', selectedFilialeForModal.id)?.length > 0" class="column-filter-btn__badge">
+                      {{ getProjekteColumnFilterValue('name', selectedFilialeForModal.id).length }}
+                    </span>
+                  </span>
+                </div>
+              </th>
+              <th *ngFor="let col of columns" pReorderableColumn class="subtable-header-cell">
+                <div class="flex items-center gap-2 text-[13px]">
+                  <span>{{ col.header }}</span>
+                  <app-icon
+                    name="table_sort"
+                    class="w-3 cursor-pointer"
+                    [class.text-primary-500]="projektSortField === selectedFilialeForModal.id + '_' + col.field"
+                    (click)="onProjektSort(col.field, selectedFilialeForModal)"
+                  />
+                  <span
+                    class="column-filter-btn column-filter-trigger"
+                    [ngClass]="{
+                      'column-filter-btn--active': getProjekteColumnFilterValue(col.field, selectedFilialeForModal.id)?.length > 0,
+                      'column-filter-btn--disabled': !hasProjekteColumnData(col.field, selectedFilialeForModal),
+                    }"
+                    (click)="hasProjekteColumnData(col.field, selectedFilialeForModal) && openProjekteColumnFilter(col.field, selectedFilialeForModal, $event); $event.stopPropagation()"
+                  >
+                    <svg class="column-filter-btn__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M6 12h12M8 18h8" />
+                    </svg>
+                    <span *ngIf="getProjekteColumnFilterValue(col.field, selectedFilialeForModal.id)?.length > 0" class="column-filter-btn__badge">
+                      {{ getProjekteColumnFilterValue(col.field, selectedFilialeForModal.id).length }}
+                    </span>
+                  </span>
+                </div>
+              </th>
+              <th class="rounded-r-lg subtable-header-cell">
+                <div class="flex gap-x-2 items-center justify-end gap-3">
+                  <span class="flex gap-x-2 items-center cursor-pointer gap-1 p-2" (click)="toggleProjekteSettings(projekteColumnsPopover, $event)">
+                    <span>Settings</span>
+                    <span class="pi pi-cog text-sm!"></span>
+                  </span>
+                </div>
+              </th>
+            </tr>
+          </ng-template>
+
+          <ng-template #body let-projekt let-columns="columns">
+            <tr class="bg-white hover:!bg-gray-200 transition-colors duration-150">
+              <td class="rounded-l-lg truncate p-0">
+                <a
+                  [routerLink]="['/projects', projekt.projectId]"
+                  [queryParams]="{ referrer: 'filiale-suchen' }"
+                  [title]="projekt.name"
+                  class="block w-full h-full font-bold text-inherit no-underline items-center truncate content-center px-4 text-[12px]"
+                  (click)="rememberFilialeModalStateBeforeNavigate()"
+                >
+                  {{ projekt.name }}
+                </a>
+              </td>
+              <td *ngFor="let col of columns" class="truncate p-0">
+                <a
+                  [routerLink]="['/projects', projekt.projectId, 'reports', projekt.id]"
+                  [queryParams]="{ referrer: 'filiale-suchen' }"
+                  [title]="getProjektTooltipValue(projekt, col.field)"
+                  class="block w-full h-full text-inherit no-underline items-center truncate content-center text-[12px]"
+                  (click)="rememberFilialeModalStateBeforeNavigate()"
+                >
+                  <ng-container [ngSwitch]="col.field">
+                    <ng-container *ngSwitchCase="'zeitraum'">
+                      <span
+                        ><strong>{{ projekt.calendarWeek }}</strong> {{ projekt.zeitraum }}</span
+                      >
+                    </ng-container>
+                    <ng-container *ngSwitchCase="'status'">
+                      <span
+                        *ngIf="projekt?.status?.name"
+                        class="text-white w-[110px] h-[23px] text-[11px] font-dm font-semibold rounded-sm flex items-center justify-center uppercase"
+                        [style.background-color]="projekt.status?.color"
+                      >
+                        {{ projekt.status?.akzenteName }}
+                      </span>
+                    </ng-container>
+                    <ng-container *ngSwitchCase="'kunde'">
+                      <span class="font-bold text-primary-700">{{ projekt.kunde?.name }}</span>
+                    </ng-container>
+                    <ng-container *ngSwitchCase="'merchandiser'">
+                      <span>{{ projekt.merchandiserName || '---' }}</span>
+                    </ng-container>
+                    <ng-container *ngSwitchDefault>{{ projekt[col.field] }}</ng-container>
+                  </ng-container>
+                </a>
+              </td>
+              <td class="rounded-r-lg">
+                <div class="flex space-x-3 justify-end pr-3">
+                  <a
+                    [routerLink]="['/projects', projekt.projectId, 'reports', projekt.id]"
+                    [queryParams]="{ referrer: 'filiale-suchen' }"
+                    title="Anzeigen"
+                    (click)="rememberFilialeModalStateBeforeNavigate()"
+                  >
+                    <app-icon name="resizeable_eye" class="w-5 h-5 cursor-pointer text-primary-500 hover:text-primary-600" />
+                  </a>
+                  <app-favorite-toggle
+                    [title]="projekt.isFavorite ? 'von favoriten entfernen' : 'als favorit hinzufügen'"
+                    class="h-5 w-5 flex-shrink-0"
+                    [isFavorite]="projekt.isFavorite"
+                    (favoriteChange)="onFavoriteChanged($event, projekt)"
+                    (click)="$event.stopPropagation()"
+                  />
+                </div>
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+    </div>
+  </div>
+</p-sidebar>
+
+<!-- Projects Mobile Filter Bottom Sheet (inside filiale modal) -->
+<app-mobile-filter-bottom-sheet
+  [(visible)]="showProjekteMobileFilter"
+  title="Projekte filtern"
+  [columns]="projekteMobileFilterColumns"
+  [filterValues]="selectedFilialeForModal ? getFilialeProjekteColumnFiltersForSheet(selectedFilialeForModal.id) : {}"
+  [columnOptions]="projekteMobileColumnOptions"
+  [canFilterMap]="projekteMobileCanFilterMap"
+  (filtersChanged)="onProjekteModalFilterChanged($event)"
+  (allFiltersCleared)="onProjekteModalAllFiltersCleared()"
+>
+</app-mobile-filter-bottom-sheet>
+
+<!-- Mobile: Centered column filter modal (replaces popover on small screens) -->
+<p-dialog
+  [(visible)]="showColumnFilterModal"
+  [modal]="true"
+  [dismissableMask]="true"
+  [closable]="true"
+  [draggable]="false"
+  [resizable]="false"
+  [style]="{ width: 'min(92vw, 400px)', maxHeight: '85vh' }"
+  styleClass="dashboard-column-filter-modal"
+  [contentStyle]="{ overflow: 'hidden', padding: '0', borderRadius: '16px' }"
+  (onHide)="closeColumnFilterModal()"
+  [showHeader]="false"
+  appendTo="body"
+>
+  <div class="dashboard-filter-modal-inner">
+    <div class="filter-modal-header">
+      <div class="filter-modal-header-content">
+        <span class="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-[4px] bg-gradient-to-br from-primary-500 to-primary-600 text-white shadow-sm" aria-hidden="true">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"
+            />
+          </svg>
+        </span>
+        <div>
+          <p class="dashboard-filter-modal-label">Filter</p>
+          <p class="dashboard-filter-modal-title">{{ getColumnFilterModalTitle() }}</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-2 shrink-0">
+        <button
+          type="button"
+          class="filter-modal-clear shrink-0"
+          [disabled]="
+            columnFilterModalType === 'filialen'
+              ? !getFilialenColumnFilterValue(currentFilialenFilterField)?.length
+              : !getProjekteColumnFilterValue(currentProjekteFilterField, selectedFilialeForFilter?.id)?.length
+          "
+          (click)="columnFilterModalType === 'filialen' ? onFilialenColumnFilterCleared() : onProjekteColumnFilterCleared(); $event.stopPropagation()"
+          aria-label="Filter zurücksetzen"
+        >
+          <svg class="filter-modal-clear__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+          </svg>
+          <span>Clear</span>
+        </button>
+        <button type="button" (click)="closeColumnFilterModal()" class="filter-modal-close" aria-label="Schließen">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+    </div>
+    <div class="dashboard-filter-modal-body">
+      <ng-container *ngIf="columnFilterModalType === 'filialen'">
+        <p-listbox
+          [(ngModel)]="filialenColumnFilterValues[currentFilialenFilterField]"
+          [options]="currentFilialenFilterOptions"
+          [multiple]="true"
+          [checkbox]="true"
+          [filter]="true"
+          scrollHeight="280px"
+          optionLabel="label"
+          optionValue="value"
+          filterBy="label"
+          emptyMessage="Keine Daten vorhanden"
+          emptyFilterMessage="Keine Ergebnisse gefunden"
+          class="dashboard-column-filter-modal-listbox"
+          (ngModelChange)="onFilialenColumnFilterChange()"
+        />
+      </ng-container>
+      <ng-container *ngIf="columnFilterModalType === 'projekte' && selectedFilialeForFilter">
+        <p-listbox
+          [(ngModel)]="projekteColumnFiltersByFilialeId[selectedFilialeForFilter.id][currentProjekteFilterField]"
+          [options]="currentProjekteFilterOptions"
+          [multiple]="true"
+          [checkbox]="true"
+          [filter]="true"
+          scrollHeight="280px"
+          optionLabel="label"
+          optionValue="value"
+          filterBy="label"
+          emptyMessage="Keine Daten vorhanden"
+          emptyFilterMessage="Keine Ergebnisse gefunden"
+          class="dashboard-column-filter-modal-listbox"
+          (ngModelChange)="onProjekteColumnFilterChange()"
+        >
+          <ng-template pTemplate="item" let-option>
+            <div class="flex items-center gap-2">
+              <span *ngIf="currentProjekteFilterField === 'status' && option?.color" class="w-3 h-3 rounded-full" [style.background-color]="option.color"></span>
+              <span>{{ option?.label }}</span>
+            </div>
+          </ng-template>
+        </p-listbox>
+      </ng-container>
+    </div>
+    <div class="filter-modal-footer filter-modal-footer--end">
+      <button type="button" class="filter-modal-btn filter-modal-btn--compact" (click)="closeColumnFilterModal()">Fertig</button>
+    </div>
+  </div>
+</p-dialog>
+<!-- Column settings popovers -->
+<p-popover #filialenColumnsPopover [styleClass]="'column-filter-popover settings-popover'" appendTo="body" [dismissable]="true">
+  <div class="column-filter-popover-content settings-popover-content w-[85vw] sm:w-[20rem]">
+    <div class="column-filter-popover-header">
+      <div class="column-filter-popover-header flex items-center justify-between pb-2">
+        <div class="flex items-center gap-3">
+          <span class="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-[4px] bg-gradient-to-br from-primary-500 to-primary-600 text-white shadow-sm" aria-hidden="true">
+            <span class="pi pi-cog text-sm!"></span>
+          </span>
+          <div>
+            <p class="m-0 text-[10px] font-bold uppercase tracking-[0.08em] text-slate-500">Columns Settings</p>
+            <p class="m-0 font-dm text-[15px] font-bold text-slate-900">Settings</p>
+          </div>
+        </div>
+        <div class="ml-auto flex items-center gap-2">
+          <button
+            type="button"
+            class="filter-modal-clear shrink-0"
+            [disabled]="selectedFilialenColumns?.length === filialenCols?.length"
+            (click)="selectedFilialenColumns = filialenCols.slice(); onFilialenColumnsChange(selectedFilialenColumns)"
+            aria-label="Filter zurücksetzen"
+          >
+            <svg class="filter-modal-clear__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+            </svg>
+            <span>Clear</span>
+          </button>
+          <button type="button" (click)="onPopoverClose(filialenColumnsPopover, $event)" class="filter-modal-close" aria-label="Schließen">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+    <p-listbox
+      [options]="filialenCols"
+      [(ngModel)]="selectedFilialenColumns"
+      [multiple]="true"
+      [checkbox]="true"
+      [filter]="true"
+      optionLabel="header"
+      emptyMessage="Keine Daten vorhanden"
+      emptyFilterMessage="Keine Ergebnisse gefunden"
+      class="settings-listbox"
+      (onChange)="onFilialenColumnsChange($event.value)"
+    />
+    <div class="filter-modal-footer filter-modal-footer--end">
+      <button type="button" class="filter-modal-btn filter-modal-btn--compact" (click)="onPopoverClose(filialenColumnsPopover, $event)">Fertig</button>
+    </div>
+  </div>
+</p-popover>
+<p-popover #projekteColumnsPopover [styleClass]="'column-filter-popover settings-popover'" appendTo="body" [dismissable]="true">
+  <div class="column-filter-popover-content settings-popover-content w-[85vw] sm:w-[20rem]">
+    <div class="column-filter-popover-header">
+      <div class="column-filter-popover-header flex items-center justify-between pb-2">
+        <div class="flex items-center gap-3">
+          <span class="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-[4px] bg-gradient-to-br from-primary-500 to-primary-600 text-white shadow-sm" aria-hidden="true">
+            <span class="pi pi-cog text-sm!"></span>
+          </span>
+          <div>
+            <p class="m-0 text-[10px] font-bold uppercase tracking-[0.08em] text-slate-500">Columns Settings</p>
+            <p class="m-0 font-dm text-[15px] font-bold text-slate-900">Settings</p>
+          </div>
+        </div>
+        <div class="ml-auto flex items-center gap-2">
+          <button
+            type="button"
+            class="filter-modal-clear shrink-0"
+            [disabled]="selectedProjekteColumns?.length === projekteCols?.length"
+            (click)="selectedProjekteColumns = projekteCols.slice(); onProjekteColumnsChange(selectedProjekteColumns)"
+            aria-label="Filter zurücksetzen"
+          >
+            <svg class="filter-modal-clear__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+            </svg>
+            <span>Clear</span>
+          </button>
+          <button type="button" (click)="onPopoverClose(projekteColumnsPopover, $event)" class="filter-modal-close" aria-label="Schließen">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+    <p-listbox
+      [options]="projekteCols"
+      [(ngModel)]="selectedProjekteColumns"
+      [multiple]="true"
+      [checkbox]="true"
+      [filter]="true"
+      optionLabel="header"
+      emptyMessage="Keine Daten vorhanden"
+      emptyFilterMessage="Keine Ergebnisse gefunden"
+      class="settings-listbox"
+      (onChange)="onProjekteColumnsChange($event.value)"
+    />
+    <div class="filter-modal-footer filter-modal-footer--end">
+      <button type="button" class="filter-modal-btn filter-modal-btn--compact" (click)="onPopoverClose(projekteColumnsPopover, $event)">Fertig</button>
+    </div>
+  </div>
+</p-popover>
+
+<!-- Mobile Filter Bottom Sheet (Filialen search + column filters) -->
+<app-filiale-mobile-filter-bottom-sheet
+  [(visible)]="showFilialeMobileFilter"
+  title="Filiale suchen"
+  [searchTerm]="searchQuery"
+  (searchTermChange)="onMobileFilterSearchChange($event)"
+  [columns]="filialeMobileFilterColumns"
+  [filterValues]="filialenColumnFilterValues"
+  [columnOptions]="filialeMobileColumnOptions"
+  [canFilterMap]="filialeMobileCanFilterMap"
+  (columnFilterChanged)="onMobileFilterColumnChanged($event)"
+  (allColumnFiltersCleared)="onMobileFilterAllCleared()"
+>
+</app-filiale-mobile-filter-bottom-sheet>
+
+<!-- Filialen Column Filter Popover -->
+<app-column-filter-popover
+  #filialenColumnFilterPopover
+  [title]="currentFilialenFilterField ? getFilialenColumnHeader(currentFilialenFilterField) : 'Filter'"
+  [options]="currentFilialenFilterOptions"
+  [(selectedValues)]="filialenColumnFilterValues[currentFilialenFilterField]"
+  (filterChange)="onFilialenColumnFilterChange()"
+  (popoverHide)="onColumnFilterPopoverClose(filialenColumnFilterPopover)"
+>
+</app-column-filter-popover>
+
+<!-- Projekte Column Filter Popover -->
+<app-column-filter-popover
+  *ngIf="selectedFilialeForFilter"
+  #projekteColumnFilterPopover
+  [title]="currentProjekteFilterField ? getProjekteColumnHeader(currentProjekteFilterField) : 'Filter'"
+  [options]="currentProjekteFilterOptions"
+  [(selectedValues)]="projekteColumnFiltersByFilialeId[selectedFilialeForFilter.id][currentProjekteFilterField]"
+  (filterChange)="onProjekteColumnFilterChange()"
+  (popoverHide)="onColumnFilterPopoverClose(projekteColumnFilterPopover)"
+>
+</app-column-filter-popover>

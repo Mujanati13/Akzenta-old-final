@@ -1,0 +1,8 @@
+/* Styles without animations */
+
+:host ::ng-deep .p-multiselect {
+  .p-multiselect-label {
+    justify-content: center;
+    text-align: center;
+  }
+}

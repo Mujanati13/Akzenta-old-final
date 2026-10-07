@@ -1,0 +1,60 @@
+<div class="min-h-screen flex items-center justify-center bg-white md:bg-[#F0F2F5] relative overflow-x-hidden transition-all duration-300">
+  <div class="bg-white md:bg-[#FBFBFB] md:border md:border-[#EBEBEB] md:rounded-xl p-6 md:px-[76px] w-full md:w-[586px] shadow-none md:shadow-sm relative flex flex-col items-center">
+    <!-- Logo -->
+    <div class="flex items-center justify-center mb-8 mt-4">
+      <img src="/logo.png" alt="Akzente Logo" class="h-[60px] md:h-[100px]" />
+    </div>
+
+    <!-- Loading State -->
+    <div *ngIf="status === 'loading'" class="text-center py-12">
+      <i class="pi pi-spin pi-spinner text-4xl text-primary-500 mb-4"></i>
+      <p class="text-gray-600 text-lg mt-4">E-Mail wird bestätigt...</p>
+      <p class="text-gray-400 text-sm mt-2">Bitte warten Sie einen Moment.</p>
+    </div>
+
+    <!-- Success State -->
+    <div *ngIf="status === 'success'" class="text-center py-8 w-full">
+      <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+        <i class="pi pi-check-circle text-5xl text-green-500"></i>
+      </div>
+
+      <h2 class="text-2xl font-dm font-bold text-gray-800 mb-3">Herzlichen Glückwunsch!</h2>
+
+      <p class="text-gray-600 text-base mb-2">Ihre E-Mail-Adresse wurde erfolgreich bestätigt.</p>
+      <p class="text-gray-500 text-sm mb-8">Ihr Konto ist jetzt aktiv und Sie können sich anmelden.</p>
+
+      <div class="w-full border-t border-gray-200 pt-6">
+        <button
+          (click)="goToLogin()"
+          class="w-full bg-primary-500 hover:bg-primary-700 text-white font-dm text-[16px] rounded-[4px] py-3.5 transition-colors duration-200 cursor-pointer flex items-center justify-center gap-2"
+        >
+          <app-icon name="einloggen" class="w-5 h-5 text-white flex items-center"></app-icon>
+          <span>Zum Login</span>
+        </button>
+
+        <p class="text-gray-400 text-sm mt-4">
+          Sie werden in <strong class="text-primary-500">{{ countdown }}</strong> Sekunden automatisch weitergeleitet...
+        </p>
+      </div>
+    </div>
+
+    <!-- Error State -->
+    <div *ngIf="status === 'error'" class="text-center py-8 w-full">
+      <div class="w-20 h-20 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-6">
+        <i class="pi pi-times-circle text-5xl text-red-500"></i>
+      </div>
+
+      <h2 class="text-2xl font-dm font-bold text-gray-800 mb-3">Bestätigung fehlgeschlagen</h2>
+
+      <p class="text-gray-600 text-base mb-8">
+        {{ errorMessage }}
+      </p>
+
+      <div class="w-full border-t border-gray-200 pt-6 flex flex-col gap-3">
+        <button (click)="goToLogin()" class="w-full bg-primary-500 hover:bg-primary-700 text-white font-dm text-[16px] rounded-[4px] py-3.5 transition-colors duration-200 cursor-pointer">
+          Zum Login
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

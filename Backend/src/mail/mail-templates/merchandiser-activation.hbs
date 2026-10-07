@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrierung bestätigen – {{app_name}}</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f2f4f6;
+            color: #2d3748;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .wrapper {
+            width: 100%;
+            padding: 40px 0;
+            background-color: #f2f4f6;
+        }
+
+        .container {
+            max-width: 560px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+        }
+
+        .header {
+            background: linear-gradient(135deg, #00838f 0%, #006064 100%);
+            padding: 30px 40px 20px 40px;
+            text-align: center;
+        }
+
+        .header h1 {
+            color: #ffffff;
+            font-size: 24px;
+            font-weight: 700;
+            margin: 0;
+            letter-spacing: -0.4px;
+        }
+
+        .content {
+            padding: 32px 40px 36px 40px;
+        }
+
+        .greeting {
+            font-size: 18px;
+            color: #1a202c;
+            font-weight: 600;
+            margin: 0 0 14px 0;
+        }
+
+        .text {
+            font-size: 15px;
+            color: #4a5568;
+            line-height: 1.6;
+            margin: 0 0 12px 0;
+        }
+
+        .highlight-box {
+            background: #e6fffa;
+            border-left: 4px solid #00838f;
+            padding: 16px 20px;
+            border-radius: 0 8px 8px 0;
+            margin: 22px 0 8px 0;
+        }
+
+        .highlight-box p {
+            margin: 0;
+            font-size: 14px;
+            color: #2c7a7b;
+            line-height: 1.5;
+        }
+
+        .btn-wrapper {
+            text-align: center;
+            margin: 30px 0 22px 0;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 14px 44px;
+            background: linear-gradient(135deg, #00838f 0%, #00acc1 100%);
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 131, 143, 0.3);
+        }
+
+        .steps {
+            margin: 18px 0 0 0;
+            padding: 0;
+        }
+
+        .step {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 10px;
+            font-size: 14px;
+            color: #4a5568;
+            line-height: 1.5;
+        }
+
+        .step-number {
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            min-width: 24px;
+            background: #00838f;
+            color: #ffffff;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 24px;
+            font-size: 12px;
+            font-weight: 700;
+            margin-right: 10px;
+        }
+
+        .footer {
+            padding: 18px 40px;
+            background: #f7fafc;
+            border-top: 1px solid #edf2f7;
+            text-align: center;
+        }
+
+        .footer p {
+            font-size: 12px;
+            color: #a0aec0;
+            margin: 0;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="container">
+            <div class="header">
+                <h1>{{app_name}}</h1>
+            </div>
+            <div class="content">
+                <p class="greeting">Hallo {{firstName}},</p>
+                <p class="text">vielen Dank für Ihre Registrierung als Merchandiser bei <strong>{{app_name}}</strong>!</p>
+                <p class="text">Um Ihr Konto zu aktivieren und den Registrierungsprozess abzuschließen, bestätigen Sie bitte Ihre E-Mail-Adresse.</p>
+
+                <div class="btn-wrapper">
+                    <a href="{{url}}" class="btn">E-Mail bestätigen</a>
+                </div>
+
+                <div class="highlight-box">
+                    <p><strong>So geht es weiter:</strong></p>
+                </div>
+
+                <div class="steps">
+                    <div class="step">
+                        <span class="step-number">1</span>
+                        <span>Klicken Sie auf den Button „E-Mail bestätigen" oben.</span>
+                    </div>
+                    <div class="step">
+                        <span class="step-number">2</span>
+                        <span>Ihr Konto wird automatisch aktiviert.</span>
+                    </div>
+                    <div class="step">
+                        <span class="step-number">3</span>
+                        <span>Melden Sie sich mit Ihrer E-Mail und Ihrem Passwort an.</span>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <p>Diese E-Mail wurde automatisch von {{app_name}} versendet.</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

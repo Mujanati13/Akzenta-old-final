@@ -1,0 +1,520 @@
+﻿.expanded-row {
+  background-color: transparent;
+}
+
+.expanded-row-cell {
+  background: #ffffff;
+  position: relative;
+  overflow: visible;
+  padding: 0 !important;
+}
+
+.expanded-row-cell .reports-table-wrapper {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  border-radius: 0;
+  position: relative;
+  z-index: 0;
+  isolation: isolate;
+  padding: 0;
+}
+
+/* Keep scrollable project/report tables in true table layout after column visibility changes. */
+:host ::ng-deep .projects-table,
+:host ::ng-deep .reports-virtual-table {
+  .p-datatable-thead > tr,
+  .p-datatable-tbody > tr,
+  .p-datatable-tfoot > tr {
+    display: table-row !important;
+  }
+
+  .p-datatable-thead > tr > th,
+  .p-datatable-tbody > tr > td,
+  .p-datatable-tfoot > tr > td {
+    display: table-cell !important;
+    float: none !important;
+    width: auto !important;
+  }
+
+  .p-column-title {
+    display: none !important;
+  }
+}
+
+:host ::ng-deep .projects-table .p-datatable-table {
+  width: 100%;
+  table-layout: fixed;
+}
+
+:host ::ng-deep .reports-virtual-table .p-datatable-table {
+  width: 100%;
+  min-width: 100%;
+  table-layout: fixed;
+}
+
+:host ::ng-deep .expanded-row-cell .reports-virtual-table,
+:host ::ng-deep .expanded-row-cell .reports-virtual-table .p-datatable-table-container,
+:host ::ng-deep .expanded-row-cell .reports-virtual-table .p-datatable-wrapper {
+  width: 100%;
+}
+
+/* PrimeNG renders the parent scroll header in a separate container from the body. Keep that
+ * container above all expanded-row content so nested sticky headers cannot paint over it. */
+:host ::ng-deep .projects-table .p-datatable-scrollable-header {
+  position: relative;
+  z-index: 300 !important;
+}
+
+:host ::ng-deep .projects-table .p-datatable-scrollable-body {
+  position: relative;
+  z-index: 1;
+}
+
+/* Keep the main project header above the nested report header while both tables scroll. */
+:host ::ng-deep .projects-table .p-datatable-thead > tr > th {
+  position: sticky;
+  top: 0;
+  z-index: 120 !important;
+}
+
+/* Fixed report header via PrimeNG scrollable header (body scrolls underneath). */
+:host ::ng-deep .expanded-row-cell .reports-virtual-table .p-datatable-scrollable-header {
+  position: relative;
+  z-index: 100 !important;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+:host ::ng-deep .expanded-row-cell .reports-virtual-table .p-datatable-scrollable-header .p-datatable-thead > tr > th,
+:host ::ng-deep .reports-virtual-table .p-datatable-thead > tr > th {
+  position: sticky;
+  top: 0;
+  z-index: 100 !important;
+  background: #1e637f !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12);
+}
+
+/* Keep body rows in a lower stacking context so they scroll behind the header */
+:host ::ng-deep .reports-virtual-table tbody {
+  position: relative;
+  z-index: 1;
+}
+
+/* Reports sub-table header background color */
+:host ::ng-deep .reports-virtual-table .subtable-header-cell {
+  background: #1e637f;
+}
+
+:host ::ng-deep .reports-virtual-table tbody td {
+  position: relative;
+  z-index: auto;
+}
+
+:host ::ng-deep .reports-virtual-table th.reports-col-address,
+:host ::ng-deep .reports-virtual-table td.reports-col-address {
+  min-width: 200px;
+  overflow: hidden;
+}
+
+:host ::ng-deep .reports-virtual-table .reports-address-cell {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100%;
+}
+
+.loading-overlay,
+.project-loading-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  text-align: center;
+  color: #1f2933;
+  background: rgba(255, 255, 255, 0.92);
+  pointer-events: none;
+  z-index: 10;
+}
+
+.reports-table {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.reports-table-header {
+  display: grid;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  border-radius: 0.75rem;
+  background: #1e2736;
+  color: #f4f4f5;
+  font-size: 0.725rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  box-shadow: 0 4px 10px rgba(15, 23, 42, 0.2);
+}
+
+.reports-table-header-cell {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.35rem;
+  font-weight: 600;
+  color: inherit;
+  text-transform: none;
+}
+
+.reports-table-header-cell span {
+  font-size: 0.8rem;
+}
+
+.status-header-cell {
+  justify-content: flex-start;
+}
+
+.actions-header-cell {
+  min-width: 180px !important;
+  width: 180px !important;
+  padding-right: 0.75rem !important;
+  justify-content: flex-end;
+  font-size: 0.7rem;
+}
+
+.header-filter-icon svg,
+.header-icon svg,
+.header-sort-icon {
+  stroke-width: 2;
+  transition: stroke 0.2s ease;
+}
+
+.reports-table-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.reports-table-row {
+  display: grid;
+  align-items: start;
+  gap: 0.75rem;
+  padding: 0.85rem 1rem;
+  border-radius: 0.75rem;
+  background: #ffffff;
+  box-shadow: 0 6px 24px rgba(15, 23, 42, 0.08);
+  border: 1px solid rgba(15, 23, 42, 0.05);
+}
+
+.reports-table-cell {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-size: 0.95rem;
+  color: #1f2933;
+}
+
+.status-cell {
+  justify-content: flex-start;
+}
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.15rem 0.85rem;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #fff;
+}
+
+.reports-table-empty {
+  padding: 1.25rem 0;
+  text-align: center;
+}
+
+.actions-cell {
+  min-width: 180px;
+  width: 180px;
+  white-space: nowrap;
+  padding-right: 0.75rem !important;
+  justify-content: flex-end;
+}
+
+.actions-inner {
+  min-width: 120px;
+  flex-wrap: nowrap;
+}
+
+.actions-inner a,
+.actions-inner app-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.reports-table-wrapper {
+  background: transparent;
+}
+
+:host ::ng-deep .reports-table-container {
+  position: relative;
+  z-index: 0;
+  isolation: isolate;
+  overflow: hidden;
+  width: 100%;
+  max-width: 100%;
+}
+
+:host ::ng-deep .reports-virtual-table .p-datatable-scrollable-body {
+  overflow: auto !important;
+}
+
+/* Enable smooth scrolling for reports table */
+:host ::ng-deep .reports-virtual-table {
+  .p-datatable-wrapper,
+  .p-datatable-scrollable-body,
+  .p-scroller {
+    scroll-behavior: smooth !important;
+  }
+}
+
+/* Keep the last actions column clear of vertical scrollbar overlay */
+:host ::ng-deep .reports-virtual-table .p-datatable-table-container,
+:host ::ng-deep .reports-virtual-table .p-datatable-wrapper,
+:host ::ng-deep .reports-virtual-table .p-datatable-scrollable-body {
+  scrollbar-gutter: stable;
+}
+
+:host ::ng-deep .reports-virtual-table th:last-child,
+:host ::ng-deep .reports-virtual-table td:last-child {
+  padding-right: 1rem !important;
+}
+
+/* Lighter + slimmer scrollbars in client detail tables */
+:host ::ng-deep .reports-table-container,
+:host ::ng-deep .reports-table-wrapper,
+:host ::ng-deep .reports-virtual-table .p-datatable-wrapper,
+:host ::ng-deep .reports-virtual-table .p-datatable-scrollable-body,
+:host ::ng-deep .reports-virtual-table .p-scroller {
+  scrollbar-width: thin; /* Firefox */
+  scrollbar-color: #cbd5e1 #f8fafc; /* thumb / track */
+}
+
+:host ::ng-deep .reports-table-container::-webkit-scrollbar,
+:host ::ng-deep .reports-table-wrapper::-webkit-scrollbar,
+:host ::ng-deep .reports-virtual-table .p-datatable-wrapper::-webkit-scrollbar,
+:host ::ng-deep .reports-virtual-table .p-datatable-scrollable-body::-webkit-scrollbar,
+:host ::ng-deep .reports-virtual-table .p-scroller::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+:host ::ng-deep .reports-table-container::-webkit-scrollbar-track,
+:host ::ng-deep .reports-table-wrapper::-webkit-scrollbar-track,
+:host ::ng-deep .reports-virtual-table .p-datatable-wrapper::-webkit-scrollbar-track,
+:host ::ng-deep .reports-virtual-table .p-datatable-scrollable-body::-webkit-scrollbar-track,
+:host ::ng-deep .reports-virtual-table .p-scroller::-webkit-scrollbar-track {
+  background: #f8fafc;
+  border-radius: 999px;
+}
+
+:host ::ng-deep .reports-table-container::-webkit-scrollbar-thumb,
+:host ::ng-deep .reports-table-wrapper::-webkit-scrollbar-thumb,
+:host ::ng-deep .reports-virtual-table .p-datatable-wrapper::-webkit-scrollbar-thumb,
+:host ::ng-deep .reports-virtual-table .p-datatable-scrollable-body::-webkit-scrollbar-thumb,
+:host ::ng-deep .reports-virtual-table .p-scroller::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 999px;
+  border: 2px solid #f8fafc;
+}
+
+:host ::ng-deep .reports-table-container::-webkit-scrollbar-thumb:hover,
+:host ::ng-deep .reports-table-wrapper::-webkit-scrollbar-thumb:hover,
+:host ::ng-deep .reports-virtual-table .p-datatable-wrapper::-webkit-scrollbar-thumb:hover,
+:host ::ng-deep .reports-virtual-table .p-datatable-scrollable-body::-webkit-scrollbar-thumb:hover,
+:host ::ng-deep .reports-virtual-table .p-scroller::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Allow overflow for dropdown visibility in expanded rows */
+:host ::ng-deep .p-datatable-row-expansion {
+  overflow: visible !important;
+}
+
+:host ::ng-deep .expanded-row-cell {
+  overflow: visible !important;
+}
+
+/* Mobile column filter modal — same as dashboard / filiale-suchen (centered, modern) */
+/* Stack mask below filter triggers so a click on another column filter reaches the control; keep the
+ * dialog panel above those triggers so the open modal stays interactive. */
+::ng-deep .dashboard-column-filter-modal.p-dialog {
+  .p-dialog-mask {
+    background-color: rgba(15, 23, 42, 0.4);
+    backdrop-filter: blur(4px);
+    z-index: 1000 !important;
+  }
+
+  .p-dialog {
+    z-index: 1100 !important;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow:
+      0 25px 50px -12px rgba(0, 0, 0, 0.25),
+      0 0 0 1px rgba(0, 0, 0, 0.05);
+    max-height: 85vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .p-dialog-content {
+    border-radius: 20px;
+    overflow: hidden;
+    padding: 0;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+  }
+}
+
+.dashboard-filter-modal-inner {
+  display: flex;
+  flex-direction: column;
+  min-height: 280px;
+  max-height: 75vh;
+  background: #fff;
+  border-radius: 20px;
+}
+
+.filter-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  flex-shrink: 0;
+  background: linear-gradient(to bottom, #fafbfc, #fff);
+}
+
+.filter-modal-header-content {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.dashboard-filter-modal-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 4px;
+  background: linear-gradient(135deg, var(--primary-500, #00839b) 0%, var(--primary-600, #006d82) 100%);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.dashboard-filter-modal-label {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #6b7280;
+  margin: 0 0 0.125rem 0;
+  line-height: 1.2;
+}
+
+.dashboard-filter-modal-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #111827;
+  margin: 0;
+  line-height: 1.3;
+  font-family: var(--font-dm, inherit);
+}
+
+.filter-modal-close {
+  width: 36px;
+  height: 36px;
+  border-radius: 4px;
+  border: none;
+  background: rgba(0, 0, 0, 0.04);
+  color: #6b7280;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    background-color 0.2s,
+    color 0.2s;
+  flex-shrink: 0;
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.08);
+    color: #374151;
+  }
+}
+
+.dashboard-column-filter-modal-listbox {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  padding: 0px;
+
+  .p-listbox {
+    border: none !important;
+  }
+}
+
+.p-listbox-empty-message {
+  align-self: center;
+}
+
+.p-listbox-empty-message {
+  align-self: center;
+}
+
+.dashboard-column-filter-modal-listbox,
+::ng-deep .dashboard-column-filter-modal .dashboard-column-filter-modal-listbox.p-listbox {
+  width: 100% !important;
+  max-height: min(50vh, 320px) !important;
+  border: 0px;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+::ng-deep .dashboard-column-filter-modal .p-listbox-list-container {
+  max-height: min(50vh, 320px);
+}
+
+/* Change merchandiser (VM) dropdown: panel height + width aligned to trigger; long names ellipsis */
+:host ::ng-deep .client-detail-merchandiser-dropdown-panel.p-select-overlay {
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+  box-sizing: border-box;
+}
+
+:host ::ng-deep .client-detail-merchandiser-dropdown-panel .p-select-option .p-select-option-label,
+:host ::ng-deep .client-detail-merchandiser-dropdown-panel .p-select-list .p-select-option {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100%;
+}
+
+/* Hide the generated sidebar header */
+:host ::ng-deep .reports-sidebar-mobile .p-sidebar-header,
+:host ::ng-deep .reports-sidebar-mobile .p-drawer-header {
+  display: none !important;
+}

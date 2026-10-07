@@ -1,0 +1,13 @@
+{
+  "APP_NAME": "Angular v18 Boiler Plate",
+  "LANGUAGE": "Deutsch",
+  "Hello World": "Hallo Welt",
+  "Home": "Heim",
+  "Login": "Einloggen",
+  "Username": "Nutzername",
+  "Password": "Passwort",
+  "Angular Boiler Plate V18": "Eckige Kesselplatte V18",
+  "Dashboard": "Dashboard",
+  "COMMON.CLOSE": "Schließen",
+  "ERRORS.DASHBOARD_LOAD_FAILED": "Es ist ein Fehler beim Laden der Dashboard-Daten aufgetreten. Bitte versuchen Sie es später erneut."
+}

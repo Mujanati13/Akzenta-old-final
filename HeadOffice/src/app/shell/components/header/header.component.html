@@ -1,0 +1,30 @@
+<nav class="bg-white h-[60px] px-2 lg:px-8">
+  <!-- Left Side: Hamburger Menu (Mobile) and Title -->
+  <div class="flex items-center">
+    <!-- Hamburger Menu (Mobile Only) -->
+    <button (click)="toggleSidebar()" class="-ml-2 mr-3 p-2 rounded-[4px] text-gray-500 hover:text-gray-700 hover:bg-gray-100 focus:outline-none lg:hidden">
+      <svg class="h-6 w-6 -translate-x-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+      </svg>
+    </button>
+
+    <!-- Language Selector -->
+    <app-language-selector class="-ml-1"></app-language-selector>
+  </div>
+
+  <!-- Right Side: Client Logo, Search, Notifications, User Profile -->
+  <div class="flex items-center space-x-4">
+    <!-- Client Logo - Show only when a client is active -->
+    <!-- <div class="flex items-center gap-3">
+      <div class="h-10 flex items-center px-3 py-1">
+        <img src="/images/projects/p-1.png" class="h-[47px] max-w-[120px] object-contain" />
+      </div>
+    </div> -->
+    <!-- <div *ngIf="currentClient" class="flex items-center gap-3">
+      <div class="h-10 flex items-center px-3 py-1">
+        <img [src]="clientLogo || '/images/placeholder.png'" [alt]="currentClient?.name" class="h-[47px] max-w-[120px] object-contain" />
+      </div>
+    </div> -->
+    <!-- ...existing code... -->
+  </div>
+</nav>

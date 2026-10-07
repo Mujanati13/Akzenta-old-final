@@ -1,0 +1,389 @@
+<section class="flex flex-col h-full w-full overflow-hidden">
+  <div class="sticky top-0 z-20 backdrop-blur-md pb-2 -mx-2 px-2 lg:mx-0 lg:px-0 lg:pb-0 bg-white/95 lg:bg-transparent pt-2 lg:pt-0 flex-shrink-0">
+    <h2 translate class="w-full flex justify-between items-center text-primary-700 lg:mb-6 mb-4 gap-4">
+      <div class="flex gap-2 items-center">
+        <app-icon name="incognito" class="w-6 h-6 sm:w-8 sm:h-8 flex items-center mr-1 text-primary-700" />
+        <span class="text-2xl sm:text-[30px] font-bold font-dm">Personal</span>
+      </div>
+      <button
+        type="button"
+        class="lg:hidden relative inline-flex items-center justify-center w-8 h-8 rounded-[4px] bg-gradient-to-br from-[#00839b] to-[#006a7e] text-white shadow-[0_4px_8px_rgba(0,131,155,0.3)] shrink-0 active:scale-95 transition-transform"
+        (click)="openStaffMobileTopFilterSheet()"
+      >
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M6 12h12M8 18h8" />
+        </svg>
+        <span
+          *ngIf="getTopSearchActiveFiltersCount() > 0"
+          class="absolute -top-2 -right-2 px-1.5 bg-[#00839b] text-white text-[10px] font-bold border-2 border-white rounded-full shadow-sm whitespace-nowrap z-10"
+        >
+          {{ getTopSearchActiveFiltersCount() }}
+        </span>
+      </button>
+    </h2>
+    <div class="hidden lg:grid mb-4 sm:mb-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-7 lg:gap-4 gap-3 items-center">
+      <!-- Search Input 1 with icon -->
+      <div class="relative">
+        <input
+          type="text"
+          placeholder="Namensuche"
+          class="lg:h-[54px] h-[45px] px-4 pr-10 border border-gray-300 rounded-[4px] font-dm text-sm w-full focus:outline-none focus:ring-0 focus:border-primary-500"
+          [(ngModel)]="searchParams.name"
+          (input)="onSearchInputChange('name', $event)"
+        />
+        <app-icon *ngIf="!searchParams.name || searchParams.name.length === 0" name="search" class="absolute right-2 top-1/2 transform -translate-y-1/2 w-[19px] h-[19px] text-gray-500" />
+        <button
+          *ngIf="searchParams.name && searchParams.name.length > 0"
+          type="button"
+          (click)="clearNameSearch()"
+          class="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 cursor-pointer transition-colors"
+          title="Suche löschen"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+      <!-- Search Input 2 with icon -->
+      <div class="relative">
+        <input
+          type="text"
+          placeholder="Ort/Umkreissuche"
+          class="lg:h-[54px] h-[45px] px-4 pr-10 border border-gray-300 rounded-[4px] font-dm text-sm w-full focus:outline-none focus:ring-0 focus:border-primary-500"
+          [(ngModel)]="searchParams.location"
+          (input)="onSearchInputChange('location', $event)"
+        />
+        <app-icon *ngIf="!searchParams.location || searchParams.location.length === 0" name="search" class="absolute right-2 top-1/2 transform -translate-y-1/2 w-[19px] h-[19px] text-gray-500" />
+        <button
+          *ngIf="searchParams.location && searchParams.location.length > 0"
+          type="button"
+          (click)="clearLocationSearch()"
+          class="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 cursor-pointer transition-colors"
+          title="Suche löschen"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+      <!-- Qualification MultiSelect -->
+      <div class="relative">
+        <p-multiSelect
+          [(ngModel)]="selectedQualification"
+          [options]="jobTypes"
+          optionLabel="name"
+          optionValue="name"
+          placeholder="Qualifikationssuche"
+          (onChange)="onQualificationChange($event)"
+          (ngModelChange)="onQualificationModelChange($event)"
+          [showClear]="true"
+          [style]="{ width: '100%' }"
+          styleClass="h-[54px]"
+          class="w-full"
+        ></p-multiSelect>
+      </div>
+      <!-- Status Dropdown -->
+      <div class="relative">
+        <p-dropdown
+          [(ngModel)]="selectedStatus"
+          [options]="statuses"
+          optionLabel="name"
+          optionValue="name"
+          placeholder="Status"
+          (onChange)="onStatusChange($event)"
+          (ngModelChange)="onStatusModelChange($event)"
+          [showClear]="true"
+          [style]="{ width: '100%' }"
+          styleClass="h-[54px]"
+          class="w-full"
+        ></p-dropdown>
+      </div>
+      <!-- Search Input 5 with icon -->
+      <div class="relative">
+        <input
+          type="text"
+          placeholder="Kundenzuordnung"
+          class="lg:h-[54px] h-[45px] px-4 pr-10 border border-gray-300 rounded-[4px] font-dm text-sm w-full focus:outline-none focus:ring-0 focus:border-primary-500"
+          [(ngModel)]="searchParams.clientAssignment"
+          (input)="onSearchInputChange('clientAssignment', $event)"
+        />
+        <app-icon
+          *ngIf="!searchParams.clientAssignment || searchParams.clientAssignment.length === 0"
+          name="search"
+          class="absolute right-2 top-1/2 transform -translate-y-1/2 w-[19px] h-[19px] text-gray-500"
+        />
+        <button
+          *ngIf="searchParams.clientAssignment && searchParams.clientAssignment.length > 0"
+          type="button"
+          (click)="clearClientAssignment()"
+          class="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 cursor-pointer transition-colors"
+          title="Suche löschen"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+      <!-- Search Input 6 with icon -->
+      <div class="relative">
+        <input
+          type="text"
+          placeholder="Individueller Filter"
+          class="lg:h-[54px] h-[45px] px-4 pr-10 border border-gray-300 rounded-[4px] font-dm text-sm w-full focus:outline-none focus:ring-0 focus:border-primary-500"
+          [(ngModel)]="searchParams.customFilter"
+          (input)="onSearchInputChange('customFilter', $event)"
+        />
+        <app-icon
+          *ngIf="!searchParams.customFilter || searchParams.customFilter.length === 0"
+          name="search"
+          class="absolute right-2 top-1/2 transform -translate-y-1/2 w-[19px] h-[19px] text-gray-500"
+        />
+        <button
+          *ngIf="searchParams.customFilter && searchParams.customFilter.length > 0"
+          type="button"
+          (click)="clearCustomFilter()"
+          class="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 cursor-pointer transition-colors"
+          title="Suche löschen"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+      <!-- Clear filters button -->
+      <div class="flex items-center">
+        <button
+          *ngIf="hasActiveFilters()"
+          type="button"
+          (click)="clearFilters()"
+          class="group cursor-pointer relative isolate w-full lg:w-auto inline-flex items-center justify-center gap-2.5 overflow-hidden rounded-[4px] border border-rose-200/80 bg-gradient-to-r from-white via-rose-50 to-orange-50 px-4 py-2 text-[12px] font-semibold text-rose-700 shadow-sm ring-1 ring-white/60 transition-all duration-300 hover:border-rose-300 hover:bg-white/90 hover:from-white hover:via-rose-100 hover:to-white hover:text-rose-800 hover:shadow-md hover:shadow-rose-200/40 hover:ring-rose-200/70 disabled:pointer-events-none disabled:opacity-40"
+          title="Filter zurücksetzen"
+        >
+          <span
+            class="relative flex h-6 w-6 items-center justify-center rounded-full bg-rose-500/15 ring-1 ring-rose-500/20 transition-all duration-300 group-hover:bg-rose-500/10 group-hover:ring-rose-300/50"
+          >
+            <svg class="h-3.5 w-3.5 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h5M20 20v-5h-5M5 9a7 7 0 0111.9-4.9L19 6M5 15a7 7 0 0011.9 4.9L19 18" />
+            </svg>
+          </span>
+          <span class="tracking-[0.01em]">Suche zurücksetzen</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex justify-center sm:justify-end mb-4 gap-x-6 flex-shrink-0">
+    <button
+      class="flex flex-col items-center focus:outline-none cursor-pointer"
+      [ngClass]="{ 'text-primary-500': viewMode === 'table', 'text-black': viewMode !== 'table' }"
+      (click)="setViewMode('table')"
+      title="Liste"
+    >
+      <app-icon name="list" class="w-6 h-6 mb-1" [ngClass]="{ 'text-primary-500': viewMode === 'table', 'text-black': viewMode !== 'table' }" />
+      <span class="text-xs font-dm" [ngClass]="{ 'text-primary-500': viewMode === 'table', 'text-black': viewMode !== 'table' }">Liste</span>
+    </button>
+    <button
+      class="flex flex-col items-center focus:outline-none cursor-pointer"
+      [ngClass]="{ 'text-primary-500': viewMode === 'map', 'text-black': viewMode !== 'map' }"
+      (click)="setViewMode('map')"
+      title="Karte"
+    >
+      <app-icon name="germany" class="w-6 h-6 mb-1" [ngClass]="{ 'text-primary-500': viewMode === 'map', 'text-black': viewMode !== 'map' }" />
+      <span class="text-xs font-dm" [ngClass]="{ 'text-primary-500': viewMode === 'map', 'text-black': viewMode !== 'map' }">Karte</span>
+    </button>
+    <button
+      class="flex flex-col items-center focus:outline-none cursor-pointer"
+      [ngClass]="{ 'text-primary-500': viewMode === 'grid', 'text-black': viewMode !== 'grid' }"
+      (click)="setViewMode('grid')"
+      title="Galerie"
+    >
+      <app-icon name="grid" class="w-6 h-6 mb-1" [ngClass]="{ 'text-primary-500': viewMode === 'grid', 'text-black': viewMode !== 'grid' }" />
+      <span class="text-xs font-dm" [ngClass]="{ 'text-primary-500': viewMode === 'grid', 'text-black': viewMode !== 'grid' }">Galerie</span>
+    </button>
+  </div>
+
+  <div #staffScrollRoot class="flex-1 overflow-y-auto min-h-0 relative -mx-2 px-2 lg:mx-0 lg:px-0 pb-4">
+    <!-- Error message -->
+    <div *ngIf="error && !loading" class="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded mb-4">
+      {{ error }}
+    </div>
+
+    <div *ngIf="loading" class="relative mb-4 overflow-hidden">
+      <div class="absolute inset-0 bg-gradient-to-br from-primary-50/50 via-white to-amber-50/40 animate-dashboard-shimmer"></div>
+      <div class="relative z-10 space-y-4">
+        <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-3" *ngIf="viewMode !== 'table'">
+          <div *ngFor="let _ of [1, 2, 3, 4, 5, 6]" class="rounded-xl border border-gray-100 bg-white/90 p-4 shadow-sm space-y-3">
+            <div class="h-4 w-2/3 rounded bg-gray-100 animate-pulse"></div>
+            <div class="h-3 w-1/2 rounded bg-gray-100 animate-pulse"></div>
+            <div class="h-8 w-full rounded-md bg-gray-100 animate-pulse"></div>
+          </div>
+        </div>
+
+        <div class="rounded-xl border border-gray-100 bg-white/90 shadow-sm overflow-hidden" *ngIf="viewMode === 'table'">
+          <div class="hidden md:grid grid-cols-12 gap-3 px-4 py-3 bg-gray-50/90 border-b border-gray-100">
+            <div class="col-span-3 h-3 rounded bg-gray-200/80 animate-pulse"></div>
+            <div class="col-span-3 h-3 rounded bg-gray-200/80 animate-pulse"></div>
+            <div class="col-span-2 h-3 rounded bg-gray-200/80 animate-pulse"></div>
+            <div class="col-span-2 h-3 rounded bg-gray-200/80 animate-pulse"></div>
+            <div class="col-span-2 h-3 rounded bg-gray-200/80 animate-pulse"></div>
+          </div>
+          <div class="divide-y divide-gray-100">
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-3 px-4 py-4" *ngFor="let _ of [1, 2, 3, 4]">
+              <div class="md:col-span-3 h-4 w-4/5 rounded bg-gray-100 animate-pulse"></div>
+              <div class="md:col-span-3 h-4 w-5/6 rounded bg-gray-100 animate-pulse"></div>
+              <div class="md:col-span-2 h-4 w-3/4 rounded bg-gray-100 animate-pulse"></div>
+              <div class="md:col-span-2 h-4 w-2/3 rounded bg-gray-100 animate-pulse"></div>
+              <div class="md:col-span-2 h-8 w-16 rounded-md bg-gray-100 animate-pulse"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <app-staff-table
+      *ngIf="viewMode === 'table' && !loading"
+      #staffTable
+      [staffData]="staffData"
+      [cols]="cols"
+      [selectedColumns]="selectedColumns"
+      [expandedRows]="expandedRows"
+      [first]="first"
+      [totalRecords]="totalItems"
+      [hasNextPage]="hasNextPage"
+      class="w-full"
+      [rows]="pageSize"
+      [loading]="loading"
+      [initialColumnFilters]="staffColumnFilters"
+      (favoriteChange)="onFavoriteChanged($event)"
+      (pageChange)="onPageChange($event)"
+      (columnFiltersChange)="onColumnFiltersChange($event)"
+      (navigationRequested)="rememberStaffListStateBeforeNavigate()"
+    >
+    </app-staff-table>
+
+    <app-staff-grid
+      *ngIf="viewMode === 'grid' && !loading"
+      [staffData]="staffData"
+      [hasNextPage]="hasNextPage"
+      [totalItems]="totalItems"
+      [rows]="pageSize"
+      [first]="first"
+      [initialFilters]="gridFilters"
+      [loading]="loading"
+      (favoriteChange)="onFavoriteChanged($event)"
+      (pageChange)="onPageChange($event)"
+    >
+    </app-staff-grid>
+
+    <app-staff-map *ngIf="viewMode === 'map' && !loading" [staffData]="staffData" [loading]="loading" [locationSearch]="searchParams.location || ''"></app-staff-map>
+  </div>
+
+  <app-mobile-filter-bottom-sheet
+    [(visible)]="showStaffMobileTopFilterSheet"
+    title="Personal"
+    [columns]="[]"
+    [filterValues]="emptyMobileFilterValues"
+    [columnOptions]="emptyMobileColumnOptions"
+    [canFilterMap]="emptyMobileCanFilterMap"
+    [customActiveFilterCount]="getTopSearchActiveFiltersCount()"
+    (allFiltersCleared)="onStaffMobileTopFiltersCleared()"
+  >
+    <div custom-inputs class="px-4 pt-2 pb-3 border-b border-gray-100 bg-white flex flex-col gap-2.5">
+      <div class="relative w-full">
+        <input
+          type="text"
+          placeholder="Namensuche"
+          class="h-[45px] px-4 pr-10 border border-gray-300 rounded-[4px] font-dm text-sm w-full focus:outline-none focus:ring-0 focus:border-primary-500"
+          [(ngModel)]="searchParams.name"
+          (input)="onSearchInputChange('name', $event)"
+        />
+        <app-icon *ngIf="!searchParams.name" name="search" class="absolute right-2 top-1/2 transform -translate-y-1/2 w-[19px] h-[19px] text-gray-500" />
+        <button *ngIf="searchParams.name" type="button" (click)="clearNameSearch()" class="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+
+      <div class="relative w-full">
+        <input
+          type="text"
+          placeholder="Ort/Umkreissuche"
+          class="h-[45px] px-4 pr-10 border border-gray-300 rounded-[4px] font-dm text-sm w-full focus:outline-none focus:ring-0 focus:border-primary-500"
+          [(ngModel)]="searchParams.location"
+          (input)="onSearchInputChange('location', $event)"
+        />
+        <app-icon *ngIf="!searchParams.location" name="search" class="absolute right-2 top-1/2 transform -translate-y-1/2 w-[19px] h-[19px] text-gray-500" />
+        <button *ngIf="searchParams.location" type="button" (click)="clearLocationSearch()" class="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+
+      <div class="relative w-full">
+        <p-multiSelect
+          [(ngModel)]="selectedQualification"
+          [options]="jobTypes"
+          optionLabel="name"
+          optionValue="name"
+          placeholder="Qualifikationssuche"
+          (onChange)="onQualificationChange($event)"
+          (ngModelChange)="onQualificationModelChange($event)"
+          [showClear]="true"
+          [style]="{ width: '100%' }"
+          styleClass="h-[45px]"
+          class="w-full"
+        ></p-multiSelect>
+      </div>
+
+      <div class="relative w-full">
+        <p-dropdown
+          [(ngModel)]="selectedStatus"
+          [options]="statuses"
+          optionLabel="name"
+          optionValue="name"
+          placeholder="Status"
+          (onChange)="onStatusChange($event)"
+          (ngModelChange)="onStatusModelChange($event)"
+          [showClear]="true"
+          [style]="{ width: '100%' }"
+          styleClass="h-[45px]"
+          class="w-full"
+        ></p-dropdown>
+      </div>
+
+      <div class="relative w-full">
+        <input
+          type="text"
+          placeholder="Kundenzuordnung"
+          class="h-[45px] px-4 pr-10 border border-gray-300 rounded-[4px] font-dm text-sm w-full focus:outline-none focus:ring-0 focus:border-primary-500"
+          [(ngModel)]="searchParams.clientAssignment"
+          (input)="onSearchInputChange('clientAssignment', $event)"
+        />
+        <app-icon *ngIf="!searchParams.clientAssignment" name="search" class="absolute right-2 top-1/2 transform -translate-y-1/2 w-[19px] h-[19px] text-gray-500" />
+        <button *ngIf="searchParams.clientAssignment" type="button" (click)="clearClientAssignment()" class="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+
+      <div class="relative w-full">
+        <input
+          type="text"
+          placeholder="Individueller Filter"
+          class="h-[45px] px-4 pr-10 border border-gray-300 rounded-[4px] font-dm text-sm w-full focus:outline-none focus:ring-0 focus:border-primary-500"
+          [(ngModel)]="searchParams.customFilter"
+          (input)="onSearchInputChange('customFilter', $event)"
+        />
+        <app-icon *ngIf="!searchParams.customFilter" name="search" class="absolute right-2 top-1/2 transform -translate-y-1/2 w-[19px] h-[19px] text-gray-500" />
+        <button *ngIf="searchParams.customFilter" type="button" (click)="clearCustomFilter()" class="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </app-mobile-filter-bottom-sheet>
+</section>

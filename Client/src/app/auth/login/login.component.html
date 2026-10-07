@@ -1,0 +1,238 @@
+<div class="login-page min-h-screen min-w-0 w-full max-w-full flex bg-white relative overflow-x-hidden" [ngClass]="{ 'fixed inset-0 overflow-hidden z-20': isMobileToolbarVisible }">
+  <!-- Mobile: gray header with circles + form card -->
+  <div class="md:hidden w-full min-w-0 max-w-full flex flex-col min-h-screen min-h-[100dvh] bg-[#F5F7FA] overflow-x-hidden">
+    <div class="flex-1 min-w-0 w-full flex flex-col overflow-y-auto overflow-x-hidden" [ngClass]="{ 'pb-24': isMobileToolbarVisible }">
+      <!-- Gray header: card will overlap this -->
+      <div class="flex-shrink-0 bg-[#EBEEF2] relative overflow-hidden safe-area-inset-top">
+        <div class="absolute top-4 -left-8 w-32 h-32 rounded-full bg-gray-300/60"></div>
+        <div class="absolute -top-4 right-4 w-24 h-24 rounded-full bg-gray-400/40"></div>
+        <!-- <div class="absolute bottom-2 left-1/4 w-20 h-20 rounded-full bg-gray-300/50"></div>
+        <div class="absolute top-1/2 -right-6 w-28 h-28 rounded-full bg-gray-400/30"></div> -->
+        <div class="relative z-10 flex flex-col items-center pt-8 pb-10 px-4">
+          <img src="/logo.png" alt="Akzente Logo" class="h-24 mb-3" />
+          <p class="text-gray-500 text-xs font-dm tracking-wider uppercase">Client Portal</p>
+        </div>
+      </div>
+      <!-- Card on top of gray -->
+      <div class="w-full flex justify-center px-4 -mt-10 sm:-mt-12 relative z-20">
+        <div class="w-full max-w-[420px] min-w-0">
+          <div class="bg-white rounded-[4px] shadow-md border border-[#EBEBEB] p-6">
+            <ng-container *ngIf="!showCompanySelection; else mobileCompanySelection">
+              <div class="flex items-center gap-2 mb-5">
+                <app-icon name="einloggen" class="w-6 h-6 text-primary-500 flex items-center" />
+                <span class="text-xl font-dm font-black text-gray-700" translate>Login</span>
+              </div>
+              <form (submit)="login(); $event.preventDefault()" class="space-y-4">
+                <div>
+                  <p-inputgroup class="login-input-group">
+                    <p-inputgroup-addon>
+                      <app-icon name="einloggen-email" class="w-5 h-5 text-primary-500 flex items-center" />
+                    </p-inputgroup-addon>
+                    <p-floatlabel variant="in">
+                      <input
+                        pInputText
+                        id="email"
+                        (focus)="onInputFocus('email')"
+                        [(ngModel)]="email"
+                        name="email"
+                        autocomplete="username"
+                        required
+                        class="w-full pr-10 py-3 border border-l-0 border-gray-300 focus:outline-none text-gray-700 bg-white"
+                      />
+                      <label for="email" translate>E-Mail</label>
+                    </p-floatlabel>
+                  </p-inputgroup>
+                </div>
+                <div>
+                  <p-inputgroup class="login-input-group">
+                    <p-inputgroup-addon>
+                      <app-icon name="einloggen-password" class="w-5 h-5 text-primary-500 flex items-center" />
+                    </p-inputgroup-addon>
+                    <p-floatlabel variant="in">
+                      <input
+                        pInputText
+                        id="password"
+                        (focus)="onInputFocus('password')"
+                        [(ngModel)]="password"
+                        name="password"
+                        [type]="showPassword ? 'text' : 'password'"
+                        autocomplete="current-password"
+                        required
+                        class="w-full pr-10 py-3 border border-x-0 border-gray-300 focus:outline-none text-gray-700 bg-white"
+                      />
+                      <label for="password" translate>Passwort</label>
+                    </p-floatlabel>
+                    <p-inputgroup-addon class="cursor-pointer" (click)="toggleShowPassword()">
+                      <i [ngClass]="['pi', showPassword ? 'pi-eye-slash' : 'pi-eye', 'text-gray-400']"></i>
+                    </p-inputgroup-addon>
+                  </p-inputgroup>
+                </div>
+                <div *ngIf="loginError" class="flex items-center gap-2 px-3 py-2.5 bg-red-50 border border-red-200 rounded-[4px] text-left">
+                  <i class="pi pi-exclamation-circle text-red-500 text-sm flex-shrink-0"></i>
+                  <span class="text-red-600 text-sm font-dm">{{ loginError }}</span>
+                </div>
+                <button
+                  type="submit"
+                  [disabled]="isLoading"
+                  class="w-full bg-primary-500 hover:bg-primary-600 active:bg-primary-700 disabled:bg-gray-300 disabled:cursor-not-allowed text-white font-dm font-semibold text-[14px] rounded-[4px] py-3.5 transition-all duration-200 cursor-pointer flex items-center justify-center gap-2 shadow-sm active:scale-[0.98]"
+                >
+                  <i *ngIf="isLoading" class="pi pi-spinner pi-spin"></i>
+                  {{ isLoading ? 'Logging in...' : ('Login' | translate) }}
+                </button>
+                <div class="text-center pt-1">
+                  <a href="#" class="text-primary-500 text-[13px] font-dm hover:underline">Passwort vergessen?</a>
+                </div>
+              </form>
+            </ng-container>
+            <ng-template #mobileCompanySelection>
+              <div class="flex flex-col min-h-0">
+                <div class="flex items-center gap-2 mb-3">
+                  <app-icon name="einloggen" class="w-6 h-6 text-primary-500 flex items-center" />
+                  <span class="text-xl font-dm font-black text-gray-700">Filiale auswählen</span>
+                </div>
+                <p class="text-sm text-gray-500 font-dm mb-4">Bitte wählen Sie die Filiale, mit der Sie fortfahren möchten.</p>
+                <div class="login-company-list -mx-1 px-1">
+                  <button *ngFor="let company of availableCompanies" type="button" (click)="selectCompany(company)" class="login-company-item">
+                    <div class="login-company-item__logo">
+                      <img *ngIf="company.logo?.path" [src]="company.logo.path" [alt]="company.name" class="w-8 h-8 object-contain" (error)="onCompanyLogoError($event)" />
+                      <svg *ngIf="!company.logo?.path" class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M3 21h18M5 21V7.5A1.5 1.5 0 016.5 6h11A1.5 1.5 0 0119 7.5V21M8 9h2m4 0h2M8 13h2m4 0h2"></path>
+                      </svg>
+                    </div>
+                    <span class="login-company-item__name">{{ company.name }}</span>
+                  </button>
+                </div>
+              </div>
+            </ng-template>
+          </div>
+        </div>
+      </div>
+      <div class="mt-6 pb-6 flex justify-center">
+        <app-language-selector [openAbove]="true"></app-language-selector>
+      </div>
+    </div>
+  </div>
+
+  <!-- Desktop: original layout unchanged -->
+  <div class="hidden md:flex min-h-screen items-center justify-center w-full">
+    <div class="login-desktop-card bg-[#FBFBFB] border border-[#EBEBEB] rounded-[4px] px-[76px] py-[40px] w-[586px] min-h-[506px] max-h-[90vh] shadow-sm relative flex flex-col">
+      <ng-container *ngIf="!showCompanySelection; else desktopCompanySelection">
+        <div class="flex items-end justify-between flex-shrink-0 mb-[49px]">
+          <div class="flex items-center gap-2">
+            <app-icon name="einloggen" class="w-7 h-7 text-primary-500 flex items-center" />
+            <span class="text-[30px] font-dm font-black text-gray-700" translate>Login</span>
+          </div>
+          <img src="/logo.png" alt="Akzente Logo" class="h-[100px] mb-1" />
+        </div>
+        <form (submit)="login(); $event.preventDefault()">
+          <div class="mb-6">
+            <p-inputgroup class="login-input-group">
+              <p-inputgroup-addon>
+                <app-icon name="einloggen-email" class="w-5 h-5 text-primary-500 flex items-center" />
+              </p-inputgroup-addon>
+              <p-floatlabel variant="in">
+                <input
+                  pInputText
+                  id="email-d"
+                  [(ngModel)]="email"
+                  name="email"
+                  autocomplete="username"
+                  required
+                  class="w-full pr-10 py-3 border border-l-0 border-gray-300 focus:outline-none text-gray-700 bg-white"
+                />
+                <label for="email-d">E-Mail</label>
+              </p-floatlabel>
+            </p-inputgroup>
+          </div>
+          <div class="mb-6">
+            <p-inputgroup class="login-input-group">
+              <p-inputgroup-addon>
+                <app-icon name="einloggen-password" class="w-5 h-5 text-primary-500 flex items-center" />
+              </p-inputgroup-addon>
+              <p-floatlabel variant="in">
+                <input
+                  pInputText
+                  id="password-d"
+                  [(ngModel)]="password"
+                  name="password"
+                  [type]="showPassword ? 'text' : 'password'"
+                  autocomplete="current-password"
+                  required
+                  class="w-full pr-10 py-3 border border-x-0 border-gray-300 focus:outline-none text-gray-700 bg-white"
+                />
+                <label for="password-d">Passwort</label>
+              </p-floatlabel>
+              <p-inputgroup-addon class="cursor-pointer" (click)="toggleShowPassword()">
+                <i [ngClass]="['pi', showPassword ? 'pi-eye-slash' : 'pi-eye', 'text-gray-400']"></i>
+              </p-inputgroup-addon>
+            </p-inputgroup>
+          </div>
+          <div *ngIf="loginError" class="mb-4 text-red-600 text-sm font-medium text-center">
+            {{ loginError }}
+          </div>
+          <button
+            type="submit"
+            [disabled]="isLoading"
+            class="w-full bg-primary-500 hover:bg-primary-700 disabled:bg-gray-400 disabled:cursor-not-allowed text-white font-dm text-[14px] rounded-[4px] py-3 mt-2 transition-colors duration-200 cursor-pointer flex items-center justify-center gap-2"
+          >
+            <i *ngIf="isLoading" class="pi pi-spinner pi-spin"></i>
+            {{ isLoading ? 'Logging in...' : ('Login' | translate) }}
+          </button>
+          <div class="text-center mt-5">
+            <a href="#" class="text-primary-500 text-[13px] font-dm hover:underline">Passwort vergessen?</a>
+          </div>
+        </form>
+      </ng-container>
+      <ng-template #desktopCompanySelection>
+        <div class="flex flex-col min-h-0 flex-1">
+          <div class="flex items-end justify-between flex-shrink-0 mb-6">
+            <div class="flex items-center gap-2">
+              <app-icon name="einloggen" class="w-7 h-7 text-primary-500 flex items-center" />
+              <span class="text-[30px] font-dm font-black text-gray-700">Filiale auswählen</span>
+            </div>
+            <img src="/logo.png" alt="Akzente Logo" class="h-[100px] mb-1" />
+          </div>
+          <p class="text-sm text-gray-500 font-dm mb-5 flex-shrink-0">Bitte wählen Sie die Filiale, mit der Sie fortfahren möchten.</p>
+          <div class="login-company-list login-company-list--desktop flex-1 min-h-0">
+            <button *ngFor="let company of availableCompanies" type="button" (click)="selectCompany(company)" class="login-company-item">
+              <div class="login-company-item__logo">
+                <img *ngIf="company.logo?.path" [src]="company.logo.path" [alt]="company.name" class="w-10 h-10 object-contain" (error)="onCompanyLogoError($event)" />
+                <svg *ngIf="!company.logo?.path" class="w-6 h-6 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M3 21h18M5 21V7.5A1.5 1.5 0 016.5 6h11A1.5 1.5 0 0119 7.5V21M8 9h2m4 0h2M8 13h2m4 0h2"></path>
+                </svg>
+              </div>
+              <span class="login-company-item__name">{{ company.name }}</span>
+            </button>
+          </div>
+        </div>
+      </ng-template>
+    </div>
+  </div>
+
+  <div class="hidden md:block absolute bottom-6 right-6">
+    <app-language-selector [openAbove]="true"></app-language-selector>
+  </div>
+
+  <div
+    *ngIf="isMobileToolbarVisible"
+    class="md:hidden fixed bottom-0 left-0 right-0 z-[9999] bg-[#EBEBEB] border-t border-gray-300 p-2.5 flex justify-between items-center shadow-[0_-4px_12px_rgba(0,0,0,0.08)] safe-area-inset-bottom"
+  >
+    <div class="flex gap-2">
+      <button
+        (click)="navigateMobileInput('prev')"
+        class="bg-white hover:bg-gray-50 border border-gray-300 text-gray-700 rounded-[4px] p-2.5 px-4 shadow-sm active:scale-95 transition-transform"
+        type="button"
+      >
+        <i class="pi pi-angle-up text-lg"></i>
+      </button>
+      <button
+        (click)="navigateMobileInput('next')"
+        class="bg-white hover:bg-gray-50 border border-gray-300 text-gray-700 rounded-[4px] p-2.5 px-4 shadow-sm active:scale-95 transition-transform"
+        type="button"
+      >
+        <i class="pi pi-angle-down text-lg"></i>
+      </button>
+    </div>
+    <button (click)="closeMobileToolbar()" class="text-primary-500 font-bold px-4 py-2.5 rounded-[4px] hover:bg-primary-50 transition-colors" type="button" translate>Fertig</button>
+  </div>
+</div>

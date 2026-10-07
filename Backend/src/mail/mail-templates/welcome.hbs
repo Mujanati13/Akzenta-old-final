@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Willkommen bei {{app_name}}</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f2f4f6;
+            color: #2d3748;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .wrapper {
+            width: 100%;
+            padding: 40px 0;
+            background-color: #f2f4f6;
+        }
+
+        .container {
+            max-width: 560px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+        }
+
+        .header {
+            padding: 28px 32px 18px 32px;
+            text-align: center;
+            background: linear-gradient(135deg, #00838f 0%, #006064 100%);
+        }
+
+        .header-title {
+            margin: 0;
+            font-size: 24px;
+            font-weight: 700;
+            color: #ffffff;
+            letter-spacing: -0.4px;
+        }
+
+        .content {
+            padding: 32px 36px 36px 36px;
+        }
+
+        .greeting {
+            font-size: 18px;
+            font-weight: 600;
+            margin: 0 0 12px 0;
+            color: #1a202c;
+        }
+
+        .text {
+            font-size: 15px;
+            line-height: 1.6;
+            margin: 0 0 12px 0;
+            color: #4a5568;
+        }
+
+        .credentials-box {
+            margin: 22px 0 26px 0;
+            padding: 16px 18px;
+            border-radius: 6px;
+            background: #e6fffa;
+            border-left: 4px solid #00838f;
+        }
+
+        .credentials-title {
+            margin: 0 0 8px 0;
+            font-size: 14px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #2c7a7b;
+        }
+
+        .credentials-text {
+            margin: 0;
+            font-size: 14px;
+            line-height: 1.6;
+            color: #2d3748;
+        }
+
+        .btn-wrapper {
+            margin: 32px 0 10px 0;
+            text-align: center;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 14px 44px;
+            background: linear-gradient(135deg, #00838f 0%, #00acc1 100%);
+            color: #ffffff !important;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 8px;
+            box-shadow: 0 4px 14px rgba(0, 131, 143, 0.35);
+            border: none;
+        }
+
+        .footer-text {
+            font-size: 13px;
+            color: #718096;
+            margin: 18px 0 0 0;
+            line-height: 1.6;
+        }
+
+        .footer {
+            padding: 18px 24px;
+            background-color: #f7fafc;
+            border-top: 1px solid #edf2f7;
+            text-align: center;
+        }
+
+        .footer small {
+            font-size: 12px;
+            color: #a0aec0;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="container">
+            <div class="header">
+                <h1 class="header-title">Willkommen bei {{app_name}}</h1>
+            </div>
+            <div class="content">
+                <p class="greeting">Hallo {{firstName}},</p>
+                <p class="text">
+                    Ihr Zugang zu <strong>{{app_name}}</strong> wurde erfolgreich erstellt.
+                </p>
+                <p class="text">
+                    Mit den folgenden Zugangsdaten können Sie sich jederzeit anmelden und direkt starten.
+                </p>
+
+                <div class="credentials-box">
+                    <p class="credentials-title">Ihre Zugangsdaten</p>
+                    <p class="credentials-text">
+                        E-Mail: <strong>{{to}}</strong>
+                        {{#if password}}<br>
+                        Passwort: <strong>{{password}}</strong>{{/if}}
+                    </p>
+                </div>
+
+                <div class="btn-wrapper">
+                    <a href="{{loginUrl}}" class="btn">Zum Login</a>
+                </div>
+
+                <p class="footer-text">
+                    Viele Grüße,<br>
+                    <strong>Ihr {{app_name}}‑Team</strong>
+                </p>
+            </div>
+            <div class="footer">
+                <small>Diese E-Mail wurde automatisch von {{app_name}} versendet.</small>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,22 @@
+.p-inputgroupaddon:first-child,
+.p-inputgroupaddon + .p-inputgroupaddon {
+  border-radius: 4px 0 0 6px;
+  min-width: auto;
+  padding-right: 0px;
+}
+
+.p-inputtext {
+  font-size: 11px;
+  padding-top: 23px;
+}
+
+// Style for the button in inputgroup
+.p-inputgroupaddon button {
+  white-space: nowrap;
+  height: 100%;
+}
+
+.p-autocomplete-input-multiple {
+  border: 1px solid var(--p-autocomplete-border-color) !important;
+  border-right: 0px !important;
+}

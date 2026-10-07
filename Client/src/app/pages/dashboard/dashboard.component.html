@@ -1,0 +1,200 @@
+<section class="pb-6">
+  <h2 translate class="flex justify-between items-center text-primary-700 mb-2 lg:mb-4">
+    <div class="flex items-center">
+      <app-icon name="dashboard" class="w-5 h-5 lg:w-6 lg:h-6 mr-1 text-primary-700" />
+      <span class="text-2xl lg:text-3xl font-bold font-dm">Dashboard</span>
+    </div>
+    <button
+      *ngIf="!loading && !error"
+      type="button"
+      class="lg:hidden relative inline-flex items-center justify-center w-8 h-8 rounded-[4px] bg-gradient-to-br from-[#00839b] to-[#006a7e] text-white shadow-[0_4px_8px_rgba(0,131,155,0.3)] shrink-0 active:scale-95 transition-transform"
+      (click)="openDashboardMobileFilterSheet()"
+      aria-label="Filter"
+    >
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M6 12h12M8 18h8" />
+      </svg>
+      <span *ngIf="hasDashboardMobileFilterSheetBadge()" class="absolute -top-[3px] -right-[3px] w-3 h-3 bg-[#00839b] border-2 border-white rounded-full z-[100]"></span>
+    </button>
+  </h2>
+
+  <!-- Loading state -->
+  <div *ngIf="loading" class="flex justify-center items-center h-64 mb-10">
+    <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary-500"></div>
+  </div>
+
+  <!-- Error state -->
+  <div *ngIf="error" class="bg-red-50 p-4 rounded-[4px] mb-6">
+    <p class="text-red-800">{{ 'ERRORS.DASHBOARD_LOAD_FAILED' | translate }}</p>
+  </div>
+
+  <!-- Content -->
+  <div *ngIf="!loading && !error">
+    <!-- Mobile: project scope (date range opens via FAB sheet) -->
+    <div class="lg:hidden grid grid-cols-1 gap-2 mb-3">
+      <a
+        [routerLink]="[]"
+        [queryParams]="{ filter: 'all' }"
+        class="lg:h-[50px] h-[40px] w-full flex items-center justify-center font-dm font-bold text-primary-500 rounded-[4px] transition-shadow duration-200 cursor-pointer"
+        [ngStyle]="{
+          'box-shadow': activeFilter === 'all' ? '0 0 0 3px rgba(0, 111, 155, 0.7)' : '0 0 0 3px rgba(0, 0, 0, 0.09)',
+        }"
+        (click)="showAllClients()"
+      >
+        Alle Projekte
+      </a>
+      <a
+        [routerLink]="[]"
+        [queryParams]="{ filter: 'running' }"
+        class="lg:h-[50px] h-[40px] w-full flex items-center justify-center font-dm font-bold text-primary-500 rounded-[4px] transition-shadow duration-200 cursor-pointer"
+        [ngStyle]="{
+          'box-shadow': activeFilter === 'running' ? '0 0 0 3px rgba(0, 111, 155, 0.7)' : '0 0 0 3px rgba(0, 0, 0, 0.09)',
+        }"
+        (click)="showRunningProjects()"
+      >
+        Laufende Projekte
+      </a>
+      <a
+        [routerLink]="[]"
+        [queryParams]="{ filter: 'completed' }"
+        class="lg:h-[50px] h-[40px] w-full flex items-center justify-center font-dm font-bold text-primary-500 rounded-[4px] transition-shadow duration-200 cursor-pointer"
+        [ngStyle]="{
+          'box-shadow': activeFilter === 'completed' ? '0 0 0 3px rgba(0, 111, 155, 0.7)' : '0 0 0 3px rgba(0, 0, 0, 0.09)',
+        }"
+        (click)="showCompletedProjects()"
+      >
+        Abgeschlossene Projekte
+      </a>
+    </div>
+
+    <!-- sm+: full filter bar (icon, scope, date, reset) -->
+    <div class="hidden lg:flex mb-8 flex-wrap gap-[15px] items-center justify-center lg:justify-start">
+      <app-icon name="filter" class="w-9 hidden lg:flex items-center mr-1 text-primary-700" />
+      <a
+        [routerLink]="[]"
+        [queryParams]="{ filter: 'all' }"
+        class="lg:h-[50px] h-[40px] w-full sm:w-auto lg:w-[257px] flex items-center justify-center font-dm font-bold text-primary-500 rounded-[4px] transition-shadow duration-200 cursor-pointer"
+        [ngStyle]="{
+          'box-shadow': activeFilter === 'all' ? '0 0 0 3px rgba(0, 111, 155, 0.7)' : '0 0 0 3px rgba(0, 0, 0, 0.09)',
+        }"
+        (click)="showAllClients()"
+      >
+        Alle Projekte
+      </a>
+
+      <a
+        [routerLink]="[]"
+        [queryParams]="{ filter: 'running' }"
+        class="lg:h-[50px] h-[40px] w-full sm:w-auto lg:w-[257px] flex items-center justify-center font-dm font-bold text-primary-500 rounded-[4px] transition-shadow duration-200 cursor-pointer"
+        [ngStyle]="{
+          'box-shadow': activeFilter === 'running' ? '0 0 0 3px rgba(0, 111, 155, 0.7)' : '0 0 0 3px rgba(0, 0, 0, 0.09)',
+        }"
+        (click)="showRunningProjects()"
+      >
+        Laufende Projekte
+      </a>
+
+      <a
+        [routerLink]="[]"
+        [queryParams]="{ filter: 'completed' }"
+        class="lg:h-[50px] h-[40px] w-full sm:w-auto lg:w-[257px] flex items-center justify-center font-dm font-bold text-primary-500 rounded-[4px] transition-shadow duration-200 cursor-pointer"
+        [ngStyle]="{
+          'box-shadow': activeFilter === 'completed' ? '0 0 0 3px rgba(0, 111, 155, 0.7)' : '0 0 0 3px rgba(0, 0, 0, 0.09)',
+        }"
+        (click)="showCompletedProjects()"
+      >
+        Abgeschlossene Projekte
+      </a>
+
+      <div class="w-full sm:w-auto lg:w-[257px]">
+        <app-date-range-picker [(selectedRange)]="dateRange" (rangeSelected)="onRangeSelected($event)" position="right"> </app-date-range-picker>
+      </div>
+
+      <div *ngIf="hasActiveFilters()" class="w-full sm:w-auto">
+        <button
+          (click)="clearFilters()"
+          class="w-full lg:w-auto inline-flex items-center justify-center gap-2 px-4 py-2.5 lg:py-2 border border-gray-200 bg-gradient-to-r from-gray-50 to-gray-100 text-gray-700 rounded-[4px] text-sm font-medium shadow-sm hover:from-gray-100 hover:to-gray-200 hover:border-primary-400 hover:text-primary-600 focus:outline-none focus:ring-2 focus:ring-primary-300 focus:ring-offset-1 transition-all duration-200 lg:w-auto"
+        >
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4 4v5h5M20 20v-5h-5M5 9a7 7 0 0111.9-4.9L19 6M5 15a7 7 0 0011.9 4.9L19 18" />
+          </svg>
+          <span>zurücksetzen</span>
+        </button>
+      </div>
+    </div>
+
+    <app-mobile-filter-sheet
+      [(visible)]="showDashboardMobileFilterSheet"
+      filterMode="dashboard"
+      title="Dashboard filtern"
+      [dateRange]="dateRange"
+      (dateRangeChange)="onRangeSelected($event)"
+      (clear)="clearFilters()"
+    >
+    </app-mobile-filter-sheet>
+
+    <!-- Empty state when no results -->
+    <div *ngIf="filteredProjects.length === 0" class="text-center py-8">
+      <p class="text-gray-500">Keine Projekte gefunden</p>
+    </div>
+
+    <!-- Project cards grid -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      <a
+        *ngFor="let item of filteredProjects"
+        style="box-shadow: 0px 0px 3.5px 3px rgba(0, 0, 0, 0.13)"
+        class="bg-white rounded-[20px] lg:px-[30px] lg:pt-[21px] lg:pb-[16px] px-6 py-4 flex flex-col space-y-4 hover:shadow-lg transition-shadow cursor-pointer ng-star-inserted"
+        [routerLink]="['/projects', item.id]"
+      >
+        <a [routerLink]="['/projects', item.id]" [queryParams]="{ id: item.id }" class="flex justify-between items-start">
+          <div>
+            <h3 class="text-[23px] font-extrabold font-dm cursor-pointer hover:text-primary-600">{{ item.name }}</h3>
+            <p class="text-[16.5px] font-black font-dm">{{ item.weekNumber }} / {{ item.dateRange }}</p>
+          </div>
+          <app-favorite-toggle
+            [title]="item.isFavorite ? 'von favoriten entfernen' : 'als favorit hinzufügen'"
+            class="h-6 w-6 flex-shrink-0"
+            [isFavorite]="item.isFavorite"
+            (favoriteChange)="onFavoriteChanged($event, item)"
+            (click)="$event.stopPropagation(); $event.preventDefault()"
+          />
+        </a>
+        <ul class="text-sm text-primary-200 space-y-2">
+          <li>
+            <a *ngIf="item.stats.new > 0" [routerLink]="['/projects', item.id]" [queryParams]="{ id: item.id, status: 'new' }" class="cursor-pointer block">
+              <span class="border rounded-full aspect-square px-1 text-black">{{ item.stats.new }}</span>
+              <span class="text-primary-500">neue Reports</span>
+            </a>
+            <span *ngIf="item.stats.new === 0" class="block cursor-default">
+              <span class="border rounded-full aspect-square px-1 text-black">{{ item.stats.new }}</span>
+              <span class="text-primary-500">neue Reports</span>
+            </span>
+          </li>
+          <li>
+            <a *ngIf="item.stats.open > 0" [routerLink]="['/projects', item.id]" [queryParams]="{ id: item.id, status: 'ongoing' }" class="cursor-pointer block">
+              <span class="border rounded-full aspect-square px-1 text-black">{{ item.stats.open }}</span>
+              <span class="text-primary-500">offene Reports</span>
+            </a>
+            <span *ngIf="item.stats.open === 0" class="block cursor-default">
+              <span class="border rounded-full aspect-square px-1 text-black">{{ item.stats.open }}</span>
+              <span class="text-primary-500">offene Reports</span>
+            </span>
+          </li>
+          <li>
+            <a *ngIf="item.stats.completed > 0" [routerLink]="['/projects', item.id]" [queryParams]="{ id: item.id, status: 'completed' }" class="cursor-pointer block">
+              <span class="border rounded-full aspect-square px-1 text-black">{{ item.stats.completed }}</span>
+              <span class="text-primary-500">abgeschlossene Reports</span>
+            </a>
+            <span *ngIf="item.stats.completed === 0" class="block cursor-default">
+              <span class="border rounded-full aspect-square px-1 text-black">{{ item.stats.completed }}</span>
+              <span class="text-primary-500">abgeschlossene Reports</span>
+            </span>
+          </li>
+        </ul>
+      </a>
+    </div>
+    <!-- <div class="mt-4 flex justify-end">
+      <button class="px-4 border-2 border-gray-200 rounded-[4px] py-2 align-self-end text-[14px] cursor-pointer">Mehr laden</button>
+    </div> -->
+  </div>
+</section>

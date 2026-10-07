@@ -1,0 +1,13 @@
+{
+  "APP_NAME": "Angular v18 Boiler Plate",
+  "LANGUAGE": "English",
+  "Hello World": "Hello World",
+  "Home": "Home",
+  "Login": "Login",
+  "Username": "Username",
+  "Password": "Password",
+  "Angular Boiler Plate V18": "Angular Boiler Plate V18",
+  "Dashboard": "Dashboard",
+  "COMMON.CLOSE": "Close",
+  "ERRORS.DASHBOARD_LOAD_FAILED": "An error occurred while loading the dashboard data. Please try again later."
+}

@@ -1,0 +1,23 @@
+.env.production
+.verification/
+deployment/backups/
+**/deployment-build.log
+**/node_modules/
+**/dist/
+**/.angular/
+
+deployment/.deploy.lock
+deployment/.rollback.yml
+deployment/.last-successful-tag
+
+# Private database snapshots, upload archives, and logs
+**/*.sql
+**/uploads.zip
+**/*.log
+**/.env
+**/.env.*
+!**/src/environments/.env.ts
+**/*.pem
+**/*.key
+**/*.pfx
+**/*.p12

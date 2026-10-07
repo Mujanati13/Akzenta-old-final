@@ -1,0 +1,104 @@
+name: akzente
+x-app-env: &app-env
+  env_file:
+    - path: .env.production
+      format: raw
+  extra_hosts:
+    - "host.docker.internal:host-gateway"
+  logging:
+    driver: json-file
+    options:
+      max-size: "10m"
+      max-file: "3"
+
+services:
+  api:
+    <<: *app-env
+    image: akzente-api:${DEPLOY_TAG:-current}
+    build:
+      context: ./Backend
+      dockerfile: Dockerfile.production
+    init: true
+    restart: unless-stopped
+    read_only: true
+    tmpfs:
+      - /tmp
+    volumes:
+      - uploads:/app/uploads
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:3000/health', {signal: AbortSignal.timeout(4000)}).then(r => {if (!r.ok) process.exit(1)}).catch(() => process.exit(1))"]
+      interval: 15s
+      timeout: 5s
+      start_period: 30s
+      retries: 5
+    stop_grace_period: 30s
+    security_opt:
+      - no-new-privileges:true
+
+  web:
+    image: akzente-web:${DEPLOY_TAG:-current}
+    build:
+      context: .
+      dockerfile: deployment/Dockerfile.frontends
+      args:
+        MAPBOX_PUBLIC_TOKEN: ${MAPBOX_PUBLIC_TOKEN:-}
+    restart: unless-stopped
+    ports:
+      - "${HEAD_OFFICE_PORT:-80}:8080"
+      - "${CLIENT_PORT:-8081}:8081"
+      - "${MERCHANDISER_PORT:-8082}:8082"
+    depends_on:
+      api:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O /dev/null http://127.0.0.1:8080/health && wget -q -O /dev/null http://127.0.0.1:8080/index.html && wget -q -O /dev/null http://127.0.0.1:8081/index.html && wget -q -O /dev/null http://127.0.0.1:8082/index.html"]
+      interval: 15s
+      timeout: 10s
+      retries: 5
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+    security_opt:
+      - no-new-privileges:true
+
+  db-check:
+    <<: *app-env
+    image: akzente-api:${DEPLOY_TAG:-current}
+    command: ["node", "deployment/check-database.cjs"]
+    volumes:
+      - uploads:/app/uploads:ro
+      - ./Backend/uploads:/source-uploads:ro
+    profiles: ["tools"]
+    read_only: true
+    tmpfs: [/tmp]
+
+  db-backup:
+    <<: *app-env
+    image: ${DATABASE_CLIENT_IMAGE:-postgres:17-alpine}
+    entrypoint: ["/bin/sh", "/backup-database.sh"]
+    profiles: ["tools"]
+    volumes:
+      - ./deployment/backup-database.sh:/backup-database.sh:ro
+      - ./deployment/backups:/backups
+
+  upload-init:
+    image: alpine:3.22
+    profiles: ["tools"]
+    command: ["sh", "-ec", "cp -an /source/. /uploads/; chown -R 1000:1000 /uploads"]
+    volumes:
+      - ./Backend/uploads:/source:ro
+      - uploads:/uploads
+
+  upload-backup:
+    image: alpine:3.22
+    profiles: ["tools"]
+    command: ["sh", "-ec", "umask 077; tar -czf /backups/uploads-$$(date -u +%Y%m%dT%H%M%SZ)-$$$$.tar.gz -C /uploads ."]
+    volumes:
+      - uploads:/uploads:ro
+      - ./deployment/backups:/backups
+
+volumes:
+  uploads:
+    name: akzente_uploads

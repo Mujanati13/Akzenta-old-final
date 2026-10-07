@@ -1,0 +1,125 @@
+<section class="">
+  <h2 translate class="flex justify-between items-center text-primary-700 mb-2 lg:mb-4 flex-shrink-0">
+    <div class="flex items-center">
+      <app-icon name="favorite_filled" class="w-5 h-5 lg:w-6 lg:h-6 mr-1 text-primary-700" />
+      <span class="text-2xl lg:text-3xl font-bold font-dm">Favoriten</span>
+    </div>
+  </h2>
+
+  <!-- Loading state -->
+  <div *ngIf="loading" class="animate-pulse space-y-6 mb-10">
+    <div class="rounded-[20px] border border-gray-200 p-4 lg:p-8 space-y-4">
+      <div class="h-8 w-40 bg-gray-100 rounded"></div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4">
+        <div class="h-44 rounded-[20px] bg-gray-100"></div>
+        <div class="h-44 rounded-[20px] bg-gray-100"></div>
+        <div class="h-44 rounded-[20px] bg-gray-100"></div>
+        <div class="h-44 rounded-[20px] bg-gray-100"></div>
+      </div>
+    </div>
+    <div class="rounded-[20px] border border-gray-200 p-4 lg:p-8 space-y-4">
+      <div class="h-8 w-40 bg-gray-100 rounded"></div>
+      <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+        <div class="h-16 rounded-[16px] bg-gray-100"></div>
+        <div class="h-16 rounded-[16px] bg-gray-100"></div>
+        <div class="h-16 rounded-[16px] bg-gray-100"></div>
+      </div>
+    </div>
+  </div>
+  <!-- Error state -->
+  <div *ngIf="error" class="bg-red-50 p-4 rounded-[4px] mb-6">
+    <p class="text-red-800">Es ist ein Fehler beim Laden der Favoriten aufgetreten. Bitte versuchen Sie es später erneut.</p>
+  </div>
+  <!-- Content -->
+  <div *ngIf="!loading && !error" class="flex flex-col gap-y-6">
+    <!-- Client Projekte section -->
+    <div class="border border-gray-300 rounded-[20px] p-4 lg:p-8 lg:gap-y-[30px] gap-y-[15px] w-full flex flex-col">
+      <h2 translate class="flex text-primary-700 items-center">
+        <span class="inline-flex items-center justify-center lg:w-10 lg:h-10 w-7 h-7 rounded-full lg:text-2xl text-base font-medium bg-primary-500 text-white mr-3">
+          {{ favoriteProjects.length }}
+        </span>
+        <span class="text-lg lg:text-xl font-semibold font-dm text-black">Projekte</span>
+        <div *ngIf="favoriteProjects.length === 0" class="py-2">
+          <!-- Project cards grid - same as client dashboard -->
+          <div class="bg-[#FDECEC] border border-[#F5C2C7] rounded-[4px] px-4 py-2 text-[#842029] text-sm ml-2">
+            <p>Keine favorisierten Einsätze vorhanden.</p>
+          </div>
+        </div>
+      </h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 lg:gap-6 gap-4">
+        <div *ngFor="let item of favoriteProjects" style="box-shadow: 0px 0px 3.5px 3px rgba(0, 0, 0, 0.13)" class="bg-white rounded-[20px] lg:p-6 p-4 flex flex-col space-y-6">
+          <div class="flex justify-between items-start">
+            <div>
+              <a class="text-lg lg:text-2xl font-extrabold font-dm cursor-pointer" [routerLink]="['/clients', item.clientCompany.id]" [queryParams]="{ status: 'new' }">{{
+                item.clientCompany.name
+              }}</a>
+              <p class="text-base font-black font-dm">{{ item.weekNumber }} / {{ item.dateRange }}</p>
+            </div>
+            <app-favorite-toggle
+              [title]="item.isFavorite ? 'von favoriten entfernen' : 'als favorit hinzufügen'"
+              class="h-6 w-6 flex-shrink-0"
+              [iconSize]="'w-5 h-5'"
+              [isFavorite]="item.isFavorite"
+              (favoriteChange)="onFavoriteChanged($event, item)"
+            />
+          </div>
+          <ul class="text-sm text-primary-200 space-y-2">
+            <li class="cursor-pointer" [routerLink]="['/clients', item.clientCompany.id]" [queryParams]="{ status: 'new' }">
+              <span class="border rounded-full aspect-square px-1 text-black">{{ item.stats.new }}</span>
+              <span class="text-primary-500">neue Reports</span>
+            </li>
+            <li class="cursor-pointer" [routerLink]="['/clients', item.clientCompany.id]" [queryParams]="{ status: 'ongoing' }">
+              <span class="border rounded-full aspect-square px-1 text-black">{{ item.stats.open }}</span>
+              <span class="text-primary-500">offene Reports</span>
+            </li>
+            <li class="cursor-pointer" [routerLink]="['/clients', item.clientCompany.id]" [queryParams]="{ status: 'completed' }">
+              <span class="border rounded-full aspect-square px-1 text-black">{{ item.stats.completed }}</span>
+              <span class="text-primary-500">abgeschlossene Reports</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <!-- Einsätze section -->
+    <div class="border mb-2 border-gray-300 rounded-[20px] p-4 lg:p-8 lg:gap-y-[30px] gap-y-[15px] w-full flex flex-col">
+      <h2 translate class="flex text-primary-700 items-center">
+        <span class="inline-flex items-center justify-center lg:w-10 lg:h-10 w-7 h-7 rounded-full lg:text-2xl text-base font-medium bg-primary-500 text-white mr-3">{{ favoriteReports.length }}</span>
+        <span class="text-lg lg:text-xl font-semibold font-dm text-black">Einsätze</span>
+        <!-- Empty state for reports -->
+        <div *ngIf="favoriteReports.length === 0" class="py-2 w-auto">
+          <div class="bg-[#FDECEC] border border-[#F5C2C7] rounded-[4px] px-4 py-2 text-[#842029] text-sm ml-2">
+            <p>Keine favorisierten Einsätze vorhanden.</p>
+          </div>
+        </div>
+      </h2>
+      <!-- Mission cards -->
+      <div *ngIf="favoriteReports.length > 0" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+        <a
+          *ngFor="let report of favoriteReports; let i = index"
+          [routerLink]="['/clients', report.clientCompany?.id, 'projects', report.project?.id, 'reports', report.id]"
+          [queryParams]="{ referrer: 'favorites', reportStatus: report.status?.name || '' }"
+          style="box-shadow: 0px 0px 3.5px 3px rgba(0, 0, 0, 0.13)"
+          class="bg-white rounded-[16px] flex justify-center items-center py-[10px] px-[12px] gap-x-[8px] text-sm font-dm font-bold cursor-pointer hover:bg-gray-50 transition-colors"
+        >
+          <p class="flex items-center gap-2 flex-wrap justify-center">
+            <span>{{ getBranchLabel(report) }}</span>
+            <span class="text-primary-500">•</span>
+            <span class="text-primary-500">{{ report.project.name }}</span>
+            <span class="text-primary-500">•</span>
+            <span class="text-primary-500">{{ getReportPeriod(report) }}</span>
+            <span *ngIf="getPlannedDate(report)" class="text-primary-500">•</span>
+            <span *ngIf="getPlannedDate(report)" class="text-gray-600 text-sm font-normal">{{ getPlannedDate(report) }}</span>
+          </p>
+          <app-favorite-toggle
+            [title]="report.isFavorite ? 'von favoriten entfernen' : 'als favorit hinzufügen'"
+            class="h-[20px] w-[20px] flex-shrink-0 ml-2"
+            [iconSize]="'w-5 h-5'"
+            [isFavorite]="true"
+            (favoriteChange)="onFavoriteReportChanged($event, report)"
+            (click)="$event.preventDefault(); $event.stopPropagation()"
+          />
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
