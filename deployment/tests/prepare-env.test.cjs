@@ -76,3 +76,19 @@ test('existing external production configuration is preserved once and converted
   assert.deepEqual(parseRaw(fs.readFileSync(sourceFile, 'utf8')), source);
   assert.equal(migrated.DATABASE_NAME, managed.DATABASE_NAME);
 });
+
+test('fresh setup requires no source configuration and keeps generated credentials on redeploy', t => {
+  const dir = fixture(t);
+  fs.unlinkSync(path.join(dir, 'Backend/.env'));
+  const first = prepare(dir, '203.0.113.10', true);
+  assert.equal(first.DATABASE_INITIALIZATION, 'fresh');
+  assert.equal(first.DATABASE_HOST, 'postgres');
+  assert.equal(first.DATABASE_NAME, 'akzente');
+  assert.equal(first.DATABASE_SYNCHRONIZE, 'false');
+  assert.ok(first.BOOTSTRAP_ADMIN_PASSWORD.length >= 24);
+  const credentials = fs.readFileSync(path.join(dir, 'deployment/admin-credentials.txt'), 'utf8');
+  assert.ok(credentials.includes(first.BOOTSTRAP_ADMIN_PASSWORD));
+  const second = prepare(dir, '203.0.113.10', true);
+  assert.equal(second.DATABASE_PASSWORD, first.DATABASE_PASSWORD);
+  assert.equal(second.BOOTSTRAP_ADMIN_PASSWORD, first.BOOTSTRAP_ADMIN_PASSWORD);
+});

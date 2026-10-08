@@ -16,6 +16,31 @@ if [ "${1:-}" = status ]; then
   exit 0
 fi
 if [ "$imported" = 1 ]; then echo 'Existing Docker database retained; import skipped.'; exit 0; fi
+if [ "${1:-}" = create-empty ]; then
+psql -d postgres -q -v ON_ERROR_STOP=1 -v target="$DATABASE_NAME" -v app_user="$DATABASE_USERNAME" -v app_password="$DATABASE_PASSWORD" <<'SQL'
+SELECT format('CREATE ROLE %I LOGIN PASSWORD %L', :'app_user', :'app_password')
+WHERE NOT EXISTS (SELECT 1 FROM pg_roles WHERE rolname = :'app_user')
+\gexec
+SELECT format('CREATE DATABASE %I OWNER %I', :'target', :'app_user')
+WHERE NOT EXISTS (SELECT 1 FROM pg_database WHERE datname = :'target')
+\gexec
+SQL
+count="$(psql -d "$DATABASE_NAME" -Atq -v ON_ERROR_STOP=1 -c "SELECT count(*) FROM pg_tables WHERE schemaname = 'public'")"
+baseline="$(psql -d "$DATABASE_NAME" -Atq -v ON_ERROR_STOP=1 -c "SELECT to_regclass('public.akzente_initial_baseline') IS NOT NULL")"
+[ "$count" = 0 ] || [ "$baseline" = t ] || { echo 'Target database already contains tables. Refusing to overwrite data.' >&2; exit 1; }
+  exit 0
+fi
+if [ "${1:-}" = mark-fresh ]; then
+  archive=fresh-baseline-v1
+psql -d postgres -q -v ON_ERROR_STOP=1 -v target="$DATABASE_NAME" -v archive="$archive" <<'SQL'
+BEGIN;
+CREATE SCHEMA IF NOT EXISTS akzente_deployment;
+CREATE TABLE IF NOT EXISTS akzente_deployment.imports (database_name text PRIMARY KEY, archive_name text NOT NULL, imported_at timestamptz NOT NULL DEFAULT now());
+INSERT INTO akzente_deployment.imports (database_name, archive_name) VALUES (:'target', :'archive');
+COMMIT;
+SQL
+  exit 0
+fi
 [ -f "$backup_dir/source.latest" ] || { echo 'Verified source backup is missing.' >&2; exit 1; }
 archive="$(cat "$backup_dir/source.latest")"
 case "$archive" in *[!A-Za-z0-9.-]*|'') echo 'Invalid archive name' >&2; exit 1;; esac

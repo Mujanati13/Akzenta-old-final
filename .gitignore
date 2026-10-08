@@ -21,3 +21,5 @@ deployment/.last-successful-tag
 **/*.key
 **/*.pfx
 **/*.p12
+
+/deployment/admin-credentials.txt

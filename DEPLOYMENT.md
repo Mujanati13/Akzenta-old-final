@@ -1,6 +1,14 @@
 # One-command VPS deployment
 
-From the project root on your Linux VPS:
+For a new installation with no existing database, run from the project root on your Linux VPS:
+
+```bash
+./deploy.sh --fresh "$(curl -4 -fsS https://api.ipify.org)"
+```
+
+Docker creates PostgreSQL and the application schema. Lookup data and a HeadOffice administrator are initialized once in a transaction, only in an empty database. Generated login details are stored privately in `deployment/admin-credentials.txt`. Runtime database synchronization remains disabled. Later deployments preserve the Docker volumes.
+
+For an existing source database to import, or subsequent deployments:
 
 ```bash
 ./deploy.sh

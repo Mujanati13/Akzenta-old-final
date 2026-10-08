@@ -4,8 +4,10 @@ set -Eeuo pipefail
 umask 077
 TASK_ROOT="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 cd "$TASK_ROOT"
+fresh=false
+if [[ "${1:-}" == --fresh ]]; then fresh=true; shift; fi
 if [[ "${1:-}" == --help || "${1:-}" == -h ]]; then
-  printf 'Usage: bash deploy.sh YOUR_VPS_IP\nAfter the first deployment: bash deploy.sh\nRequires Linux, Docker Engine, Compose >= 2.30, curl, flock, and access to the existing source database. Missing first-run settings are prompted.\n'
+  printf 'Usage: bash deploy.sh [--fresh] YOUR_VPS_IP\nAfter the first deployment: bash deploy.sh\nRequires Linux, Docker Engine, Compose >= 2.30, curl, flock, and access to the existing source database. Missing first-run settings are prompted.\n'
   exit 0
 fi
 [[ $# -le 1 ]] || { echo 'Expected at most one VPS IP argument' >&2; exit 1; }
@@ -27,7 +29,7 @@ if [[ ! -f .env.production && -z "${1:-}" ]]; then
   read -r -p 'VPS public IP: ' vps_ip </dev/tty
   set -- "$vps_ip"
 fi
-if [[ ! -f .env.production && ! -f Backend/.env ]]; then
+if [[ "$fresh" == false && ! -f .env.production && ! -f Backend/.env ]]; then
   echo 'Provide the existing database to preserve and import its data.'
   read -r -p 'Source database host (host.docker.internal if on this VPS): ' source_host </dev/tty
   read -r -p 'Source database port [5432]: ' source_port </dev/tty
@@ -53,6 +55,7 @@ if [[ ! -f .env.production && ! -f Backend/.env ]]; then
   unset source_password
 fi
 
+if [[ "$fresh" == false ]]; then
 # Complete partial source configuration without replacing existing settings.
 source_settings="$(docker run --rm --user "$(id -u):$(id -g)" -v "$TASK_ROOT:/project" -w /project node:22-alpine node deployment/source-config.cjs)"
 mapfile -t source_fields <<<"$source_settings"
@@ -88,9 +91,10 @@ for key in "${source_fields[@]:1}"; do
   unset value
 done
 unset source_settings source_fields
+fi
 
 # Bootstrap with Node in Docker; the host needs neither Node nor npm.
-ports="$(docker run --rm --user "$(id -u):$(id -g)" -v "$TASK_ROOT:/project" -w /project node:22-alpine node deployment/prepare-env.cjs "${1:-}")"
+ports="$(docker run --rm --user "$(id -u):$(id -g)" -v "$TASK_ROOT:/project" -w /project node:22-alpine node deployment/prepare-env.cjs "${1:-}" "$fresh")"
 read -r HEAD_OFFICE_PORT CLIENT_PORT MERCHANDISER_PORT MAPBOX_PUBLIC_TOKEN <<<"$ports"
 for port in "$HEAD_OFFICE_PORT" "$CLIENT_PORT" "$MERCHANDISER_PORT"; do
   [[ "$port" =~ ^[0-9]+$ ]] || { echo 'Invalid portal configuration' >&2; exit 1; }
@@ -132,9 +136,16 @@ if [[ "$import_state" != done && "$import_state" != pending ]]; then
   exit 1
 fi
 if [[ "$import_state" == pending ]]; then
-  "${COMPOSE[@]}" run --rm --no-deps source-check
-  "${COMPOSE[@]}" run --rm --no-deps source-backup
-  "${COMPOSE[@]}" run --rm --no-deps db-bootstrap
+  initialization="$(docker run --rm --user "$(id -u):$(id -g)" -v "$TASK_ROOT:/project" -w /project node:22-alpine node -e 'const fs=require("fs"); const {parseRaw}=require("./deployment/prepare-env.cjs"); console.log(parseRaw(fs.readFileSync(".env.production","utf8")).DATABASE_INITIALIZATION || "import")')"
+  if [[ "$initialization" == fresh ]]; then
+    "${COMPOSE[@]}" run --rm --no-deps db-bootstrap create-empty
+    "${COMPOSE[@]}" run --rm --no-deps db-initialize
+    "${COMPOSE[@]}" run --rm --no-deps db-bootstrap mark-fresh
+  else
+    "${COMPOSE[@]}" run --rm --no-deps source-check
+    "${COMPOSE[@]}" run --rm --no-deps source-backup
+    "${COMPOSE[@]}" run --rm --no-deps db-bootstrap
+  fi
 fi
 "${COMPOSE[@]}" run --rm --no-deps db-check
 "${COMPOSE[@]}" run --rm --no-deps db-backup
@@ -151,3 +162,5 @@ for port in "$HEAD_OFFICE_PORT" "$CLIENT_PORT" "$MERCHANDISER_PORT"; do
 done
 printf '%s\n' "$DEPLOY_TAG" >deployment/.last-successful-tag
 printf '\nDeployment is healthy. Open the VPS IP using:\n  HeadOffice: port %s\n  Client: port %s\n  Merchandiser: port %s\nPostgreSQL and SMTP: private Docker network\n  Mail viewer: 127.0.0.1:1080\n  Adminer: 127.0.0.1:8080\nBackups: deployment/backups/\n' "$HEAD_OFFICE_PORT" "$CLIENT_PORT" "$MERCHANDISER_PORT"
+
+[[ ! -f deployment/admin-credentials.txt ]] || echo "Initial administrator credentials: deployment/admin-credentials.txt"

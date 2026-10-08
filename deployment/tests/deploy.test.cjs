@@ -10,6 +10,7 @@ const dockerMock = [
   'printf "docker %s\\n" "$*" >>"$MOCK_LOG"',
   'if [[ "$1" == info ]]; then exit 0; fi',
   'if [[ "$*" == *"source-config.cjs"* ]]; then echo ".env.production"; exit 0; fi',
+  'if [[ "$*" == *"parseRaw(fs.readFileSync"* ]]; then if [[ "$MOCK_FAIL" == fresh ]]; then echo fresh; else echo import; fi; exit 0; fi',
   'if [[ "$1" == run ]]; then echo "80 8081 8082"; exit 0; fi',
   'if [[ "$*" == *"db-bootstrap status"* ]]; then if [[ "$MOCK_FAIL" == repeat ]]; then echo done; else echo pending; fi; exit 0; fi',
   'if [[ "$1" == inspect ]]; then echo "previous:stable"; exit 0; fi',
@@ -75,4 +76,13 @@ test('later deployments retain Docker data and never repeat source import', t =>
   assert.equal(r.status, 0, r.stderr);
   assert.doesNotMatch(r.calls, /source-backup|source-check|run --rm --no-deps db-bootstrap\n/);
   assert.match(r.calls, /db-backup/);
+});
+
+test('fresh deployment initializes schema without requesting or importing a source database', t => {
+  const r = scenario(t, 'fresh');
+  assert.equal(r.status, 0, r.stderr);
+  assert.doesNotMatch(r.calls, /source-check|source-backup/);
+  assert.ok(r.calls.indexOf('db-bootstrap create-empty') < r.calls.indexOf('db-initialize'));
+  assert.ok(r.calls.indexOf('db-initialize') < r.calls.indexOf('db-bootstrap mark-fresh'));
+  assert.ok(r.calls.indexOf('db-bootstrap mark-fresh') < r.calls.indexOf('db-check'));
 });

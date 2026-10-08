@@ -49,7 +49,7 @@ function validate(values) {
   if (values.FRONTEND_DOMAIN !== url(ports[0]) || values.CLIENT_FRONTEND_DOMAIN !== url(ports[1]) || values.MERCHANDISER_FRONTEND_DOMAIN !== url(ports[2]) || values.BACKEND_DOMAIN !== values.FRONTEND_DOMAIN) throw new Error('Portal URLs must match the IP and configured ports');
   for (const [key, value] of Object.entries(values)) if (/\r|\n/.test(value)) throw new Error('Multiline values are unsupported in the raw production environment: ' + key);
 }
-function prepare(base, ip) {
+function prepare(base, ip, fresh = false) {
   const target = path.join(base, '.env.production');
   let values;
   if (fs.existsSync(target)) {
@@ -59,8 +59,8 @@ function prepare(base, ip) {
   } else {
     if (!net.isIP(ip || '')) throw new Error('Usage: bash deploy.sh YOUR_VPS_IP');
     const source = path.join(base, 'Backend', '.env');
-    if (!fs.existsSync(source)) throw new Error('Backend/.env is required to preserve the existing database and SMTP settings');
-    const old = parseDotenv(fs.readFileSync(source, 'utf8'));
+    if (!fresh && !fs.existsSync(source)) throw new Error('Backend/.env is required to preserve the existing database and SMTP settings');
+    const old = fresh ? { DATABASE_HOST: 'postgres', DATABASE_PORT: '5432', DATABASE_NAME: 'akzente', DATABASE_USERNAME: 'akzente_app', DATABASE_PASSWORD: crypto.randomBytes(48).toString('hex') } : parseDotenv(fs.readFileSync(source, 'utf8'));
     const hostname = net.isIP(ip) === 6 ? '[' + ip + ']' : ip;
     const publicURL = 'http://' + hostname;
     values = {
@@ -84,6 +84,13 @@ function prepare(base, ip) {
       AUTH_FORGOT_TOKEN_EXPIRES_IN: '30m', AUTH_CONFIRM_EMAIL_TOKEN_EXPIRES_IN: '1d',
     };
     for (const key of ['AUTH_JWT_SECRET', 'AUTH_REFRESH_SECRET', 'AUTH_FORGOT_SECRET', 'AUTH_CONFIRM_EMAIL_SECRET']) values[key] = crypto.randomBytes(48).toString('hex');
+    if (fresh) {
+      values.DATABASE_INITIALIZATION = 'fresh';
+      values.BOOTSTRAP_ADMIN_EMAIL = 'admin@akzente.local';
+      values.BOOTSTRAP_ADMIN_PASSWORD = crypto.randomBytes(24).toString('base64url');
+      fs.mkdirSync(path.join(base, 'deployment'), {recursive: true});
+      fs.writeFileSync(path.join(base, 'deployment/admin-credentials.txt'), 'Email: ' + values.BOOTSTRAP_ADMIN_EMAIL + '\nPassword: ' + values.BOOTSTRAP_ADMIN_PASSWORD + '\n', {mode: 0o600});
+    }
     validate(values);
   }
   if (values.DEPLOYMENT_STACK !== 'managed') {
@@ -113,7 +120,7 @@ function writeRaw(file, values) {
 }
 if (require.main === module) {
   try {
-    const values = prepare(process.cwd(), process.argv[2]);
+    const values = prepare(process.cwd(), process.argv[2], process.argv[3] === 'true');
     console.log([values.HEAD_OFFICE_PORT, values.CLIENT_PORT, values.MERCHANDISER_PORT, values.MAPBOX_PUBLIC_TOKEN || ''].join(' '));
   } catch (error) { console.error(error.message); process.exitCode = 1; }
 }

@@ -108,6 +108,14 @@ services:
     security_opt:
       - no-new-privileges:true
 
+  db-initialize:
+    <<: *app-env
+    image: akzente-api:${DEPLOY_TAG:-current}
+    command: ["node", "deployment/initialize-database.cjs"]
+    profiles: ["tools"]
+    read_only: true
+    tmpfs: [/tmp]
+
   db-check:
     <<: *app-env
     image: akzente-api:${DEPLOY_TAG:-current}
