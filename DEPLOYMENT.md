@@ -97,3 +97,7 @@ The bundled target is PostgreSQL 17. Source databases must be compatible with Po
 Configuration, credential preservation, first-run import ordering, later-run import skipping, build/schema failure handling, rollback orchestration, and read-only schema/upload checks are covered by automated tests. Compose and shell syntax were validated. A real isolated PostgreSQL 17 test verified backup restoration, UUID extension creation under the application role, retained rows, skipped repeated import, and refusal to overwrite a populated target without a marker.
 
 Full Docker image builds and the complete running stack remain unverified in this workspace because Docker Engine was unavailable. The command enforces builds, preflight and container/host health checks on the VPS. After it succeeds, verify actual login/refresh for each portal, a business write, an upload, and captured mail (or actual delivery if an SMTP provider is configured).
+
+## Dependency installation
+
+The frontend and backend Docker stages use `npm ci --legacy-peer-deps` with the committed lockfiles. These lockfiles contain conflicting peer ranges (including Angular localize, older toast/stylelint packages, and AWS SDK packages); strict peer resolution rejects them. This keeps the existing locked dependency versions and does not regenerate the lockfiles during deployment. A dependency upgrade must separately align Angular and its integrations and verify all three production builds. See [npm ci documentation](https://docs.npmjs.com/cli/v11/commands/npm-ci/).
