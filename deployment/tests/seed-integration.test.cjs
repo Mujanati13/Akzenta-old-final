@@ -1,0 +1,51 @@
+const {test}=require('node:test');
+const assert=require('node:assert/strict');
+const fs=require('node:fs');
+const path=require('node:path');
+const os=require('node:os');
+test('all seed datasets roll back on failure and preserve records on repeated PostgreSQL runs', {skip: !process.env.SEED_TEST_DATABASE_URL}, async t => {
+ const runtime = name => require(require.resolve(name,{paths:[path.join(__dirname,'../../Backend')]}));
+ const {Client}=runtime('pg');
+ const bcrypt=runtime('bcryptjs');
+ const {seed}=require('../../Backend/deployment/seed-all.cjs');
+ const url=new URL(process.env.SEED_TEST_DATABASE_URL);
+ const base={host:url.hostname,port:Number(url.port||5432),user:decodeURIComponent(url.username),password:decodeURIComponent(url.password),database:url.pathname.slice(1)||'postgres'};
+ const dir=fs.mkdtempSync(path.join(os.tmpdir(),'akzente-seed-test-'));
+ t.after(()=>fs.rmSync(dir,{recursive:true,force:true}));
+ const admin=new Client(base);await admin.connect();
+ const database='seed_verification_'+Date.now();
+ await admin.query('CREATE DATABASE '+database);
+ const c=new Client({...base,database});await c.connect();
+ try {
+  await c.query(`CREATE TABLE role(id integer PRIMARY KEY,name text); CREATE TABLE status(id integer PRIMARY KEY,name text); CREATE TABLE user_type(id integer PRIMARY KEY,name text); CREATE TABLE merchandiser_status(id integer PRIMARY KEY,name text);
+  CREATE TABLE "report-status"(id serial PRIMARY KEY,name text,"akzenteName" text,"clientName" text,"merchandiserName" text,"akzenteColor" text,"clientColor" text,"merchandiserColor" text);
+  CREATE TABLE countries(id serial PRIMARY KEY,name jsonb,flag text,"createdAt" timestamptz,"updatedAt" timestamptz);
+  CREATE TABLE cities(id serial PRIMARY KEY,name text,coordinates float8[],"countryId" integer REFERENCES countries,"createdAt" timestamptz,"updatedAt" timestamptz);
+  CREATE TABLE "user"(id serial PRIMARY KEY,email text UNIQUE,password text,provider text,"firstName" text,"lastName" text,"roleId" integer REFERENCES role,"statusId" integer REFERENCES status,"typeId" integer REFERENCES user_type,"createdAt" timestamptz,"updatedAt" timestamptz);
+  CREATE TABLE akzente(id serial PRIMARY KEY,user_id integer REFERENCES "user","createdAt" timestamptz,"updatedAt" timestamptz);`);
+  const file=path.join(dir,'credentials.json');
+  const query=c.query.bind(c);
+  let failed=false;
+  c.query=async(sql,args)=>{if(sql.startsWith('INSERT INTO cities')) {failed=true;throw Error('simulated insertion failure');}return query(sql,args);};
+  await assert.rejects(seed(c,file),/simulated/);
+  assert.ok(failed);
+  assert.equal((await query('SELECT count(*) FROM countries')).rows[0].count,'0');
+  c.query=query;
+  await c.query('INSERT INTO countries(id,name) VALUES(500,$1),(900,$2)',[{en:'France',de:'Frankreich'},{en:'Germany',de:'Deutschland'}]);
+  await c.query(`INSERT INTO cities(name,coordinates,"countryId") VALUES('Berlin',ARRAY[1,2],900); INSERT INTO "report-status"(id,name) VALUES(1,'Keep existing');`);
+  const first=await seed(c,file);
+  assert.equal(first.countries,39); assert.equal(first.users,2); assert.ok(first.cities>2000);
+  assert.equal((await c.query('SELECT "countryId" FROM cities WHERE name=$1',['Paris'])).rows[0].countryId,500);
+  assert.equal((await c.query('SELECT coordinates FROM cities WHERE name=$1',['Berlin'])).rows[0].coordinates[0],1);
+  assert.equal((await c.query('SELECT name FROM "report-status" WHERE id=1')).rows[0].name,'Keep existing');
+  const credentials=JSON.parse(fs.readFileSync(file,'utf8'));
+  const users=(await c.query('SELECT email,password FROM "user"')).rows;
+  for(const u of users){assert.ok(await bcrypt.compare(credentials[u.email],u.password)); assert.ok(!await bcrypt.compare('secret',u.password));}
+  const savedHashes=users.map(u=>u.password).sort();
+  const second=await seed(c,file);
+  assert.deepEqual(second,{countries:0,cities:0,users:0});
+  assert.deepEqual((await c.query('SELECT password FROM "user"')).rows.map(u=>u.password).sort(),savedHashes);
+  assert.equal((await c.query('SELECT count(*) FROM akzente')).rows[0].count,'2');
+  console.log(JSON.stringify({first,second,rollback:'passed',existingData:'preserved',passwords:'hashed and stable'}));
+ } finally {await c.end();await admin.query('DROP DATABASE '+database);await admin.end();}
+});

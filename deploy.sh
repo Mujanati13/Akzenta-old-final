@@ -5,9 +5,13 @@ umask 077
 TASK_ROOT="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 cd "$TASK_ROOT"
 fresh=false
-if [[ "${1:-}" == --fresh ]]; then fresh=true; shift; fi
+seed_all=false
+while [[ "${1:-}" == --fresh || "${1:-}" == --seed-all ]]; do
+  case "$1" in --fresh) fresh=true ;; --seed-all) seed_all=true ;; esac
+  shift
+done
 if [[ "${1:-}" == --help || "${1:-}" == -h ]]; then
-  printf 'Usage: bash deploy.sh [--fresh] YOUR_VPS_IP\nAfter the first deployment: bash deploy.sh\nRequires Linux, Docker Engine, Compose >= 2.30, curl, flock, and access to the existing source database. Missing first-run settings are prompted.\n'
+  printf 'Usage: bash deploy.sh [--fresh] [--seed-all] YOUR_VPS_IP\nAfter the first deployment: bash deploy.sh\nRequires Linux, Docker Engine, Compose >= 2.30, curl, flock, and access to the existing source database. Missing first-run settings are prompted.\n'
   exit 0
 fi
 [[ $# -le 1 ]] || { echo 'Expected at most one VPS IP argument' >&2; exit 1; }
@@ -149,6 +153,10 @@ if [[ "$import_state" == pending ]]; then
 fi
 "${COMPOSE[@]}" run --rm --no-deps db-check
 "${COMPOSE[@]}" run --rm --no-deps db-backup
+if [[ "$seed_all" == true ]]; then
+  "${COMPOSE[@]}" run --rm --no-deps db-seed
+  "${COMPOSE[@]}" run --rm --no-deps db-check
+fi
 "${COMPOSE[@]}" run --rm --no-deps upload-init
 "${COMPOSE[@]}" run --rm --no-deps upload-backup
 
@@ -166,3 +174,5 @@ printf '%s\n' "$DEPLOY_TAG" >deployment/.last-successful-tag
 printf '\nDeployment is healthy. Open the VPS IP using:\n  HeadOffice: port %s\n  Client: port %s\n  Merchandiser: port %s\nPostgreSQL and SMTP: private Docker network\n  Mail viewer: %s\n  Adminer: %s\nBackups: deployment/backups/\n' "$HEAD_OFFICE_PORT" "$CLIENT_PORT" "$MERCHANDISER_PORT" "$mail_viewer_address" "$adminer_address"
 
 [[ ! -f deployment/admin-credentials.txt ]] || echo "Initial administrator credentials: deployment/admin-credentials.txt"
+
+[[ ! -f deployment/seeder-credentials.json ]] || echo "Seed account credentials: deployment/seeder-credentials.json"

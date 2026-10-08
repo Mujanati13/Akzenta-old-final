@@ -1,0 +1,14380 @@
+[
+  {
+    "name": "Aachen",
+    "coordinates": [
+      50.77556,
+      6.08361
+    ]
+  },
+  {
+    "name": "Aach",
+    "coordinates": [
+      47.84556,
+      8.85167
+    ]
+  },
+  {
+    "name": "Aalen",
+    "coordinates": [
+      48.833,
+      10.1
+    ]
+  },
+  {
+    "name": "Abenberg",
+    "coordinates": [
+      49.25,
+      10.967
+    ]
+  },
+  {
+    "name": "Abensberg",
+    "coordinates": [
+      48.8,
+      11.85
+    ]
+  },
+  {
+    "name": "Achern",
+    "coordinates": [
+      48.633,
+      8.067
+    ]
+  },
+  {
+    "name": "Achim",
+    "coordinates": [
+      53.06528,
+      9.03417
+    ]
+  },
+  {
+    "name": "Adelsheim",
+    "coordinates": [
+      49.40472,
+      9.38917
+    ]
+  },
+  {
+    "name": "Adenau",
+    "coordinates": [
+      50.383,
+      6.933
+    ]
+  },
+  {
+    "name": "Adorf",
+    "coordinates": [
+      50.317,
+      12.267
+    ]
+  },
+  {
+    "name": "Ahaus",
+    "coordinates": [
+      52.067,
+      7
+    ]
+  },
+  {
+    "name": "Ahlen",
+    "coordinates": [
+      51.76333,
+      7.89111
+    ]
+  },
+  {
+    "name": "Ahrensburg",
+    "coordinates": [
+      53.67472,
+      10.24111
+    ]
+  },
+  {
+    "name": "Aichach",
+    "coordinates": [
+      48.45,
+      11.13333
+    ]
+  },
+  {
+    "name": "Aichtal",
+    "coordinates": [
+      48.62278,
+      9.23722
+    ]
+  },
+  {
+    "name": "Aken",
+    "coordinates": [
+      51.85,
+      12.05
+    ]
+  },
+  {
+    "name": "Albstadt",
+    "coordinates": [
+      48.21194,
+      9.02389
+    ]
+  },
+  {
+    "name": "Alfeld",
+    "coordinates": [
+      51.98861,
+      9.82694
+    ]
+  },
+  {
+    "name": "Allendorf",
+    "coordinates": [
+      50.67889,
+      8.82444
+    ]
+  },
+  {
+    "name": "Allstedt",
+    "coordinates": [
+      51.4,
+      11.383
+    ]
+  },
+  {
+    "name": "Alpirsbach",
+    "coordinates": [
+      48.34611,
+      8.40389
+    ]
+  },
+  {
+    "name": "Alsdorf",
+    "coordinates": [
+      50.883,
+      6.167
+    ]
+  },
+  {
+    "name": "Alsfeld",
+    "coordinates": [
+      50.75111,
+      9.27111
+    ]
+  },
+  {
+    "name": "Alsleben",
+    "coordinates": [
+      51.7,
+      11.667
+    ]
+  },
+  {
+    "name": "Altdorf bei Nürnberg",
+    "coordinates": [
+      49.3875,
+      11.35694
+    ]
+  },
+  {
+    "name": "Altena",
+    "coordinates": [
+      51.3,
+      7.66667
+    ]
+  },
+  {
+    "name": "Altenberg",
+    "coordinates": [
+      50.76444,
+      13.75778
+    ]
+  },
+  {
+    "name": "Altenburg",
+    "coordinates": [
+      50.985,
+      12.43333
+    ]
+  },
+  {
+    "name": "Altenkirchen",
+    "coordinates": [
+      50.68722,
+      7.64556
+    ]
+  },
+  {
+    "name": "Altensteig",
+    "coordinates": [
+      48.58639,
+      8.60472
+    ]
+  },
+  {
+    "name": "Altentreptow",
+    "coordinates": [
+      53.667,
+      13.25
+    ]
+  },
+  {
+    "name": "Altlandsberg",
+    "coordinates": [
+      52.56667,
+      13.73306
+    ]
+  },
+  {
+    "name": "Altötting",
+    "coordinates": [
+      48.22667,
+      12.67833
+    ]
+  },
+  {
+    "name": "Alzenau",
+    "coordinates": [
+      50.067,
+      9.067
+    ]
+  },
+  {
+    "name": "Alzey",
+    "coordinates": [
+      49.74583,
+      8.11528
+    ]
+  },
+  {
+    "name": "Amberg",
+    "coordinates": [
+      49.44444,
+      11.84833
+    ]
+  },
+  {
+    "name": "Amorbach",
+    "coordinates": [
+      49.633,
+      9.217
+    ]
+  },
+  {
+    "name": "Amt Creuzburg",
+    "coordinates": [
+      51.05139,
+      10.24472
+    ]
+  },
+  {
+    "name": "Amöneburg",
+    "coordinates": [
+      50.79778,
+      8.92306
+    ]
+  },
+  {
+    "name": "An der Schmücke",
+    "coordinates": [
+      51.3,
+      11.217
+    ]
+  },
+  {
+    "name": "Andernach",
+    "coordinates": [
+      50.43972,
+      7.40167
+    ]
+  },
+  {
+    "name": "Angermünde",
+    "coordinates": [
+      53.03333,
+      14
+    ]
+  },
+  {
+    "name": "Anklam",
+    "coordinates": [
+      53.85,
+      13.683
+    ]
+  },
+  {
+    "name": "Annaberg-Buchholz",
+    "coordinates": [
+      50.58,
+      13.00222
+    ]
+  },
+  {
+    "name": "Annaburg",
+    "coordinates": [
+      51.73278,
+      13.04556
+    ]
+  },
+  {
+    "name": "Annweiler am Trifels",
+    "coordinates": [
+      49.2,
+      7.967
+    ]
+  },
+  {
+    "name": "Ansbach",
+    "coordinates": [
+      49.3,
+      10.58333
+    ]
+  },
+  {
+    "name": "Apolda",
+    "coordinates": [
+      51.017,
+      11.517
+    ]
+  },
+  {
+    "name": "Arendsee",
+    "coordinates": [
+      52.8767,
+      11.4867
+    ]
+  },
+  {
+    "name": "Arneburg",
+    "coordinates": [
+      52.667,
+      12
+    ]
+  },
+  {
+    "name": "ArnisArnæs",
+    "coordinates": [
+      54.63,
+      9.93139
+    ]
+  },
+  {
+    "name": "Arnsberg",
+    "coordinates": [
+      51.383,
+      8.083
+    ]
+  },
+  {
+    "name": "Arnstadt",
+    "coordinates": [
+      50.83417,
+      10.94639
+    ]
+  },
+  {
+    "name": "Arnstein",
+    "coordinates": [
+      49.967,
+      9.983
+    ]
+  },
+  {
+    "name": "Arnstein",
+    "coordinates": [
+      51.683,
+      11.467
+    ]
+  },
+  {
+    "name": "Artern",
+    "coordinates": [
+      51.36667,
+      11.3
+    ]
+  },
+  {
+    "name": "Arzberg",
+    "coordinates": [
+      50.067,
+      12.183
+    ]
+  },
+  {
+    "name": "Aschaffenburg",
+    "coordinates": [
+      49.96667,
+      9.15
+    ]
+  },
+  {
+    "name": "Aschersleben",
+    "coordinates": [
+      51.75,
+      11.467
+    ]
+  },
+  {
+    "name": "Asperg",
+    "coordinates": [
+      48.9,
+      9.13333
+    ]
+  },
+  {
+    "name": "Attendorn",
+    "coordinates": [
+      51.117,
+      7.9
+    ]
+  },
+  {
+    "name": "Aub",
+    "coordinates": [
+      49.533,
+      10.05
+    ]
+  },
+  {
+    "name": "Aue-Bad Schlema",
+    "coordinates": [
+      50.6,
+      12.683
+    ]
+  },
+  {
+    "name": "Auerbach in der Oberpfalz",
+    "coordinates": [
+      49.683,
+      11.617
+    ]
+  },
+  {
+    "name": "Auerbach",
+    "coordinates": [
+      50.50944,
+      12.4
+    ]
+  },
+  {
+    "name": "Augsburg",
+    "coordinates": [
+      48.367,
+      10.9
+    ]
+  },
+  {
+    "name": "Augustusburg",
+    "coordinates": [
+      50.81444,
+      13.1
+    ]
+  },
+  {
+    "name": "Aulendorf",
+    "coordinates": [
+      47.95417,
+      9.63889
+    ]
+  },
+  {
+    "name": "Auma-Weidatal",
+    "coordinates": [
+      50.7,
+      11.9
+    ]
+  },
+  {
+    "name": "Aurich",
+    "coordinates": [
+      53.47139,
+      7.48361
+    ]
+  },
+  {
+    "name": "Aßlar",
+    "coordinates": [
+      50.583,
+      8.467
+    ]
+  },
+  {
+    "name": "Babenhausen",
+    "coordinates": [
+      49.96667,
+      8.95
+    ]
+  },
+  {
+    "name": "Bacharach",
+    "coordinates": [
+      50.06667,
+      7.76667
+    ]
+  },
+  {
+    "name": "Backnang",
+    "coordinates": [
+      48.94639,
+      9.43056
+    ]
+  },
+  {
+    "name": "Bad Aibling",
+    "coordinates": [
+      47.867,
+      12.017
+    ]
+  },
+  {
+    "name": "Bad Arolsen",
+    "coordinates": [
+      51.367,
+      9.017
+    ]
+  },
+  {
+    "name": "Bad Belzig",
+    "coordinates": [
+      52.14222,
+      12.59556
+    ]
+  },
+  {
+    "name": "Bad Bentheim",
+    "coordinates": [
+      52.30306,
+      7.15972
+    ]
+  },
+  {
+    "name": "Bad Bergzabern",
+    "coordinates": [
+      49.1028,
+      7.99913
+    ]
+  },
+  {
+    "name": "Bad Berka",
+    "coordinates": [
+      50.9,
+      11.28083
+    ]
+  },
+  {
+    "name": "Bad Berleburg",
+    "coordinates": [
+      51.04972,
+      8.4
+    ]
+  },
+  {
+    "name": "Bad Berneck i.Fichtelgebirge",
+    "coordinates": [
+      50.04778,
+      11.67222
+    ]
+  },
+  {
+    "name": "Bad Bevensen",
+    "coordinates": [
+      53.07917,
+      10.58333
+    ]
+  },
+  {
+    "name": "Bad Bibra",
+    "coordinates": [
+      51.2,
+      11.567
+    ]
+  },
+  {
+    "name": "Bad Blankenburg",
+    "coordinates": [
+      50.68333,
+      11.26667
+    ]
+  },
+  {
+    "name": "Bad Bramstedt",
+    "coordinates": [
+      53.91861,
+      9.88444
+    ]
+  },
+  {
+    "name": "Bad Breisig",
+    "coordinates": [
+      50.50917,
+      7.29639
+    ]
+  },
+  {
+    "name": "Bad Brückenau",
+    "coordinates": [
+      50.30944,
+      9.79056
+    ]
+  },
+  {
+    "name": "Bad Buchau",
+    "coordinates": [
+      48.06611,
+      9.61
+    ]
+  },
+  {
+    "name": "Bad Camberg",
+    "coordinates": [
+      50.3,
+      8.267
+    ]
+  },
+  {
+    "name": "Bad Doberan",
+    "coordinates": [
+      54.10694,
+      11.90528
+    ]
+  },
+  {
+    "name": "Bad Driburg",
+    "coordinates": [
+      51.733,
+      9.017
+    ]
+  },
+  {
+    "name": "Bad Düben",
+    "coordinates": [
+      51.59194,
+      12.58528
+    ]
+  },
+  {
+    "name": "Bad Dürkheim",
+    "coordinates": [
+      49.45944,
+      8.16806
+    ]
+  },
+  {
+    "name": "Bad Dürrenberg",
+    "coordinates": [
+      51.283,
+      12.067
+    ]
+  },
+  {
+    "name": "Bad Dürrheim",
+    "coordinates": [
+      48.017,
+      8.533
+    ]
+  },
+  {
+    "name": "Bad Elster",
+    "coordinates": [
+      50.28194,
+      12.23472
+    ]
+  },
+  {
+    "name": "Bad Ems",
+    "coordinates": [
+      50.33806,
+      7.71056
+    ]
+  },
+  {
+    "name": "Bad Fallingbostel",
+    "coordinates": [
+      52.8675,
+      9.69667
+    ]
+  },
+  {
+    "name": "Bad Frankenhausen",
+    "coordinates": [
+      51.35583,
+      11.10111
+    ]
+  },
+  {
+    "name": "Bad Freienwalde",
+    "coordinates": [
+      52.78556,
+      14.0325
+    ]
+  },
+  {
+    "name": "Bad Friedrichshall",
+    "coordinates": [
+      49.233,
+      9.217
+    ]
+  },
+  {
+    "name": "Bad Gandersheim",
+    "coordinates": [
+      51.87194,
+      10.02528
+    ]
+  },
+  {
+    "name": "Bad Gottleuba-Berggießhübel",
+    "coordinates": [
+      50.85833,
+      13.95
+    ]
+  },
+  {
+    "name": "Bad Griesbach im Rottal",
+    "coordinates": [
+      48.45,
+      13.2
+    ]
+  },
+  {
+    "name": "Bad Harzburg",
+    "coordinates": [
+      51.88111,
+      10.56222
+    ]
+  },
+  {
+    "name": "Bad Herrenalb",
+    "coordinates": [
+      48.80056,
+      8.44083
+    ]
+  },
+  {
+    "name": "Bad Hersfeld",
+    "coordinates": [
+      50.86833,
+      9.7075
+    ]
+  },
+  {
+    "name": "Bad Homburg v. d. Höhe",
+    "coordinates": [
+      50.21667,
+      8.6
+    ]
+  },
+  {
+    "name": "Bad Honnef",
+    "coordinates": [
+      50.645,
+      7.22694
+    ]
+  },
+  {
+    "name": "Bad Hönningen",
+    "coordinates": [
+      50.51778,
+      7.30861
+    ]
+  },
+  {
+    "name": "Bad Iburg",
+    "coordinates": [
+      52.15917,
+      8.04722
+    ]
+  },
+  {
+    "name": "Bad Karlshafen",
+    "coordinates": [
+      51.633,
+      9.45
+    ]
+  },
+  {
+    "name": "Bad Kissingen",
+    "coordinates": [
+      50.2,
+      10.067
+    ]
+  },
+  {
+    "name": "Bad Kreuznach",
+    "coordinates": [
+      49.85,
+      7.867
+    ]
+  },
+  {
+    "name": "Bad Krozingen",
+    "coordinates": [
+      47.917,
+      7.7
+    ]
+  },
+  {
+    "name": "Bad Königshofen",
+    "coordinates": [
+      50.3,
+      10.417
+    ]
+  },
+  {
+    "name": "Bad König",
+    "coordinates": [
+      49.75,
+      9.017
+    ]
+  },
+  {
+    "name": "Bad Köstritz",
+    "coordinates": [
+      50.93056,
+      12.00972
+    ]
+  },
+  {
+    "name": "Bad Kötzting",
+    "coordinates": [
+      49.17694,
+      12.855
+    ]
+  },
+  {
+    "name": "Bad Laasphe",
+    "coordinates": [
+      50.93028,
+      8.41667
+    ]
+  },
+  {
+    "name": "Bad Langensalza",
+    "coordinates": [
+      51.10806,
+      10.64667
+    ]
+  },
+  {
+    "name": "Bad Lauchstädt",
+    "coordinates": [
+      51.367,
+      11.833
+    ]
+  },
+  {
+    "name": "Bad Lausick",
+    "coordinates": [
+      51.14472,
+      12.64528
+    ]
+  },
+  {
+    "name": "Bad Lauterberg",
+    "coordinates": [
+      51.63167,
+      10.47056
+    ]
+  },
+  {
+    "name": "Bad Liebenstein",
+    "coordinates": [
+      50.81444,
+      10.35417
+    ]
+  },
+  {
+    "name": "Bad Liebenwerda",
+    "coordinates": [
+      51.51667,
+      13.4
+    ]
+  },
+  {
+    "name": "Bad Liebenzell",
+    "coordinates": [
+      48.77417,
+      8.73139
+    ]
+  },
+  {
+    "name": "Bad Lippspringe",
+    "coordinates": [
+      51.78333,
+      8.81667
+    ]
+  },
+  {
+    "name": "Bad Lobenstein",
+    "coordinates": [
+      50.45,
+      11.65
+    ]
+  },
+  {
+    "name": "Bad Marienberg",
+    "coordinates": [
+      50.65194,
+      7.95222
+    ]
+  },
+  {
+    "name": "Bad Mergentheim",
+    "coordinates": [
+      49.5,
+      9.76667
+    ]
+  },
+  {
+    "name": "Bad Muskau",
+    "coordinates": [
+      51.55,
+      14.71667
+    ]
+  },
+  {
+    "name": "Bad Münder",
+    "coordinates": [
+      52.19917,
+      9.46528
+    ]
+  },
+  {
+    "name": "Bad Münstereifel",
+    "coordinates": [
+      50.55306,
+      6.76611
+    ]
+  },
+  {
+    "name": "Bad Nauheim",
+    "coordinates": [
+      50.367,
+      8.75
+    ]
+  },
+  {
+    "name": "Bad Nenndorf",
+    "coordinates": [
+      52.33694,
+      9.37861
+    ]
+  },
+  {
+    "name": "Bad Neuenahr-Ahrweiler",
+    "coordinates": [
+      50.54472,
+      7.11333
+    ]
+  },
+  {
+    "name": "Bad Neustadt an der Saale",
+    "coordinates": [
+      50.32194,
+      10.21611
+    ]
+  },
+  {
+    "name": "Bad Oeynhausen",
+    "coordinates": [
+      52.2,
+      8.8
+    ]
+  },
+  {
+    "name": "Bad Oldesloe",
+    "coordinates": [
+      53.81167,
+      10.37417
+    ]
+  },
+  {
+    "name": "Bad Orb",
+    "coordinates": [
+      50.217,
+      9.35
+    ]
+  },
+  {
+    "name": "Bad Pyrmont",
+    "coordinates": [
+      51.98667,
+      9.26361
+    ]
+  },
+  {
+    "name": "Bad Rappenau",
+    "coordinates": [
+      49.233,
+      9.1
+    ]
+  },
+  {
+    "name": "Bad Reichenhall",
+    "coordinates": [
+      47.72472,
+      12.87694
+    ]
+  },
+  {
+    "name": "Bad Rodach",
+    "coordinates": [
+      50.333,
+      10.783
+    ]
+  },
+  {
+    "name": "Bad Sachsa",
+    "coordinates": [
+      51.59694,
+      10.55222
+    ]
+  },
+  {
+    "name": "Bad Salzdetfurth",
+    "coordinates": [
+      52.06528,
+      10.00917
+    ]
+  },
+  {
+    "name": "Bad Salzuflen",
+    "coordinates": [
+      52.0875,
+      8.75056
+    ]
+  },
+  {
+    "name": "Bad Salzungen",
+    "coordinates": [
+      50.81167,
+      10.23333
+    ]
+  },
+  {
+    "name": "Bad Saulgau",
+    "coordinates": [
+      48.0175,
+      9.50028
+    ]
+  },
+  {
+    "name": "Bad Schandau",
+    "coordinates": [
+      50.917,
+      14.15
+    ]
+  },
+  {
+    "name": "Bad Schmiedeberg",
+    "coordinates": [
+      51.68806,
+      12.7375
+    ]
+  },
+  {
+    "name": "Bad Schussenried",
+    "coordinates": [
+      48.00667,
+      9.65861
+    ]
+  },
+  {
+    "name": "Bad Schwalbach",
+    "coordinates": [
+      50.13333,
+      8.06667
+    ]
+  },
+  {
+    "name": "Bad Schwartau",
+    "coordinates": [
+      53.91944,
+      10.6975
+    ]
+  },
+  {
+    "name": "Bad Segeberg",
+    "coordinates": [
+      53.917,
+      10.317
+    ]
+  },
+  {
+    "name": "Bad Sobernheim",
+    "coordinates": [
+      49.78722,
+      7.65278
+    ]
+  },
+  {
+    "name": "Bad Soden-Salmünster",
+    "coordinates": [
+      50.267,
+      9.367
+    ]
+  },
+  {
+    "name": "Bad Soden",
+    "coordinates": [
+      50.133,
+      8.5
+    ]
+  },
+  {
+    "name": "Bad Sooden-Allendorf",
+    "coordinates": [
+      51.283,
+      9.983
+    ]
+  },
+  {
+    "name": "Bad Staffelstein",
+    "coordinates": [
+      50.1,
+      10.967
+    ]
+  },
+  {
+    "name": "Bad Sulza",
+    "coordinates": [
+      51.0875,
+      11.62222
+    ]
+  },
+  {
+    "name": "Bad Säckingen",
+    "coordinates": [
+      47.55,
+      7.95
+    ]
+  },
+  {
+    "name": "Bad Sülze",
+    "coordinates": [
+      54.133,
+      12.667
+    ]
+  },
+  {
+    "name": "Bad Teinach-Zavelstein",
+    "coordinates": [
+      48.68833,
+      8.68806
+    ]
+  },
+  {
+    "name": "Bad Tennstedt",
+    "coordinates": [
+      51.15389,
+      10.83722
+    ]
+  },
+  {
+    "name": "Bad Tölz",
+    "coordinates": [
+      47.76028,
+      11.55667
+    ]
+  },
+  {
+    "name": "Bad Urach",
+    "coordinates": [
+      48.49306,
+      9.39861
+    ]
+  },
+  {
+    "name": "Bad Vilbel",
+    "coordinates": [
+      50.17806,
+      8.73611
+    ]
+  },
+  {
+    "name": "Bad Waldsee",
+    "coordinates": [
+      47.92111,
+      9.75194
+    ]
+  },
+  {
+    "name": "Bad Wildbad",
+    "coordinates": [
+      48.75028,
+      8.55056
+    ]
+  },
+  {
+    "name": "Bad Wildungen",
+    "coordinates": [
+      51.117,
+      9.117
+    ]
+  },
+  {
+    "name": "Bad Wilsnack",
+    "coordinates": [
+      52.95,
+      11.94972
+    ]
+  },
+  {
+    "name": "Bad Wimpfen",
+    "coordinates": [
+      49.233,
+      9.167
+    ]
+  },
+  {
+    "name": "Bad Windsheim",
+    "coordinates": [
+      49.5,
+      10.417
+    ]
+  },
+  {
+    "name": "Bad Wurzach",
+    "coordinates": [
+      47.90944,
+      9.89944
+    ]
+  },
+  {
+    "name": "Bad Wörishofen",
+    "coordinates": [
+      48.00583,
+      10.59694
+    ]
+  },
+  {
+    "name": "Bad Wünnenberg",
+    "coordinates": [
+      51.517,
+      8.7
+    ]
+  },
+  {
+    "name": "Baden-Baden",
+    "coordinates": [
+      48.76278,
+      8.24083
+    ]
+  },
+  {
+    "name": "Baesweiler",
+    "coordinates": [
+      50.9,
+      6.183
+    ]
+  },
+  {
+    "name": "Baiersdorf",
+    "coordinates": [
+      49.65,
+      11.017
+    ]
+  },
+  {
+    "name": "Balingen",
+    "coordinates": [
+      48.27306,
+      8.85056
+    ]
+  },
+  {
+    "name": "Ballenstedt",
+    "coordinates": [
+      51.72,
+      11.2375
+    ]
+  },
+  {
+    "name": "Balve",
+    "coordinates": [
+      51.33333,
+      7.86667
+    ]
+  },
+  {
+    "name": "Bamberg",
+    "coordinates": [
+      49.9,
+      10.9
+    ]
+  },
+  {
+    "name": "Barby",
+    "coordinates": [
+      51.967,
+      11.867
+    ]
+  },
+  {
+    "name": "Bargteheide",
+    "coordinates": [
+      53.71667,
+      10.26667
+    ]
+  },
+  {
+    "name": "Barmstedt",
+    "coordinates": [
+      53.783,
+      9.767
+    ]
+  },
+  {
+    "name": "Barntrup",
+    "coordinates": [
+      51.98306,
+      9.11667
+    ]
+  },
+  {
+    "name": "Barsinghausen",
+    "coordinates": [
+      52.3,
+      9.48111
+    ]
+  },
+  {
+    "name": "Barth",
+    "coordinates": [
+      54.367,
+      12.717
+    ]
+  },
+  {
+    "name": "Baruth/Mark",
+    "coordinates": [
+      52.05,
+      13.5
+    ]
+  },
+  {
+    "name": "Bassum",
+    "coordinates": [
+      52.84944,
+      8.72667
+    ]
+  },
+  {
+    "name": "Battenberg",
+    "coordinates": [
+      51.017,
+      8.65
+    ]
+  },
+  {
+    "name": "Baumholder",
+    "coordinates": [
+      49.6125,
+      7.33472
+    ]
+  },
+  {
+    "name": "Baunach",
+    "coordinates": [
+      49.967,
+      10.833
+    ]
+  },
+  {
+    "name": "Baunatal",
+    "coordinates": [
+      51.25889,
+      9.41833
+    ]
+  },
+  {
+    "name": "Bautzen",
+    "coordinates": [
+      51.18139,
+      14.42417
+    ]
+  },
+  {
+    "name": "Bayreuth",
+    "coordinates": [
+      49.94806,
+      11.57833
+    ]
+  },
+  {
+    "name": "Bebra",
+    "coordinates": [
+      50.97111,
+      9.79028
+    ]
+  },
+  {
+    "name": "Beckum",
+    "coordinates": [
+      51.755,
+      8.04028
+    ]
+  },
+  {
+    "name": "Bedburg",
+    "coordinates": [
+      51,
+      6.5625
+    ]
+  },
+  {
+    "name": "Beelitz",
+    "coordinates": [
+      52.233,
+      12.967
+    ]
+  },
+  {
+    "name": "Beeskow",
+    "coordinates": [
+      52.167,
+      14.25
+    ]
+  },
+  {
+    "name": "Beilngries",
+    "coordinates": [
+      49.033,
+      11.467
+    ]
+  },
+  {
+    "name": "Beilstein",
+    "coordinates": [
+      49.033,
+      9.317
+    ]
+  },
+  {
+    "name": "Belgern-Schildau",
+    "coordinates": [
+      51.467,
+      13.033
+    ]
+  },
+  {
+    "name": "Bendorf",
+    "coordinates": [
+      50.42972,
+      7.57028
+    ]
+  },
+  {
+    "name": "Bensheim",
+    "coordinates": [
+      49.66667,
+      8.61667
+    ]
+  },
+  {
+    "name": "Berching",
+    "coordinates": [
+      49.1,
+      11.433
+    ]
+  },
+  {
+    "name": "Berga",
+    "coordinates": [
+      50.75,
+      12.167
+    ]
+  },
+  {
+    "name": "Bergen auf Rügen",
+    "coordinates": [
+      54.417,
+      13.433
+    ]
+  },
+  {
+    "name": "Bergen",
+    "coordinates": [
+      52.81028,
+      9.96111
+    ]
+  },
+  {
+    "name": "Bergheim",
+    "coordinates": [
+      50.967,
+      6.65
+    ]
+  },
+  {
+    "name": "Bergisch Gladbach",
+    "coordinates": [
+      51.1,
+      7.117
+    ]
+  },
+  {
+    "name": "Bergkamen",
+    "coordinates": [
+      51.617,
+      7.633
+    ]
+  },
+  {
+    "name": "Bergneustadt",
+    "coordinates": [
+      51.033,
+      7.65
+    ]
+  },
+  {
+    "name": "Berlin",
+    "coordinates": [
+      52.52,
+      13.405
+    ]
+  },
+  {
+    "name": "Bernau bei Berlin",
+    "coordinates": [
+      52.66667,
+      13.58306
+    ]
+  },
+  {
+    "name": "Bernburg",
+    "coordinates": [
+      51.8,
+      11.733
+    ]
+  },
+  {
+    "name": "Bernkastel-Kues",
+    "coordinates": [
+      49.91611,
+      7.06944
+    ]
+  },
+  {
+    "name": "Bernsdorf",
+    "coordinates": [
+      51.367,
+      14.067
+    ]
+  },
+  {
+    "name": "Bernstadt auf dem Eigen",
+    "coordinates": [
+      51.04583,
+      14.82639
+    ]
+  },
+  {
+    "name": "Bersenbrück",
+    "coordinates": [
+      52.533,
+      7.917
+    ]
+  },
+  {
+    "name": "Besigheim",
+    "coordinates": [
+      48.9983,
+      9.1417
+    ]
+  },
+  {
+    "name": "Betzdorf",
+    "coordinates": [
+      50.78556,
+      7.87278
+    ]
+  },
+  {
+    "name": "Betzenstein",
+    "coordinates": [
+      49.68028,
+      11.41778
+    ]
+  },
+  {
+    "name": "Beverungen",
+    "coordinates": [
+      51.66278,
+      9.3725
+    ]
+  },
+  {
+    "name": "Bexbach",
+    "coordinates": [
+      49.34944,
+      7.25944
+    ]
+  },
+  {
+    "name": "Biberach an der Riss",
+    "coordinates": [
+      48.1,
+      9.783
+    ]
+  },
+  {
+    "name": "Biedenkopf",
+    "coordinates": [
+      50.91278,
+      8.53222
+    ]
+  },
+  {
+    "name": "Bielefeld",
+    "coordinates": [
+      52.02111,
+      8.53472
+    ]
+  },
+  {
+    "name": "Biesenthal",
+    "coordinates": [
+      52.76667,
+      13.63306
+    ]
+  },
+  {
+    "name": "Bietigheim-Bissingen",
+    "coordinates": [
+      48.967,
+      9.133
+    ]
+  },
+  {
+    "name": "Billerbeck",
+    "coordinates": [
+      51.97917,
+      7.295
+    ]
+  },
+  {
+    "name": "Bingen am Rhein",
+    "coordinates": [
+      49.967,
+      7.9
+    ]
+  },
+  {
+    "name": "Birkenfeld",
+    "coordinates": [
+      49.65,
+      7.183
+    ]
+  },
+  {
+    "name": "Bischofsheim i.d.Rhön",
+    "coordinates": [
+      50.4,
+      10.017
+    ]
+  },
+  {
+    "name": "Bischofswerda",
+    "coordinates": [
+      51.1275,
+      14.17972
+    ]
+  },
+  {
+    "name": "Bismark",
+    "coordinates": [
+      52.66667,
+      11.55
+    ]
+  },
+  {
+    "name": "Bitburg",
+    "coordinates": [
+      49.967,
+      6.533
+    ]
+  },
+  {
+    "name": "Bitterfeld-Wolfen",
+    "coordinates": [
+      51.617,
+      12.317
+    ]
+  },
+  {
+    "name": "Blankenburg",
+    "coordinates": [
+      51.79528,
+      10.96222
+    ]
+  },
+  {
+    "name": "Blankenhain",
+    "coordinates": [
+      50.86,
+      11.34389
+    ]
+  },
+  {
+    "name": "Blaubeuren",
+    "coordinates": [
+      48.41194,
+      9.785
+    ]
+  },
+  {
+    "name": "Blaustein",
+    "coordinates": [
+      48.41833,
+      9.90806
+    ]
+  },
+  {
+    "name": "Bleckede",
+    "coordinates": [
+      53.3,
+      10.733
+    ]
+  },
+  {
+    "name": "Bleicherode",
+    "coordinates": [
+      51.41667,
+      10.56667
+    ]
+  },
+  {
+    "name": "Blieskastel",
+    "coordinates": [
+      49.23306,
+      7.25
+    ]
+  },
+  {
+    "name": "Blomberg",
+    "coordinates": [
+      51.93306,
+      9.08306
+    ]
+  },
+  {
+    "name": "Blumberg",
+    "coordinates": [
+      47.83917,
+      8.53417
+    ]
+  },
+  {
+    "name": "Bobingen",
+    "coordinates": [
+      48.267,
+      10.817
+    ]
+  },
+  {
+    "name": "Bocholt",
+    "coordinates": [
+      51.833,
+      6.617
+    ]
+  },
+  {
+    "name": "Bochum",
+    "coordinates": [
+      51.48194,
+      7.21583
+    ]
+  },
+  {
+    "name": "Bockenem",
+    "coordinates": [
+      52.01167,
+      10.13194
+    ]
+  },
+  {
+    "name": "Bodenwerder",
+    "coordinates": [
+      51.967,
+      9.517
+    ]
+  },
+  {
+    "name": "Bogen",
+    "coordinates": [
+      48.917,
+      12.683
+    ]
+  },
+  {
+    "name": "Boizenburg",
+    "coordinates": [
+      53.367,
+      10.717
+    ]
+  },
+  {
+    "name": "Bonndorf im Schwarzwald",
+    "coordinates": [
+      47.81944,
+      8.34306
+    ]
+  },
+  {
+    "name": "Bonn",
+    "coordinates": [
+      50.733,
+      7.1
+    ]
+  },
+  {
+    "name": "Bopfingen",
+    "coordinates": [
+      48.85694,
+      10.35222
+    ]
+  },
+  {
+    "name": "Boppard",
+    "coordinates": [
+      50.23139,
+      7.59083
+    ]
+  },
+  {
+    "name": "Borgentreich",
+    "coordinates": [
+      51.567,
+      9.25
+    ]
+  },
+  {
+    "name": "Borgholzhausen",
+    "coordinates": [
+      52.1,
+      8.3
+    ]
+  },
+  {
+    "name": "Borken",
+    "coordinates": [
+      51.04583,
+      9.26722
+    ]
+  },
+  {
+    "name": "Borken",
+    "coordinates": [
+      51.833,
+      6.867
+    ]
+  },
+  {
+    "name": "Borkum",
+    "coordinates": [
+      53.58806,
+      6.66972
+    ]
+  },
+  {
+    "name": "Borna",
+    "coordinates": [
+      51.117,
+      12.5
+    ]
+  },
+  {
+    "name": "Bornheim",
+    "coordinates": [
+      50.75917,
+      7.005
+    ]
+  },
+  {
+    "name": "Bottrop",
+    "coordinates": [
+      51.52472,
+      6.92278
+    ]
+  },
+  {
+    "name": "Boxberg",
+    "coordinates": [
+      49.48139,
+      9.64167
+    ]
+  },
+  {
+    "name": "Brackenheim",
+    "coordinates": [
+      49.083,
+      9.067
+    ]
+  },
+  {
+    "name": "Brakel",
+    "coordinates": [
+      51.717,
+      9.183
+    ]
+  },
+  {
+    "name": "Brake",
+    "coordinates": [
+      53.333,
+      8.483
+    ]
+  },
+  {
+    "name": "Bramsche",
+    "coordinates": [
+      52.4,
+      7.983
+    ]
+  },
+  {
+    "name": "Brand-Erbisdorf",
+    "coordinates": [
+      50.86889,
+      13.32194
+    ]
+  },
+  {
+    "name": "Brandenburg an der Havel",
+    "coordinates": [
+      52.41667,
+      12.53333
+    ]
+  },
+  {
+    "name": "Brandis",
+    "coordinates": [
+      51.33472,
+      12.60889
+    ]
+  },
+  {
+    "name": "Braubach",
+    "coordinates": [
+      50.27472,
+      7.64611
+    ]
+  },
+  {
+    "name": "Braunfels",
+    "coordinates": [
+      50.517,
+      8.383
+    ]
+  },
+  {
+    "name": "Braunlage",
+    "coordinates": [
+      51.72694,
+      10.61194
+    ]
+  },
+  {
+    "name": "Braunsbedra",
+    "coordinates": [
+      51.283,
+      11.9
+    ]
+  },
+  {
+    "name": "Breckerfeld",
+    "coordinates": [
+      51.267,
+      7.467
+    ]
+  },
+  {
+    "name": "BredstedtBräist / Bredsted",
+    "coordinates": [
+      54.62,
+      8.96444
+    ]
+  },
+  {
+    "name": "Breisach",
+    "coordinates": [
+      48.033,
+      7.583
+    ]
+  },
+  {
+    "name": "Bremen",
+    "coordinates": [
+      53.083,
+      8.8
+    ]
+  },
+  {
+    "name": "Bremerhaven",
+    "coordinates": [
+      53.55,
+      8.58333
+    ]
+  },
+  {
+    "name": "Bremervörde",
+    "coordinates": [
+      53.483,
+      9.133
+    ]
+  },
+  {
+    "name": "Bretten",
+    "coordinates": [
+      49.03639,
+      8.70611
+    ]
+  },
+  {
+    "name": "Breuberg",
+    "coordinates": [
+      49.81722,
+      9.035
+    ]
+  },
+  {
+    "name": "Brilon",
+    "coordinates": [
+      51.39556,
+      8.56778
+    ]
+  },
+  {
+    "name": "Brotterode-Trusetal",
+    "coordinates": [
+      50.8249417,
+      10.4456306
+    ]
+  },
+  {
+    "name": "Bruchköbel",
+    "coordinates": [
+      50.183,
+      8.917
+    ]
+  },
+  {
+    "name": "Bruchsal",
+    "coordinates": [
+      49.133,
+      8.6
+    ]
+  },
+  {
+    "name": "Brunsbüttel",
+    "coordinates": [
+      53.89639,
+      9.13861
+    ]
+  },
+  {
+    "name": "Brunswick",
+    "coordinates": [
+      52.267,
+      10.517
+    ]
+  },
+  {
+    "name": "Bräunlingen",
+    "coordinates": [
+      47.92972,
+      8.44806
+    ]
+  },
+  {
+    "name": "Brück",
+    "coordinates": [
+      52.2,
+      12.767
+    ]
+  },
+  {
+    "name": "Brüel",
+    "coordinates": [
+      53.717,
+      11.717
+    ]
+  },
+  {
+    "name": "Brühl",
+    "coordinates": [
+      50.833,
+      6.9
+    ]
+  },
+  {
+    "name": "Brüssow",
+    "coordinates": [
+      53.4,
+      14.13333
+    ]
+  },
+  {
+    "name": "Buchen",
+    "coordinates": [
+      49.52167,
+      9.32333
+    ]
+  },
+  {
+    "name": "Buchholz in der Nordheide",
+    "coordinates": [
+      53.317,
+      9.867
+    ]
+  },
+  {
+    "name": "Buchloe",
+    "coordinates": [
+      48.0375,
+      10.725
+    ]
+  },
+  {
+    "name": "Buckow",
+    "coordinates": [
+      52.567,
+      14.083
+    ]
+  },
+  {
+    "name": "Burg Stargard",
+    "coordinates": [
+      53.483,
+      13.3
+    ]
+  },
+  {
+    "name": "Burgau",
+    "coordinates": [
+      48.43222,
+      10.40694
+    ]
+  },
+  {
+    "name": "Burgbernheim",
+    "coordinates": [
+      49.45,
+      10.317
+    ]
+  },
+  {
+    "name": "Burgdorf",
+    "coordinates": [
+      52.45,
+      10.00833
+    ]
+  },
+  {
+    "name": "Burghausen",
+    "coordinates": [
+      48.167,
+      12.833
+    ]
+  },
+  {
+    "name": "Burgkunstadt",
+    "coordinates": [
+      50.117,
+      11.25
+    ]
+  },
+  {
+    "name": "Burglengenfeld",
+    "coordinates": [
+      49.2,
+      12.033
+    ]
+  },
+  {
+    "name": "Burgstädt",
+    "coordinates": [
+      50.917,
+      12.817
+    ]
+  },
+  {
+    "name": "Burgwedel",
+    "coordinates": [
+      52.49333,
+      9.85861
+    ]
+  },
+  {
+    "name": "Burg",
+    "coordinates": [
+      52.2725,
+      11.855
+    ]
+  },
+  {
+    "name": "Burladingen",
+    "coordinates": [
+      48.29028,
+      9.10944
+    ]
+  },
+  {
+    "name": "Burscheid",
+    "coordinates": [
+      51.1,
+      7.11667
+    ]
+  },
+  {
+    "name": "Butzbach",
+    "coordinates": [
+      50.43667,
+      8.66222
+    ]
+  },
+  {
+    "name": "Bärnau",
+    "coordinates": [
+      49.81028,
+      12.43611
+    ]
+  },
+  {
+    "name": "Böblingen",
+    "coordinates": [
+      48.68556,
+      9.01528
+    ]
+  },
+  {
+    "name": "Böhlen",
+    "coordinates": [
+      51.2025,
+      12.38583
+    ]
+  },
+  {
+    "name": "Bönnigheim",
+    "coordinates": [
+      49.041,
+      9.095
+    ]
+  },
+  {
+    "name": "Bückeburg",
+    "coordinates": [
+      52.26083,
+      9.04917
+    ]
+  },
+  {
+    "name": "Büdelsdorf",
+    "coordinates": [
+      54.317,
+      9.683
+    ]
+  },
+  {
+    "name": "Büdingen",
+    "coordinates": [
+      50.29083,
+      9.1125
+    ]
+  },
+  {
+    "name": "Bühl",
+    "coordinates": [
+      48.69528,
+      8.135
+    ]
+  },
+  {
+    "name": "Bünde",
+    "coordinates": [
+      52.2,
+      8.6
+    ]
+  },
+  {
+    "name": "Büren",
+    "coordinates": [
+      51.55,
+      8.567
+    ]
+  },
+  {
+    "name": "Bürgel",
+    "coordinates": [
+      50.94139,
+      11.75389
+    ]
+  },
+  {
+    "name": "Bürstadt",
+    "coordinates": [
+      49.63333,
+      8.45
+    ]
+  },
+  {
+    "name": "Bützow",
+    "coordinates": [
+      53.85,
+      11.983
+    ]
+  },
+  {
+    "name": "Calau",
+    "coordinates": [
+      51.74583,
+      13.95083
+    ]
+  },
+  {
+    "name": "Calbe",
+    "coordinates": [
+      51.90333,
+      11.77583
+    ]
+  },
+  {
+    "name": "Calw",
+    "coordinates": [
+      48.71667,
+      8.73333
+    ]
+  },
+  {
+    "name": "Castrop-Rauxel",
+    "coordinates": [
+      51.55,
+      7.317
+    ]
+  },
+  {
+    "name": "Celle",
+    "coordinates": [
+      52.62556,
+      10.0825
+    ]
+  },
+  {
+    "name": "Cham",
+    "coordinates": [
+      49.217,
+      12.65
+    ]
+  },
+  {
+    "name": "Chemnitz",
+    "coordinates": [
+      50.833,
+      12.917
+    ]
+  },
+  {
+    "name": "Clausthal-Zellerfeld",
+    "coordinates": [
+      51.805,
+      10.33556
+    ]
+  },
+  {
+    "name": "Clingen",
+    "coordinates": [
+      51.21667,
+      10.93333
+    ]
+  },
+  {
+    "name": "Cloppenburg",
+    "coordinates": [
+      52.85,
+      8.05
+    ]
+  },
+  {
+    "name": "Coburg",
+    "coordinates": [
+      50.267,
+      10.967
+    ]
+  },
+  {
+    "name": "Cochem",
+    "coordinates": [
+      50.14694,
+      7.16667
+    ]
+  },
+  {
+    "name": "Coesfeld",
+    "coordinates": [
+      51.95,
+      7.167
+    ]
+  },
+  {
+    "name": "Colditz",
+    "coordinates": [
+      51.12917,
+      12.80694
+    ]
+  },
+  {
+    "name": "Cologne",
+    "coordinates": [
+      50.93639,
+      6.95278
+    ]
+  },
+  {
+    "name": "Constance",
+    "coordinates": [
+      47.667,
+      9.183
+    ]
+  },
+  {
+    "name": "Coswig",
+    "coordinates": [
+      51.133,
+      13.583
+    ]
+  },
+  {
+    "name": "Coswig",
+    "coordinates": [
+      51.883,
+      12.433
+    ]
+  },
+  {
+    "name": "Cottbus/Chóśebuz",
+    "coordinates": [
+      51.76056,
+      14.33417
+    ]
+  },
+  {
+    "name": "Crailsheim",
+    "coordinates": [
+      49.13472,
+      10.07056
+    ]
+  },
+  {
+    "name": "Creglingen",
+    "coordinates": [
+      49.467,
+      10.033
+    ]
+  },
+  {
+    "name": "Creußen",
+    "coordinates": [
+      49.8439861,
+      11.622675
+    ]
+  },
+  {
+    "name": "Crimmitschau",
+    "coordinates": [
+      50.81806,
+      12.3875
+    ]
+  },
+  {
+    "name": "Crivitz",
+    "coordinates": [
+      53.583,
+      11.65
+    ]
+  },
+  {
+    "name": "Cuxhaven",
+    "coordinates": [
+      53.86111,
+      8.69444
+    ]
+  },
+  {
+    "name": "Daaden",
+    "coordinates": [
+      50.73972,
+      7.96833
+    ]
+  },
+  {
+    "name": "Dachau, Bavaria",
+    "coordinates": [
+      48.26028,
+      11.43417
+    ]
+  },
+  {
+    "name": "Dahlen",
+    "coordinates": [
+      51.367,
+      13
+    ]
+  },
+  {
+    "name": "Dahme",
+    "coordinates": [
+      51.86667,
+      13.43306
+    ]
+  },
+  {
+    "name": "Dahn",
+    "coordinates": [
+      49.15,
+      7.783
+    ]
+  },
+  {
+    "name": "Damme",
+    "coordinates": [
+      52.52083,
+      8.19861
+    ]
+  },
+  {
+    "name": "Dannenberg",
+    "coordinates": [
+      53.083,
+      11.083
+    ]
+  },
+  {
+    "name": "Dargun",
+    "coordinates": [
+      53.883,
+      12.833
+    ]
+  },
+  {
+    "name": "Darmstadt",
+    "coordinates": [
+      49.87222,
+      8.65278
+    ]
+  },
+  {
+    "name": "Dassel",
+    "coordinates": [
+      51.80333,
+      9.69028
+    ]
+  },
+  {
+    "name": "Dassow",
+    "coordinates": [
+      53.91056,
+      10.97222
+    ]
+  },
+  {
+    "name": "Datteln",
+    "coordinates": [
+      51.65389,
+      7.34167
+    ]
+  },
+  {
+    "name": "Daun",
+    "coordinates": [
+      50.19861,
+      6.83194
+    ]
+  },
+  {
+    "name": "Deggendorf",
+    "coordinates": [
+      48.833,
+      12.967
+    ]
+  },
+  {
+    "name": "Deidesheim",
+    "coordinates": [
+      49.4075,
+      8.18639
+    ]
+  },
+  {
+    "name": "Delbrück",
+    "coordinates": [
+      51.76667,
+      8.56667
+    ]
+  },
+  {
+    "name": "Delitzsch",
+    "coordinates": [
+      51.52639,
+      12.3425
+    ]
+  },
+  {
+    "name": "Delmenhorst",
+    "coordinates": [
+      53.05056,
+      8.63167
+    ]
+  },
+  {
+    "name": "Demmin",
+    "coordinates": [
+      53.905,
+      13.04389
+    ]
+  },
+  {
+    "name": "Dessau-Roßlau",
+    "coordinates": [
+      51.833,
+      12.25
+    ]
+  },
+  {
+    "name": "Detmold",
+    "coordinates": [
+      51.93778,
+      8.88333
+    ]
+  },
+  {
+    "name": "Dettelbach",
+    "coordinates": [
+      49.8,
+      10.183
+    ]
+  },
+  {
+    "name": "Dieburg",
+    "coordinates": [
+      49.9,
+      8.85
+    ]
+  },
+  {
+    "name": "Diemelstadt",
+    "coordinates": [
+      51.46,
+      8.98
+    ]
+  },
+  {
+    "name": "Diepholz",
+    "coordinates": [
+      52.60722,
+      8.37111
+    ]
+  },
+  {
+    "name": "Dierdorf",
+    "coordinates": [
+      50.54889,
+      7.65944
+    ]
+  },
+  {
+    "name": "Dietenheim",
+    "coordinates": [
+      48.21194,
+      10.07333
+    ]
+  },
+  {
+    "name": "Dietfurt a.d. Altmühl",
+    "coordinates": [
+      49.033,
+      11.583
+    ]
+  },
+  {
+    "name": "Dietzenbach",
+    "coordinates": [
+      50.017,
+      8.783
+    ]
+  },
+  {
+    "name": "Diez, Germany",
+    "coordinates": [
+      50.37083,
+      8.01583
+    ]
+  },
+  {
+    "name": "Dillenburg",
+    "coordinates": [
+      50.733,
+      8.283
+    ]
+  },
+  {
+    "name": "Dillingen an der Donau",
+    "coordinates": [
+      48.567,
+      10.467
+    ]
+  },
+  {
+    "name": "Dillingen",
+    "coordinates": [
+      49.35,
+      6.733
+    ]
+  },
+  {
+    "name": "Dingelstädt",
+    "coordinates": [
+      51.31556,
+      10.31944
+    ]
+  },
+  {
+    "name": "Dingolfing",
+    "coordinates": [
+      48.633,
+      12.5
+    ]
+  },
+  {
+    "name": "Dinkelsbühl",
+    "coordinates": [
+      49.07083,
+      10.31944
+    ]
+  },
+  {
+    "name": "Dinklage",
+    "coordinates": [
+      52.667,
+      8.133
+    ]
+  },
+  {
+    "name": "Dinslaken",
+    "coordinates": [
+      51.567,
+      6.733
+    ]
+  },
+  {
+    "name": "Dippoldiswalde",
+    "coordinates": [
+      50.89333,
+      13.66667
+    ]
+  },
+  {
+    "name": "Dissen, Lower Saxony",
+    "coordinates": [
+      52.117,
+      8.2
+    ]
+  },
+  {
+    "name": "Ditzingen",
+    "coordinates": [
+      48.82639,
+      9.06667
+    ]
+  },
+  {
+    "name": "Doberlug-Kirchhain",
+    "coordinates": [
+      51.617,
+      13.567
+    ]
+  },
+  {
+    "name": "Dohna",
+    "coordinates": [
+      50.95472,
+      13.8575
+    ]
+  },
+  {
+    "name": "Dommitzsch",
+    "coordinates": [
+      51.65,
+      12.883
+    ]
+  },
+  {
+    "name": "Donaueschingen",
+    "coordinates": [
+      47.95306,
+      8.50333
+    ]
+  },
+  {
+    "name": "Donauwörth",
+    "coordinates": [
+      48.7,
+      10.8
+    ]
+  },
+  {
+    "name": "Donzdorf",
+    "coordinates": [
+      48.683,
+      9.817
+    ]
+  },
+  {
+    "name": "Dorfen",
+    "coordinates": [
+      48.267,
+      12.15
+    ]
+  },
+  {
+    "name": "Dormagen",
+    "coordinates": [
+      51.1,
+      6.817
+    ]
+  },
+  {
+    "name": "Dornburg-Camburg",
+    "coordinates": [
+      51.05389,
+      11.7075
+    ]
+  },
+  {
+    "name": "Dornhan",
+    "coordinates": [
+      48.34944,
+      8.51222
+    ]
+  },
+  {
+    "name": "Dornstetten",
+    "coordinates": [
+      48.467,
+      8.5
+    ]
+  },
+  {
+    "name": "Dorsten",
+    "coordinates": [
+      51.66,
+      6.96417
+    ]
+  },
+  {
+    "name": "Dortmund",
+    "coordinates": [
+      51.517,
+      7.467
+    ]
+  },
+  {
+    "name": "Dransfeld",
+    "coordinates": [
+      51.5,
+      9.767
+    ]
+  },
+  {
+    "name": "Drebkau",
+    "coordinates": [
+      51.65,
+      14.217
+    ]
+  },
+  {
+    "name": "Dreieich",
+    "coordinates": [
+      50,
+      8.7
+    ]
+  },
+  {
+    "name": "Drensteinfurt",
+    "coordinates": [
+      51.79444,
+      7.73917
+    ]
+  },
+  {
+    "name": "Dresden",
+    "coordinates": [
+      51.05,
+      13.74
+    ]
+  },
+  {
+    "name": "Drolshagen",
+    "coordinates": [
+      51.033,
+      7.767
+    ]
+  },
+  {
+    "name": "Duderstadt",
+    "coordinates": [
+      51.5125,
+      10.25972
+    ]
+  },
+  {
+    "name": "Duisburg",
+    "coordinates": [
+      51.43472,
+      6.7625
+    ]
+  },
+  {
+    "name": "Döbeln",
+    "coordinates": [
+      51.11944,
+      13.11278
+    ]
+  },
+  {
+    "name": "Döbern",
+    "coordinates": [
+      51.617,
+      14.6
+    ]
+  },
+  {
+    "name": "Dömitz",
+    "coordinates": [
+      53.13833,
+      11.26333
+    ]
+  },
+  {
+    "name": "Dülmen",
+    "coordinates": [
+      51.83083,
+      7.27833
+    ]
+  },
+  {
+    "name": "Düren",
+    "coordinates": [
+      50.8,
+      6.483
+    ]
+  },
+  {
+    "name": "Düsseldorf",
+    "coordinates": [
+      51.233,
+      6.783
+    ]
+  },
+  {
+    "name": "Ebeleben",
+    "coordinates": [
+      51.28333,
+      10.73333
+    ]
+  },
+  {
+    "name": "Eberbach",
+    "coordinates": [
+      49.467,
+      8.983
+    ]
+  },
+  {
+    "name": "Ebermannstadt",
+    "coordinates": [
+      49.767,
+      11.167
+    ]
+  },
+  {
+    "name": "Ebern",
+    "coordinates": [
+      50.1,
+      10.79361
+    ]
+  },
+  {
+    "name": "Ebersbach an der Fils",
+    "coordinates": [
+      48.71472,
+      9.52361
+    ]
+  },
+  {
+    "name": "Ebersbach-Neugersdorf",
+    "coordinates": [
+      51,
+      14.6
+    ]
+  },
+  {
+    "name": "Ebersberg",
+    "coordinates": [
+      48.083,
+      11.967
+    ]
+  },
+  {
+    "name": "Eberswalde",
+    "coordinates": [
+      52.833,
+      13.833
+    ]
+  },
+  {
+    "name": "Eckartsberga",
+    "coordinates": [
+      51.117,
+      11.55
+    ]
+  },
+  {
+    "name": "Eckernförde Eckernföör, Egernførde",
+    "coordinates": [
+      54.47417,
+      9.83778
+    ]
+  },
+  {
+    "name": "Edenkoben",
+    "coordinates": [
+      49.283,
+      8.133
+    ]
+  },
+  {
+    "name": "Egeln",
+    "coordinates": [
+      51.95,
+      11.433
+    ]
+  },
+  {
+    "name": "Eggenfelden",
+    "coordinates": [
+      48.40389,
+      12.76417
+    ]
+  },
+  {
+    "name": "Eggesin",
+    "coordinates": [
+      53.683,
+      14.083
+    ]
+  },
+  {
+    "name": "Ehingen",
+    "coordinates": [
+      48.28333,
+      9.72361
+    ]
+  },
+  {
+    "name": "Ehrenfriedersdorf",
+    "coordinates": [
+      50.64611,
+      12.96972
+    ]
+  },
+  {
+    "name": "Eibelstadt",
+    "coordinates": [
+      49.7238806,
+      10.0009306
+    ]
+  },
+  {
+    "name": "Eibenstock",
+    "coordinates": [
+      50.49556,
+      12.5975
+    ]
+  },
+  {
+    "name": "Eichstätt",
+    "coordinates": [
+      48.89194,
+      11.18389
+    ]
+  },
+  {
+    "name": "Eilenburg",
+    "coordinates": [
+      51.46083,
+      12.63583
+    ]
+  },
+  {
+    "name": "Einbeck",
+    "coordinates": [
+      51.817,
+      9.867
+    ]
+  },
+  {
+    "name": "Eisenach",
+    "coordinates": [
+      50.97611,
+      10.32056
+    ]
+  },
+  {
+    "name": "Eisenberg",
+    "coordinates": [
+      49.56139,
+      8.0725
+    ]
+  },
+  {
+    "name": "Eisenberg",
+    "coordinates": [
+      50.96667,
+      11.9
+    ]
+  },
+  {
+    "name": "Eisenhüttenstadt",
+    "coordinates": [
+      52.145,
+      14.67278
+    ]
+  },
+  {
+    "name": "Eisfeld",
+    "coordinates": [
+      50.417,
+      10.917
+    ]
+  },
+  {
+    "name": "Eisleben",
+    "coordinates": [
+      51.517,
+      11.55
+    ]
+  },
+  {
+    "name": "Eislingen",
+    "coordinates": [
+      48.69333,
+      9.70667
+    ]
+  },
+  {
+    "name": "Ellingen",
+    "coordinates": [
+      49.017,
+      10.967
+    ]
+  },
+  {
+    "name": "Ellrich",
+    "coordinates": [
+      51.58556,
+      10.66806
+    ]
+  },
+  {
+    "name": "Ellwangen",
+    "coordinates": [
+      48.96111,
+      10.13056
+    ]
+  },
+  {
+    "name": "Elmshorn",
+    "coordinates": [
+      53.75194,
+      9.65111
+    ]
+  },
+  {
+    "name": "Elsdorf",
+    "coordinates": [
+      50.933,
+      6.567
+    ]
+  },
+  {
+    "name": "Elsfleth",
+    "coordinates": [
+      53.233,
+      8.467
+    ]
+  },
+  {
+    "name": "Elsterberg",
+    "coordinates": [
+      50.6,
+      12.167
+    ]
+  },
+  {
+    "name": "Elsterwerda",
+    "coordinates": [
+      51.45778,
+      13.52389
+    ]
+  },
+  {
+    "name": "Elstra",
+    "coordinates": [
+      51.22083,
+      14.13083
+    ]
+  },
+  {
+    "name": "Elterlein",
+    "coordinates": [
+      50.57694,
+      12.86722
+    ]
+  },
+  {
+    "name": "Eltmann",
+    "coordinates": [
+      49.967,
+      10.667
+    ]
+  },
+  {
+    "name": "Eltville",
+    "coordinates": [
+      50.02556,
+      8.11917
+    ]
+  },
+  {
+    "name": "Elzach",
+    "coordinates": [
+      48.17472,
+      8.07167
+    ]
+  },
+  {
+    "name": "Elze",
+    "coordinates": [
+      52.117,
+      9.733
+    ]
+  },
+  {
+    "name": "Emden",
+    "coordinates": [
+      53.36694,
+      7.20611
+    ]
+  },
+  {
+    "name": "Emmelshausen",
+    "coordinates": [
+      50.15528,
+      7.55167
+    ]
+  },
+  {
+    "name": "Emmendingen",
+    "coordinates": [
+      48.12139,
+      7.84917
+    ]
+  },
+  {
+    "name": "Emmerich",
+    "coordinates": [
+      51.835,
+      6.24528
+    ]
+  },
+  {
+    "name": "Emsdetten",
+    "coordinates": [
+      52.17278,
+      7.53444
+    ]
+  },
+  {
+    "name": "Endingen",
+    "coordinates": [
+      48.14083,
+      7.70639
+    ]
+  },
+  {
+    "name": "Engen",
+    "coordinates": [
+      47.85278,
+      8.77139
+    ]
+  },
+  {
+    "name": "Enger",
+    "coordinates": [
+      52.13333,
+      8.56667
+    ]
+  },
+  {
+    "name": "Ennepetal",
+    "coordinates": [
+      51.283,
+      7.333
+    ]
+  },
+  {
+    "name": "Ennigerloh",
+    "coordinates": [
+      51.83667,
+      8.02556
+    ]
+  },
+  {
+    "name": "Eppelheim",
+    "coordinates": [
+      49.4,
+      8.633
+    ]
+  },
+  {
+    "name": "Eppingen",
+    "coordinates": [
+      49.133,
+      8.917
+    ]
+  },
+  {
+    "name": "Eppstein",
+    "coordinates": [
+      50.133,
+      8.4
+    ]
+  },
+  {
+    "name": "Erbach",
+    "coordinates": [
+      48.32806,
+      9.88778
+    ]
+  },
+  {
+    "name": "Erbach",
+    "coordinates": [
+      49.65833,
+      8.99583
+    ]
+  },
+  {
+    "name": "Erbendorf",
+    "coordinates": [
+      49.833,
+      12.05
+    ]
+  },
+  {
+    "name": "Erding",
+    "coordinates": [
+      48.283,
+      11.9
+    ]
+  },
+  {
+    "name": "Erftstadt",
+    "coordinates": [
+      50.817,
+      6.767
+    ]
+  },
+  {
+    "name": "Erfurt",
+    "coordinates": [
+      50.98333,
+      11.03333
+    ]
+  },
+  {
+    "name": "Erkelenz",
+    "coordinates": [
+      51.083,
+      6.317
+    ]
+  },
+  {
+    "name": "Erkner",
+    "coordinates": [
+      52.417,
+      13.75
+    ]
+  },
+  {
+    "name": "Erkrath",
+    "coordinates": [
+      51.22389,
+      6.91472
+    ]
+  },
+  {
+    "name": "Erlangen",
+    "coordinates": [
+      49.583,
+      11.017
+    ]
+  },
+  {
+    "name": "Erlenbach a.Main",
+    "coordinates": [
+      49.80389,
+      9.16389
+    ]
+  },
+  {
+    "name": "Erlensee",
+    "coordinates": [
+      50.133,
+      8.933
+    ]
+  },
+  {
+    "name": "Erwitte",
+    "coordinates": [
+      51.617,
+      8.35
+    ]
+  },
+  {
+    "name": "Eschborn",
+    "coordinates": [
+      50.14361,
+      8.57
+    ]
+  },
+  {
+    "name": "Eschenbach in der Oberpfalz",
+    "coordinates": [
+      49.75,
+      11.817
+    ]
+  },
+  {
+    "name": "Eschershausen",
+    "coordinates": [
+      51.917,
+      9.65
+    ]
+  },
+  {
+    "name": "Eschwege",
+    "coordinates": [
+      51.18806,
+      10.05278
+    ]
+  },
+  {
+    "name": "Eschweiler",
+    "coordinates": [
+      50.817,
+      6.283
+    ]
+  },
+  {
+    "name": "Espelkamp",
+    "coordinates": [
+      52.37722,
+      8.63278
+    ]
+  },
+  {
+    "name": "Essen",
+    "coordinates": [
+      53.64694,
+      7.61278
+    ]
+  },
+  {
+    "name": "Essen",
+    "coordinates": [
+      51.45083,
+      7.01306
+    ]
+  },
+  {
+    "name": "Esslingen am Neckar",
+    "coordinates": [
+      48.73333,
+      9.31667
+    ]
+  },
+  {
+    "name": "Ettenheim",
+    "coordinates": [
+      48.25556,
+      7.81194
+    ]
+  },
+  {
+    "name": "Ettlingen",
+    "coordinates": [
+      48.933,
+      8.4
+    ]
+  },
+  {
+    "name": "Euskirchen",
+    "coordinates": [
+      50.65972,
+      6.79167
+    ]
+  },
+  {
+    "name": "Eutin",
+    "coordinates": [
+      54.13778,
+      10.61806
+    ]
+  },
+  {
+    "name": "Falkenberg/Elster",
+    "coordinates": [
+      51.58306,
+      13.23222
+    ]
+  },
+  {
+    "name": "Falkensee",
+    "coordinates": [
+      52.55833,
+      13.09167
+    ]
+  },
+  {
+    "name": "Falkenstein/Harz",
+    "coordinates": [
+      51.733,
+      11.333
+    ]
+  },
+  {
+    "name": "Falkenstein",
+    "coordinates": [
+      50.467,
+      12.367
+    ]
+  },
+  {
+    "name": "Fehmarn",
+    "coordinates": [
+      54.4454,
+      11.1702
+    ]
+  },
+  {
+    "name": "Fellbach",
+    "coordinates": [
+      48.80861,
+      9.27583
+    ]
+  },
+  {
+    "name": "Felsberg",
+    "coordinates": [
+      51.133,
+      9.417
+    ]
+  },
+  {
+    "name": "Feuchtwangen",
+    "coordinates": [
+      49.167,
+      10.317
+    ]
+  },
+  {
+    "name": "Filderstadt",
+    "coordinates": [
+      48.68028,
+      9.21833
+    ]
+  },
+  {
+    "name": "Finsterwalde",
+    "coordinates": [
+      51.628243,
+      13.71021
+    ]
+  },
+  {
+    "name": "Fladungen",
+    "coordinates": [
+      50.52111,
+      10.14528
+    ]
+  },
+  {
+    "name": "Flensburg",
+    "coordinates": [
+      54.78194,
+      9.43667
+    ]
+  },
+  {
+    "name": "Florstadt",
+    "coordinates": [
+      50.31583,
+      8.86306
+    ]
+  },
+  {
+    "name": "Flöha",
+    "coordinates": [
+      50.85583,
+      13.07139
+    ]
+  },
+  {
+    "name": "Flörsheim am Main",
+    "coordinates": [
+      50.017,
+      8.433
+    ]
+  },
+  {
+    "name": "Forchheim",
+    "coordinates": [
+      49.71972,
+      11.05806
+    ]
+  },
+  {
+    "name": "Forchtenberg",
+    "coordinates": [
+      49.283,
+      9.567
+    ]
+  },
+  {
+    "name": "Forst (Lausitz)",
+    "coordinates": [
+      51.733,
+      14.633
+    ]
+  },
+  {
+    "name": "Frankenau",
+    "coordinates": [
+      51.1,
+      8.933
+    ]
+  },
+  {
+    "name": "Frankenberg",
+    "coordinates": [
+      51.05889,
+      8.79667
+    ]
+  },
+  {
+    "name": "Frankenberg",
+    "coordinates": [
+      50.91083,
+      13.03778
+    ]
+  },
+  {
+    "name": "Frankenthal (Pfalz)",
+    "coordinates": [
+      49.533,
+      8.35
+    ]
+  },
+  {
+    "name": "Frankfurt (Oder)",
+    "coordinates": [
+      52.341944,
+      14.551667
+    ]
+  },
+  {
+    "name": "Frankfurt am Main",
+    "coordinates": [
+      50.117,
+      8.683
+    ]
+  },
+  {
+    "name": "Franzburg",
+    "coordinates": [
+      54.167,
+      12.867
+    ]
+  },
+  {
+    "name": "Frauenstein",
+    "coordinates": [
+      50.80194,
+      13.53806
+    ]
+  },
+  {
+    "name": "Frechen",
+    "coordinates": [
+      50.917,
+      6.817
+    ]
+  },
+  {
+    "name": "Freiberg am Neckar",
+    "coordinates": [
+      48.93333,
+      9.2
+    ]
+  },
+  {
+    "name": "Freiberg",
+    "coordinates": [
+      50.91194,
+      13.34278
+    ]
+  },
+  {
+    "name": "Freiburg im Breisgau",
+    "coordinates": [
+      47.983,
+      7.85
+    ]
+  },
+  {
+    "name": "Freilassing",
+    "coordinates": [
+      47.83333,
+      12.96667
+    ]
+  },
+  {
+    "name": "Freinsheim",
+    "coordinates": [
+      49.5075,
+      8.20861
+    ]
+  },
+  {
+    "name": "Freising",
+    "coordinates": [
+      48.40278,
+      11.74889
+    ]
+  },
+  {
+    "name": "Freital",
+    "coordinates": [
+      51.01667,
+      13.65
+    ]
+  },
+  {
+    "name": "Freren",
+    "coordinates": [
+      52.467,
+      7.533
+    ]
+  },
+  {
+    "name": "Freudenberg",
+    "coordinates": [
+      49.75,
+      9.333
+    ]
+  },
+  {
+    "name": "Freudenberg",
+    "coordinates": [
+      50.89972,
+      7.86667
+    ]
+  },
+  {
+    "name": "Freudenstadt",
+    "coordinates": [
+      48.46333,
+      8.41111
+    ]
+  },
+  {
+    "name": "Freyburg",
+    "coordinates": [
+      51.21278,
+      11.76972
+    ]
+  },
+  {
+    "name": "Freystadt",
+    "coordinates": [
+      49.2,
+      11.317
+    ]
+  },
+  {
+    "name": "Freyung",
+    "coordinates": [
+      48.8,
+      13.55
+    ]
+  },
+  {
+    "name": "Fridingen",
+    "coordinates": [
+      48.02056,
+      8.93278
+    ]
+  },
+  {
+    "name": "Friedberg",
+    "coordinates": [
+      48.35,
+      10.983
+    ]
+  },
+  {
+    "name": "Friedberg",
+    "coordinates": [
+      50.333,
+      8.75
+    ]
+  },
+  {
+    "name": "Friedland",
+    "coordinates": [
+      52.1,
+      14.267
+    ]
+  },
+  {
+    "name": "Friedland",
+    "coordinates": [
+      53.65,
+      13.533
+    ]
+  },
+  {
+    "name": "Friedrichroda",
+    "coordinates": [
+      50.86667,
+      10.56667
+    ]
+  },
+  {
+    "name": "Friedrichsdorf",
+    "coordinates": [
+      50.25556,
+      8.63972
+    ]
+  },
+  {
+    "name": "Friedrichshafen",
+    "coordinates": [
+      47.65,
+      9.483
+    ]
+  },
+  {
+    "name": "FriedrichstadtFrederiksstad",
+    "coordinates": [
+      54.367,
+      9.067
+    ]
+  },
+  {
+    "name": "Friedrichsthal",
+    "coordinates": [
+      49.32556,
+      7.09611
+    ]
+  },
+  {
+    "name": "Friesack",
+    "coordinates": [
+      52.73306,
+      12.58306
+    ]
+  },
+  {
+    "name": "Friesoythe",
+    "coordinates": [
+      53.02056,
+      7.85861
+    ]
+  },
+  {
+    "name": "Fritzlar",
+    "coordinates": [
+      51.13333,
+      9.28333
+    ]
+  },
+  {
+    "name": "Frohburg",
+    "coordinates": [
+      51.05611,
+      12.555
+    ]
+  },
+  {
+    "name": "Fröndenberg",
+    "coordinates": [
+      51.47194,
+      7.76583
+    ]
+  },
+  {
+    "name": "Fulda",
+    "coordinates": [
+      50.55083,
+      9.67528
+    ]
+  },
+  {
+    "name": "Furth im Wald",
+    "coordinates": [
+      49.30972,
+      12.84
+    ]
+  },
+  {
+    "name": "Furtwangen im Schwarzwald",
+    "coordinates": [
+      48.05028,
+      8.20917
+    ]
+  },
+  {
+    "name": "Fürstenau",
+    "coordinates": [
+      52.517,
+      7.667
+    ]
+  },
+  {
+    "name": "Fürstenberg",
+    "coordinates": [
+      53.18528,
+      13.14556
+    ]
+  },
+  {
+    "name": "Fürstenfeldbruck",
+    "coordinates": [
+      48.17778,
+      11.25556
+    ]
+  },
+  {
+    "name": "Fürstenwalde/Spree",
+    "coordinates": [
+      52.367,
+      14.067
+    ]
+  },
+  {
+    "name": "Fürth",
+    "coordinates": [
+      49.467,
+      11
+    ]
+  },
+  {
+    "name": "Füssen",
+    "coordinates": [
+      47.567,
+      10.7
+    ]
+  },
+  {
+    "name": "Gadebusch",
+    "coordinates": [
+      53.7,
+      11.117
+    ]
+  },
+  {
+    "name": "Gaggenau",
+    "coordinates": [
+      48.80389,
+      8.31944
+    ]
+  },
+  {
+    "name": "Gaildorf",
+    "coordinates": [
+      49,
+      9.767
+    ]
+  },
+  {
+    "name": "Gammertingen",
+    "coordinates": [
+      48.24944,
+      9.2175
+    ]
+  },
+  {
+    "name": "Garbsen",
+    "coordinates": [
+      52.41833,
+      9.59806
+    ]
+  },
+  {
+    "name": "Garching bei München",
+    "coordinates": [
+      48.25,
+      11.65
+    ]
+  },
+  {
+    "name": "Gardelegen",
+    "coordinates": [
+      52.52639,
+      11.3925
+    ]
+  },
+  {
+    "name": "Garding",
+    "coordinates": [
+      54.33056,
+      8.78056
+    ]
+  },
+  {
+    "name": "Gartz",
+    "coordinates": [
+      53.2,
+      14.38333
+    ]
+  },
+  {
+    "name": "Garz",
+    "coordinates": [
+      54.317,
+      13.35
+    ]
+  },
+  {
+    "name": "Gau-Algesheim",
+    "coordinates": [
+      49.95,
+      8.017
+    ]
+  },
+  {
+    "name": "Gebesee",
+    "coordinates": [
+      51.11389,
+      10.93472
+    ]
+  },
+  {
+    "name": "Gedern",
+    "coordinates": [
+      50.42444,
+      9.19972
+    ]
+  },
+  {
+    "name": "Geesthacht",
+    "coordinates": [
+      53.4375,
+      10.3675
+    ]
+  },
+  {
+    "name": "Geestland",
+    "coordinates": [
+      53.633,
+      8.75
+    ]
+  },
+  {
+    "name": "Gefell",
+    "coordinates": [
+      50.43333,
+      11.85
+    ]
+  },
+  {
+    "name": "Gefrees",
+    "coordinates": [
+      50.0951389,
+      11.7398361
+    ]
+  },
+  {
+    "name": "Gehrden",
+    "coordinates": [
+      52.31167,
+      9.60028
+    ]
+  },
+  {
+    "name": "Geilenkirchen",
+    "coordinates": [
+      50.96528,
+      6.11944
+    ]
+  },
+  {
+    "name": "Geisa",
+    "coordinates": [
+      50.717,
+      9.967
+    ]
+  },
+  {
+    "name": "Geiselhöring",
+    "coordinates": [
+      48.82583,
+      12.3925
+    ]
+  },
+  {
+    "name": "Geisenfeld",
+    "coordinates": [
+      48.667,
+      11.6
+    ]
+  },
+  {
+    "name": "Geisenheim",
+    "coordinates": [
+      49.98444,
+      7.96722
+    ]
+  },
+  {
+    "name": "Geisingen",
+    "coordinates": [
+      47.92222,
+      8.64639
+    ]
+  },
+  {
+    "name": "Geislingen an der Steige",
+    "coordinates": [
+      48.62444,
+      9.83056
+    ]
+  },
+  {
+    "name": "Geislingen",
+    "coordinates": [
+      48.2875,
+      8.8125
+    ]
+  },
+  {
+    "name": "Geithain",
+    "coordinates": [
+      51.05,
+      12.683
+    ]
+  },
+  {
+    "name": "Geldern",
+    "coordinates": [
+      51.51972,
+      6.3325
+    ]
+  },
+  {
+    "name": "Gelnhausen",
+    "coordinates": [
+      50.2,
+      9.167
+    ]
+  },
+  {
+    "name": "Gelsenkirchen",
+    "coordinates": [
+      51.517,
+      7.1
+    ]
+  },
+  {
+    "name": "Gemünden am Main",
+    "coordinates": [
+      50.04972,
+      9.70556
+    ]
+  },
+  {
+    "name": "Gemünden",
+    "coordinates": [
+      50.967,
+      8.967
+    ]
+  },
+  {
+    "name": "Gengenbach",
+    "coordinates": [
+      48.4,
+      8.017
+    ]
+  },
+  {
+    "name": "Genthin",
+    "coordinates": [
+      52.4,
+      12.167
+    ]
+  },
+  {
+    "name": "Georgsmarienhütte",
+    "coordinates": [
+      52.2,
+      8.067
+    ]
+  },
+  {
+    "name": "Gerabronn",
+    "coordinates": [
+      49.24944,
+      9.92028
+    ]
+  },
+  {
+    "name": "Gera",
+    "coordinates": [
+      50.88056,
+      12.08333
+    ]
+  },
+  {
+    "name": "Gerbstedt",
+    "coordinates": [
+      51.63306,
+      11.61667
+    ]
+  },
+  {
+    "name": "Geretsried",
+    "coordinates": [
+      47.867,
+      11.467
+    ]
+  },
+  {
+    "name": "Geringswalde",
+    "coordinates": [
+      51.07639,
+      12.90417
+    ]
+  },
+  {
+    "name": "Gerlingen",
+    "coordinates": [
+      48.8,
+      9.06528
+    ]
+  },
+  {
+    "name": "Germering",
+    "coordinates": [
+      48.133,
+      11.367
+    ]
+  },
+  {
+    "name": "Germersheim",
+    "coordinates": [
+      49.21667,
+      8.36667
+    ]
+  },
+  {
+    "name": "Gernsbach",
+    "coordinates": [
+      48.76333,
+      8.33417
+    ]
+  },
+  {
+    "name": "Gernsheim",
+    "coordinates": [
+      49.75,
+      8.483
+    ]
+  },
+  {
+    "name": "Gerolstein",
+    "coordinates": [
+      50.22389,
+      6.66139
+    ]
+  },
+  {
+    "name": "Gerolzhofen",
+    "coordinates": [
+      49.9,
+      10.35
+    ]
+  },
+  {
+    "name": "Gersfeld",
+    "coordinates": [
+      50.45,
+      9.917
+    ]
+  },
+  {
+    "name": "Gersthofen",
+    "coordinates": [
+      48.417,
+      10.867
+    ]
+  },
+  {
+    "name": "Gescher",
+    "coordinates": [
+      51.95694,
+      7.00556
+    ]
+  },
+  {
+    "name": "Geseke",
+    "coordinates": [
+      51.65,
+      8.517
+    ]
+  },
+  {
+    "name": "Gevelsberg",
+    "coordinates": [
+      51.317,
+      7.333
+    ]
+  },
+  {
+    "name": "Geyer",
+    "coordinates": [
+      50.62361,
+      12.92333
+    ]
+  },
+  {
+    "name": "Giengen",
+    "coordinates": [
+      48.62167,
+      10.245
+    ]
+  },
+  {
+    "name": "Giessen",
+    "coordinates": [
+      50.58333,
+      8.66667
+    ]
+  },
+  {
+    "name": "Gifhorn",
+    "coordinates": [
+      52.48861,
+      10.54639
+    ]
+  },
+  {
+    "name": "Ginsheim-Gustavsburg",
+    "coordinates": [
+      49.983,
+      8.333
+    ]
+  },
+  {
+    "name": "Gladbeck",
+    "coordinates": [
+      51.567,
+      6.967
+    ]
+  },
+  {
+    "name": "Gladenbach",
+    "coordinates": [
+      50.76806,
+      8.58278
+    ]
+  },
+  {
+    "name": "Glashütte",
+    "coordinates": [
+      50.85,
+      13.78333
+    ]
+  },
+  {
+    "name": "Glauchau",
+    "coordinates": [
+      50.82333,
+      12.54444
+    ]
+  },
+  {
+    "name": "Glinde",
+    "coordinates": [
+      53.54056,
+      10.21111
+    ]
+  },
+  {
+    "name": "GlücksburgLyksborg",
+    "coordinates": [
+      54.83361,
+      9.55
+    ]
+  },
+  {
+    "name": "Glückstadt",
+    "coordinates": [
+      53.79167,
+      9.42194
+    ]
+  },
+  {
+    "name": "Gnoien",
+    "coordinates": [
+      53.967,
+      12.717
+    ]
+  },
+  {
+    "name": "Goch",
+    "coordinates": [
+      51.68389,
+      6.16194
+    ]
+  },
+  {
+    "name": "Goldberg",
+    "coordinates": [
+      53.567,
+      12.067
+    ]
+  },
+  {
+    "name": "Goldkronach",
+    "coordinates": [
+      50.0115,
+      11.6873139
+    ]
+  },
+  {
+    "name": "Golßen",
+    "coordinates": [
+      51.967,
+      13.6
+    ]
+  },
+  {
+    "name": "Gommern",
+    "coordinates": [
+      52.067,
+      11.833
+    ]
+  },
+  {
+    "name": "Goslar",
+    "coordinates": [
+      51.90722,
+      10.43
+    ]
+  },
+  {
+    "name": "Gotha",
+    "coordinates": [
+      50.94889,
+      10.71833
+    ]
+  },
+  {
+    "name": "Grabow",
+    "coordinates": [
+      53.267,
+      11.567
+    ]
+  },
+  {
+    "name": "Grafenau",
+    "coordinates": [
+      48.85,
+      13.383
+    ]
+  },
+  {
+    "name": "Grafenwöhr",
+    "coordinates": [
+      49.717,
+      11.9
+    ]
+  },
+  {
+    "name": "Grafing bei München",
+    "coordinates": [
+      48.05,
+      11.967
+    ]
+  },
+  {
+    "name": "Gransee",
+    "coordinates": [
+      53.00694,
+      13.15861
+    ]
+  },
+  {
+    "name": "Grebenau",
+    "coordinates": [
+      50.75,
+      9.467
+    ]
+  },
+  {
+    "name": "Grebenstein",
+    "coordinates": [
+      51.45,
+      9.417
+    ]
+  },
+  {
+    "name": "Greding",
+    "coordinates": [
+      49.05194,
+      11.36056
+    ]
+  },
+  {
+    "name": "Greifswald",
+    "coordinates": [
+      54.083,
+      13.383
+    ]
+  },
+  {
+    "name": "Greiz",
+    "coordinates": [
+      50.65472,
+      12.19972
+    ]
+  },
+  {
+    "name": "Greußen",
+    "coordinates": [
+      51.22917,
+      10.9475
+    ]
+  },
+  {
+    "name": "Grevenbroich",
+    "coordinates": [
+      51.08833,
+      6.5875
+    ]
+  },
+  {
+    "name": "Greven",
+    "coordinates": [
+      52.09167,
+      7.60833
+    ]
+  },
+  {
+    "name": "Grevesmühlen",
+    "coordinates": [
+      53.867,
+      11.167
+    ]
+  },
+  {
+    "name": "Griesheim",
+    "coordinates": [
+      49.86389,
+      8.56389
+    ]
+  },
+  {
+    "name": "Grimma",
+    "coordinates": [
+      51.23861,
+      12.72528
+    ]
+  },
+  {
+    "name": "Grimmen",
+    "coordinates": [
+      54.11,
+      13.04139
+    ]
+  },
+  {
+    "name": "Groitzsch",
+    "coordinates": [
+      51.15556,
+      12.28056
+    ]
+  },
+  {
+    "name": "Gronau",
+    "coordinates": [
+      52.067,
+      9.783
+    ]
+  },
+  {
+    "name": "Gronau",
+    "coordinates": [
+      52.2125,
+      7.04167
+    ]
+  },
+  {
+    "name": "Groß-Bieberau",
+    "coordinates": [
+      49.8,
+      8.833
+    ]
+  },
+  {
+    "name": "Groß-Gerau",
+    "coordinates": [
+      49.91917,
+      8.485
+    ]
+  },
+  {
+    "name": "Groß-Umstadt",
+    "coordinates": [
+      49.867,
+      8.933
+    ]
+  },
+  {
+    "name": "Großalmerode",
+    "coordinates": [
+      51.2575,
+      9.78444
+    ]
+  },
+  {
+    "name": "Großbottwar",
+    "coordinates": [
+      49.00139,
+      9.29306
+    ]
+  },
+  {
+    "name": "Großbreitenbach",
+    "coordinates": [
+      50.58278,
+      11.01056
+    ]
+  },
+  {
+    "name": "Großenhain",
+    "coordinates": [
+      51.283,
+      13.55
+    ]
+  },
+  {
+    "name": "Großräschen",
+    "coordinates": [
+      51.58306,
+      14
+    ]
+  },
+  {
+    "name": "Großröhrsdorf",
+    "coordinates": [
+      51.14444,
+      14.01667
+    ]
+  },
+  {
+    "name": "Großschirma",
+    "coordinates": [
+      50.96639,
+      13.27806
+    ]
+  },
+  {
+    "name": "Gräfenberg, Bavaria",
+    "coordinates": [
+      49.633,
+      11.25
+    ]
+  },
+  {
+    "name": "Gräfenhainichen",
+    "coordinates": [
+      51.717,
+      12.433
+    ]
+  },
+  {
+    "name": "Gräfenthal",
+    "coordinates": [
+      50.533,
+      11.3
+    ]
+  },
+  {
+    "name": "Gröditz",
+    "coordinates": [
+      51.41667,
+      13.46639
+    ]
+  },
+  {
+    "name": "Gröningen",
+    "coordinates": [
+      51.93333,
+      11.21667
+    ]
+  },
+  {
+    "name": "Grünberg",
+    "coordinates": [
+      50.6,
+      8.95
+    ]
+  },
+  {
+    "name": "Grünhain-Beierfeld",
+    "coordinates": [
+      50.567,
+      12.8
+    ]
+  },
+  {
+    "name": "Grünsfeld",
+    "coordinates": [
+      49.6,
+      9.75
+    ]
+  },
+  {
+    "name": "Grünstadt",
+    "coordinates": [
+      49.56917,
+      8.16806
+    ]
+  },
+  {
+    "name": "Guben",
+    "coordinates": [
+      51.95333,
+      14.71667
+    ]
+  },
+  {
+    "name": "Gudensberg",
+    "coordinates": [
+      51.183,
+      9.367
+    ]
+  },
+  {
+    "name": "Gummersbach",
+    "coordinates": [
+      51.033,
+      7.567
+    ]
+  },
+  {
+    "name": "Gundelfingen an der Donau",
+    "coordinates": [
+      48.55,
+      10.367
+    ]
+  },
+  {
+    "name": "Gundelsheim",
+    "coordinates": [
+      49.283,
+      9.167
+    ]
+  },
+  {
+    "name": "Gunzenhausen",
+    "coordinates": [
+      49.11472,
+      10.75417
+    ]
+  },
+  {
+    "name": "Göppingen",
+    "coordinates": [
+      48.7025,
+      9.65278
+    ]
+  },
+  {
+    "name": "Görlitz",
+    "coordinates": [
+      51.15278,
+      14.98722
+    ]
+  },
+  {
+    "name": "Göttingen",
+    "coordinates": [
+      51.53389,
+      9.93556
+    ]
+  },
+  {
+    "name": "Gößnitz",
+    "coordinates": [
+      50.89028,
+      12.43278
+    ]
+  },
+  {
+    "name": "Güglingen",
+    "coordinates": [
+      49.067,
+      9
+    ]
+  },
+  {
+    "name": "Günzburg",
+    "coordinates": [
+      48.45267,
+      10.27133
+    ]
+  },
+  {
+    "name": "Güsten",
+    "coordinates": [
+      51.79722,
+      11.61
+    ]
+  },
+  {
+    "name": "Güstrow",
+    "coordinates": [
+      53.79389,
+      12.17639
+    ]
+  },
+  {
+    "name": "Gütersloh",
+    "coordinates": [
+      51.9,
+      8.383
+    ]
+  },
+  {
+    "name": "Gützkow",
+    "coordinates": [
+      53.95,
+      13.417
+    ]
+  },
+  {
+    "name": "Haan",
+    "coordinates": [
+      51.167,
+      7
+    ]
+  },
+  {
+    "name": "Hachenburg",
+    "coordinates": [
+      50.66139,
+      7.82028
+    ]
+  },
+  {
+    "name": "Hadamar",
+    "coordinates": [
+      50.45,
+      8.05
+    ]
+  },
+  {
+    "name": "Hagenbach",
+    "coordinates": [
+      49.02056,
+      8.24833
+    ]
+  },
+  {
+    "name": "Hagenow",
+    "coordinates": [
+      53.417,
+      11.183
+    ]
+  },
+  {
+    "name": "Hagen",
+    "coordinates": [
+      51.367,
+      7.483
+    ]
+  },
+  {
+    "name": "Haigerloch",
+    "coordinates": [
+      48.36472,
+      8.805
+    ]
+  },
+  {
+    "name": "Haiger",
+    "coordinates": [
+      50.74222,
+      8.20389
+    ]
+  },
+  {
+    "name": "Hainichen",
+    "coordinates": [
+      50.96972,
+      13.12528
+    ]
+  },
+  {
+    "name": "Haiterbach",
+    "coordinates": [
+      48.52444,
+      8.65028
+    ]
+  },
+  {
+    "name": "Halberstadt",
+    "coordinates": [
+      51.89583,
+      11.04667
+    ]
+  },
+  {
+    "name": "Haldensleben",
+    "coordinates": [
+      52.283,
+      11.417
+    ]
+  },
+  {
+    "name": "Halle (Saale)",
+    "coordinates": [
+      51.48278,
+      11.96972
+    ]
+  },
+  {
+    "name": "Hallenberg",
+    "coordinates": [
+      51.11167,
+      8.62306
+    ]
+  },
+  {
+    "name": "Halle",
+    "coordinates": [
+      52.067,
+      8.367
+    ]
+  },
+  {
+    "name": "Hallstadt",
+    "coordinates": [
+      49.933,
+      10.883
+    ]
+  },
+  {
+    "name": "Haltern am See",
+    "coordinates": [
+      51.75,
+      7.183
+    ]
+  },
+  {
+    "name": "Halver",
+    "coordinates": [
+      51.183,
+      7.467
+    ]
+  },
+  {
+    "name": "Hamburg",
+    "coordinates": [
+      53.56528,
+      10.00139
+    ]
+  },
+  {
+    "name": "Hamelin",
+    "coordinates": [
+      52.1,
+      9.367
+    ]
+  },
+  {
+    "name": "Hammelburg",
+    "coordinates": [
+      50.117,
+      9.9
+    ]
+  },
+  {
+    "name": "Hamminkeln",
+    "coordinates": [
+      51.73194,
+      6.59083
+    ]
+  },
+  {
+    "name": "Hamm",
+    "coordinates": [
+      51.683,
+      7.817
+    ]
+  },
+  {
+    "name": "Hanau",
+    "coordinates": [
+      50.13278,
+      8.91694
+    ]
+  },
+  {
+    "name": "Hann. Münden",
+    "coordinates": [
+      51.417,
+      9.65
+    ]
+  },
+  {
+    "name": "Hanover",
+    "coordinates": [
+      52.367,
+      9.717
+    ]
+  },
+  {
+    "name": "Hanseatic City of Buxtehude",
+    "coordinates": [
+      53.47694,
+      9.70111
+    ]
+  },
+  {
+    "name": "Hanseatic City of Korbach",
+    "coordinates": [
+      51.283,
+      8.867
+    ]
+  },
+  {
+    "name": "Hanseatic City of Stade",
+    "coordinates": [
+      53.60083,
+      9.47639
+    ]
+  },
+  {
+    "name": "Harburg",
+    "coordinates": [
+      48.767,
+      10.667
+    ]
+  },
+  {
+    "name": "Hardegsen",
+    "coordinates": [
+      51.65222,
+      9.82944
+    ]
+  },
+  {
+    "name": "Haren, Germany",
+    "coordinates": [
+      52.767,
+      7.217
+    ]
+  },
+  {
+    "name": "Harsewinkel",
+    "coordinates": [
+      51.96667,
+      8.23306
+    ]
+  },
+  {
+    "name": "Hartenstein",
+    "coordinates": [
+      50.66833,
+      12.67139
+    ]
+  },
+  {
+    "name": "Hartha",
+    "coordinates": [
+      51.0978,
+      12.9773
+    ]
+  },
+  {
+    "name": "Harzgerode",
+    "coordinates": [
+      51.64222,
+      11.14417
+    ]
+  },
+  {
+    "name": "Haselünne",
+    "coordinates": [
+      52.667,
+      7.467
+    ]
+  },
+  {
+    "name": "Haslach im Kinzigtal",
+    "coordinates": [
+      48.27778,
+      8.08694
+    ]
+  },
+  {
+    "name": "Hattersheim am Main",
+    "coordinates": [
+      50.067,
+      8.467
+    ]
+  },
+  {
+    "name": "Hattingen",
+    "coordinates": [
+      51.39917,
+      7.18583
+    ]
+  },
+  {
+    "name": "Hatzfeld",
+    "coordinates": [
+      51,
+      8.55
+    ]
+  },
+  {
+    "name": "Hausach",
+    "coordinates": [
+      48.28528,
+      8.17972
+    ]
+  },
+  {
+    "name": "Hauzenberg",
+    "coordinates": [
+      48.65,
+      13.633
+    ]
+  },
+  {
+    "name": "Havelberg",
+    "coordinates": [
+      52.825,
+      12.07444
+    ]
+  },
+  {
+    "name": "Havelsee",
+    "coordinates": [
+      52.5,
+      12.467
+    ]
+  },
+  {
+    "name": "Hayingen",
+    "coordinates": [
+      48.27528,
+      9.47806
+    ]
+  },
+  {
+    "name": "Haßfurt",
+    "coordinates": [
+      50.017,
+      10.5
+    ]
+  },
+  {
+    "name": "Hechingen",
+    "coordinates": [
+      48.35167,
+      8.96333
+    ]
+  },
+  {
+    "name": "Hecklingen",
+    "coordinates": [
+      51.85,
+      11.517
+    ]
+  },
+  {
+    "name": "Heideck",
+    "coordinates": [
+      49.117,
+      11.117
+    ]
+  },
+  {
+    "name": "Heidelberg",
+    "coordinates": [
+      49.417,
+      8.717
+    ]
+  },
+  {
+    "name": "Heidenau",
+    "coordinates": [
+      50.983,
+      13.867
+    ]
+  },
+  {
+    "name": "Heidenheim an der Brenz",
+    "coordinates": [
+      48.67611,
+      10.15444
+    ]
+  },
+  {
+    "name": "Heide",
+    "coordinates": [
+      54.19611,
+      9.09333
+    ]
+  },
+  {
+    "name": "Heilbad Heiligenstadt",
+    "coordinates": [
+      51.37889,
+      10.13861
+    ]
+  },
+  {
+    "name": "Heilbronn",
+    "coordinates": [
+      49.15,
+      9.217
+    ]
+  },
+  {
+    "name": "Heiligenhafen",
+    "coordinates": [
+      54.37389,
+      10.97972
+    ]
+  },
+  {
+    "name": "Heiligenhaus",
+    "coordinates": [
+      51.31667,
+      6.96667
+    ]
+  },
+  {
+    "name": "Heilsbronn",
+    "coordinates": [
+      49.317,
+      10.8
+    ]
+  },
+  {
+    "name": "Heimbach",
+    "coordinates": [
+      50.63306,
+      6.48306
+    ]
+  },
+  {
+    "name": "Heimsheim",
+    "coordinates": [
+      48.80556,
+      8.86194
+    ]
+  },
+  {
+    "name": "Heinsberg",
+    "coordinates": [
+      51.06306,
+      6.09639
+    ]
+  },
+  {
+    "name": "Heitersheim",
+    "coordinates": [
+      47.87528,
+      7.65472
+    ]
+  },
+  {
+    "name": "Heldburg",
+    "coordinates": [
+      50.283,
+      10.733
+    ]
+  },
+  {
+    "name": "Helmbrechts",
+    "coordinates": [
+      50.217,
+      11.683
+    ]
+  },
+  {
+    "name": "Helmstedt",
+    "coordinates": [
+      52.22806,
+      11.01056
+    ]
+  },
+  {
+    "name": "Hemau",
+    "coordinates": [
+      49.05194,
+      11.78278
+    ]
+  },
+  {
+    "name": "Hemer",
+    "coordinates": [
+      51.38333,
+      7.76667
+    ]
+  },
+  {
+    "name": "Hemmingen",
+    "coordinates": [
+      52.32361,
+      9.72556
+    ]
+  },
+  {
+    "name": "Hemmoor",
+    "coordinates": [
+      53.7025,
+      9.13944
+    ]
+  },
+  {
+    "name": "Hemsbach",
+    "coordinates": [
+      49.59028,
+      8.65639
+    ]
+  },
+  {
+    "name": "Hennef",
+    "coordinates": [
+      50.783,
+      7.283
+    ]
+  },
+  {
+    "name": "Hennigsdorf",
+    "coordinates": [
+      52.63778,
+      13.20361
+    ]
+  },
+  {
+    "name": "Heppenheim",
+    "coordinates": [
+      49.64306,
+      8.63889
+    ]
+  },
+  {
+    "name": "Herbolzheim",
+    "coordinates": [
+      48.22194,
+      7.7775
+    ]
+  },
+  {
+    "name": "Herborn, Hesse",
+    "coordinates": [
+      50.6825,
+      8.30611
+    ]
+  },
+  {
+    "name": "Herbrechtingen",
+    "coordinates": [
+      48.62528,
+      10.17389
+    ]
+  },
+  {
+    "name": "Herbstein",
+    "coordinates": [
+      50.55,
+      9.35
+    ]
+  },
+  {
+    "name": "Herdecke",
+    "coordinates": [
+      51.4,
+      7.433
+    ]
+  },
+  {
+    "name": "Herdorf",
+    "coordinates": [
+      50.7775,
+      7.95472
+    ]
+  },
+  {
+    "name": "Herford",
+    "coordinates": [
+      52.13333,
+      8.68333
+    ]
+  },
+  {
+    "name": "Heringen",
+    "coordinates": [
+      50.88722,
+      10.00556
+    ]
+  },
+  {
+    "name": "Heringen",
+    "coordinates": [
+      51.44722,
+      10.88083
+    ]
+  },
+  {
+    "name": "Hermeskeil",
+    "coordinates": [
+      49.65722,
+      6.94889
+    ]
+  },
+  {
+    "name": "Hermsdorf",
+    "coordinates": [
+      50.89806,
+      11.85667
+    ]
+  },
+  {
+    "name": "Herne city",
+    "coordinates": [
+      51.55,
+      7.21667
+    ]
+  },
+  {
+    "name": "Herrenberg",
+    "coordinates": [
+      48.59667,
+      8.87083
+    ]
+  },
+  {
+    "name": "Herrieden",
+    "coordinates": [
+      49.217,
+      10.517
+    ]
+  },
+  {
+    "name": "Herrnhut",
+    "coordinates": [
+      51.01667,
+      14.74167
+    ]
+  },
+  {
+    "name": "Hersbruck",
+    "coordinates": [
+      49.50806,
+      11.43278
+    ]
+  },
+  {
+    "name": "Herten",
+    "coordinates": [
+      51.6,
+      7.133
+    ]
+  },
+  {
+    "name": "Herzberg am Harz",
+    "coordinates": [
+      51.6575,
+      10.34111
+    ]
+  },
+  {
+    "name": "Herzberg",
+    "coordinates": [
+      51.68306,
+      13.23306
+    ]
+  },
+  {
+    "name": "Herzogenaurach",
+    "coordinates": [
+      49.567,
+      10.883
+    ]
+  },
+  {
+    "name": "Herzogenrath",
+    "coordinates": [
+      50.867,
+      6.1
+    ]
+  },
+  {
+    "name": "Hessisch Lichtenau",
+    "coordinates": [
+      51.2,
+      9.717
+    ]
+  },
+  {
+    "name": "Hessisch Oldendorf",
+    "coordinates": [
+      52.167,
+      9.25
+    ]
+  },
+  {
+    "name": "Hettingen",
+    "coordinates": [
+      48.21611,
+      9.23139
+    ]
+  },
+  {
+    "name": "Hettstedt",
+    "coordinates": [
+      51.633,
+      11.5
+    ]
+  },
+  {
+    "name": "Heubach",
+    "coordinates": [
+      48.78806,
+      9.93333
+    ]
+  },
+  {
+    "name": "Heusenstamm",
+    "coordinates": [
+      50.05,
+      8.8
+    ]
+  },
+  {
+    "name": "Hilchenbach",
+    "coordinates": [
+      50.99833,
+      8.10944
+    ]
+  },
+  {
+    "name": "Hildburghausen",
+    "coordinates": [
+      50.41667,
+      10.75
+    ]
+  },
+  {
+    "name": "Hilden",
+    "coordinates": [
+      51.17139,
+      6.93944
+    ]
+  },
+  {
+    "name": "Hildesheim",
+    "coordinates": [
+      52.15,
+      9.95
+    ]
+  },
+  {
+    "name": "Hillesheim",
+    "coordinates": [
+      50.29306,
+      6.675
+    ]
+  },
+  {
+    "name": "Hilpoltstein",
+    "coordinates": [
+      49.183,
+      11.183
+    ]
+  },
+  {
+    "name": "Hirschau",
+    "coordinates": [
+      49.533,
+      11.95
+    ]
+  },
+  {
+    "name": "Hirschberg",
+    "coordinates": [
+      50.40583,
+      11.82
+    ]
+  },
+  {
+    "name": "Hirschhorn",
+    "coordinates": [
+      49.45,
+      8.9
+    ]
+  },
+  {
+    "name": "Hitzacker",
+    "coordinates": [
+      53.133,
+      11.05
+    ]
+  },
+  {
+    "name": "Hochheim am Main",
+    "coordinates": [
+      50.01667,
+      8.35
+    ]
+  },
+  {
+    "name": "Hockenheim",
+    "coordinates": [
+      49.31806,
+      8.54722
+    ]
+  },
+  {
+    "name": "Hofgeismar",
+    "coordinates": [
+      51.483,
+      9.4
+    ]
+  },
+  {
+    "name": "Hofheim in Unterfranken",
+    "coordinates": [
+      50.133,
+      10.183
+    ]
+  },
+  {
+    "name": "Hofheim, Hesse",
+    "coordinates": [
+      50.08333,
+      8.45
+    ]
+  },
+  {
+    "name": "Hof",
+    "coordinates": [
+      50.31667,
+      11.91667
+    ]
+  },
+  {
+    "name": "Hohen Neuendorf",
+    "coordinates": [
+      52.667,
+      13.283
+    ]
+  },
+  {
+    "name": "Hohenberg a.d.Eger",
+    "coordinates": [
+      50.1,
+      12.217
+    ]
+  },
+  {
+    "name": "Hohenleuben",
+    "coordinates": [
+      50.717,
+      12.05
+    ]
+  },
+  {
+    "name": "Hohenmölsen",
+    "coordinates": [
+      51.15639,
+      12.09806
+    ]
+  },
+  {
+    "name": "Hohenstein-Ernstthal",
+    "coordinates": [
+      50.8,
+      12.717
+    ]
+  },
+  {
+    "name": "Hohnstein",
+    "coordinates": [
+      50.983,
+      14.117
+    ]
+  },
+  {
+    "name": "Hollfeld",
+    "coordinates": [
+      49.933,
+      11.3
+    ]
+  },
+  {
+    "name": "Holzgerlingen",
+    "coordinates": [
+      48.63917,
+      9.01083
+    ]
+  },
+  {
+    "name": "Holzminden",
+    "coordinates": [
+      51.82972,
+      9.44833
+    ]
+  },
+  {
+    "name": "Homberg",
+    "coordinates": [
+      51.03306,
+      9.4
+    ]
+  },
+  {
+    "name": "Homberg",
+    "coordinates": [
+      50.717,
+      9
+    ]
+  },
+  {
+    "name": "Homburg",
+    "coordinates": [
+      49.317,
+      7.333
+    ]
+  },
+  {
+    "name": "Horb am Neckar",
+    "coordinates": [
+      48.44528,
+      8.69111
+    ]
+  },
+  {
+    "name": "Horn-Bad Meinberg",
+    "coordinates": [
+      51.88333,
+      8.96667
+    ]
+  },
+  {
+    "name": "Hornbach",
+    "coordinates": [
+      49.18806,
+      7.36917
+    ]
+  },
+  {
+    "name": "Hornberg",
+    "coordinates": [
+      48.21333,
+      8.23083
+    ]
+  },
+  {
+    "name": "Horstmar",
+    "coordinates": [
+      52.08056,
+      7.30833
+    ]
+  },
+  {
+    "name": "Hoya",
+    "coordinates": [
+      52.8,
+      9.133
+    ]
+  },
+  {
+    "name": "Hoyerswerda",
+    "coordinates": [
+      51.433,
+      14.25
+    ]
+  },
+  {
+    "name": "Hungen",
+    "coordinates": [
+      50.467,
+      8.9
+    ]
+  },
+  {
+    "name": "Husum",
+    "coordinates": [
+      54.46667,
+      9.05
+    ]
+  },
+  {
+    "name": "Höchstadt",
+    "coordinates": [
+      49.7,
+      10.8
+    ]
+  },
+  {
+    "name": "Höchstädt an der Donau",
+    "coordinates": [
+      48.6,
+      10.55
+    ]
+  },
+  {
+    "name": "Höhr-Grenzhausen",
+    "coordinates": [
+      50.435,
+      7.67111
+    ]
+  },
+  {
+    "name": "Hörstel",
+    "coordinates": [
+      52.29722,
+      7.58611
+    ]
+  },
+  {
+    "name": "Höxter",
+    "coordinates": [
+      51.767,
+      9.367
+    ]
+  },
+  {
+    "name": "Hückelhoven",
+    "coordinates": [
+      51.06083,
+      6.21972
+    ]
+  },
+  {
+    "name": "Hückeswagen",
+    "coordinates": [
+      51.145,
+      7.34167
+    ]
+  },
+  {
+    "name": "Hüfingen",
+    "coordinates": [
+      47.92611,
+      8.49
+    ]
+  },
+  {
+    "name": "Hünfeld",
+    "coordinates": [
+      50.66667,
+      9.76667
+    ]
+  },
+  {
+    "name": "Hürth",
+    "coordinates": [
+      50.8775,
+      6.87611
+    ]
+  },
+  {
+    "name": "Ibbenbüren",
+    "coordinates": [
+      52.27778,
+      7.71667
+    ]
+  },
+  {
+    "name": "Ichenhausen",
+    "coordinates": [
+      48.367,
+      10.317
+    ]
+  },
+  {
+    "name": "Idar-Oberstein",
+    "coordinates": [
+      49.71139,
+      7.31306
+    ]
+  },
+  {
+    "name": "Idstein",
+    "coordinates": [
+      50.22056,
+      8.27417
+    ]
+  },
+  {
+    "name": "Illertissen",
+    "coordinates": [
+      48.217,
+      10.083
+    ]
+  },
+  {
+    "name": "Ilmenau",
+    "coordinates": [
+      50.68389,
+      10.91944
+    ]
+  },
+  {
+    "name": "Ilsenburg",
+    "coordinates": [
+      51.867,
+      10.683
+    ]
+  },
+  {
+    "name": "Ilshofen",
+    "coordinates": [
+      49.17028,
+      9.92028
+    ]
+  },
+  {
+    "name": "Immenhausen",
+    "coordinates": [
+      51.417,
+      9.5
+    ]
+  },
+  {
+    "name": "Immenstadt",
+    "coordinates": [
+      47.567,
+      10.217
+    ]
+  },
+  {
+    "name": "Ingelfingen",
+    "coordinates": [
+      49.3,
+      9.65
+    ]
+  },
+  {
+    "name": "Ingelheim am Rhein",
+    "coordinates": [
+      49.97472,
+      8.05639
+    ]
+  },
+  {
+    "name": "Ingolstadt",
+    "coordinates": [
+      48.767,
+      11.433
+    ]
+  },
+  {
+    "name": "Iphofen",
+    "coordinates": [
+      49.7,
+      10.267
+    ]
+  },
+  {
+    "name": "Iserlohn",
+    "coordinates": [
+      51.383,
+      7.667
+    ]
+  },
+  {
+    "name": "Isny im Allgäu",
+    "coordinates": [
+      47.69194,
+      10.03944
+    ]
+  },
+  {
+    "name": "Isselburg",
+    "coordinates": [
+      51.83306,
+      6.46667
+    ]
+  },
+  {
+    "name": "Itzehoe",
+    "coordinates": [
+      53.925,
+      9.51639
+    ]
+  },
+  {
+    "name": "Jarmen",
+    "coordinates": [
+      53.917,
+      13.333
+    ]
+  },
+  {
+    "name": "Jena",
+    "coordinates": [
+      50.92722,
+      11.58611
+    ]
+  },
+  {
+    "name": "Jerichow",
+    "coordinates": [
+      52.483,
+      12.017
+    ]
+  },
+  {
+    "name": "Jessen",
+    "coordinates": [
+      51.79167,
+      12.95556
+    ]
+  },
+  {
+    "name": "Jever",
+    "coordinates": [
+      53.57444,
+      7.90083
+    ]
+  },
+  {
+    "name": "Joachimsthal",
+    "coordinates": [
+      52.96667,
+      13.75
+    ]
+  },
+  {
+    "name": "Johanngeorgenstadt",
+    "coordinates": [
+      50.43333,
+      12.71389
+    ]
+  },
+  {
+    "name": "Jöhstadt",
+    "coordinates": [
+      50.51444,
+      13.08861
+    ]
+  },
+  {
+    "name": "Jüchen",
+    "coordinates": [
+      51.10111,
+      6.50167
+    ]
+  },
+  {
+    "name": "Jülich",
+    "coordinates": [
+      50.92222,
+      6.35833
+    ]
+  },
+  {
+    "name": "Jüterbog",
+    "coordinates": [
+      51.99333,
+      13.07278
+    ]
+  },
+  {
+    "name": "Kaarst",
+    "coordinates": [
+      51.217,
+      6.617
+    ]
+  },
+  {
+    "name": "Kahla",
+    "coordinates": [
+      50.80083,
+      11.5875
+    ]
+  },
+  {
+    "name": "Kaisersesch",
+    "coordinates": [
+      50.23222,
+      7.13944
+    ]
+  },
+  {
+    "name": "Kaiserslautern",
+    "coordinates": [
+      49.44472,
+      7.76889
+    ]
+  },
+  {
+    "name": "Kalbe, Saxony-Anhalt",
+    "coordinates": [
+      52.6333,
+      11.4
+    ]
+  },
+  {
+    "name": "Kalkar",
+    "coordinates": [
+      51.73889,
+      6.2925
+    ]
+  },
+  {
+    "name": "Kaltenkirchen",
+    "coordinates": [
+      53.83972,
+      9.96028
+    ]
+  },
+  {
+    "name": "Kaltennordheim",
+    "coordinates": [
+      50.633,
+      10.167
+    ]
+  },
+  {
+    "name": "Kamenz",
+    "coordinates": [
+      51.267,
+      14.1
+    ]
+  },
+  {
+    "name": "Kamen",
+    "coordinates": [
+      51.59167,
+      7.66528
+    ]
+  },
+  {
+    "name": "Kamp-Lintfort",
+    "coordinates": [
+      51.5,
+      6.53333
+    ]
+  },
+  {
+    "name": "Kandel",
+    "coordinates": [
+      49.083,
+      8.2
+    ]
+  },
+  {
+    "name": "Kandern",
+    "coordinates": [
+      47.717,
+      7.667
+    ]
+  },
+  {
+    "name": "KappelnKappel",
+    "coordinates": [
+      54.66139,
+      9.93111
+    ]
+  },
+  {
+    "name": "Karben",
+    "coordinates": [
+      50.23222,
+      8.76806
+    ]
+  },
+  {
+    "name": "Karlsruhe",
+    "coordinates": [
+      49.0092097,
+      8.4039514
+    ]
+  },
+  {
+    "name": "Karlstadt am Main",
+    "coordinates": [
+      49.96028,
+      9.77222
+    ]
+  },
+  {
+    "name": "Kassel",
+    "coordinates": [
+      51.3158,
+      9.4979
+    ]
+  },
+  {
+    "name": "Kastellaun",
+    "coordinates": [
+      50.06944,
+      7.44306
+    ]
+  },
+  {
+    "name": "Katzenelnbogen",
+    "coordinates": [
+      50.26667,
+      7.98333
+    ]
+  },
+  {
+    "name": "Kaub",
+    "coordinates": [
+      50.08806,
+      7.76278
+    ]
+  },
+  {
+    "name": "Kaufbeuren",
+    "coordinates": [
+      47.88,
+      10.6225
+    ]
+  },
+  {
+    "name": "Kehl",
+    "coordinates": [
+      48.567,
+      7.817
+    ]
+  },
+  {
+    "name": "Kelbra",
+    "coordinates": [
+      51.433,
+      11.033
+    ]
+  },
+  {
+    "name": "Kelheim",
+    "coordinates": [
+      48.917,
+      11.867
+    ]
+  },
+  {
+    "name": "Kelkheim",
+    "coordinates": [
+      50.13778,
+      8.44972
+    ]
+  },
+  {
+    "name": "Kellinghusen",
+    "coordinates": [
+      53.95,
+      9.717
+    ]
+  },
+  {
+    "name": "Kelsterbach",
+    "coordinates": [
+      50.06167,
+      8.53111
+    ]
+  },
+  {
+    "name": "Kemberg",
+    "coordinates": [
+      51.783,
+      12.633
+    ]
+  },
+  {
+    "name": "Kemnath",
+    "coordinates": [
+      49.867,
+      11.883
+    ]
+  },
+  {
+    "name": "Kempen",
+    "coordinates": [
+      51.36583,
+      6.41944
+    ]
+  },
+  {
+    "name": "Kempten",
+    "coordinates": [
+      47.733,
+      10.317
+    ]
+  },
+  {
+    "name": "Kenzingen",
+    "coordinates": [
+      48.19167,
+      7.76833
+    ]
+  },
+  {
+    "name": "Kerpen",
+    "coordinates": [
+      50.87194,
+      6.69611
+    ]
+  },
+  {
+    "name": "Ketzin",
+    "coordinates": [
+      52.46972,
+      12.845
+    ]
+  },
+  {
+    "name": "Kevelaer",
+    "coordinates": [
+      51.58333,
+      6.25
+    ]
+  },
+  {
+    "name": "Kiel",
+    "coordinates": [
+      54.32333,
+      10.13944
+    ]
+  },
+  {
+    "name": "Kierspe",
+    "coordinates": [
+      51.133,
+      7.567
+    ]
+  },
+  {
+    "name": "Kirchberg an der Jagst",
+    "coordinates": [
+      49.20389,
+      9.98139
+    ]
+  },
+  {
+    "name": "Kirchberg",
+    "coordinates": [
+      49.945,
+      7.40722
+    ]
+  },
+  {
+    "name": "Kirchberg",
+    "coordinates": [
+      50.62222,
+      12.52556
+    ]
+  },
+  {
+    "name": "Kirchenlamitz",
+    "coordinates": [
+      50.15,
+      11.95
+    ]
+  },
+  {
+    "name": "Kirchen",
+    "coordinates": [
+      50.80861,
+      7.88333
+    ]
+  },
+  {
+    "name": "Kirchhain",
+    "coordinates": [
+      50.817,
+      8.917
+    ]
+  },
+  {
+    "name": "Kirchheim unter Teck",
+    "coordinates": [
+      48.64833,
+      9.45111
+    ]
+  },
+  {
+    "name": "Kirchheimbolanden",
+    "coordinates": [
+      49.66639,
+      8.01167
+    ]
+  },
+  {
+    "name": "Kirn",
+    "coordinates": [
+      49.78806,
+      7.45722
+    ]
+  },
+  {
+    "name": "Kirtorf",
+    "coordinates": [
+      50.767,
+      9.1
+    ]
+  },
+  {
+    "name": "Kitzingen",
+    "coordinates": [
+      49.733,
+      10.167
+    ]
+  },
+  {
+    "name": "Kitzscher",
+    "coordinates": [
+      51.164475,
+      12.5535
+    ]
+  },
+  {
+    "name": "Kleve",
+    "coordinates": [
+      51.79,
+      6.14
+    ]
+  },
+  {
+    "name": "Klingenberg am Main",
+    "coordinates": [
+      49.783,
+      9.183
+    ]
+  },
+  {
+    "name": "Klingenthal",
+    "coordinates": [
+      50.36694,
+      12.46861
+    ]
+  },
+  {
+    "name": "Klötze",
+    "coordinates": [
+      52.62629,
+      11.1616
+    ]
+  },
+  {
+    "name": "Klütz",
+    "coordinates": [
+      53.967,
+      11.167
+    ]
+  },
+  {
+    "name": "Knittlingen",
+    "coordinates": [
+      49.02389,
+      8.75694
+    ]
+  },
+  {
+    "name": "Koblenz",
+    "coordinates": [
+      50.35972,
+      7.59778
+    ]
+  },
+  {
+    "name": "Kolbermoor",
+    "coordinates": [
+      47.85,
+      12.067
+    ]
+  },
+  {
+    "name": "Konz",
+    "coordinates": [
+      49.7,
+      6.583
+    ]
+  },
+  {
+    "name": "Korntal-Münchingen",
+    "coordinates": [
+      48.83056,
+      9.12139
+    ]
+  },
+  {
+    "name": "Kornwestheim",
+    "coordinates": [
+      48.8598,
+      9.1852
+    ]
+  },
+  {
+    "name": "Korschenbroich",
+    "coordinates": [
+      51.183,
+      6.517
+    ]
+  },
+  {
+    "name": "Kraichtal",
+    "coordinates": [
+      49.12417,
+      8.71472
+    ]
+  },
+  {
+    "name": "Krakow am See",
+    "coordinates": [
+      53.65,
+      12.267
+    ]
+  },
+  {
+    "name": "Kranichfeld",
+    "coordinates": [
+      50.85,
+      11.2
+    ]
+  },
+  {
+    "name": "Krautheim",
+    "coordinates": [
+      49.383,
+      9.633
+    ]
+  },
+  {
+    "name": "Krefeld",
+    "coordinates": [
+      51.33333,
+      6.56667
+    ]
+  },
+  {
+    "name": "Kremmen",
+    "coordinates": [
+      52.76667,
+      13.03306
+    ]
+  },
+  {
+    "name": "Krempe",
+    "coordinates": [
+      53.817,
+      9.467
+    ]
+  },
+  {
+    "name": "Kreuztal",
+    "coordinates": [
+      50.967,
+      7.967
+    ]
+  },
+  {
+    "name": "Kronach",
+    "coordinates": [
+      50.24111,
+      11.32806
+    ]
+  },
+  {
+    "name": "Kronberg im Taunus",
+    "coordinates": [
+      50.183,
+      8.5
+    ]
+  },
+  {
+    "name": "Kroppenstedt",
+    "coordinates": [
+      51.9413,
+      11.30845
+    ]
+  },
+  {
+    "name": "Krumbach",
+    "coordinates": [
+      48.25,
+      10.367
+    ]
+  },
+  {
+    "name": "Kröpelin",
+    "coordinates": [
+      54.067,
+      11.783
+    ]
+  },
+  {
+    "name": "Kulmbach",
+    "coordinates": [
+      50.1,
+      11.433
+    ]
+  },
+  {
+    "name": "Kupferberg",
+    "coordinates": [
+      50.117,
+      11.567
+    ]
+  },
+  {
+    "name": "Kuppenheim",
+    "coordinates": [
+      48.8275,
+      8.25444
+    ]
+  },
+  {
+    "name": "Kusel",
+    "coordinates": [
+      49.53472,
+      7.39806
+    ]
+  },
+  {
+    "name": "Kyllburg",
+    "coordinates": [
+      50.04194,
+      6.59472
+    ]
+  },
+  {
+    "name": "Kyritz",
+    "coordinates": [
+      52.95,
+      12.4
+    ]
+  },
+  {
+    "name": "Kölleda",
+    "coordinates": [
+      51.167,
+      11.217
+    ]
+  },
+  {
+    "name": "Königs Wusterhausen",
+    "coordinates": [
+      52.29167,
+      13.625
+    ]
+  },
+  {
+    "name": "Königsberg in Bayern",
+    "coordinates": [
+      50.07778,
+      10.56667
+    ]
+  },
+  {
+    "name": "Königsbrunn",
+    "coordinates": [
+      48.26889,
+      10.89083
+    ]
+  },
+  {
+    "name": "Königsbrück",
+    "coordinates": [
+      51.25,
+      13.883
+    ]
+  },
+  {
+    "name": "Königsee",
+    "coordinates": [
+      50.66139,
+      11.09722
+    ]
+  },
+  {
+    "name": "Königslutter",
+    "coordinates": [
+      52.25,
+      10.817
+    ]
+  },
+  {
+    "name": "Königstein im Taunus",
+    "coordinates": [
+      50.183,
+      8.467
+    ]
+  },
+  {
+    "name": "Königstein",
+    "coordinates": [
+      50.91889,
+      14.07139
+    ]
+  },
+  {
+    "name": "Königswinter",
+    "coordinates": [
+      50.67361,
+      7.19472
+    ]
+  },
+  {
+    "name": "Könnern",
+    "coordinates": [
+      51.66972,
+      11.77083
+    ]
+  },
+  {
+    "name": "Köthen",
+    "coordinates": [
+      51.75,
+      11.91667
+    ]
+  },
+  {
+    "name": "Kühlungsborn",
+    "coordinates": [
+      54.133,
+      11.75
+    ]
+  },
+  {
+    "name": "Külsheim",
+    "coordinates": [
+      49.66944,
+      9.52056
+    ]
+  },
+  {
+    "name": "Künzelsau",
+    "coordinates": [
+      49.283,
+      9.683
+    ]
+  },
+  {
+    "name": "Laage",
+    "coordinates": [
+      53.93222,
+      12.34667
+    ]
+  },
+  {
+    "name": "Laatzen",
+    "coordinates": [
+      52.317,
+      9.8
+    ]
+  },
+  {
+    "name": "Ladenburg",
+    "coordinates": [
+      49.467,
+      8.617
+    ]
+  },
+  {
+    "name": "Lage",
+    "coordinates": [
+      51.96667,
+      8.8
+    ]
+  },
+  {
+    "name": "Lahnstein",
+    "coordinates": [
+      50.30111,
+      7.60556
+    ]
+  },
+  {
+    "name": "Lahr",
+    "coordinates": [
+      48.333,
+      7.867
+    ]
+  },
+  {
+    "name": "Laichingen",
+    "coordinates": [
+      48.48972,
+      9.68611
+    ]
+  },
+  {
+    "name": "Lambrecht, Rhineland-Palatinate",
+    "coordinates": [
+      49.38028,
+      8.08611
+    ]
+  },
+  {
+    "name": "Lampertheim",
+    "coordinates": [
+      49.6,
+      8.46667
+    ]
+  },
+  {
+    "name": "Landau an der Isar",
+    "coordinates": [
+      48.667,
+      12.667
+    ]
+  },
+  {
+    "name": "Landau in der Pfalz",
+    "coordinates": [
+      49.2,
+      8.117
+    ]
+  },
+  {
+    "name": "Landsberg am Lech",
+    "coordinates": [
+      48.04778,
+      10.89889
+    ]
+  },
+  {
+    "name": "Landsberg",
+    "coordinates": [
+      51.533,
+      12.167
+    ]
+  },
+  {
+    "name": "Landshut",
+    "coordinates": [
+      48.53972,
+      12.15083
+    ]
+  },
+  {
+    "name": "Landstuhl",
+    "coordinates": [
+      49.41222,
+      7.57222
+    ]
+  },
+  {
+    "name": "Langelsheim",
+    "coordinates": [
+      51.93806,
+      10.335
+    ]
+  },
+  {
+    "name": "Langen, Hesse",
+    "coordinates": [
+      49.983,
+      8.667
+    ]
+  },
+  {
+    "name": "Langenau",
+    "coordinates": [
+      48.49667,
+      10.12
+    ]
+  },
+  {
+    "name": "Langenburg",
+    "coordinates": [
+      49.25333,
+      9.84861
+    ]
+  },
+  {
+    "name": "Langenfeld",
+    "coordinates": [
+      51.117,
+      6.95
+    ]
+  },
+  {
+    "name": "Langenhagen",
+    "coordinates": [
+      52.43944,
+      9.74
+    ]
+  },
+  {
+    "name": "Langenselbold",
+    "coordinates": [
+      50.183,
+      9.033
+    ]
+  },
+  {
+    "name": "Langenzenn",
+    "coordinates": [
+      49.49444,
+      10.79472
+    ]
+  },
+  {
+    "name": "Lassan",
+    "coordinates": [
+      53.933,
+      13.833
+    ]
+  },
+  {
+    "name": "Laubach",
+    "coordinates": [
+      50.533,
+      8.99
+    ]
+  },
+  {
+    "name": "Laucha an der Unstrut",
+    "coordinates": [
+      51.22361,
+      11.67972
+    ]
+  },
+  {
+    "name": "Lauchhammer",
+    "coordinates": [
+      51.5,
+      13.8
+    ]
+  },
+  {
+    "name": "Lauchheim",
+    "coordinates": [
+      48.87167,
+      10.24444
+    ]
+  },
+  {
+    "name": "Lauda-Königshofen",
+    "coordinates": [
+      49.56861,
+      9.70389
+    ]
+  },
+  {
+    "name": "Lauenburg",
+    "coordinates": [
+      53.383,
+      10.567
+    ]
+  },
+  {
+    "name": "Lauf an der Pegnitz",
+    "coordinates": [
+      49.51028,
+      11.27722
+    ]
+  },
+  {
+    "name": "Laufenburg",
+    "coordinates": [
+      47.56556,
+      8.06472
+    ]
+  },
+  {
+    "name": "Laufen",
+    "coordinates": [
+      47.933,
+      12.933
+    ]
+  },
+  {
+    "name": "Lauffen",
+    "coordinates": [
+      49.08333,
+      9.15
+    ]
+  },
+  {
+    "name": "Lauingen",
+    "coordinates": [
+      48.567,
+      10.433
+    ]
+  },
+  {
+    "name": "Laupheim",
+    "coordinates": [
+      48.22889,
+      9.87972
+    ]
+  },
+  {
+    "name": "Lauscha",
+    "coordinates": [
+      50.48139,
+      11.16028
+    ]
+  },
+  {
+    "name": "Lauta",
+    "coordinates": [
+      51.44806,
+      14.09972
+    ]
+  },
+  {
+    "name": "Lauter-Bernsbach",
+    "coordinates": [
+      50.567,
+      12.75
+    ]
+  },
+  {
+    "name": "Lauterbach",
+    "coordinates": [
+      50.63778,
+      9.39444
+    ]
+  },
+  {
+    "name": "Lauterecken",
+    "coordinates": [
+      49.64944,
+      7.59194
+    ]
+  },
+  {
+    "name": "Lauterstein",
+    "coordinates": [
+      48.71,
+      9.86139
+    ]
+  },
+  {
+    "name": "Lebach",
+    "coordinates": [
+      49.41,
+      6.91
+    ]
+  },
+  {
+    "name": "Lebus",
+    "coordinates": [
+      52.41667,
+      14.53306
+    ]
+  },
+  {
+    "name": "Leer",
+    "coordinates": [
+      53.23083,
+      7.45278
+    ]
+  },
+  {
+    "name": "Lehesten",
+    "coordinates": [
+      50.47556,
+      11.44806
+    ]
+  },
+  {
+    "name": "Lehrte",
+    "coordinates": [
+      52.367,
+      9.967
+    ]
+  },
+  {
+    "name": "Leichlingen",
+    "coordinates": [
+      51.117,
+      7.017
+    ]
+  },
+  {
+    "name": "Leimen",
+    "coordinates": [
+      49.34806,
+      8.69111
+    ]
+  },
+  {
+    "name": "Leinefelde-Worbis",
+    "coordinates": [
+      51.38333,
+      10.33333
+    ]
+  },
+  {
+    "name": "Leinfelden-Echterdingen",
+    "coordinates": [
+      48.69278,
+      9.14278
+    ]
+  },
+  {
+    "name": "Leingarten",
+    "coordinates": [
+      49.15,
+      9.117
+    ]
+  },
+  {
+    "name": "Leipheim",
+    "coordinates": [
+      48.44889,
+      10.22083
+    ]
+  },
+  {
+    "name": "Leipzig",
+    "coordinates": [
+      51.333,
+      12.383
+    ]
+  },
+  {
+    "name": "Leisnig",
+    "coordinates": [
+      51.167,
+      12.917
+    ]
+  },
+  {
+    "name": "Lemgo",
+    "coordinates": [
+      52.02722,
+      8.91167
+    ]
+  },
+  {
+    "name": "Lengenfeld",
+    "coordinates": [
+      50.567,
+      12.367
+    ]
+  },
+  {
+    "name": "Lengerich",
+    "coordinates": [
+      52.175,
+      7.86667
+    ]
+  },
+  {
+    "name": "Lennestadt",
+    "coordinates": [
+      51.12361,
+      8.06806
+    ]
+  },
+  {
+    "name": "Lenzen",
+    "coordinates": [
+      53.09111,
+      11.47333
+    ]
+  },
+  {
+    "name": "Leonberg",
+    "coordinates": [
+      48.80139,
+      9.01306
+    ]
+  },
+  {
+    "name": "Leuna",
+    "coordinates": [
+      51.317,
+      12.017
+    ]
+  },
+  {
+    "name": "Leun",
+    "coordinates": [
+      50.55,
+      8.367
+    ]
+  },
+  {
+    "name": "Leutenberg",
+    "coordinates": [
+      50.54972,
+      11.44972
+    ]
+  },
+  {
+    "name": "Leutershausen",
+    "coordinates": [
+      49.283,
+      10.417
+    ]
+  },
+  {
+    "name": "Leutkirch im Allgäu",
+    "coordinates": [
+      47.82556,
+      10.02222
+    ]
+  },
+  {
+    "name": "Leverkusen",
+    "coordinates": [
+      51.033,
+      6.983
+    ]
+  },
+  {
+    "name": "Lichtenau",
+    "coordinates": [
+      48.72611,
+      8.005
+    ]
+  },
+  {
+    "name": "Lichtenau",
+    "coordinates": [
+      51.6,
+      8.88333
+    ]
+  },
+  {
+    "name": "Lichtenberg",
+    "coordinates": [
+      50.38361,
+      11.67583
+    ]
+  },
+  {
+    "name": "Lichtenfels",
+    "coordinates": [
+      50.133,
+      11.033
+    ]
+  },
+  {
+    "name": "Lichtenfels",
+    "coordinates": [
+      51.15,
+      8.8
+    ]
+  },
+  {
+    "name": "Lichtenstein",
+    "coordinates": [
+      50.75639,
+      12.63167
+    ]
+  },
+  {
+    "name": "Lich",
+    "coordinates": [
+      50.52167,
+      8.82083
+    ]
+  },
+  {
+    "name": "Liebenau",
+    "coordinates": [
+      51.483,
+      9.283
+    ]
+  },
+  {
+    "name": "Liebenwalde",
+    "coordinates": [
+      52.867,
+      13.4
+    ]
+  },
+  {
+    "name": "Lieberose",
+    "coordinates": [
+      51.98306,
+      14.3
+    ]
+  },
+  {
+    "name": "Liebstadt",
+    "coordinates": [
+      50.86472,
+      13.85556
+    ]
+  },
+  {
+    "name": "Limbach-Oberfrohna",
+    "coordinates": [
+      50.867,
+      12.75
+    ]
+  },
+  {
+    "name": "Limburg an der Lahn",
+    "coordinates": [
+      50.383,
+      8.067
+    ]
+  },
+  {
+    "name": "Lindau",
+    "coordinates": [
+      47.54583,
+      9.68333
+    ]
+  },
+  {
+    "name": "Lindenberg im Allgäu",
+    "coordinates": [
+      47.6,
+      9.9
+    ]
+  },
+  {
+    "name": "Lindenfels",
+    "coordinates": [
+      49.68333,
+      8.78333
+    ]
+  },
+  {
+    "name": "Linden",
+    "coordinates": [
+      50.533,
+      8.65
+    ]
+  },
+  {
+    "name": "Lindow",
+    "coordinates": [
+      52.967,
+      12.983
+    ]
+  },
+  {
+    "name": "Lingen (Ems)",
+    "coordinates": [
+      52.52306,
+      7.32306
+    ]
+  },
+  {
+    "name": "Linnich",
+    "coordinates": [
+      50.97889,
+      6.26778
+    ]
+  },
+  {
+    "name": "Linz am Rhein",
+    "coordinates": [
+      50.57028,
+      7.28472
+    ]
+  },
+  {
+    "name": "Lippstadt",
+    "coordinates": [
+      51.667,
+      8.35
+    ]
+  },
+  {
+    "name": "Lohmar",
+    "coordinates": [
+      50.817,
+      7.217
+    ]
+  },
+  {
+    "name": "Lohne (Oldenburg)",
+    "coordinates": [
+      52.66667,
+      8.23861
+    ]
+  },
+  {
+    "name": "Lohr a. Main",
+    "coordinates": [
+      50,
+      9.583
+    ]
+  },
+  {
+    "name": "Loitz",
+    "coordinates": [
+      53.967,
+      13.15
+    ]
+  },
+  {
+    "name": "Lollar",
+    "coordinates": [
+      50.64972,
+      8.70444
+    ]
+  },
+  {
+    "name": "Lommatzsch",
+    "coordinates": [
+      51.2,
+      13.3
+    ]
+  },
+  {
+    "name": "Lorch",
+    "coordinates": [
+      48.79833,
+      9.68833
+    ]
+  },
+  {
+    "name": "Lorch",
+    "coordinates": [
+      50.04417,
+      7.80333
+    ]
+  },
+  {
+    "name": "Lorsch",
+    "coordinates": [
+      49.65389,
+      8.5675
+    ]
+  },
+  {
+    "name": "Luckau",
+    "coordinates": [
+      51.85,
+      13.71667
+    ]
+  },
+  {
+    "name": "Lucka",
+    "coordinates": [
+      51.095,
+      12.33528
+    ]
+  },
+  {
+    "name": "Luckenwalde",
+    "coordinates": [
+      52.083,
+      13.167
+    ]
+  },
+  {
+    "name": "Ludwigsburg",
+    "coordinates": [
+      48.8975,
+      9.19222
+    ]
+  },
+  {
+    "name": "Ludwigsfelde",
+    "coordinates": [
+      52.29972,
+      13.26667
+    ]
+  },
+  {
+    "name": "Ludwigshafen am Rhein",
+    "coordinates": [
+      49.48111,
+      8.43528
+    ]
+  },
+  {
+    "name": "Ludwigslust",
+    "coordinates": [
+      53.32444,
+      11.49722
+    ]
+  },
+  {
+    "name": "Ludwigsstadt",
+    "coordinates": [
+      50.48583,
+      11.3875
+    ]
+  },
+  {
+    "name": "Lugau",
+    "coordinates": [
+      50.73833,
+      12.74639
+    ]
+  },
+  {
+    "name": "Lunzenau",
+    "coordinates": [
+      50.96306,
+      12.75306
+    ]
+  },
+  {
+    "name": "Lychen",
+    "coordinates": [
+      53.203235,
+      13.319617
+    ]
+  },
+  {
+    "name": "Löbau",
+    "coordinates": [
+      51.09444,
+      14.66667
+    ]
+  },
+  {
+    "name": "Löffingen",
+    "coordinates": [
+      47.88389,
+      8.34361
+    ]
+  },
+  {
+    "name": "Löhne",
+    "coordinates": [
+      52.2,
+      8.7
+    ]
+  },
+  {
+    "name": "Löningen",
+    "coordinates": [
+      52.717,
+      7.767
+    ]
+  },
+  {
+    "name": "Lörrach",
+    "coordinates": [
+      47.617,
+      7.667
+    ]
+  },
+  {
+    "name": "Löwenstein",
+    "coordinates": [
+      49.1,
+      9.383
+    ]
+  },
+  {
+    "name": "Lößnitz",
+    "coordinates": [
+      50.62139,
+      12.73167
+    ]
+  },
+  {
+    "name": "Lübbecke",
+    "coordinates": [
+      52.30806,
+      8.62306
+    ]
+  },
+  {
+    "name": "Lübben/Lubin",
+    "coordinates": [
+      51.95,
+      13.9
+    ]
+  },
+  {
+    "name": "Lübbenau/Spreewald",
+    "coordinates": [
+      51.867,
+      13.967
+    ]
+  },
+  {
+    "name": "Lübeck",
+    "coordinates": [
+      53.86972,
+      10.68639
+    ]
+  },
+  {
+    "name": "Lübtheen",
+    "coordinates": [
+      53.3,
+      11.083
+    ]
+  },
+  {
+    "name": "Lübz",
+    "coordinates": [
+      53.46306,
+      12.02833
+    ]
+  },
+  {
+    "name": "Lüchow",
+    "coordinates": [
+      52.967,
+      11.15
+    ]
+  },
+  {
+    "name": "Lüdenscheid",
+    "coordinates": [
+      51.217,
+      7.633
+    ]
+  },
+  {
+    "name": "Lüdinghausen",
+    "coordinates": [
+      51.767,
+      7.433
+    ]
+  },
+  {
+    "name": "Lügde",
+    "coordinates": [
+      51.95,
+      9.25
+    ]
+  },
+  {
+    "name": "Lüneburg",
+    "coordinates": [
+      53.2525,
+      10.41444
+    ]
+  },
+  {
+    "name": "Lünen",
+    "coordinates": [
+      51.617,
+      7.517
+    ]
+  },
+  {
+    "name": "Lütjenburg",
+    "coordinates": [
+      54.29472,
+      10.59139
+    ]
+  },
+  {
+    "name": "Lützen",
+    "coordinates": [
+      51.25,
+      12.133
+    ]
+  },
+  {
+    "name": "Magdala",
+    "coordinates": [
+      50.90667,
+      11.44611
+    ]
+  },
+  {
+    "name": "Magdeburg",
+    "coordinates": [
+      52.13333,
+      11.61667
+    ]
+  },
+  {
+    "name": "Mahlberg",
+    "coordinates": [
+      48.28694,
+      7.81139
+    ]
+  },
+  {
+    "name": "Mainbernheim",
+    "coordinates": [
+      49.7,
+      10.217
+    ]
+  },
+  {
+    "name": "Mainburg",
+    "coordinates": [
+      48.65,
+      11.783
+    ]
+  },
+  {
+    "name": "Maintal",
+    "coordinates": [
+      50.15,
+      8.833
+    ]
+  },
+  {
+    "name": "Mainz",
+    "coordinates": [
+      49.983,
+      8.267
+    ]
+  },
+  {
+    "name": "Malchin",
+    "coordinates": [
+      53.733,
+      12.783
+    ]
+  },
+  {
+    "name": "Malchow",
+    "coordinates": [
+      53.467,
+      12.417
+    ]
+  },
+  {
+    "name": "Manderscheid",
+    "coordinates": [
+      50.09194,
+      6.80917
+    ]
+  },
+  {
+    "name": "Mannheim",
+    "coordinates": [
+      49.48778,
+      8.46611
+    ]
+  },
+  {
+    "name": "Mansfeld",
+    "coordinates": [
+      51.59417,
+      11.45472
+    ]
+  },
+  {
+    "name": "Marbach am Neckar",
+    "coordinates": [
+      48.933,
+      9.25
+    ]
+  },
+  {
+    "name": "Marburg",
+    "coordinates": [
+      50.81,
+      8.77083
+    ]
+  },
+  {
+    "name": "Marienberg",
+    "coordinates": [
+      50.633,
+      13.15
+    ]
+  },
+  {
+    "name": "Marienmünster",
+    "coordinates": [
+      51.81667,
+      9.18306
+    ]
+  },
+  {
+    "name": "Markdorf",
+    "coordinates": [
+      47.72083,
+      9.39167
+    ]
+  },
+  {
+    "name": "Markgröningen",
+    "coordinates": [
+      48.90472,
+      9.08083
+    ]
+  },
+  {
+    "name": "Markkleeberg",
+    "coordinates": [
+      51.27778,
+      12.38333
+    ]
+  },
+  {
+    "name": "Markneukirchen",
+    "coordinates": [
+      50.317,
+      12.317
+    ]
+  },
+  {
+    "name": "Markranstädt",
+    "coordinates": [
+      51.30167,
+      12.22111
+    ]
+  },
+  {
+    "name": "Marktbreit",
+    "coordinates": [
+      49.66694,
+      10.14361
+    ]
+  },
+  {
+    "name": "Marktheidenfeld",
+    "coordinates": [
+      49.85,
+      9.6
+    ]
+  },
+  {
+    "name": "Marktleuthen",
+    "coordinates": [
+      50.117,
+      12
+    ]
+  },
+  {
+    "name": "Marktoberdorf",
+    "coordinates": [
+      47.767,
+      10.617
+    ]
+  },
+  {
+    "name": "Marktredwitz",
+    "coordinates": [
+      50,
+      12.067
+    ]
+  },
+  {
+    "name": "Marktsteft",
+    "coordinates": [
+      49.7,
+      10.117
+    ]
+  },
+  {
+    "name": "Marlow",
+    "coordinates": [
+      54.133,
+      12.567
+    ]
+  },
+  {
+    "name": "Marl",
+    "coordinates": [
+      51.667,
+      7.117
+    ]
+  },
+  {
+    "name": "Marne",
+    "coordinates": [
+      53.95,
+      9
+    ]
+  },
+  {
+    "name": "Marsberg",
+    "coordinates": [
+      51.45,
+      8.833
+    ]
+  },
+  {
+    "name": "Maulbronn",
+    "coordinates": [
+      49.00028,
+      8.81083
+    ]
+  },
+  {
+    "name": "Maxhütte-Haidhof",
+    "coordinates": [
+      49.2,
+      12.1
+    ]
+  },
+  {
+    "name": "Mayen",
+    "coordinates": [
+      50.33333,
+      7.21667
+    ]
+  },
+  {
+    "name": "Mechernich",
+    "coordinates": [
+      50.6,
+      6.65
+    ]
+  },
+  {
+    "name": "Meckenheim",
+    "coordinates": [
+      50.633,
+      7.017
+    ]
+  },
+  {
+    "name": "Medebach",
+    "coordinates": [
+      51.19722,
+      8.70694
+    ]
+  },
+  {
+    "name": "Meerane",
+    "coordinates": [
+      50.85194,
+      12.46361
+    ]
+  },
+  {
+    "name": "Meerbusch",
+    "coordinates": [
+      51.267,
+      6.667
+    ]
+  },
+  {
+    "name": "Meersburg",
+    "coordinates": [
+      47.7,
+      9.267
+    ]
+  },
+  {
+    "name": "Meinerzhagen",
+    "coordinates": [
+      51.117,
+      7.633
+    ]
+  },
+  {
+    "name": "Meiningen",
+    "coordinates": [
+      50.55,
+      10.417
+    ]
+  },
+  {
+    "name": "Meisenheim",
+    "coordinates": [
+      49.717,
+      7.667
+    ]
+  },
+  {
+    "name": "Meissen",
+    "coordinates": [
+      51.167,
+      13.483
+    ]
+  },
+  {
+    "name": "Meldorf",
+    "coordinates": [
+      54.083,
+      9.067
+    ]
+  },
+  {
+    "name": "Melle",
+    "coordinates": [
+      52.20444,
+      8.33889
+    ]
+  },
+  {
+    "name": "Mellrichstadt",
+    "coordinates": [
+      50.417,
+      10.317
+    ]
+  },
+  {
+    "name": "Melsungen",
+    "coordinates": [
+      51.133,
+      9.55
+    ]
+  },
+  {
+    "name": "Memmingen",
+    "coordinates": [
+      47.98778,
+      10.18111
+    ]
+  },
+  {
+    "name": "Menden",
+    "coordinates": [
+      51.43333,
+      7.8
+    ]
+  },
+  {
+    "name": "Mendig",
+    "coordinates": [
+      50.37444,
+      7.28083
+    ]
+  },
+  {
+    "name": "Mengen",
+    "coordinates": [
+      48.04972,
+      9.33
+    ]
+  },
+  {
+    "name": "Meppen",
+    "coordinates": [
+      52.69361,
+      7.29278
+    ]
+  },
+  {
+    "name": "Merkendorf",
+    "coordinates": [
+      49.2,
+      10.683
+    ]
+  },
+  {
+    "name": "Merseburg",
+    "coordinates": [
+      51.35444,
+      11.99278
+    ]
+  },
+  {
+    "name": "Merzig",
+    "coordinates": [
+      49.45,
+      6.617
+    ]
+  },
+  {
+    "name": "Meschede",
+    "coordinates": [
+      51.35,
+      8.283
+    ]
+  },
+  {
+    "name": "Mettmann",
+    "coordinates": [
+      51.25,
+      6.967
+    ]
+  },
+  {
+    "name": "Metzingen",
+    "coordinates": [
+      48.53667,
+      9.28583
+    ]
+  },
+  {
+    "name": "Meuselwitz",
+    "coordinates": [
+      51.05,
+      12.3
+    ]
+  },
+  {
+    "name": "Meyenburg",
+    "coordinates": [
+      53.31667,
+      12.23306
+    ]
+  },
+  {
+    "name": "Meßkirch",
+    "coordinates": [
+      47.99278,
+      9.1125
+    ]
+  },
+  {
+    "name": "Meßstetten",
+    "coordinates": [
+      48.18056,
+      8.9625
+    ]
+  },
+  {
+    "name": "Michelstadt",
+    "coordinates": [
+      49.678591,
+      9.003859
+    ]
+  },
+  {
+    "name": "Miesbach",
+    "coordinates": [
+      47.783,
+      11.833
+    ]
+  },
+  {
+    "name": "Miltenberg",
+    "coordinates": [
+      49.70389,
+      9.26444
+    ]
+  },
+  {
+    "name": "Mindelheim",
+    "coordinates": [
+      48.033,
+      10.467
+    ]
+  },
+  {
+    "name": "Minden",
+    "coordinates": [
+      52.28833,
+      8.91667
+    ]
+  },
+  {
+    "name": "Mirow",
+    "coordinates": [
+      53.267,
+      12.8
+    ]
+  },
+  {
+    "name": "Mittenwalde",
+    "coordinates": [
+      52.267,
+      13.533
+    ]
+  },
+  {
+    "name": "Mitterteich",
+    "coordinates": [
+      49.933,
+      12.233
+    ]
+  },
+  {
+    "name": "Mittweida",
+    "coordinates": [
+      50.98556,
+      12.98111
+    ]
+  },
+  {
+    "name": "Moers",
+    "coordinates": [
+      51.45917,
+      6.61972
+    ]
+  },
+  {
+    "name": "Monheim am Rhein",
+    "coordinates": [
+      51.1,
+      6.9
+    ]
+  },
+  {
+    "name": "Monheim",
+    "coordinates": [
+      48.833,
+      10.833
+    ]
+  },
+  {
+    "name": "Monschau",
+    "coordinates": [
+      50.56,
+      6.25639
+    ]
+  },
+  {
+    "name": "Montabaur",
+    "coordinates": [
+      50.4375,
+      7.82583
+    ]
+  },
+  {
+    "name": "Moosburg an der Isar",
+    "coordinates": [
+      48.467,
+      11.933
+    ]
+  },
+  {
+    "name": "Moringen",
+    "coordinates": [
+      51.7,
+      9.867
+    ]
+  },
+  {
+    "name": "Mosbach",
+    "coordinates": [
+      49.35222,
+      9.14667
+    ]
+  },
+  {
+    "name": "Munderkingen",
+    "coordinates": [
+      48.23528,
+      9.64389
+    ]
+  },
+  {
+    "name": "Munich",
+    "coordinates": [
+      48.133,
+      11.567
+    ]
+  },
+  {
+    "name": "Munster",
+    "coordinates": [
+      52.98861,
+      10.09111
+    ]
+  },
+  {
+    "name": "Murrhardt",
+    "coordinates": [
+      48.98,
+      9.58139
+    ]
+  },
+  {
+    "name": "Märkisch Buchholz",
+    "coordinates": [
+      52.1,
+      13.75
+    ]
+  },
+  {
+    "name": "Möckern",
+    "coordinates": [
+      52.14056,
+      11.9525
+    ]
+  },
+  {
+    "name": "Möckmühl",
+    "coordinates": [
+      49.317,
+      9.35
+    ]
+  },
+  {
+    "name": "Mölln",
+    "coordinates": [
+      53.62694,
+      10.68472
+    ]
+  },
+  {
+    "name": "Mönchengladbach",
+    "coordinates": [
+      51.2,
+      6.43333
+    ]
+  },
+  {
+    "name": "Mörfelden-Walldorf",
+    "coordinates": [
+      50,
+      8.583
+    ]
+  },
+  {
+    "name": "Mössingen",
+    "coordinates": [
+      48.40639,
+      9.0575
+    ]
+  },
+  {
+    "name": "Mücheln",
+    "coordinates": [
+      51.3,
+      11.8
+    ]
+  },
+  {
+    "name": "Mügeln",
+    "coordinates": [
+      51.23333,
+      13.05
+    ]
+  },
+  {
+    "name": "Mühlacker",
+    "coordinates": [
+      48.95,
+      8.83944
+    ]
+  },
+  {
+    "name": "Mühlberg",
+    "coordinates": [
+      51.43306,
+      13.21667
+    ]
+  },
+  {
+    "name": "Mühldorf am Inn",
+    "coordinates": [
+      48.24167,
+      12.525
+    ]
+  },
+  {
+    "name": "Mühlhausen",
+    "coordinates": [
+      51.217,
+      10.45
+    ]
+  },
+  {
+    "name": "Mühlheim am Main",
+    "coordinates": [
+      50.117,
+      8.917
+    ]
+  },
+  {
+    "name": "Mühlheim an der Donau",
+    "coordinates": [
+      48.03056,
+      8.88583
+    ]
+  },
+  {
+    "name": "Mülheim an der Ruhr",
+    "coordinates": [
+      51.4275,
+      6.8825
+    ]
+  },
+  {
+    "name": "Mülheim-Kärlich",
+    "coordinates": [
+      50.38694,
+      7.49528
+    ]
+  },
+  {
+    "name": "Müllheim",
+    "coordinates": [
+      47.8,
+      7.633
+    ]
+  },
+  {
+    "name": "Müllrose",
+    "coordinates": [
+      52.25,
+      14.417
+    ]
+  },
+  {
+    "name": "Münchberg",
+    "coordinates": [
+      50.2,
+      11.767
+    ]
+  },
+  {
+    "name": "Müncheberg",
+    "coordinates": [
+      52.50361,
+      14.13972
+    ]
+  },
+  {
+    "name": "Münchenbernsdorf",
+    "coordinates": [
+      50.81667,
+      11.93333
+    ]
+  },
+  {
+    "name": "Münnerstadt",
+    "coordinates": [
+      50.25,
+      10.167
+    ]
+  },
+  {
+    "name": "Münsingen",
+    "coordinates": [
+      48.41278,
+      9.49528
+    ]
+  },
+  {
+    "name": "Münstermaifeld",
+    "coordinates": [
+      50.2475,
+      7.36306
+    ]
+  },
+  {
+    "name": "Münster",
+    "coordinates": [
+      51.9625,
+      7.62556
+    ]
+  },
+  {
+    "name": "Münzenberg",
+    "coordinates": [
+      50.45333,
+      8.77611
+    ]
+  },
+  {
+    "name": "Nabburg",
+    "coordinates": [
+      49.45,
+      12.167
+    ]
+  },
+  {
+    "name": "Nagold",
+    "coordinates": [
+      48.55194,
+      8.72556
+    ]
+  },
+  {
+    "name": "Naila",
+    "coordinates": [
+      50.317,
+      11.683
+    ]
+  },
+  {
+    "name": "Nassau",
+    "coordinates": [
+      50.31583,
+      7.80222
+    ]
+  },
+  {
+    "name": "Nastätten",
+    "coordinates": [
+      50.19944,
+      7.85833
+    ]
+  },
+  {
+    "name": "Nauen",
+    "coordinates": [
+      52.6,
+      12.88306
+    ]
+  },
+  {
+    "name": "Naumburg",
+    "coordinates": [
+      51.25,
+      9.167
+    ]
+  },
+  {
+    "name": "Naumburg",
+    "coordinates": [
+      51.15,
+      11.817
+    ]
+  },
+  {
+    "name": "Naunhof",
+    "coordinates": [
+      51.27778,
+      12.58833
+    ]
+  },
+  {
+    "name": "Nebra",
+    "coordinates": [
+      51.283,
+      11.567
+    ]
+  },
+  {
+    "name": "Neckarbischofsheim",
+    "coordinates": [
+      49.2925,
+      8.96056
+    ]
+  },
+  {
+    "name": "Neckargemünd",
+    "coordinates": [
+      49.39389,
+      8.7975
+    ]
+  },
+  {
+    "name": "Neckarsteinach",
+    "coordinates": [
+      49.4,
+      8.83333
+    ]
+  },
+  {
+    "name": "Neckarsulm",
+    "coordinates": [
+      49.191694,
+      9.224556
+    ]
+  },
+  {
+    "name": "Neresheim",
+    "coordinates": [
+      48.75417,
+      10.33444
+    ]
+  },
+  {
+    "name": "Netphen",
+    "coordinates": [
+      50.91472,
+      8.1
+    ]
+  },
+  {
+    "name": "Nettetal",
+    "coordinates": [
+      51.317,
+      6.283
+    ]
+  },
+  {
+    "name": "Netzschkau",
+    "coordinates": [
+      50.617,
+      12.25
+    ]
+  },
+  {
+    "name": "Neu-Anspach",
+    "coordinates": [
+      50.29306,
+      8.50889
+    ]
+  },
+  {
+    "name": "Neu-Isenburg",
+    "coordinates": [
+      50.05,
+      8.7
+    ]
+  },
+  {
+    "name": "Neu-Ulm",
+    "coordinates": [
+      48.383,
+      10
+    ]
+  },
+  {
+    "name": "Neubrandenburg",
+    "coordinates": [
+      53.55694,
+      13.26111
+    ]
+  },
+  {
+    "name": "Neubukow",
+    "coordinates": [
+      54.017,
+      11.667
+    ]
+  },
+  {
+    "name": "Neubulach",
+    "coordinates": [
+      48.66111,
+      8.69667
+    ]
+  },
+  {
+    "name": "Neuburg a.d. Donau",
+    "coordinates": [
+      48.733,
+      11.183
+    ]
+  },
+  {
+    "name": "Neudenau",
+    "coordinates": [
+      49.283,
+      9.267
+    ]
+  },
+  {
+    "name": "Neuenburg am Rhein",
+    "coordinates": [
+      47.81472,
+      7.56194
+    ]
+  },
+  {
+    "name": "Neuenbürg",
+    "coordinates": [
+      48.84611,
+      8.58889
+    ]
+  },
+  {
+    "name": "Neuenhaus",
+    "coordinates": [
+      52.5,
+      6.96667
+    ]
+  },
+  {
+    "name": "Neuenrade",
+    "coordinates": [
+      51.28389,
+      7.78
+    ]
+  },
+  {
+    "name": "Neuenstadt am Kocher",
+    "coordinates": [
+      49.233,
+      9.333
+    ]
+  },
+  {
+    "name": "Neuenstein",
+    "coordinates": [
+      49.2,
+      9.583
+    ]
+  },
+  {
+    "name": "Neuerburg",
+    "coordinates": [
+      50.01056,
+      6.29583
+    ]
+  },
+  {
+    "name": "Neuffen",
+    "coordinates": [
+      48.55444,
+      9.37556
+    ]
+  },
+  {
+    "name": "Neuhaus am Rennweg",
+    "coordinates": [
+      50.517,
+      11.15
+    ]
+  },
+  {
+    "name": "Neukalen",
+    "coordinates": [
+      53.817,
+      12.783
+    ]
+  },
+  {
+    "name": "Neukirchen-Vluyn",
+    "coordinates": [
+      51.44167,
+      6.55833
+    ]
+  },
+  {
+    "name": "Neukirchen",
+    "coordinates": [
+      50.867,
+      9.333
+    ]
+  },
+  {
+    "name": "Neukloster",
+    "coordinates": [
+      53.867,
+      11.683
+    ]
+  },
+  {
+    "name": "Neumarkt in der Oberpfalz",
+    "coordinates": [
+      49.283,
+      11.467
+    ]
+  },
+  {
+    "name": "Neumarkt-Sankt Veit",
+    "coordinates": [
+      48.367,
+      12.5
+    ]
+  },
+  {
+    "name": "Neumark",
+    "coordinates": [
+      51.08,
+      11.24778
+    ]
+  },
+  {
+    "name": "Neumünster",
+    "coordinates": [
+      54.07139,
+      9.99
+    ]
+  },
+  {
+    "name": "Neunburg vorm Wald",
+    "coordinates": [
+      49.333,
+      12.383
+    ]
+  },
+  {
+    "name": "Neunkirchen",
+    "coordinates": [
+      49.35,
+      7.167
+    ]
+  },
+  {
+    "name": "Neuruppin",
+    "coordinates": [
+      52.93306,
+      12.8
+    ]
+  },
+  {
+    "name": "Neusalza-Spremberg",
+    "coordinates": [
+      51.03889,
+      14.52944
+    ]
+  },
+  {
+    "name": "Neuss",
+    "coordinates": [
+      51.2,
+      6.7
+    ]
+  },
+  {
+    "name": "Neustadt a.d.Donau",
+    "coordinates": [
+      48.8,
+      11.767
+    ]
+  },
+  {
+    "name": "Neustadt a.d.Waldnaab",
+    "coordinates": [
+      49.73082,
+      12.1707
+    ]
+  },
+  {
+    "name": "Neustadt am Kulm",
+    "coordinates": [
+      49.817,
+      11.817
+    ]
+  },
+  {
+    "name": "Neustadt am Rübenberge",
+    "coordinates": [
+      52.5,
+      9.467
+    ]
+  },
+  {
+    "name": "Neustadt an der Aisch",
+    "coordinates": [
+      49.59667,
+      10.60889
+    ]
+  },
+  {
+    "name": "Neustadt an der Orla",
+    "coordinates": [
+      50.733,
+      11.75
+    ]
+  },
+  {
+    "name": "Neustadt an der Weinstraße",
+    "coordinates": [
+      49.35,
+      8.15
+    ]
+  },
+  {
+    "name": "Neustadt b.Coburg",
+    "coordinates": [
+      50.32889,
+      11.12111
+    ]
+  },
+  {
+    "name": "Neustadt in Holstein",
+    "coordinates": [
+      54.10722,
+      10.81583
+    ]
+  },
+  {
+    "name": "Neustadt in Sachsen",
+    "coordinates": [
+      51.02389,
+      14.21667
+    ]
+  },
+  {
+    "name": "Neustadt-Glewe",
+    "coordinates": [
+      53.367,
+      11.583
+    ]
+  },
+  {
+    "name": "Neustadt",
+    "coordinates": [
+      52.86667,
+      12.43306
+    ]
+  },
+  {
+    "name": "Neustadt",
+    "coordinates": [
+      50.85,
+      9.117
+    ]
+  },
+  {
+    "name": "Neustrelitz",
+    "coordinates": [
+      53.36472,
+      13.06361
+    ]
+  },
+  {
+    "name": "Neusäß",
+    "coordinates": [
+      48.4,
+      10.833
+    ]
+  },
+  {
+    "name": "Neutraubling",
+    "coordinates": [
+      48.99361,
+      12.19528
+    ]
+  },
+  {
+    "name": "Neuwied",
+    "coordinates": [
+      50.42861,
+      7.46139
+    ]
+  },
+  {
+    "name": "Neuötting",
+    "coordinates": [
+      48.217,
+      12.683
+    ]
+  },
+  {
+    "name": "Niddatal",
+    "coordinates": [
+      50.29833,
+      8.81389
+    ]
+  },
+  {
+    "name": "Nidda",
+    "coordinates": [
+      50.41278,
+      9.00917
+    ]
+  },
+  {
+    "name": "Nidderau",
+    "coordinates": [
+      50.25,
+      8.9
+    ]
+  },
+  {
+    "name": "Nideggen",
+    "coordinates": [
+      50.7,
+      6.483
+    ]
+  },
+  {
+    "name": "NiebüllNaibel / Nibøl",
+    "coordinates": [
+      54.7881,
+      8.8296
+    ]
+  },
+  {
+    "name": "Niedenstein",
+    "coordinates": [
+      51.233,
+      9.317
+    ]
+  },
+  {
+    "name": "Nieder-Olm",
+    "coordinates": [
+      49.90833,
+      8.20278
+    ]
+  },
+  {
+    "name": "Niederkassel",
+    "coordinates": [
+      50.817,
+      7.033
+    ]
+  },
+  {
+    "name": "Niedernhall",
+    "coordinates": [
+      49.3,
+      9.617
+    ]
+  },
+  {
+    "name": "Niederstetten",
+    "coordinates": [
+      49.40083,
+      9.91806
+    ]
+  },
+  {
+    "name": "Niederstotzingen",
+    "coordinates": [
+      48.54111,
+      10.23306
+    ]
+  },
+  {
+    "name": "Nieheim",
+    "coordinates": [
+      51.79972,
+      9.10972
+    ]
+  },
+  {
+    "name": "Niemegk",
+    "coordinates": [
+      52.08306,
+      12.69972
+    ]
+  },
+  {
+    "name": "Nienburg",
+    "coordinates": [
+      52.64111,
+      9.20694
+    ]
+  },
+  {
+    "name": "Nienburg",
+    "coordinates": [
+      51.817,
+      11.75
+    ]
+  },
+  {
+    "name": "Nierstein",
+    "coordinates": [
+      49.86944,
+      8.3375
+    ]
+  },
+  {
+    "name": "Niesky",
+    "coordinates": [
+      51.3,
+      14.817
+    ]
+  },
+  {
+    "name": "Nittenau",
+    "coordinates": [
+      49.2,
+      12.267
+    ]
+  },
+  {
+    "name": "Nordenham",
+    "coordinates": [
+      53.5,
+      8.467
+    ]
+  },
+  {
+    "name": "Norden",
+    "coordinates": [
+      53.59667,
+      7.20556
+    ]
+  },
+  {
+    "name": "Norderney",
+    "coordinates": [
+      53.70722,
+      7.14694
+    ]
+  },
+  {
+    "name": "Norderstedt",
+    "coordinates": [
+      53.70639,
+      10.01028
+    ]
+  },
+  {
+    "name": "Nordhausen, Thuringia",
+    "coordinates": [
+      51.505,
+      10.79111
+    ]
+  },
+  {
+    "name": "Nordhorn",
+    "coordinates": [
+      52.43194,
+      7.06778
+    ]
+  },
+  {
+    "name": "Northeim",
+    "coordinates": [
+      51.70667,
+      10.00111
+    ]
+  },
+  {
+    "name": "Nortorf",
+    "coordinates": [
+      54.167,
+      9.867
+    ]
+  },
+  {
+    "name": "Nossen",
+    "coordinates": [
+      51.05,
+      13.3
+    ]
+  },
+  {
+    "name": "Nottertal-Heilinger Höhen",
+    "coordinates": [
+      51.24694,
+      10.65639
+    ]
+  },
+  {
+    "name": "Nuremberg",
+    "coordinates": [
+      49.45389,
+      11.0775
+    ]
+  },
+  {
+    "name": "Nördlingen",
+    "coordinates": [
+      48.85111,
+      10.48833
+    ]
+  },
+  {
+    "name": "Nürtingen",
+    "coordinates": [
+      48.633,
+      9.333
+    ]
+  },
+  {
+    "name": "Ober-Ramstadt",
+    "coordinates": [
+      49.833,
+      8.75
+    ]
+  },
+  {
+    "name": "Oberasbach",
+    "coordinates": [
+      49.42194,
+      10.95833
+    ]
+  },
+  {
+    "name": "Oberharz am Brocken",
+    "coordinates": [
+      51.717,
+      10.817
+    ]
+  },
+  {
+    "name": "Oberhausen",
+    "coordinates": [
+      51.49667,
+      6.87056
+    ]
+  },
+  {
+    "name": "Oberhof",
+    "coordinates": [
+      50.70528,
+      10.72583
+    ]
+  },
+  {
+    "name": "Oberkirch",
+    "coordinates": [
+      48.533,
+      8.083
+    ]
+  },
+  {
+    "name": "Oberkochen",
+    "coordinates": [
+      48.78389,
+      10.10528
+    ]
+  },
+  {
+    "name": "Oberlungwitz",
+    "coordinates": [
+      50.783,
+      12.717
+    ]
+  },
+  {
+    "name": "Obermoschel",
+    "coordinates": [
+      49.72694,
+      7.77278
+    ]
+  },
+  {
+    "name": "Obernburg a.Main",
+    "coordinates": [
+      49.84,
+      9.14139
+    ]
+  },
+  {
+    "name": "Oberndorf am Neckar",
+    "coordinates": [
+      48.29139,
+      8.5725
+    ]
+  },
+  {
+    "name": "Obernkirchen",
+    "coordinates": [
+      52.26639,
+      9.11778
+    ]
+  },
+  {
+    "name": "Oberriexingen",
+    "coordinates": [
+      48.92556,
+      9.02806
+    ]
+  },
+  {
+    "name": "Obertshausen",
+    "coordinates": [
+      50.067,
+      8.833
+    ]
+  },
+  {
+    "name": "Oberursel (Taunus)",
+    "coordinates": [
+      50.2032194,
+      8.576925
+    ]
+  },
+  {
+    "name": "Oberviechtach",
+    "coordinates": [
+      49.45,
+      12.417
+    ]
+  },
+  {
+    "name": "Oberwesel",
+    "coordinates": [
+      50.11111,
+      7.72139
+    ]
+  },
+  {
+    "name": "Oberwiesenthal",
+    "coordinates": [
+      50.41917,
+      12.97083
+    ]
+  },
+  {
+    "name": "Oberzent",
+    "coordinates": [
+      49.567,
+      8.967
+    ]
+  },
+  {
+    "name": "Ochsenfurt",
+    "coordinates": [
+      49.65,
+      10.067
+    ]
+  },
+  {
+    "name": "Ochsenhausen",
+    "coordinates": [
+      48.07222,
+      9.94806
+    ]
+  },
+  {
+    "name": "Ochtrup",
+    "coordinates": [
+      52.20556,
+      7.19028
+    ]
+  },
+  {
+    "name": "Oderberg",
+    "coordinates": [
+      52.86667,
+      14.05
+    ]
+  },
+  {
+    "name": "Oebisfelde-Weferlingen",
+    "coordinates": [
+      52.433,
+      10.983
+    ]
+  },
+  {
+    "name": "Oederan",
+    "coordinates": [
+      50.86167,
+      13.16722
+    ]
+  },
+  {
+    "name": "Oelde",
+    "coordinates": [
+      51.833,
+      8.15
+    ]
+  },
+  {
+    "name": "Oelsnitz",
+    "coordinates": [
+      50.41667,
+      12.16667
+    ]
+  },
+  {
+    "name": "Oelsnitz",
+    "coordinates": [
+      50.72222,
+      12.69861
+    ]
+  },
+  {
+    "name": "Oer-Erkenschwick",
+    "coordinates": [
+      51.64222,
+      7.25083
+    ]
+  },
+  {
+    "name": "Oerlinghausen",
+    "coordinates": [
+      51.96667,
+      8.66667
+    ]
+  },
+  {
+    "name": "Oestrich-Winkel",
+    "coordinates": [
+      50,
+      8
+    ]
+  },
+  {
+    "name": "Oettingen in Bayern",
+    "coordinates": [
+      48.95,
+      10.583
+    ]
+  },
+  {
+    "name": "Offenbach am Main",
+    "coordinates": [
+      50.1,
+      8.8
+    ]
+  },
+  {
+    "name": "Offenburg",
+    "coordinates": [
+      48.467,
+      7.933
+    ]
+  },
+  {
+    "name": "Ohrdruf",
+    "coordinates": [
+      50.82806,
+      10.73278
+    ]
+  },
+  {
+    "name": "Olbernhau",
+    "coordinates": [
+      50.667,
+      13.333
+    ]
+  },
+  {
+    "name": "Olching",
+    "coordinates": [
+      48.2,
+      11.317
+    ]
+  },
+  {
+    "name": "Oldenburg in Holstein",
+    "coordinates": [
+      54.3,
+      10.88333
+    ]
+  },
+  {
+    "name": "Oldenburg",
+    "coordinates": [
+      53.14389,
+      8.21389
+    ]
+  },
+  {
+    "name": "Olfen",
+    "coordinates": [
+      51.717,
+      7.383
+    ]
+  },
+  {
+    "name": "Olpe",
+    "coordinates": [
+      51.017,
+      7.833
+    ]
+  },
+  {
+    "name": "Olsberg",
+    "coordinates": [
+      51.35,
+      8.483
+    ]
+  },
+  {
+    "name": "Oppenau",
+    "coordinates": [
+      48.47361,
+      8.15944
+    ]
+  },
+  {
+    "name": "Oppenheim",
+    "coordinates": [
+      49.85556,
+      8.36028
+    ]
+  },
+  {
+    "name": "Oranienbaum-Wörlitz",
+    "coordinates": [
+      51.79917,
+      12.40694
+    ]
+  },
+  {
+    "name": "Oranienburg",
+    "coordinates": [
+      52.75444,
+      13.23694
+    ]
+  },
+  {
+    "name": "Orlamünde",
+    "coordinates": [
+      50.77528,
+      11.53139
+    ]
+  },
+  {
+    "name": "Ornbau",
+    "coordinates": [
+      49.17778,
+      10.65556
+    ]
+  },
+  {
+    "name": "Ortenberg",
+    "coordinates": [
+      50.35583,
+      9.05528
+    ]
+  },
+  {
+    "name": "Ortrand",
+    "coordinates": [
+      51.36667,
+      13.78306
+    ]
+  },
+  {
+    "name": "Oschatz",
+    "coordinates": [
+      51.30028,
+      13.10722
+    ]
+  },
+  {
+    "name": "Oschersleben",
+    "coordinates": [
+      52.017,
+      11.25
+    ]
+  },
+  {
+    "name": "Osnabrück",
+    "coordinates": [
+      52.283,
+      8.05
+    ]
+  },
+  {
+    "name": "Osterburg",
+    "coordinates": [
+      52.783,
+      11.767
+    ]
+  },
+  {
+    "name": "Osterburken",
+    "coordinates": [
+      49.43083,
+      9.42611
+    ]
+  },
+  {
+    "name": "Osterfeld",
+    "coordinates": [
+      51.07667,
+      11.93306
+    ]
+  },
+  {
+    "name": "Osterhofen",
+    "coordinates": [
+      48.7,
+      13.017
+    ]
+  },
+  {
+    "name": "Osterholz-Scharmbeck",
+    "coordinates": [
+      53.217,
+      8.8
+    ]
+  },
+  {
+    "name": "Osterode am Harz",
+    "coordinates": [
+      51.72861,
+      10.25222
+    ]
+  },
+  {
+    "name": "Osterwieck",
+    "coordinates": [
+      51.967,
+      10.717
+    ]
+  },
+  {
+    "name": "Ostfildern",
+    "coordinates": [
+      48.733,
+      9.25
+    ]
+  },
+  {
+    "name": "Ostheim",
+    "coordinates": [
+      50.467,
+      10.217
+    ]
+  },
+  {
+    "name": "Osthofen",
+    "coordinates": [
+      49.70778,
+      8.32889
+    ]
+  },
+  {
+    "name": "Ostritz",
+    "coordinates": [
+      51.01472,
+      14.93222
+    ]
+  },
+  {
+    "name": "Otterberg",
+    "coordinates": [
+      49.50444,
+      7.77111
+    ]
+  },
+  {
+    "name": "Otterndorf",
+    "coordinates": [
+      53.8,
+      8.9
+    ]
+  },
+  {
+    "name": "Ottweiler",
+    "coordinates": [
+      49.367,
+      7.167
+    ]
+  },
+  {
+    "name": "Overath",
+    "coordinates": [
+      50.95,
+      7.3
+    ]
+  },
+  {
+    "name": "Owen",
+    "coordinates": [
+      48.58833,
+      9.45139
+    ]
+  },
+  {
+    "name": "Paderborn",
+    "coordinates": [
+      51.71806,
+      8.75417
+    ]
+  },
+  {
+    "name": "Papenburg",
+    "coordinates": [
+      53.067,
+      7.4
+    ]
+  },
+  {
+    "name": "Pappenheim",
+    "coordinates": [
+      48.93472,
+      10.97444
+    ]
+  },
+  {
+    "name": "Parchim",
+    "coordinates": [
+      53.417,
+      11.833
+    ]
+  },
+  {
+    "name": "Parsberg",
+    "coordinates": [
+      49.15,
+      11.717
+    ]
+  },
+  {
+    "name": "Pasewalk",
+    "coordinates": [
+      53.5,
+      14
+    ]
+  },
+  {
+    "name": "Passau",
+    "coordinates": [
+      48.56667,
+      13.46667
+    ]
+  },
+  {
+    "name": "Pattensen",
+    "coordinates": [
+      52.267,
+      9.767
+    ]
+  },
+  {
+    "name": "Pausa-Mühltroff",
+    "coordinates": [
+      50.567,
+      11.967
+    ]
+  },
+  {
+    "name": "Pegau",
+    "coordinates": [
+      51.16667,
+      12.25
+    ]
+  },
+  {
+    "name": "Pegnitz",
+    "coordinates": [
+      49.75639,
+      11.545
+    ]
+  },
+  {
+    "name": "Peine",
+    "coordinates": [
+      52.32028,
+      10.23361
+    ]
+  },
+  {
+    "name": "Peitz",
+    "coordinates": [
+      51.86667,
+      14.41667
+    ]
+  },
+  {
+    "name": "Penig",
+    "coordinates": [
+      50.93361,
+      12.70583
+    ]
+  },
+  {
+    "name": "Penkun",
+    "coordinates": [
+      53.283,
+      14.25
+    ]
+  },
+  {
+    "name": "Penzberg",
+    "coordinates": [
+      47.75,
+      11.383
+    ]
+  },
+  {
+    "name": "Penzlin",
+    "coordinates": [
+      53.505,
+      13.08306
+    ]
+  },
+  {
+    "name": "Perleberg",
+    "coordinates": [
+      53.06667,
+      11.86667
+    ]
+  },
+  {
+    "name": "Petershagen",
+    "coordinates": [
+      52.383,
+      8.967
+    ]
+  },
+  {
+    "name": "Pfaffenhofen a.d.Ilm",
+    "coordinates": [
+      48.533,
+      11.517
+    ]
+  },
+  {
+    "name": "Pfarrkirchen",
+    "coordinates": [
+      48.417,
+      12.917
+    ]
+  },
+  {
+    "name": "Pforzheim",
+    "coordinates": [
+      48.895,
+      8.705
+    ]
+  },
+  {
+    "name": "Pfreimd",
+    "coordinates": [
+      49.5,
+      12.183
+    ]
+  },
+  {
+    "name": "Pfullendorf",
+    "coordinates": [
+      47.92417,
+      9.25667
+    ]
+  },
+  {
+    "name": "Pfullingen",
+    "coordinates": [
+      48.46556,
+      9.22611
+    ]
+  },
+  {
+    "name": "Pfungstadt",
+    "coordinates": [
+      49.80556,
+      8.60444
+    ]
+  },
+  {
+    "name": "Philippsburg",
+    "coordinates": [
+      49.23333,
+      8.45
+    ]
+  },
+  {
+    "name": "Pinneberg",
+    "coordinates": [
+      53.633,
+      9.8
+    ]
+  },
+  {
+    "name": "Pirmasens",
+    "coordinates": [
+      49.2,
+      7.6
+    ]
+  },
+  {
+    "name": "Pirna",
+    "coordinates": [
+      50.96222,
+      13.94028
+    ]
+  },
+  {
+    "name": "Plattling",
+    "coordinates": [
+      48.767,
+      12.867
+    ]
+  },
+  {
+    "name": "Plau am See",
+    "coordinates": [
+      53.45806,
+      12.2625
+    ]
+  },
+  {
+    "name": "Plauen",
+    "coordinates": [
+      50.483,
+      12.117
+    ]
+  },
+  {
+    "name": "Plaue",
+    "coordinates": [
+      50.77944,
+      10.89889
+    ]
+  },
+  {
+    "name": "Plettenberg",
+    "coordinates": [
+      51.217,
+      7.883
+    ]
+  },
+  {
+    "name": "Pleystein",
+    "coordinates": [
+      49.65,
+      12.417
+    ]
+  },
+  {
+    "name": "Plochingen",
+    "coordinates": [
+      48.71167,
+      9.41639
+    ]
+  },
+  {
+    "name": "Plön",
+    "coordinates": [
+      54.16222,
+      10.42139
+    ]
+  },
+  {
+    "name": "Pockau-Lengefeld",
+    "coordinates": [
+      50.717,
+      13.183
+    ]
+  },
+  {
+    "name": "Pocking",
+    "coordinates": [
+      48.4,
+      13.317
+    ]
+  },
+  {
+    "name": "Pohlheim",
+    "coordinates": [
+      50.517,
+      8.7
+    ]
+  },
+  {
+    "name": "Polch",
+    "coordinates": [
+      50.30111,
+      7.31667
+    ]
+  },
+  {
+    "name": "Porta Westfalica",
+    "coordinates": [
+      52.21667,
+      8.93333
+    ]
+  },
+  {
+    "name": "Potsdam",
+    "coordinates": [
+      52.4,
+      13.067
+    ]
+  },
+  {
+    "name": "Pottenstein",
+    "coordinates": [
+      49.77222,
+      11.41139
+    ]
+  },
+  {
+    "name": "Preetz",
+    "coordinates": [
+      54.23667,
+      10.28222
+    ]
+  },
+  {
+    "name": "Premnitz",
+    "coordinates": [
+      52.53306,
+      12.33306
+    ]
+  },
+  {
+    "name": "Prenzlau",
+    "coordinates": [
+      53.317,
+      13.867
+    ]
+  },
+  {
+    "name": "Pressath",
+    "coordinates": [
+      49.767,
+      11.917
+    ]
+  },
+  {
+    "name": "Preußisch Oldendorf",
+    "coordinates": [
+      52.28333,
+      8.5
+    ]
+  },
+  {
+    "name": "Prichsenstadt",
+    "coordinates": [
+      49.817,
+      10.333
+    ]
+  },
+  {
+    "name": "Pritzwalk",
+    "coordinates": [
+      53.14972,
+      12.18306
+    ]
+  },
+  {
+    "name": "Prüm",
+    "coordinates": [
+      50.20806,
+      6.42444
+    ]
+  },
+  {
+    "name": "Puchheim",
+    "coordinates": [
+      48.15,
+      11.35
+    ]
+  },
+  {
+    "name": "Pulheim",
+    "coordinates": [
+      51,
+      6.8
+    ]
+  },
+  {
+    "name": "Pulsnitz",
+    "coordinates": [
+      51.18167,
+      14.01306
+    ]
+  },
+  {
+    "name": "Putbus",
+    "coordinates": [
+      54.333,
+      13.483
+    ]
+  },
+  {
+    "name": "Putlitz",
+    "coordinates": [
+      53.25,
+      12.05
+    ]
+  },
+  {
+    "name": "Pößneck",
+    "coordinates": [
+      50.7,
+      11.6
+    ]
+  },
+  {
+    "name": "Püttlingen",
+    "coordinates": [
+      49.283,
+      6.883
+    ]
+  },
+  {
+    "name": "Quakenbrück",
+    "coordinates": [
+      52.67722,
+      7.9575
+    ]
+  },
+  {
+    "name": "Quedlinburg",
+    "coordinates": [
+      51.79167,
+      11.14722
+    ]
+  },
+  {
+    "name": "Querfurt",
+    "coordinates": [
+      51.383,
+      11.6
+    ]
+  },
+  {
+    "name": "Quickborn",
+    "coordinates": [
+      53.73333,
+      9.89722
+    ]
+  },
+  {
+    "name": "Rabenau",
+    "coordinates": [
+      50.967,
+      13.633
+    ]
+  },
+  {
+    "name": "Radeberg",
+    "coordinates": [
+      51.117,
+      13.917
+    ]
+  },
+  {
+    "name": "Radebeul",
+    "coordinates": [
+      51.1,
+      13.65
+    ]
+  },
+  {
+    "name": "Radeburg",
+    "coordinates": [
+      51.2125,
+      13.72556
+    ]
+  },
+  {
+    "name": "Radevormwald",
+    "coordinates": [
+      51.2,
+      7.35
+    ]
+  },
+  {
+    "name": "Radolfzell",
+    "coordinates": [
+      47.73333,
+      8.96667
+    ]
+  },
+  {
+    "name": "Raguhn-Jeßnitz",
+    "coordinates": [
+      51.667,
+      12.067
+    ]
+  },
+  {
+    "name": "Rahden",
+    "coordinates": [
+      52.417,
+      8.617
+    ]
+  },
+  {
+    "name": "Rain",
+    "coordinates": [
+      48.683,
+      10.917
+    ]
+  },
+  {
+    "name": "Ramstein-Miesenbach",
+    "coordinates": [
+      49.44611,
+      7.55472
+    ]
+  },
+  {
+    "name": "Ranis",
+    "coordinates": [
+      50.66389,
+      11.56806
+    ]
+  },
+  {
+    "name": "Ransbach-Baumbach",
+    "coordinates": [
+      50.46611,
+      7.72528
+    ]
+  },
+  {
+    "name": "Rastatt",
+    "coordinates": [
+      48.85,
+      8.2
+    ]
+  },
+  {
+    "name": "Rastenberg",
+    "coordinates": [
+      51.17611,
+      11.41917
+    ]
+  },
+  {
+    "name": "Rathenow",
+    "coordinates": [
+      52.6,
+      12.333
+    ]
+  },
+  {
+    "name": "Ratingen",
+    "coordinates": [
+      51.3,
+      6.85
+    ]
+  },
+  {
+    "name": "Ratzeburg",
+    "coordinates": [
+      53.7,
+      10.75
+    ]
+  },
+  {
+    "name": "Rauenberg",
+    "coordinates": [
+      49.26778,
+      8.70361
+    ]
+  },
+  {
+    "name": "Raunheim",
+    "coordinates": [
+      50.017,
+      8.45
+    ]
+  },
+  {
+    "name": "Rauschenberg",
+    "coordinates": [
+      50.86667,
+      8.91667
+    ]
+  },
+  {
+    "name": "Ravensburg",
+    "coordinates": [
+      47.78306,
+      9.61139
+    ]
+  },
+  {
+    "name": "Ravenstein",
+    "coordinates": [
+      49.40111,
+      9.50778
+    ]
+  },
+  {
+    "name": "Recklinghausen",
+    "coordinates": [
+      51.585,
+      7.16194
+    ]
+  },
+  {
+    "name": "Rees",
+    "coordinates": [
+      51.76667,
+      6.4
+    ]
+  },
+  {
+    "name": "Regensburg",
+    "coordinates": [
+      49.017,
+      12.083
+    ]
+  },
+  {
+    "name": "Regen",
+    "coordinates": [
+      48.967,
+      13.133
+    ]
+  },
+  {
+    "name": "Regis-Breitingen",
+    "coordinates": [
+      51.083,
+      12.45
+    ]
+  },
+  {
+    "name": "Rehau",
+    "coordinates": [
+      50.25,
+      12.017
+    ]
+  },
+  {
+    "name": "Rehburg-Loccum",
+    "coordinates": [
+      52.45083,
+      9.20778
+    ]
+  },
+  {
+    "name": "Rehna",
+    "coordinates": [
+      53.767,
+      11.033
+    ]
+  },
+  {
+    "name": "Reichelsheim",
+    "coordinates": [
+      50.35694,
+      8.8725
+    ]
+  },
+  {
+    "name": "Reichenbach im Vogtland",
+    "coordinates": [
+      50.617,
+      12.3
+    ]
+  },
+  {
+    "name": "Reichenbach",
+    "coordinates": [
+      51.14167,
+      14.8
+    ]
+  },
+  {
+    "name": "Reinbek",
+    "coordinates": [
+      53.50889,
+      10.24833
+    ]
+  },
+  {
+    "name": "Reinfeld",
+    "coordinates": [
+      53.83333,
+      10.48333
+    ]
+  },
+  {
+    "name": "Reinheim",
+    "coordinates": [
+      49.82694,
+      8.83083
+    ]
+  },
+  {
+    "name": "Remagen",
+    "coordinates": [
+      50.57861,
+      7.23056
+    ]
+  },
+  {
+    "name": "Remscheid",
+    "coordinates": [
+      51.18333,
+      7.2
+    ]
+  },
+  {
+    "name": "Remseck",
+    "coordinates": [
+      48.86889,
+      9.27639
+    ]
+  },
+  {
+    "name": "Renchen",
+    "coordinates": [
+      48.58583,
+      8.01056
+    ]
+  },
+  {
+    "name": "Rendsburg",
+    "coordinates": [
+      54.3,
+      9.66667
+    ]
+  },
+  {
+    "name": "Rennerod",
+    "coordinates": [
+      50.60972,
+      8.06889
+    ]
+  },
+  {
+    "name": "Renningen",
+    "coordinates": [
+      48.76611,
+      8.93472
+    ]
+  },
+  {
+    "name": "Rerik",
+    "coordinates": [
+      54.1,
+      11.617
+    ]
+  },
+  {
+    "name": "Rethem",
+    "coordinates": [
+      52.78472,
+      9.37806
+    ]
+  },
+  {
+    "name": "Reutlingen",
+    "coordinates": [
+      48.483,
+      9.217
+    ]
+  },
+  {
+    "name": "Rheda-Wiedenbrück",
+    "coordinates": [
+      51.84167,
+      8.3
+    ]
+  },
+  {
+    "name": "Rhede",
+    "coordinates": [
+      51.83333,
+      6.70056
+    ]
+  },
+  {
+    "name": "Rheinau",
+    "coordinates": [
+      48.66778,
+      7.93472
+    ]
+  },
+  {
+    "name": "Rheinbach",
+    "coordinates": [
+      50.633,
+      6.95
+    ]
+  },
+  {
+    "name": "Rheinberg",
+    "coordinates": [
+      51.54667,
+      6.60056
+    ]
+  },
+  {
+    "name": "Rheinböllen",
+    "coordinates": [
+      50,
+      7.667
+    ]
+  },
+  {
+    "name": "Rheine",
+    "coordinates": [
+      52.283,
+      7.433
+    ]
+  },
+  {
+    "name": "Rheinfelden",
+    "coordinates": [
+      47.56111,
+      7.79167
+    ]
+  },
+  {
+    "name": "Rheinsberg",
+    "coordinates": [
+      53.09833,
+      12.89583
+    ]
+  },
+  {
+    "name": "Rheinstetten",
+    "coordinates": [
+      48.96056,
+      8.28972
+    ]
+  },
+  {
+    "name": "Rhens",
+    "coordinates": [
+      50.2804889,
+      7.618111
+    ]
+  },
+  {
+    "name": "Rhinow",
+    "coordinates": [
+      52.75,
+      12.33306
+    ]
+  },
+  {
+    "name": "Ribnitz-Damgarten",
+    "coordinates": [
+      54.25,
+      12.46667
+    ]
+  },
+  {
+    "name": "Richtenberg",
+    "coordinates": [
+      54.2,
+      12.867
+    ]
+  },
+  {
+    "name": "Riedenburg",
+    "coordinates": [
+      48.967,
+      11.683
+    ]
+  },
+  {
+    "name": "Riedlingen",
+    "coordinates": [
+      48.15528,
+      9.47278
+    ]
+  },
+  {
+    "name": "Riedstadt",
+    "coordinates": [
+      49.83722,
+      8.50444
+    ]
+  },
+  {
+    "name": "Rieneck",
+    "coordinates": [
+      50.1,
+      9.633
+    ]
+  },
+  {
+    "name": "Riesa",
+    "coordinates": [
+      51.30806,
+      13.29389
+    ]
+  },
+  {
+    "name": "Rietberg",
+    "coordinates": [
+      51.8,
+      8.433
+    ]
+  },
+  {
+    "name": "Rinteln",
+    "coordinates": [
+      52.19056,
+      9.08139
+    ]
+  },
+  {
+    "name": "Rochlitz",
+    "coordinates": [
+      51.04806,
+      12.79861
+    ]
+  },
+  {
+    "name": "Rockenhausen",
+    "coordinates": [
+      49.6285861,
+      7.8205111
+    ]
+  },
+  {
+    "name": "Rodalben",
+    "coordinates": [
+      49.233,
+      7.65
+    ]
+  },
+  {
+    "name": "Rodenberg",
+    "coordinates": [
+      52.317,
+      9.35
+    ]
+  },
+  {
+    "name": "Rodewisch",
+    "coordinates": [
+      50.517,
+      12.417
+    ]
+  },
+  {
+    "name": "Rodgau",
+    "coordinates": [
+      50.017,
+      8.883
+    ]
+  },
+  {
+    "name": "Roding",
+    "coordinates": [
+      49.2,
+      12.517
+    ]
+  },
+  {
+    "name": "Romrod",
+    "coordinates": [
+      50.717,
+      9.217
+    ]
+  },
+  {
+    "name": "Ronneburg",
+    "coordinates": [
+      50.86361,
+      12.18083
+    ]
+  },
+  {
+    "name": "Ronnenberg",
+    "coordinates": [
+      52.31944,
+      9.65556
+    ]
+  },
+  {
+    "name": "Rosbach vor der Höhe",
+    "coordinates": [
+      50.29861,
+      8.70056
+    ]
+  },
+  {
+    "name": "Rosenfeld",
+    "coordinates": [
+      48.28639,
+      8.72417
+    ]
+  },
+  {
+    "name": "Rosenheim",
+    "coordinates": [
+      47.85,
+      12.13333
+    ]
+  },
+  {
+    "name": "Rosenthal",
+    "coordinates": [
+      50.967,
+      8.867
+    ]
+  },
+  {
+    "name": "Rostock",
+    "coordinates": [
+      54.08333,
+      12.13333
+    ]
+  },
+  {
+    "name": "Rotenburg a. d.  Fulda",
+    "coordinates": [
+      50.99611,
+      9.72778
+    ]
+  },
+  {
+    "name": "Rotenburg an der Wümme",
+    "coordinates": [
+      53.10694,
+      9.39694
+    ]
+  },
+  {
+    "name": "Rothenburg ob der Tauber",
+    "coordinates": [
+      49.383,
+      10.183
+    ]
+  },
+  {
+    "name": "Rothenburg",
+    "coordinates": [
+      51.33333,
+      14.96667
+    ]
+  },
+  {
+    "name": "Rothenfels",
+    "coordinates": [
+      49.883,
+      9.583
+    ]
+  },
+  {
+    "name": "Roth",
+    "coordinates": [
+      49.24611,
+      11.09111
+    ]
+  },
+  {
+    "name": "Rottenburg a.d.Laaber",
+    "coordinates": [
+      48.70194,
+      12.02722
+    ]
+  },
+  {
+    "name": "Rottenburg am Neckar",
+    "coordinates": [
+      48.47722,
+      8.93444
+    ]
+  },
+  {
+    "name": "Rottweil",
+    "coordinates": [
+      48.16806,
+      8.62472
+    ]
+  },
+  {
+    "name": "Roßleben-Wiehe",
+    "coordinates": [
+      51.3,
+      11.433
+    ]
+  },
+  {
+    "name": "Roßwein",
+    "coordinates": [
+      51.067,
+      13.183
+    ]
+  },
+  {
+    "name": "Rudolstadt",
+    "coordinates": [
+      50.71694,
+      11.3275
+    ]
+  },
+  {
+    "name": "Ruhland",
+    "coordinates": [
+      51.46667,
+      13.86667
+    ]
+  },
+  {
+    "name": "Ruhla",
+    "coordinates": [
+      50.89194,
+      10.36667
+    ]
+  },
+  {
+    "name": "Runkel",
+    "coordinates": [
+      50.40528,
+      8.155
+    ]
+  },
+  {
+    "name": "Rutesheim",
+    "coordinates": [
+      48.80972,
+      8.945
+    ]
+  },
+  {
+    "name": "Röbel",
+    "coordinates": [
+      53.37611,
+      12.60611
+    ]
+  },
+  {
+    "name": "Rödental",
+    "coordinates": [
+      50.283,
+      11.067
+    ]
+  },
+  {
+    "name": "Rödermark",
+    "coordinates": [
+      49.96667,
+      8.81667
+    ]
+  },
+  {
+    "name": "Römhild",
+    "coordinates": [
+      50.383,
+      10.55
+    ]
+  },
+  {
+    "name": "Rösrath",
+    "coordinates": [
+      50.9,
+      7.183
+    ]
+  },
+  {
+    "name": "Rötha",
+    "coordinates": [
+      51.19722,
+      12.41722
+    ]
+  },
+  {
+    "name": "Röthenbach an der Pegnitz",
+    "coordinates": [
+      49.48472,
+      11.2475
+    ]
+  },
+  {
+    "name": "Röttingen",
+    "coordinates": [
+      49.5,
+      9.967
+    ]
+  },
+  {
+    "name": "Rötz",
+    "coordinates": [
+      49.35,
+      12.517
+    ]
+  },
+  {
+    "name": "Rüdesheim",
+    "coordinates": [
+      49.98333,
+      7.93056
+    ]
+  },
+  {
+    "name": "Rüsselsheim am Main",
+    "coordinates": [
+      50,
+      8.433
+    ]
+  },
+  {
+    "name": "Rüthen",
+    "coordinates": [
+      51.49333,
+      8.48333
+    ]
+  },
+  {
+    "name": "Saalburg-Ebersdorf",
+    "coordinates": [
+      50.49167,
+      11.7
+    ]
+  },
+  {
+    "name": "Saalfeld",
+    "coordinates": [
+      50.65,
+      11.367
+    ]
+  },
+  {
+    "name": "Saarbrücken",
+    "coordinates": [
+      49.233,
+      7
+    ]
+  },
+  {
+    "name": "Saarburg",
+    "coordinates": [
+      49.617,
+      6.55
+    ]
+  },
+  {
+    "name": "Saarlouis",
+    "coordinates": [
+      49.31667,
+      6.75
+    ]
+  },
+  {
+    "name": "Sachsenhagen",
+    "coordinates": [
+      52.4,
+      9.267
+    ]
+  },
+  {
+    "name": "Sachsenheim",
+    "coordinates": [
+      48.96,
+      9.06472
+    ]
+  },
+  {
+    "name": "Salzgitter",
+    "coordinates": [
+      52.15,
+      10.33333
+    ]
+  },
+  {
+    "name": "Salzkotten",
+    "coordinates": [
+      51.67083,
+      8.60472
+    ]
+  },
+  {
+    "name": "Salzwedel",
+    "coordinates": [
+      52.85,
+      11.15
+    ]
+  },
+  {
+    "name": "Sandau",
+    "coordinates": [
+      52.78333,
+      12.05
+    ]
+  },
+  {
+    "name": "Sandersdorf-Brehna",
+    "coordinates": [
+      51.617,
+      12.233
+    ]
+  },
+  {
+    "name": "Sangerhausen",
+    "coordinates": [
+      51.46667,
+      11.3
+    ]
+  },
+  {
+    "name": "Sankt Augustin",
+    "coordinates": [
+      50.77,
+      7.18667
+    ]
+  },
+  {
+    "name": "Sankt Blasien",
+    "coordinates": [
+      47.76194,
+      8.12833
+    ]
+  },
+  {
+    "name": "Sankt Georgen im Schwarzwald",
+    "coordinates": [
+      48.12472,
+      8.33083
+    ]
+  },
+  {
+    "name": "Sankt Goarshausen",
+    "coordinates": [
+      50.15472,
+      7.71528
+    ]
+  },
+  {
+    "name": "Sankt Goar",
+    "coordinates": [
+      50.15,
+      7.717
+    ]
+  },
+  {
+    "name": "Sankt Ingbert",
+    "coordinates": [
+      49.3,
+      7.117
+    ]
+  },
+  {
+    "name": "Sankt Wendel",
+    "coordinates": [
+      49.467,
+      7.167
+    ]
+  },
+  {
+    "name": "Sarstedt",
+    "coordinates": [
+      52.23944,
+      9.86056
+    ]
+  },
+  {
+    "name": "Sassenberg",
+    "coordinates": [
+      51.98972,
+      8.04083
+    ]
+  },
+  {
+    "name": "Sassnitz",
+    "coordinates": [
+      54.51639,
+      13.64111
+    ]
+  },
+  {
+    "name": "Sayda, Saxony",
+    "coordinates": [
+      50.717,
+      13.417
+    ]
+  },
+  {
+    "name": "Schalkau",
+    "coordinates": [
+      50.39444,
+      11.00861
+    ]
+  },
+  {
+    "name": "Schauenstein",
+    "coordinates": [
+      50.267,
+      11.767
+    ]
+  },
+  {
+    "name": "Scheer",
+    "coordinates": [
+      48.07361,
+      9.29333
+    ]
+  },
+  {
+    "name": "Scheibenberg",
+    "coordinates": [
+      50.54083,
+      12.9125
+    ]
+  },
+  {
+    "name": "Scheinfeld",
+    "coordinates": [
+      49.667,
+      10.467
+    ]
+  },
+  {
+    "name": "Schelklingen",
+    "coordinates": [
+      48.37556,
+      9.7325
+    ]
+  },
+  {
+    "name": "Schenefeld",
+    "coordinates": [
+      53.60278,
+      9.82333
+    ]
+  },
+  {
+    "name": "Scheßlitz",
+    "coordinates": [
+      49.975,
+      11.03333
+    ]
+  },
+  {
+    "name": "Schieder-Schwalenberg",
+    "coordinates": [
+      51.88306,
+      9.18306
+    ]
+  },
+  {
+    "name": "Schifferstadt",
+    "coordinates": [
+      49.383,
+      8.367
+    ]
+  },
+  {
+    "name": "Schillingsfürst",
+    "coordinates": [
+      49.267,
+      10.267
+    ]
+  },
+  {
+    "name": "Schiltach",
+    "coordinates": [
+      48.29056,
+      8.34472
+    ]
+  },
+  {
+    "name": "Schirgiswalde-Kirschau",
+    "coordinates": [
+      51.1,
+      14.433
+    ]
+  },
+  {
+    "name": "Schkeuditz",
+    "coordinates": [
+      51.4,
+      12.21667
+    ]
+  },
+  {
+    "name": "Schkölen",
+    "coordinates": [
+      51.03333,
+      11.81667
+    ]
+  },
+  {
+    "name": "Schleiden",
+    "coordinates": [
+      50.53306,
+      6.46667
+    ]
+  },
+  {
+    "name": "Schleiz",
+    "coordinates": [
+      50.58333,
+      11.81667
+    ]
+  },
+  {
+    "name": "Schleswig",
+    "coordinates": [
+      54.51806,
+      9.57028
+    ]
+  },
+  {
+    "name": "Schlettau",
+    "coordinates": [
+      50.55861,
+      12.95111
+    ]
+  },
+  {
+    "name": "Schleusingen",
+    "coordinates": [
+      50.51667,
+      10.75
+    ]
+  },
+  {
+    "name": "Schlieben",
+    "coordinates": [
+      51.71667,
+      13.38306
+    ]
+  },
+  {
+    "name": "Schlitz",
+    "coordinates": [
+      50.667,
+      9.567
+    ]
+  },
+  {
+    "name": "Schloß Holte-Stukenbrock",
+    "coordinates": [
+      51.883,
+      8.617
+    ]
+  },
+  {
+    "name": "Schlüchtern",
+    "coordinates": [
+      50.35,
+      9.517
+    ]
+  },
+  {
+    "name": "Schlüsselfeld",
+    "coordinates": [
+      49.767,
+      10.617
+    ]
+  },
+  {
+    "name": "Schmalkalden",
+    "coordinates": [
+      50.717,
+      10.45
+    ]
+  },
+  {
+    "name": "Schmallenberg",
+    "coordinates": [
+      51.148983,
+      8.284539
+    ]
+  },
+  {
+    "name": "Schmölln",
+    "coordinates": [
+      50.895,
+      12.35639
+    ]
+  },
+  {
+    "name": "Schnackenburg",
+    "coordinates": [
+      53.03667,
+      11.56806
+    ]
+  },
+  {
+    "name": "Schnaittenbach",
+    "coordinates": [
+      49.533,
+      12.017
+    ]
+  },
+  {
+    "name": "Schneeberg",
+    "coordinates": [
+      50.59417,
+      12.64556
+    ]
+  },
+  {
+    "name": "Schneverdingen",
+    "coordinates": [
+      53.11667,
+      9.8
+    ]
+  },
+  {
+    "name": "Schongau",
+    "coordinates": [
+      47.817,
+      10.9
+    ]
+  },
+  {
+    "name": "Schopfheim",
+    "coordinates": [
+      47.65,
+      7.817
+    ]
+  },
+  {
+    "name": "Schorndorf",
+    "coordinates": [
+      48.8,
+      9.533
+    ]
+  },
+  {
+    "name": "Schortens",
+    "coordinates": [
+      53.533,
+      7.95
+    ]
+  },
+  {
+    "name": "Schotten",
+    "coordinates": [
+      50.5,
+      9.117
+    ]
+  },
+  {
+    "name": "Schramberg",
+    "coordinates": [
+      48.22694,
+      8.38417
+    ]
+  },
+  {
+    "name": "Schraplau",
+    "coordinates": [
+      51.43639,
+      11.665
+    ]
+  },
+  {
+    "name": "Schriesheim",
+    "coordinates": [
+      49.47361,
+      8.65917
+    ]
+  },
+  {
+    "name": "Schrobenhausen",
+    "coordinates": [
+      48.533,
+      11.267
+    ]
+  },
+  {
+    "name": "Schrozberg",
+    "coordinates": [
+      49.34444,
+      9.98056
+    ]
+  },
+  {
+    "name": "Schwaan",
+    "coordinates": [
+      53.93889,
+      12.10694
+    ]
+  },
+  {
+    "name": "Schwabach",
+    "coordinates": [
+      49.32917,
+      11.02083
+    ]
+  },
+  {
+    "name": "Schwabmünchen",
+    "coordinates": [
+      48.17889,
+      10.755
+    ]
+  },
+  {
+    "name": "Schwaigern",
+    "coordinates": [
+      49.133,
+      9.05
+    ]
+  },
+  {
+    "name": "Schwalbach am Taunus",
+    "coordinates": [
+      50.15,
+      8.533
+    ]
+  },
+  {
+    "name": "Schwalmstadt",
+    "coordinates": [
+      50.933,
+      9.217
+    ]
+  },
+  {
+    "name": "Schwandorf",
+    "coordinates": [
+      49.32833,
+      12.11
+    ]
+  },
+  {
+    "name": "Schwanebeck",
+    "coordinates": [
+      51.9675,
+      11.12083
+    ]
+  },
+  {
+    "name": "Schwarzatal",
+    "coordinates": [
+      50.583,
+      11.15
+    ]
+  },
+  {
+    "name": "Schwarzenbach a.Wald",
+    "coordinates": [
+      50.28333,
+      11.62083
+    ]
+  },
+  {
+    "name": "Schwarzenbach a.d.Saale",
+    "coordinates": [
+      50.22083,
+      11.93333
+    ]
+  },
+  {
+    "name": "Schwarzenbek",
+    "coordinates": [
+      53.50417,
+      10.47917
+    ]
+  },
+  {
+    "name": "Schwarzenberg",
+    "coordinates": [
+      50.54528,
+      12.77917
+    ]
+  },
+  {
+    "name": "Schwarzenborn",
+    "coordinates": [
+      50.917,
+      9.433
+    ]
+  },
+  {
+    "name": "Schwarzheide",
+    "coordinates": [
+      51.48306,
+      13.86667
+    ]
+  },
+  {
+    "name": "Schwedt",
+    "coordinates": [
+      53.05,
+      14.267
+    ]
+  },
+  {
+    "name": "Schweich",
+    "coordinates": [
+      49.82,
+      6.75222
+    ]
+  },
+  {
+    "name": "Schweinfurt",
+    "coordinates": [
+      50.05,
+      10.23333
+    ]
+  },
+  {
+    "name": "Schwelm",
+    "coordinates": [
+      51.267,
+      7.267
+    ]
+  },
+  {
+    "name": "Schwentinental",
+    "coordinates": [
+      54.267,
+      10.217
+    ]
+  },
+  {
+    "name": "Schwerin",
+    "coordinates": [
+      53.63333,
+      11.41667
+    ]
+  },
+  {
+    "name": "Schwerte",
+    "coordinates": [
+      51.44583,
+      7.56528
+    ]
+  },
+  {
+    "name": "Schwetzingen",
+    "coordinates": [
+      49.383,
+      8.567
+    ]
+  },
+  {
+    "name": "Schwäbisch Gmünd",
+    "coordinates": [
+      48.8,
+      9.8
+    ]
+  },
+  {
+    "name": "Schwäbisch Hall",
+    "coordinates": [
+      49.11222,
+      9.7375
+    ]
+  },
+  {
+    "name": "Schömberg",
+    "coordinates": [
+      48.21139,
+      8.76167
+    ]
+  },
+  {
+    "name": "Schönau im Schwarzwald",
+    "coordinates": [
+      47.78667,
+      7.89417
+    ]
+  },
+  {
+    "name": "Schönau",
+    "coordinates": [
+      49.43556,
+      8.80917
+    ]
+  },
+  {
+    "name": "Schönberg",
+    "coordinates": [
+      53.85,
+      10.917
+    ]
+  },
+  {
+    "name": "Schönebeck",
+    "coordinates": [
+      52.017,
+      11.75
+    ]
+  },
+  {
+    "name": "Schöneck",
+    "coordinates": [
+      50.367,
+      12.317
+    ]
+  },
+  {
+    "name": "Schönewalde",
+    "coordinates": [
+      51.8125,
+      13.22278
+    ]
+  },
+  {
+    "name": "Schöningen",
+    "coordinates": [
+      52.133,
+      10.95
+    ]
+  },
+  {
+    "name": "Schönsee",
+    "coordinates": [
+      49.517,
+      12.55
+    ]
+  },
+  {
+    "name": "Schönwald",
+    "coordinates": [
+      50.2,
+      12.083
+    ]
+  },
+  {
+    "name": "Schöppenstedt",
+    "coordinates": [
+      52.13306,
+      10.77833
+    ]
+  },
+  {
+    "name": "Schüttorf",
+    "coordinates": [
+      52.317,
+      7.217
+    ]
+  },
+  {
+    "name": "Sebnitz",
+    "coordinates": [
+      50.967,
+      14.283
+    ]
+  },
+  {
+    "name": "Seehausen",
+    "coordinates": [
+      52.867,
+      11.75
+    ]
+  },
+  {
+    "name": "Seeland",
+    "coordinates": [
+      51.8,
+      11.333
+    ]
+  },
+  {
+    "name": "Seelow",
+    "coordinates": [
+      52.51667,
+      14.38306
+    ]
+  },
+  {
+    "name": "Seelze",
+    "coordinates": [
+      52.39611,
+      9.59806
+    ]
+  },
+  {
+    "name": "Seesen",
+    "coordinates": [
+      51.89306,
+      10.17833
+    ]
+  },
+  {
+    "name": "Sehnde",
+    "coordinates": [
+      52.31611,
+      9.96417
+    ]
+  },
+  {
+    "name": "Seifhennersdorf",
+    "coordinates": [
+      50.933,
+      14.617
+    ]
+  },
+  {
+    "name": "Selbitz",
+    "coordinates": [
+      50.317,
+      11.75
+    ]
+  },
+  {
+    "name": "Selb",
+    "coordinates": [
+      50.167,
+      12.133
+    ]
+  },
+  {
+    "name": "Seligenstadt",
+    "coordinates": [
+      50.033,
+      8.967
+    ]
+  },
+  {
+    "name": "Selm",
+    "coordinates": [
+      51.683,
+      7.483
+    ]
+  },
+  {
+    "name": "Selters",
+    "coordinates": [
+      50.53222,
+      7.75722
+    ]
+  },
+  {
+    "name": "Sendenhorst",
+    "coordinates": [
+      51.84389,
+      7.82778
+    ]
+  },
+  {
+    "name": "Senden",
+    "coordinates": [
+      48.317,
+      10.067
+    ]
+  },
+  {
+    "name": "Senftenberg",
+    "coordinates": [
+      51.517,
+      14.017
+    ]
+  },
+  {
+    "name": "Seßlach",
+    "coordinates": [
+      50.167,
+      10.833
+    ]
+  },
+  {
+    "name": "Siegburg",
+    "coordinates": [
+      50.80139,
+      7.20444
+    ]
+  },
+  {
+    "name": "Siegen",
+    "coordinates": [
+      50.883,
+      8.017
+    ]
+  },
+  {
+    "name": "Sigmaringen",
+    "coordinates": [
+      48.08667,
+      9.21639
+    ]
+  },
+  {
+    "name": "Simbach am Inn",
+    "coordinates": [
+      48.267,
+      13.017
+    ]
+  },
+  {
+    "name": "Simmern",
+    "coordinates": [
+      49.98333,
+      7.51667
+    ]
+  },
+  {
+    "name": "Sindelfingen",
+    "coordinates": [
+      48.71333,
+      9.00278
+    ]
+  },
+  {
+    "name": "Singen",
+    "coordinates": [
+      47.76278,
+      8.84
+    ]
+  },
+  {
+    "name": "Sinsheim",
+    "coordinates": [
+      49.25,
+      8.883
+    ]
+  },
+  {
+    "name": "Sinzig",
+    "coordinates": [
+      50.54528,
+      7.25194
+    ]
+  },
+  {
+    "name": "Soest",
+    "coordinates": [
+      51.57111,
+      8.10917
+    ]
+  },
+  {
+    "name": "Solingen",
+    "coordinates": [
+      51.16667,
+      7.08333
+    ]
+  },
+  {
+    "name": "Solms",
+    "coordinates": [
+      50.53972,
+      8.40722
+    ]
+  },
+  {
+    "name": "Soltau",
+    "coordinates": [
+      52.983,
+      9.833
+    ]
+  },
+  {
+    "name": "Sondershausen",
+    "coordinates": [
+      51.367,
+      10.867
+    ]
+  },
+  {
+    "name": "Sonneberg",
+    "coordinates": [
+      50.35,
+      11.167
+    ]
+  },
+  {
+    "name": "Sonnewalde",
+    "coordinates": [
+      51.68306,
+      13.65
+    ]
+  },
+  {
+    "name": "Sonthofen",
+    "coordinates": [
+      47.51583,
+      10.28111
+    ]
+  },
+  {
+    "name": "Sontra",
+    "coordinates": [
+      51.067,
+      9.933
+    ]
+  },
+  {
+    "name": "Spaichingen",
+    "coordinates": [
+      48.07583,
+      8.73778
+    ]
+  },
+  {
+    "name": "Spalt",
+    "coordinates": [
+      49.17389,
+      10.9275
+    ]
+  },
+  {
+    "name": "Spangenberg",
+    "coordinates": [
+      51.117,
+      9.667
+    ]
+  },
+  {
+    "name": "Speicher",
+    "coordinates": [
+      49.93722,
+      6.63806
+    ]
+  },
+  {
+    "name": "Spenge",
+    "coordinates": [
+      52.13306,
+      8.48306
+    ]
+  },
+  {
+    "name": "Speyer",
+    "coordinates": [
+      49.31944,
+      8.43111
+    ]
+  },
+  {
+    "name": "Spremberg",
+    "coordinates": [
+      51.57167,
+      14.37944
+    ]
+  },
+  {
+    "name": "Springe",
+    "coordinates": [
+      52.217,
+      9.55
+    ]
+  },
+  {
+    "name": "Sprockhövel",
+    "coordinates": [
+      51.367,
+      7.25
+    ]
+  },
+  {
+    "name": "Stadt Tegernsee",
+    "coordinates": [
+      47.7,
+      11.767
+    ]
+  },
+  {
+    "name": "Stadt Wehlen",
+    "coordinates": [
+      50.95694,
+      14.03222
+    ]
+  },
+  {
+    "name": "Stadtallendorf",
+    "coordinates": [
+      50.833,
+      9.017
+    ]
+  },
+  {
+    "name": "Stadtbergen",
+    "coordinates": [
+      48.367,
+      10.85
+    ]
+  },
+  {
+    "name": "Stadthagen",
+    "coordinates": [
+      52.32472,
+      9.20694
+    ]
+  },
+  {
+    "name": "Stadtilm",
+    "coordinates": [
+      50.775,
+      11.08083
+    ]
+  },
+  {
+    "name": "Stadtlohn",
+    "coordinates": [
+      51.9925,
+      6.915
+    ]
+  },
+  {
+    "name": "Stadtoldendorf",
+    "coordinates": [
+      51.883,
+      9.617
+    ]
+  },
+  {
+    "name": "Stadtprozelten",
+    "coordinates": [
+      49.783,
+      9.417
+    ]
+  },
+  {
+    "name": "Stadtroda",
+    "coordinates": [
+      50.85,
+      11.73333
+    ]
+  },
+  {
+    "name": "Stadtsteinach",
+    "coordinates": [
+      50.167,
+      11.5
+    ]
+  },
+  {
+    "name": "Starnberg",
+    "coordinates": [
+      47.99722,
+      11.34056
+    ]
+  },
+  {
+    "name": "Staufen im Breisgau",
+    "coordinates": [
+      47.88139,
+      7.73139
+    ]
+  },
+  {
+    "name": "Staufenberg",
+    "coordinates": [
+      50.667,
+      8.717
+    ]
+  },
+  {
+    "name": "Stavenhagen",
+    "coordinates": [
+      53.7,
+      12.9
+    ]
+  },
+  {
+    "name": "Staßfurt",
+    "coordinates": [
+      51.867,
+      11.567
+    ]
+  },
+  {
+    "name": "Steinach",
+    "coordinates": [
+      50.43333,
+      11.16667
+    ]
+  },
+  {
+    "name": "Steinau an der Straße",
+    "coordinates": [
+      50.317,
+      9.467
+    ]
+  },
+  {
+    "name": "Steinbach-Hallenberg",
+    "coordinates": [
+      50.70056,
+      10.56667
+    ]
+  },
+  {
+    "name": "Steinbach",
+    "coordinates": [
+      50.167,
+      8.567
+    ]
+  },
+  {
+    "name": "Steinfurt",
+    "coordinates": [
+      52.1475,
+      7.34417
+    ]
+  },
+  {
+    "name": "Steinheim an der Murr",
+    "coordinates": [
+      48.96667,
+      9.28333
+    ]
+  },
+  {
+    "name": "Steinheim",
+    "coordinates": [
+      51.86583,
+      9.09444
+    ]
+  },
+  {
+    "name": "Stein",
+    "coordinates": [
+      49.417,
+      11.017
+    ]
+  },
+  {
+    "name": "Stendal",
+    "coordinates": [
+      52.6,
+      11.85
+    ]
+  },
+  {
+    "name": "Sternberg",
+    "coordinates": [
+      53.7,
+      11.817
+    ]
+  },
+  {
+    "name": "Stockach",
+    "coordinates": [
+      47.85139,
+      9.01139
+    ]
+  },
+  {
+    "name": "Stolberg",
+    "coordinates": [
+      50.767,
+      6.233
+    ]
+  },
+  {
+    "name": "Stollberg",
+    "coordinates": [
+      50.70833,
+      12.77833
+    ]
+  },
+  {
+    "name": "Stolpen",
+    "coordinates": [
+      51.04889,
+      14.08278
+    ]
+  },
+  {
+    "name": "Storkow",
+    "coordinates": [
+      52.25,
+      13.933
+    ]
+  },
+  {
+    "name": "Straelen",
+    "coordinates": [
+      51.45,
+      6.26667
+    ]
+  },
+  {
+    "name": "Stralsund",
+    "coordinates": [
+      54.30917,
+      13.08194
+    ]
+  },
+  {
+    "name": "Strasburg",
+    "coordinates": [
+      53.5,
+      13.75
+    ]
+  },
+  {
+    "name": "Straubing",
+    "coordinates": [
+      48.883,
+      12.567
+    ]
+  },
+  {
+    "name": "Strausberg",
+    "coordinates": [
+      52.58333,
+      13.88333
+    ]
+  },
+  {
+    "name": "Strehla",
+    "coordinates": [
+      51.3525,
+      13.22583
+    ]
+  },
+  {
+    "name": "Stromberg",
+    "coordinates": [
+      49.94694,
+      7.77944
+    ]
+  },
+  {
+    "name": "Stutensee",
+    "coordinates": [
+      49.06472,
+      8.47167
+    ]
+  },
+  {
+    "name": "Stuttgart",
+    "coordinates": [
+      48.782,
+      9.184
+    ]
+  },
+  {
+    "name": "Stößen",
+    "coordinates": [
+      51.10972,
+      11.93306
+    ]
+  },
+  {
+    "name": "Stühlingen",
+    "coordinates": [
+      47.74528,
+      8.44583
+    ]
+  },
+  {
+    "name": "Suhl",
+    "coordinates": [
+      50.61056,
+      10.69306
+    ]
+  },
+  {
+    "name": "Sulingen",
+    "coordinates": [
+      52.667,
+      8.8
+    ]
+  },
+  {
+    "name": "Sulz am Neckar",
+    "coordinates": [
+      48.36278,
+      8.63167
+    ]
+  },
+  {
+    "name": "Sulzbach-Rosenberg",
+    "coordinates": [
+      49.5,
+      11.75
+    ]
+  },
+  {
+    "name": "Sulzbach",
+    "coordinates": [
+      49.283,
+      7.067
+    ]
+  },
+  {
+    "name": "Sulzburg",
+    "coordinates": [
+      47.84028,
+      7.70917
+    ]
+  },
+  {
+    "name": "Sundern",
+    "coordinates": [
+      51.317,
+      8
+    ]
+  },
+  {
+    "name": "Syke",
+    "coordinates": [
+      52.91306,
+      8.82694
+    ]
+  },
+  {
+    "name": "Sömmerda",
+    "coordinates": [
+      51.16167,
+      11.11694
+    ]
+  },
+  {
+    "name": "Südliches Anhalt",
+    "coordinates": [
+      51.667,
+      12.067
+    ]
+  },
+  {
+    "name": "Süßen",
+    "coordinates": [
+      48.67972,
+      9.7575
+    ]
+  },
+  {
+    "name": "Tambach-Dietharz",
+    "coordinates": [
+      50.78972,
+      10.61667
+    ]
+  },
+  {
+    "name": "Tangerhütte",
+    "coordinates": [
+      52.433,
+      11.8
+    ]
+  },
+  {
+    "name": "Tangermünde",
+    "coordinates": [
+      52.54083,
+      11.96889
+    ]
+  },
+  {
+    "name": "Tann (Rhön)",
+    "coordinates": [
+      50.65,
+      10.017
+    ]
+  },
+  {
+    "name": "Tanna",
+    "coordinates": [
+      50.49444,
+      11.86111
+    ]
+  },
+  {
+    "name": "Tauberbischofsheim",
+    "coordinates": [
+      49.6225,
+      9.66278
+    ]
+  },
+  {
+    "name": "Taucha",
+    "coordinates": [
+      51.38,
+      12.49361
+    ]
+  },
+  {
+    "name": "Taunusstein",
+    "coordinates": [
+      50.133,
+      8.15
+    ]
+  },
+  {
+    "name": "Tecklenburg",
+    "coordinates": [
+      52.21944,
+      7.8125
+    ]
+  },
+  {
+    "name": "Telgte",
+    "coordinates": [
+      51.98194,
+      7.78556
+    ]
+  },
+  {
+    "name": "Teltow",
+    "coordinates": [
+      52.40222,
+      13.27056
+    ]
+  },
+  {
+    "name": "Templin",
+    "coordinates": [
+      53.11667,
+      13.5
+    ]
+  },
+  {
+    "name": "Tengen",
+    "coordinates": [
+      47.81444,
+      8.65917
+    ]
+  },
+  {
+    "name": "Tessin",
+    "coordinates": [
+      54.017,
+      12.467
+    ]
+  },
+  {
+    "name": "Teterow",
+    "coordinates": [
+      53.767,
+      12.567
+    ]
+  },
+  {
+    "name": "Tettnang",
+    "coordinates": [
+      47.67083,
+      9.5875
+    ]
+  },
+  {
+    "name": "Teublitz",
+    "coordinates": [
+      49.22083,
+      12.08528
+    ]
+  },
+  {
+    "name": "Teuchern",
+    "coordinates": [
+      51.117,
+      12.017
+    ]
+  },
+  {
+    "name": "Teupitz",
+    "coordinates": [
+      52.13611,
+      13.61056
+    ]
+  },
+  {
+    "name": "Teuschnitz",
+    "coordinates": [
+      50.39583,
+      11.38056
+    ]
+  },
+  {
+    "name": "Thale",
+    "coordinates": [
+      51.75,
+      11.05
+    ]
+  },
+  {
+    "name": "Thalheim",
+    "coordinates": [
+      50.7025,
+      12.85167
+    ]
+  },
+  {
+    "name": "Thannhausen",
+    "coordinates": [
+      48.267,
+      10.467
+    ]
+  },
+  {
+    "name": "Tharandt",
+    "coordinates": [
+      50.98333,
+      13.58083
+    ]
+  },
+  {
+    "name": "Themar",
+    "coordinates": [
+      50.50417,
+      10.61583
+    ]
+  },
+  {
+    "name": "Thum",
+    "coordinates": [
+      50.67111,
+      12.95139
+    ]
+  },
+  {
+    "name": "Tirschenreuth",
+    "coordinates": [
+      49.883,
+      12.333
+    ]
+  },
+  {
+    "name": "Titisee-Neustadt",
+    "coordinates": [
+      47.91222,
+      8.21472
+    ]
+  },
+  {
+    "name": "Tittmoning",
+    "coordinates": [
+      48.06306,
+      12.76694
+    ]
+  },
+  {
+    "name": "Todtnau",
+    "coordinates": [
+      47.833,
+      7.95
+    ]
+  },
+  {
+    "name": "Torgau",
+    "coordinates": [
+      51.56028,
+      13.00556
+    ]
+  },
+  {
+    "name": "Torgelow",
+    "coordinates": [
+      53.617,
+      14
+    ]
+  },
+  {
+    "name": "Tornesch",
+    "coordinates": [
+      53.7,
+      9.717
+    ]
+  },
+  {
+    "name": "Traben-Trarbach",
+    "coordinates": [
+      49.95111,
+      7.11667
+    ]
+  },
+  {
+    "name": "Traunreut",
+    "coordinates": [
+      47.967,
+      12.583
+    ]
+  },
+  {
+    "name": "Traunstein",
+    "coordinates": [
+      47.867,
+      12.633
+    ]
+  },
+  {
+    "name": "Trebbin",
+    "coordinates": [
+      52.21667,
+      13.19972
+    ]
+  },
+  {
+    "name": "Trebsen",
+    "coordinates": [
+      51.28306,
+      12.75
+    ]
+  },
+  {
+    "name": "Treffurt",
+    "coordinates": [
+      51.13667,
+      10.2375
+    ]
+  },
+  {
+    "name": "Trendelburg",
+    "coordinates": [
+      51.583,
+      9.417
+    ]
+  },
+  {
+    "name": "Treuchtlingen",
+    "coordinates": [
+      48.95528,
+      10.90944
+    ]
+  },
+  {
+    "name": "Treuenbrietzen",
+    "coordinates": [
+      52.09722,
+      12.87111
+    ]
+  },
+  {
+    "name": "Treuen",
+    "coordinates": [
+      50.5425,
+      12.30222
+    ]
+  },
+  {
+    "name": "Triberg im Schwarzwald",
+    "coordinates": [
+      48.13083,
+      8.23167
+    ]
+  },
+  {
+    "name": "Tribsees",
+    "coordinates": [
+      54.083,
+      12.75
+    ]
+  },
+  {
+    "name": "Trier",
+    "coordinates": [
+      49.75667,
+      6.64139
+    ]
+  },
+  {
+    "name": "Triptis",
+    "coordinates": [
+      50.733,
+      11.85
+    ]
+  },
+  {
+    "name": "Trochtelfingen",
+    "coordinates": [
+      48.30806,
+      9.24444
+    ]
+  },
+  {
+    "name": "Troisdorf",
+    "coordinates": [
+      50.81611,
+      7.15556
+    ]
+  },
+  {
+    "name": "Trossingen",
+    "coordinates": [
+      48.07556,
+      8.63611
+    ]
+  },
+  {
+    "name": "Trostberg",
+    "coordinates": [
+      48.017,
+      12.55
+    ]
+  },
+  {
+    "name": "Tuttlingen",
+    "coordinates": [
+      47.985,
+      8.82333
+    ]
+  },
+  {
+    "name": "Twistringen",
+    "coordinates": [
+      52.8,
+      8.65
+    ]
+  },
+  {
+    "name": "Töging am Inn",
+    "coordinates": [
+      48.25,
+      12.567
+    ]
+  },
+  {
+    "name": "Tönisvorst",
+    "coordinates": [
+      51.32083,
+      6.49306
+    ]
+  },
+  {
+    "name": "TönningTønning / Taning",
+    "coordinates": [
+      54.31722,
+      8.94278
+    ]
+  },
+  {
+    "name": "Tübingen",
+    "coordinates": [
+      48.52,
+      9.05556
+    ]
+  },
+  {
+    "name": "Uebigau-Wahrenbrück",
+    "coordinates": [
+      51.55,
+      13.35
+    ]
+  },
+  {
+    "name": "Ueckermünde",
+    "coordinates": [
+      53.73889,
+      14.04444
+    ]
+  },
+  {
+    "name": "Uelzen",
+    "coordinates": [
+      52.96472,
+      10.56583
+    ]
+  },
+  {
+    "name": "Uetersen",
+    "coordinates": [
+      53.68722,
+      9.66917
+    ]
+  },
+  {
+    "name": "Uffenheim",
+    "coordinates": [
+      49.517,
+      10.25
+    ]
+  },
+  {
+    "name": "Uhingen",
+    "coordinates": [
+      48.70583,
+      9.59194
+    ]
+  },
+  {
+    "name": "Ulmen",
+    "coordinates": [
+      50.2086889,
+      6.9795889
+    ]
+  },
+  {
+    "name": "Ulm",
+    "coordinates": [
+      48.4,
+      9.983
+    ]
+  },
+  {
+    "name": "Ulrichstein",
+    "coordinates": [
+      50.583,
+      9.2
+    ]
+  },
+  {
+    "name": "Ummerstadt",
+    "coordinates": [
+      50.25833,
+      10.82778
+    ]
+  },
+  {
+    "name": "Unkel",
+    "coordinates": [
+      50.60083,
+      7.215
+    ]
+  },
+  {
+    "name": "Unna",
+    "coordinates": [
+      51.53472,
+      7.68889
+    ]
+  },
+  {
+    "name": "Unterschleißheim",
+    "coordinates": [
+      48.28333,
+      11.56667
+    ]
+  },
+  {
+    "name": "Usedom",
+    "coordinates": [
+      53.867,
+      13.917
+    ]
+  },
+  {
+    "name": "Usingen",
+    "coordinates": [
+      50.33444,
+      8.5375
+    ]
+  },
+  {
+    "name": "Uslar",
+    "coordinates": [
+      51.65972,
+      9.63583
+    ]
+  },
+  {
+    "name": "Vacha",
+    "coordinates": [
+      50.82889,
+      10.02139
+    ]
+  },
+  {
+    "name": "Vaihingen an der Enz",
+    "coordinates": [
+      48.93278,
+      8.95639
+    ]
+  },
+  {
+    "name": "Vallendar",
+    "coordinates": [
+      50.3971361,
+      7.6220222
+    ]
+  },
+  {
+    "name": "Varel",
+    "coordinates": [
+      53.39694,
+      8.13611
+    ]
+  },
+  {
+    "name": "Vechta",
+    "coordinates": [
+      52.73056,
+      8.28861
+    ]
+  },
+  {
+    "name": "Velbert",
+    "coordinates": [
+      51.333,
+      7.05
+    ]
+  },
+  {
+    "name": "Velburg",
+    "coordinates": [
+      49.23278,
+      11.67194
+    ]
+  },
+  {
+    "name": "Velden",
+    "coordinates": [
+      49.617,
+      11.517
+    ]
+  },
+  {
+    "name": "Velen",
+    "coordinates": [
+      51.89389,
+      6.98972
+    ]
+  },
+  {
+    "name": "Vellberg",
+    "coordinates": [
+      49.08778,
+      9.88167
+    ]
+  },
+  {
+    "name": "Vellmar",
+    "coordinates": [
+      51.35,
+      9.467
+    ]
+  },
+  {
+    "name": "Velten",
+    "coordinates": [
+      52.683,
+      13.183
+    ]
+  },
+  {
+    "name": "Verden an der Aller",
+    "coordinates": [
+      52.92333,
+      9.235
+    ]
+  },
+  {
+    "name": "Veringenstadt",
+    "coordinates": [
+      48.17833,
+      9.21194
+    ]
+  },
+  {
+    "name": "Verl",
+    "coordinates": [
+      51.88306,
+      8.51667
+    ]
+  },
+  {
+    "name": "Versmold",
+    "coordinates": [
+      52.04361,
+      8.15
+    ]
+  },
+  {
+    "name": "Vetschau",
+    "coordinates": [
+      51.78306,
+      14.06667
+    ]
+  },
+  {
+    "name": "Viechtach",
+    "coordinates": [
+      49.07917,
+      12.88472
+    ]
+  },
+  {
+    "name": "Viernheim",
+    "coordinates": [
+      49.54167,
+      8.57861
+    ]
+  },
+  {
+    "name": "Viersen",
+    "coordinates": [
+      51.25611,
+      6.39722
+    ]
+  },
+  {
+    "name": "Villingen-Schwenningen",
+    "coordinates": [
+      48.06028,
+      8.45861
+    ]
+  },
+  {
+    "name": "Vilsbiburg",
+    "coordinates": [
+      48.45,
+      12.35
+    ]
+  },
+  {
+    "name": "Vilseck",
+    "coordinates": [
+      49.6,
+      11.8
+    ]
+  },
+  {
+    "name": "Vilshofen an der Donau",
+    "coordinates": [
+      48.63306,
+      13.18306
+    ]
+  },
+  {
+    "name": "Visselhövede",
+    "coordinates": [
+      52.967,
+      9.583
+    ]
+  },
+  {
+    "name": "Vlotho",
+    "coordinates": [
+      52.16667,
+      8.84972
+    ]
+  },
+  {
+    "name": "Voerde",
+    "coordinates": [
+      51.6,
+      6.68333
+    ]
+  },
+  {
+    "name": "Vogtsburg",
+    "coordinates": [
+      48.08917,
+      7.63167
+    ]
+  },
+  {
+    "name": "Vohburg a.d.Donau",
+    "coordinates": [
+      48.767,
+      11.617
+    ]
+  },
+  {
+    "name": "Vohenstrauß",
+    "coordinates": [
+      49.617,
+      12.333
+    ]
+  },
+  {
+    "name": "Volkach",
+    "coordinates": [
+      49.867,
+      10.217
+    ]
+  },
+  {
+    "name": "Volkmarsen",
+    "coordinates": [
+      51.383,
+      9.117
+    ]
+  },
+  {
+    "name": "Vreden",
+    "coordinates": [
+      52.03306,
+      6.83306
+    ]
+  },
+  {
+    "name": "Vöhrenbach",
+    "coordinates": [
+      48.04556,
+      8.30417
+    ]
+  },
+  {
+    "name": "Vöhringen",
+    "coordinates": [
+      48.283,
+      10.083
+    ]
+  },
+  {
+    "name": "Völklingen",
+    "coordinates": [
+      49.25,
+      6.833
+    ]
+  },
+  {
+    "name": "Wachenheim",
+    "coordinates": [
+      49.44111,
+      8.18
+    ]
+  },
+  {
+    "name": "Wadern",
+    "coordinates": [
+      49.517,
+      6.867
+    ]
+  },
+  {
+    "name": "Waghäusel",
+    "coordinates": [
+      49.25,
+      8.517
+    ]
+  },
+  {
+    "name": "Wahlstedt",
+    "coordinates": [
+      53.95,
+      10.217
+    ]
+  },
+  {
+    "name": "Waiblingen",
+    "coordinates": [
+      48.83028,
+      9.31694
+    ]
+  },
+  {
+    "name": "Waibstadt",
+    "coordinates": [
+      49.2975,
+      8.92
+    ]
+  },
+  {
+    "name": "Waischenfeld",
+    "coordinates": [
+      49.85,
+      11.333
+    ]
+  },
+  {
+    "name": "Waldbröl",
+    "coordinates": [
+      50.87889,
+      7.615
+    ]
+  },
+  {
+    "name": "Waldeck",
+    "coordinates": [
+      51.2,
+      9.067
+    ]
+  },
+  {
+    "name": "Waldenbuch",
+    "coordinates": [
+      48.63722,
+      9.13167
+    ]
+  },
+  {
+    "name": "Waldenburg",
+    "coordinates": [
+      49.183,
+      9.633
+    ]
+  },
+  {
+    "name": "Waldenburg",
+    "coordinates": [
+      50.87583,
+      12.59972
+    ]
+  },
+  {
+    "name": "Waldershof",
+    "coordinates": [
+      49.967,
+      12.067
+    ]
+  },
+  {
+    "name": "Waldheim",
+    "coordinates": [
+      51.067,
+      13.017
+    ]
+  },
+  {
+    "name": "Waldkappel",
+    "coordinates": [
+      51.15,
+      9.883
+    ]
+  },
+  {
+    "name": "Waldkirchen",
+    "coordinates": [
+      48.7304778,
+      13.601139
+    ]
+  },
+  {
+    "name": "Waldkirch",
+    "coordinates": [
+      48.1,
+      7.967
+    ]
+  },
+  {
+    "name": "Waldkraiburg",
+    "coordinates": [
+      48.217,
+      12.4
+    ]
+  },
+  {
+    "name": "Waldmohr",
+    "coordinates": [
+      49.39528,
+      7.34111
+    ]
+  },
+  {
+    "name": "Waldmünchen",
+    "coordinates": [
+      49.367,
+      12.7
+    ]
+  },
+  {
+    "name": "Waldsassen",
+    "coordinates": [
+      50,
+      12.3
+    ]
+  },
+  {
+    "name": "Waldshut-Tiengen",
+    "coordinates": [
+      47.62306,
+      8.21444
+    ]
+  },
+  {
+    "name": "Walldorf",
+    "coordinates": [
+      49.3,
+      8.65
+    ]
+  },
+  {
+    "name": "Walldürn",
+    "coordinates": [
+      49.58306,
+      9.36806
+    ]
+  },
+  {
+    "name": "Wallenfels",
+    "coordinates": [
+      50.2675,
+      11.47333
+    ]
+  },
+  {
+    "name": "Walsrode",
+    "coordinates": [
+      52.867,
+      9.583
+    ]
+  },
+  {
+    "name": "Waltershausen",
+    "coordinates": [
+      50.8975,
+      10.55583
+    ]
+  },
+  {
+    "name": "Waltrop",
+    "coordinates": [
+      51.617,
+      7.383
+    ]
+  },
+  {
+    "name": "Wanfried",
+    "coordinates": [
+      51.183,
+      10.167
+    ]
+  },
+  {
+    "name": "Wangen im Allgäu",
+    "coordinates": [
+      47.68583,
+      9.83417
+    ]
+  },
+  {
+    "name": "Wanzleben-Börde",
+    "coordinates": [
+      52.067,
+      11.433
+    ]
+  },
+  {
+    "name": "Warburg",
+    "coordinates": [
+      51.5,
+      9.16972
+    ]
+  },
+  {
+    "name": "Warendorf",
+    "coordinates": [
+      51.95389,
+      7.99333
+    ]
+  },
+  {
+    "name": "Waren",
+    "coordinates": [
+      53.517,
+      12.683
+    ]
+  },
+  {
+    "name": "Warin",
+    "coordinates": [
+      53.783,
+      11.683
+    ]
+  },
+  {
+    "name": "Warstein",
+    "coordinates": [
+      51.45,
+      8.35
+    ]
+  },
+  {
+    "name": "Wassenberg",
+    "coordinates": [
+      51.1,
+      6.15
+    ]
+  },
+  {
+    "name": "Wasserburg am Inn",
+    "coordinates": [
+      48.0617,
+      12.2333
+    ]
+  },
+  {
+    "name": "Wassertrüdingen",
+    "coordinates": [
+      49.033,
+      10.6
+    ]
+  },
+  {
+    "name": "Wasungen",
+    "coordinates": [
+      50.66667,
+      10.36667
+    ]
+  },
+  {
+    "name": "Wedel",
+    "coordinates": [
+      53.583,
+      9.7
+    ]
+  },
+  {
+    "name": "Weener",
+    "coordinates": [
+      53.16917,
+      7.35639
+    ]
+  },
+  {
+    "name": "Wegberg",
+    "coordinates": [
+      51.14167,
+      6.27917
+    ]
+  },
+  {
+    "name": "Wegeleben",
+    "coordinates": [
+      51.867,
+      11.167
+    ]
+  },
+  {
+    "name": "Wehr",
+    "coordinates": [
+      47.62972,
+      7.90444
+    ]
+  },
+  {
+    "name": "Weida",
+    "coordinates": [
+      50.775,
+      12.05694
+    ]
+  },
+  {
+    "name": "Weiden in der Oberpfalz",
+    "coordinates": [
+      49.667,
+      12.15
+    ]
+  },
+  {
+    "name": "Weikersheim",
+    "coordinates": [
+      49.48167,
+      9.89917
+    ]
+  },
+  {
+    "name": "Weil am Rhein, Germany",
+    "coordinates": [
+      47.59472,
+      7.61083
+    ]
+  },
+  {
+    "name": "Weil der Stadt",
+    "coordinates": [
+      48.75083,
+      8.87056
+    ]
+  },
+  {
+    "name": "Weilburg",
+    "coordinates": [
+      50.483,
+      8.25
+    ]
+  },
+  {
+    "name": "Weilheim an der Teck",
+    "coordinates": [
+      48.615,
+      9.53861
+    ]
+  },
+  {
+    "name": "Weilheim in Oberbayern",
+    "coordinates": [
+      47.833,
+      11.15
+    ]
+  },
+  {
+    "name": "Weimar",
+    "coordinates": [
+      50.98333,
+      11.31667
+    ]
+  },
+  {
+    "name": "Weingarten",
+    "coordinates": [
+      47.80917,
+      9.64444
+    ]
+  },
+  {
+    "name": "Weinheim",
+    "coordinates": [
+      49.55,
+      8.667
+    ]
+  },
+  {
+    "name": "Weinsberg",
+    "coordinates": [
+      49.151806,
+      9.285694
+    ]
+  },
+  {
+    "name": "Weinstadt",
+    "coordinates": [
+      48.81111,
+      9.36556
+    ]
+  },
+  {
+    "name": "Weismain",
+    "coordinates": [
+      50.067,
+      11.217
+    ]
+  },
+  {
+    "name": "Weiterstadt",
+    "coordinates": [
+      49.9,
+      8.6
+    ]
+  },
+  {
+    "name": "Weißenberg",
+    "coordinates": [
+      51.19694,
+      14.65944
+    ]
+  },
+  {
+    "name": "Weißenburg in Bayern",
+    "coordinates": [
+      49.03056,
+      10.97194
+    ]
+  },
+  {
+    "name": "Weißenfels",
+    "coordinates": [
+      51.2,
+      11.967
+    ]
+  },
+  {
+    "name": "Weißenhorn",
+    "coordinates": [
+      48.3,
+      10.167
+    ]
+  },
+  {
+    "name": "Weißensee",
+    "coordinates": [
+      51.18333,
+      11.06667
+    ]
+  },
+  {
+    "name": "Weißenstadt",
+    "coordinates": [
+      50.10083,
+      11.88472
+    ]
+  },
+  {
+    "name": "Weißenthurm",
+    "coordinates": [
+      50.41444,
+      7.46056
+    ]
+  },
+  {
+    "name": "Weißwasser",
+    "coordinates": [
+      51.5,
+      14.633
+    ]
+  },
+  {
+    "name": "Welzheim",
+    "coordinates": [
+      48.87472,
+      9.63444
+    ]
+  },
+  {
+    "name": "Welzow",
+    "coordinates": [
+      51.56667,
+      14.18306
+    ]
+  },
+  {
+    "name": "Wemding",
+    "coordinates": [
+      48.867,
+      10.717
+    ]
+  },
+  {
+    "name": "Wendlingen",
+    "coordinates": [
+      48.67472,
+      9.38167
+    ]
+  },
+  {
+    "name": "Werben",
+    "coordinates": [
+      52.867,
+      11.967
+    ]
+  },
+  {
+    "name": "Werdau",
+    "coordinates": [
+      50.733,
+      12.383
+    ]
+  },
+  {
+    "name": "Werder (Havel)",
+    "coordinates": [
+      52.37806,
+      12.935
+    ]
+  },
+  {
+    "name": "Werdohl",
+    "coordinates": [
+      51.267,
+      7.767
+    ]
+  },
+  {
+    "name": "Werlte",
+    "coordinates": [
+      52.85,
+      7.683
+    ]
+  },
+  {
+    "name": "Werl",
+    "coordinates": [
+      51.55,
+      7.92
+    ]
+  },
+  {
+    "name": "Wermelskirchen",
+    "coordinates": [
+      51.15,
+      7.217
+    ]
+  },
+  {
+    "name": "Wernau",
+    "coordinates": [
+      48.68861,
+      9.42222
+    ]
+  },
+  {
+    "name": "Werneuchen",
+    "coordinates": [
+      52.63306,
+      13.73306
+    ]
+  },
+  {
+    "name": "Werne",
+    "coordinates": [
+      51.667,
+      7.617
+    ]
+  },
+  {
+    "name": "Wernigerode",
+    "coordinates": [
+      51.835,
+      10.78528
+    ]
+  },
+  {
+    "name": "Werra-Suhl-Tal",
+    "coordinates": [
+      50.933,
+      10.067
+    ]
+  },
+  {
+    "name": "Wertheim",
+    "coordinates": [
+      49.75889,
+      9.5175
+    ]
+  },
+  {
+    "name": "Werther (Westf.)",
+    "coordinates": [
+      52.075,
+      8.4125
+    ]
+  },
+  {
+    "name": "Wertingen",
+    "coordinates": [
+      48.533,
+      10.667
+    ]
+  },
+  {
+    "name": "Wesel",
+    "coordinates": [
+      51.65861,
+      6.61778
+    ]
+  },
+  {
+    "name": "Wesenberg",
+    "coordinates": [
+      53.267,
+      12.967
+    ]
+  },
+  {
+    "name": "Wesselburen",
+    "coordinates": [
+      54.217,
+      8.917
+    ]
+  },
+  {
+    "name": "Wesseling",
+    "coordinates": [
+      50.817,
+      6.967
+    ]
+  },
+  {
+    "name": "Westerburg",
+    "coordinates": [
+      50.56389,
+      7.9725
+    ]
+  },
+  {
+    "name": "Westerstede",
+    "coordinates": [
+      53.25,
+      7.917
+    ]
+  },
+  {
+    "name": "Wetter (Hessen)",
+    "coordinates": [
+      50.88333,
+      8.71667
+    ]
+  },
+  {
+    "name": "Wetter",
+    "coordinates": [
+      51.38806,
+      7.395
+    ]
+  },
+  {
+    "name": "Wettin-Löbejün",
+    "coordinates": [
+      51.633,
+      11.9
+    ]
+  },
+  {
+    "name": "Wetzlar",
+    "coordinates": [
+      50.567,
+      8.5
+    ]
+  },
+  {
+    "name": "Widdern",
+    "coordinates": [
+      49.317,
+      9.417
+    ]
+  },
+  {
+    "name": "Wiehl",
+    "coordinates": [
+      50.95,
+      7.533
+    ]
+  },
+  {
+    "name": "Wiesbaden",
+    "coordinates": [
+      50.0825,
+      8.24
+    ]
+  },
+  {
+    "name": "Wiesensteig",
+    "coordinates": [
+      48.56167,
+      9.62528
+    ]
+  },
+  {
+    "name": "Wiesloch",
+    "coordinates": [
+      49.29417,
+      8.69833
+    ]
+  },
+  {
+    "name": "Wiesmoor",
+    "coordinates": [
+      53.4,
+      7.733
+    ]
+  },
+  {
+    "name": "Wildau",
+    "coordinates": [
+      52.317,
+      13.633
+    ]
+  },
+  {
+    "name": "Wildberg",
+    "coordinates": [
+      48.62389,
+      8.74722
+    ]
+  },
+  {
+    "name": "Wildenfels",
+    "coordinates": [
+      50.6575,
+      12.58278
+    ]
+  },
+  {
+    "name": "Wildeshausen",
+    "coordinates": [
+      52.9,
+      8.433
+    ]
+  },
+  {
+    "name": "Wilhelmshaven",
+    "coordinates": [
+      53.51667,
+      8.13333
+    ]
+  },
+  {
+    "name": "Wilkau-Haßlau",
+    "coordinates": [
+      50.667,
+      12.517
+    ]
+  },
+  {
+    "name": "Willebadessen",
+    "coordinates": [
+      51.63306,
+      9.03306
+    ]
+  },
+  {
+    "name": "Willich",
+    "coordinates": [
+      51.26306,
+      6.54917
+    ]
+  },
+  {
+    "name": "Wilsdruff",
+    "coordinates": [
+      51.05222,
+      13.53833
+    ]
+  },
+  {
+    "name": "Wilster",
+    "coordinates": [
+      53.9225,
+      9.37444
+    ]
+  },
+  {
+    "name": "Wilthen",
+    "coordinates": [
+      51.1,
+      14.4
+    ]
+  },
+  {
+    "name": "Windischeschenbach",
+    "coordinates": [
+      49.8,
+      12.167
+    ]
+  },
+  {
+    "name": "Windsbach",
+    "coordinates": [
+      49.25,
+      10.817
+    ]
+  },
+  {
+    "name": "Winnenden",
+    "coordinates": [
+      48.87639,
+      9.39778
+    ]
+  },
+  {
+    "name": "Winsen",
+    "coordinates": [
+      53.367,
+      10.217
+    ]
+  },
+  {
+    "name": "Winterberg",
+    "coordinates": [
+      51.2,
+      8.517
+    ]
+  },
+  {
+    "name": "Wipperfürth",
+    "coordinates": [
+      51.11667,
+      7.4
+    ]
+  },
+  {
+    "name": "Wirges",
+    "coordinates": [
+      50.47417,
+      7.79528
+    ]
+  },
+  {
+    "name": "Wismar",
+    "coordinates": [
+      53.9,
+      11.467
+    ]
+  },
+  {
+    "name": "Wissen",
+    "coordinates": [
+      50.7825,
+      7.735
+    ]
+  },
+  {
+    "name": "Wittenberge",
+    "coordinates": [
+      53,
+      11.75
+    ]
+  },
+  {
+    "name": "Wittenberg",
+    "coordinates": [
+      51.8671,
+      12.6484
+    ]
+  },
+  {
+    "name": "Wittenburg",
+    "coordinates": [
+      53.5,
+      11.067
+    ]
+  },
+  {
+    "name": "Witten",
+    "coordinates": [
+      51.43333,
+      7.33333
+    ]
+  },
+  {
+    "name": "Wittichenau",
+    "coordinates": [
+      51.383,
+      14.25
+    ]
+  },
+  {
+    "name": "Wittingen",
+    "coordinates": [
+      52.717,
+      10.733
+    ]
+  },
+  {
+    "name": "Wittlich",
+    "coordinates": [
+      49.98694,
+      6.88972
+    ]
+  },
+  {
+    "name": "Wittmund",
+    "coordinates": [
+      53.575,
+      7.78083
+    ]
+  },
+  {
+    "name": "Wittstock",
+    "coordinates": [
+      53.16361,
+      12.48556
+    ]
+  },
+  {
+    "name": "Witzenhausen, Germany",
+    "coordinates": [
+      51.34222,
+      9.85778
+    ]
+  },
+  {
+    "name": "Woldegk",
+    "coordinates": [
+      53.45944,
+      13.58278
+    ]
+  },
+  {
+    "name": "Wolfach",
+    "coordinates": [
+      48.3,
+      8.217
+    ]
+  },
+  {
+    "name": "Wolfenbüttel",
+    "coordinates": [
+      52.16222,
+      10.53694
+    ]
+  },
+  {
+    "name": "Wolfhagen",
+    "coordinates": [
+      51.317,
+      9.167
+    ]
+  },
+  {
+    "name": "Wolframs-Eschenbach",
+    "coordinates": [
+      49.233,
+      10.733
+    ]
+  },
+  {
+    "name": "Wolfratshausen",
+    "coordinates": [
+      47.91333,
+      11.42778
+    ]
+  },
+  {
+    "name": "Wolfsburg",
+    "coordinates": [
+      52.42306,
+      10.78722
+    ]
+  },
+  {
+    "name": "Wolfstein",
+    "coordinates": [
+      49.58417,
+      7.60611
+    ]
+  },
+  {
+    "name": "Wolgast",
+    "coordinates": [
+      54.05,
+      13.767
+    ]
+  },
+  {
+    "name": "Wolkenstein",
+    "coordinates": [
+      50.65444,
+      13.07472
+    ]
+  },
+  {
+    "name": "Wolmirstedt",
+    "coordinates": [
+      52.25194,
+      11.62972
+    ]
+  },
+  {
+    "name": "Worms",
+    "coordinates": [
+      49.63194,
+      8.36528
+    ]
+  },
+  {
+    "name": "Wriezen",
+    "coordinates": [
+      52.71667,
+      14.13306
+    ]
+  },
+  {
+    "name": "Wunsiedel",
+    "coordinates": [
+      50.017,
+      12.017
+    ]
+  },
+  {
+    "name": "Wunstorf",
+    "coordinates": [
+      52.4275,
+      9.42944
+    ]
+  },
+  {
+    "name": "Wuppertal",
+    "coordinates": [
+      51.26667,
+      7.18333
+    ]
+  },
+  {
+    "name": "Wurzbach",
+    "coordinates": [
+      50.46389,
+      11.53667
+    ]
+  },
+  {
+    "name": "Wurzen",
+    "coordinates": [
+      51.367,
+      12.717
+    ]
+  },
+  {
+    "name": "Wustrow",
+    "coordinates": [
+      52.92194,
+      11.12167
+    ]
+  },
+  {
+    "name": "Wyk auf Föhra Wik / Vyk",
+    "coordinates": [
+      54.7,
+      8.567
+    ]
+  },
+  {
+    "name": "Wächtersbach",
+    "coordinates": [
+      50.26667,
+      9.3
+    ]
+  },
+  {
+    "name": "Wörrstadt",
+    "coordinates": [
+      49.84306,
+      8.11556
+    ]
+  },
+  {
+    "name": "Wörth am Main",
+    "coordinates": [
+      49.79639,
+      9.1575
+    ]
+  },
+  {
+    "name": "Wörth am Rhein",
+    "coordinates": [
+      49.05167,
+      8.26028
+    ]
+  },
+  {
+    "name": "Wörth an der Donau",
+    "coordinates": [
+      49.00083,
+      12.40111
+    ]
+  },
+  {
+    "name": "Wülfrath",
+    "coordinates": [
+      51.28333,
+      7.03333
+    ]
+  },
+  {
+    "name": "Würselen",
+    "coordinates": [
+      50.817,
+      6.133
+    ]
+  },
+  {
+    "name": "Würzburg",
+    "coordinates": [
+      49.783,
+      9.933
+    ]
+  },
+  {
+    "name": "Xanten",
+    "coordinates": [
+      51.66222,
+      6.45389
+    ]
+  },
+  {
+    "name": "Zahna-Elster",
+    "coordinates": [
+      51.79917,
+      12.40694
+    ]
+  },
+  {
+    "name": "Zarrentin am Schaalsee",
+    "coordinates": [
+      53.533,
+      10.917
+    ]
+  },
+  {
+    "name": "Zehdenick",
+    "coordinates": [
+      52.983,
+      13.333
+    ]
+  },
+  {
+    "name": "Zeil am Main",
+    "coordinates": [
+      50.017,
+      10.6
+    ]
+  },
+  {
+    "name": "Zeitz",
+    "coordinates": [
+      51.04778,
+      12.13833
+    ]
+  },
+  {
+    "name": "Zell am Harmersbach",
+    "coordinates": [
+      48.34667,
+      8.06389
+    ]
+  },
+  {
+    "name": "Zell im Wiesental",
+    "coordinates": [
+      47.70694,
+      7.85139
+    ]
+  },
+  {
+    "name": "Zella-Mehlis",
+    "coordinates": [
+      50.65972,
+      10.66694
+    ]
+  },
+  {
+    "name": "Zell",
+    "coordinates": [
+      50.02639,
+      7.18361
+    ]
+  },
+  {
+    "name": "Zerbst",
+    "coordinates": [
+      51.96806,
+      12.08444
+    ]
+  },
+  {
+    "name": "Zeulenroda-Triebes",
+    "coordinates": [
+      50.64861,
+      11.98056
+    ]
+  },
+  {
+    "name": "Zeven",
+    "coordinates": [
+      53.3,
+      9.28333
+    ]
+  },
+  {
+    "name": "Ziegenrück",
+    "coordinates": [
+      50.61667,
+      11.65
+    ]
+  },
+  {
+    "name": "Zierenberg",
+    "coordinates": [
+      51.317,
+      9.167
+    ]
+  },
+  {
+    "name": "Ziesar",
+    "coordinates": [
+      52.26667,
+      12.28306
+    ]
+  },
+  {
+    "name": "Zirndorf",
+    "coordinates": [
+      49.45,
+      10.95
+    ]
+  },
+  {
+    "name": "Zittau",
+    "coordinates": [
+      50.89611,
+      14.80722
+    ]
+  },
+  {
+    "name": "Zossen",
+    "coordinates": [
+      52.21667,
+      13.44972
+    ]
+  },
+  {
+    "name": "Zschopau",
+    "coordinates": [
+      50.75,
+      13.067
+    ]
+  },
+  {
+    "name": "Zweibrücken",
+    "coordinates": [
+      49.25,
+      7.367
+    ]
+  },
+  {
+    "name": "Zwenkau",
+    "coordinates": [
+      51.2175,
+      12.32417
+    ]
+  },
+  {
+    "name": "Zwickau",
+    "coordinates": [
+      50.717,
+      12.5
+    ]
+  },
+  {
+    "name": "Zwiesel",
+    "coordinates": [
+      49.017,
+      13.233
+    ]
+  },
+  {
+    "name": "Zwingenberg",
+    "coordinates": [
+      49.71667,
+      8.61667
+    ]
+  },
+  {
+    "name": "Zwönitz",
+    "coordinates": [
+      50.61667,
+      12.8
+    ]
+  },
+  {
+    "name": "Zörbig",
+    "coordinates": [
+      51.61667,
+      12.11667
+    ]
+  },
+  {
+    "name": "Zülpich",
+    "coordinates": [
+      50.7,
+      6.65
+    ]
+  },
+  {
+    "name": "Öhringen",
+    "coordinates": [
+      49.2,
+      9.5
+    ]
+  },
+  {
+    "name": "Östringen",
+    "coordinates": [
+      49.21944,
+      8.71083
+    ]
+  },
+  {
+    "name": "Übach-Palenberg",
+    "coordinates": [
+      50.91972,
+      6.11944
+    ]
+  },
+  {
+    "name": "Überlingen",
+    "coordinates": [
+      47.76667,
+      9.15833
+    ]
+  }
+]

@@ -23,3 +23,6 @@ deployment/.last-successful-tag
 **/*.p12
 
 /deployment/admin-credentials.txt
+
+/deployment/seeder-credentials.json
+/deployment/seeder-credentials.json.tmp

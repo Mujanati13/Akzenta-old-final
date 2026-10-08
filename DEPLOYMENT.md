@@ -108,3 +108,13 @@ Find the current private tool addresses at any time:
 docker compose -p akzente -f docker-compose.production.yml port maildev 1080
 docker compose -p akzente -f docker-compose.production.yml port adminer 8080
 ```
+
+## Load all existing seed data
+
+```bash
+git pull --ff-only && ./deploy.sh --seed-all
+```
+
+This runs a database backup before adding missing roles, account statuses, user types, merchandiser statuses, report statuses, 41 European countries, 402 European city entries, and 2,054 German city entries. City names shared by both datasets are inserted only once per country. Existing country IDs, cities, account passwords, and report statuses are preserved. It creates the existing demo seed users (`admin@example.com` and `john.doe@example.com`) only when absent, with generated passwords and HeadOffice membership. Read their passwords with `cat deployment/seeder-credentials.json`. This private file is excluded from Git. The initial deployment administrator remains available. No clients, projects, or reports are defined by these seeders. The destructive `seed_remote.sql` maintenance script is not a dataset and is not executed.
+
+The seed writes run in one transaction and can be repeated without duplicate records. Combine `--fresh --seed-all` for a new installation.

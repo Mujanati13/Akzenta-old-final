@@ -108,6 +108,17 @@ services:
     security_opt:
       - no-new-privileges:true
 
+  db-seed:
+    <<: *app-env
+    image: akzente-api:${DEPLOY_TAG:-current}
+    user: "0:0"
+    command: ["node", "deployment/seed-all.cjs"]
+    profiles: ["tools"]
+    read_only: true
+    tmpfs: [/tmp]
+    volumes:
+      - ./deployment:/seed-output
+
   db-initialize:
     <<: *app-env
     image: akzente-api:${DEPLOY_TAG:-current}

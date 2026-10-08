@@ -37,8 +37,8 @@ function scenario(t, failure) {
   const bash = process.env.BASH_BIN || 'bash';
   const log = path.join(dir, 'calls.log');
   // Let Bash prepend its platform-native bin path, including on Windows/MSYS.
-  const result = spawnSync(bash, ['-c', 'export PATH="$(cd "$1/bin" && pwd):$PATH"; cd "$1"; bash deploy.sh 203.0.113.10', '--', dir.replace(/\\/g, '/')], {
-    env: { ...process.env, MOCK_FAIL: failure, MOCK_LOG: log.replace(/\\/g, '/') }, encoding: 'utf8', timeout: 30000,
+  const result = spawnSync(bash, ['-c', 'export PATH="$(cd "$1/bin" && pwd):$PATH"; cd "$1"; bash deploy.sh ${MOCK_DEPLOY_ARGS:-} 203.0.113.10', '--', dir.replace(/\\/g, '/')], {
+    env: { ...process.env, MOCK_FAIL: failure, MOCK_DEPLOY_ARGS: failure === 'seed' ? '--seed-all' : '', MOCK_LOG: log.replace(/\\/g, '/') }, encoding: 'utf8', timeout: 30000,
   });
   if (result.error) throw result.error;
   return { ...result, calls: fs.readFileSync(log, 'utf8') };
@@ -89,4 +89,12 @@ test('fresh deployment initializes schema without requesting or importing a sour
   assert.ok(r.calls.indexOf('db-bootstrap create-empty') < r.calls.indexOf('db-initialize'));
   assert.ok(r.calls.indexOf('db-initialize') < r.calls.indexOf('db-bootstrap mark-fresh'));
   assert.ok(r.calls.indexOf('db-bootstrap mark-fresh') < r.calls.indexOf('db-check'));
+});
+
+test('seed-all backs up before inserting seed data and rechecks schema before switching services', t => {
+ const r=scenario(t,'seed');
+ assert.equal(r.status,0,r.stderr);
+ assert.ok(r.calls.indexOf('db-backup') < r.calls.indexOf('db-seed'));
+ assert.ok(r.calls.lastIndexOf('db-check') > r.calls.indexOf('db-seed'));
+ assert.ok(r.calls.indexOf('db-seed') < r.calls.indexOf('180 postgres maildev adminer api web'));
 });
