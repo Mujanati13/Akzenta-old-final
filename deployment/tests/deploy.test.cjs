@@ -13,6 +13,8 @@ const dockerMock = [
   'if [[ "$*" == *"parseRaw(fs.readFileSync"* ]]; then if [[ "$MOCK_FAIL" == fresh ]]; then echo fresh; else echo import; fi; exit 0; fi',
   'if [[ "$1" == run ]]; then echo "80 8081 8082"; exit 0; fi',
   'if [[ "$*" == *"db-bootstrap status"* ]]; then if [[ "$MOCK_FAIL" == repeat ]]; then echo done; else echo pending; fi; exit 0; fi',
+  'if [[ "$*" == *"port maildev 1080"* ]]; then echo "127.0.0.1:49170"; exit 0; fi',
+  'if [[ "$*" == *"port adminer 8080"* ]]; then echo "127.0.0.1:49171"; exit 0; fi',
   'if [[ "$1" == inspect ]]; then echo "previous:stable"; exit 0; fi',
   'if [[ "$*" == *"version --short"* ]]; then echo "2.30.0"; exit 0; fi',
   'if [[ "$*" == *"ps -q api"* ]]; then echo "old_api"; exit 0; fi',
@@ -44,6 +46,8 @@ function scenario(t, failure) {
 test('successful deployment backs up and checks before replacing services; probes all three portals', t => {
   const r = scenario(t, 'none');
   assert.equal(r.status, 0, r.stderr);
+  assert.match(r.stdout, /Mail viewer: 127\.0\.0\.1:49170/);
+  assert.match(r.stdout, /Adminer: 127\.0\.0\.1:49171/);
   assert.ok(r.calls.indexOf('source-check') < r.calls.indexOf('source-backup'));
   assert.ok(r.calls.indexOf('source-backup') < r.calls.indexOf('run --rm --no-deps db-bootstrap\n'));
   assert.ok(r.calls.indexOf('db-check') < r.calls.indexOf('db-backup'));

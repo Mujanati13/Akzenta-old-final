@@ -160,7 +160,9 @@ for port in "$HEAD_OFFICE_PORT" "$CLIENT_PORT" "$MERCHANDISER_PORT"; do
   curl --noproxy '*' --fail --silent --show-error --max-time 15 "http://127.0.0.1:$port/health" >/dev/null
   curl --noproxy '*' --fail --silent --show-error --max-time 15 "http://127.0.0.1:$port/login" >/dev/null
 done
+mail_viewer_address="$("${COMPOSE[@]}" port maildev 1080)"
+adminer_address="$("${COMPOSE[@]}" port adminer 8080)"
 printf '%s\n' "$DEPLOY_TAG" >deployment/.last-successful-tag
-printf '\nDeployment is healthy. Open the VPS IP using:\n  HeadOffice: port %s\n  Client: port %s\n  Merchandiser: port %s\nPostgreSQL and SMTP: private Docker network\n  Mail viewer: 127.0.0.1:1080\n  Adminer: 127.0.0.1:8080\nBackups: deployment/backups/\n' "$HEAD_OFFICE_PORT" "$CLIENT_PORT" "$MERCHANDISER_PORT"
+printf '\nDeployment is healthy. Open the VPS IP using:\n  HeadOffice: port %s\n  Client: port %s\n  Merchandiser: port %s\nPostgreSQL and SMTP: private Docker network\n  Mail viewer: %s\n  Adminer: %s\nBackups: deployment/backups/\n' "$HEAD_OFFICE_PORT" "$CLIENT_PORT" "$MERCHANDISER_PORT" "$mail_viewer_address" "$adminer_address"
 
 [[ ! -f deployment/admin-credentials.txt ]] || echo "Initial administrator credentials: deployment/admin-credentials.txt"

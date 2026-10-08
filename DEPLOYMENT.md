@@ -28,8 +28,8 @@ The first run asks for the VPS IP when missing. If neither `Backend/.env` nor sa
 | API | /api/v1/ on each portal; private container port 3000 |
 | PostgreSQL 17 | Private Docker network; persistent `akzente_database` volume |
 | Maildev SMTP | Private Docker network, port 1025; captured mail in `akzente_mail` |
-| Mail viewer | VPS loopback only: 127.0.0.1:1080 |
-| Adminer | VPS loopback only: 127.0.0.1:8080 |
+| Mail viewer | VPS loopback only; automatically assigned port printed after deployment |
+| Adminer | VPS loopback only; automatically assigned port printed after deployment |
 | Uploaded files | Persistent `akzente_uploads` volume |
 
 Nginx serves all three production frontend builds and proxies API requests to the same backend. PostgreSQL and SMTP ports are not exposed to the internet. Maildev captures messages for viewing; it does not deliver them to recipients. To deliver real emails, set the `MAIL_*` settings in `.env.production` to a real SMTP provider and redeploy. Maildev will still start as part of the stack.
@@ -40,7 +40,7 @@ Nginx serves all three production frontend builds and proxies API requests to th
 - Keep the existing source PostgreSQL reachable from containers. For PostgreSQL on the host, use `host.docker.internal` with the correct source port and PostgreSQL access rules. A source database in another Docker project needs a reachable address; the new stack's `postgres` hostname refers to the new database, not your old one.
 - Copy the current live uploads into `Backend/uploads/` before the first run. Database records referencing missing uploads stop deployment.
 - Schedule the first import with source application writes paused. The import copies data as of its backup; it does not continuously synchronize later changes from the original database. The command never stops unrelated applications or modifies the source database.
-- Allow public TCP ports **80, 8081, 8082**, and ensure they are free. Local mail-viewer and Adminer ports 1080/8080 must also be free. The script does not change your firewall or stop unrelated services.
+- Allow public TCP ports **80, 8081, 8082**, and ensure they are free. Docker assigns free local host ports for the mail viewer and Adminer, avoiding conflicts with other containers. The script does not change your firewall or stop unrelated services.
 
 This workflow preserves an existing database. It does not silently create an empty business dataset or run development seeds. If you intend a fresh installation, a separately verified initial schema and secure administrator setup are required.
 
@@ -73,10 +73,10 @@ Set `MAPBOX_PUBLIC_TOKEN=pk.YOUR_PUBLIC_TOKEN` in `Backend/.env` before the firs
 View captured mail and Adminer from your own computer through SSH:
 
 ```bash
-ssh -L 1080:127.0.0.1:1080 -L 8080:127.0.0.1:8080 root@YOUR_VPS_IP
+ssh -L 1080:127.0.0.1:MAIL_VIEWER_HOST_PORT -L 8080:127.0.0.1:ADMINER_HOST_PORT root@YOUR_VPS_IP
 ```
 
-Then open http://localhost:1080 for mail or http://localhost:8080 for Adminer. Adminer's server is `postgres`; use the database username, password, and name from `.env.production`.
+Replace `MAIL_VIEWER_HOST_PORT` and `ADMINER_HOST_PORT` with the assigned ports printed by deployment (or look them up using the commands below). Then open http://localhost:1080 for mail or http://localhost:8080 for Adminer. Adminer's server is `postgres`; use the database username, password, and name from `.env.production`.
 
 ## Operations and recovery
 
@@ -101,3 +101,10 @@ Full Docker image builds and the complete running stack remain unverified in thi
 ## Dependency installation
 
 The frontend and backend Docker stages use `npm ci --legacy-peer-deps` with the committed lockfiles. These lockfiles contain conflicting peer ranges (including Angular localize, older toast/stylelint packages, and AWS SDK packages); strict peer resolution rejects them. This keeps the existing locked dependency versions and does not regenerate the lockfiles during deployment. A dependency upgrade must separately align Angular and its integrations and verify all three production builds. See [npm ci documentation](https://docs.npmjs.com/cli/v11/commands/npm-ci/).
+
+Find the current private tool addresses at any time:
+
+```bash
+docker compose -p akzente -f docker-compose.production.yml port maildev 1080
+docker compose -p akzente -f docker-compose.production.yml port adminer 8080
+```
