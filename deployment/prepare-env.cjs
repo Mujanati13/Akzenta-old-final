@@ -34,7 +34,7 @@ function validate(values) {
   }
   if (values.DATABASE_HOST === 'localhost' || values.DATABASE_HOST === '127.0.0.1') throw new Error('Use host.docker.internal for a database on the VPS host, or its reachable IP');
   if (values.DATABASE_URL && ['localhost', '127.0.0.1'].includes(new URL(values.DATABASE_URL).hostname)) throw new Error('DATABASE_URL must use a database hostname reachable from Docker');
-  if (!values.MAIL_HOST || values.MAIL_HOST === 'maildev' || !values.MAIL_DEFAULT_EMAIL) throw new Error('Configure a real SMTP host and sender in Backend/.env');
+  if (!values.MAIL_HOST || !values.MAIL_DEFAULT_EMAIL) throw new Error('Mail configuration is missing');
   for (const key of ['AUTH_JWT_SECRET', 'AUTH_REFRESH_SECRET', 'AUTH_FORGOT_SECRET', 'AUTH_CONFIRM_EMAIL_SECRET']) {
     if (!values[key] || values[key].length < 32) throw new Error('Set a strong production secret for ' + key);
   }
@@ -76,18 +76,40 @@ function prepare(base, ip) {
       DATABASE_SSL_ENABLED: old.DATABASE_SSL_ENABLED || 'false', DATABASE_REJECT_UNAUTHORIZED: old.DATABASE_REJECT_UNAUTHORIZED || 'true',
       DATABASE_CA: old.DATABASE_CA || '', DATABASE_KEY: old.DATABASE_KEY || '', DATABASE_CERT: old.DATABASE_CERT || '',
       MAPBOX_PUBLIC_TOKEN: old.MAPBOX_PUBLIC_TOKEN || '',
-      FILE_DRIVER: 'local', MAIL_HOST: old.MAIL_HOST || '', MAIL_PORT: old.MAIL_PORT || '587',
+      FILE_DRIVER: 'local', MAIL_HOST: old.MAIL_HOST || 'maildev', MAIL_PORT: old.MAIL_PORT || '587',
       MAIL_USER: old.MAIL_USER || '', MAIL_PASSWORD: old.MAIL_PASSWORD || '',
-      MAIL_DEFAULT_EMAIL: old.MAIL_DEFAULT_EMAIL || '', MAIL_DEFAULT_NAME: old.MAIL_DEFAULT_NAME || 'Akzente',
+      MAIL_DEFAULT_EMAIL: old.MAIL_DEFAULT_EMAIL || 'noreply@example.com', MAIL_DEFAULT_NAME: old.MAIL_DEFAULT_NAME || 'Akzente',
       MAIL_IGNORE_TLS: 'false', MAIL_SECURE: old.MAIL_SECURE || (old.MAIL_PORT === '465' ? 'true' : 'false'), MAIL_REQUIRE_TLS: old.MAIL_REQUIRE_TLS || 'true',
       AUTH_JWT_TOKEN_EXPIRES_IN: '15m', AUTH_SESSION_MAX_AGE: '8h', AUTH_REFRESH_TOKEN_EXPIRES_IN: '7d',
       AUTH_FORGOT_TOKEN_EXPIRES_IN: '30m', AUTH_CONFIRM_EMAIL_TOKEN_EXPIRES_IN: '1d',
     };
     for (const key of ['AUTH_JWT_SECRET', 'AUTH_REFRESH_SECRET', 'AUTH_FORGOT_SECRET', 'AUTH_CONFIRM_EMAIL_SECRET']) values[key] = crypto.randomBytes(48).toString('hex');
     validate(values);
-    fs.writeFileSync(target, Object.entries(values).map(([k, v]) => k + '=' + v).join('\n') + '\n', { mode: 0o600, flag: 'wx' });
   }
+  if (values.DEPLOYMENT_STACK !== 'managed') {
+    const source = path.join(base, '.env.source');
+    if (!fs.existsSync(source)) writeRaw(source, values);
+    const databaseFile = path.join(base, '.env.database');
+    if (!fs.existsSync(databaseFile)) writeRaw(databaseFile, {
+      POSTGRES_USER: 'postgres', POSTGRES_PASSWORD: crypto.randomBytes(48).toString('hex'), POSTGRES_DB: 'postgres',
+    });
+    values = {
+      ...values, DEPLOYMENT_STACK: 'managed', DATABASE_HOST: 'postgres', DATABASE_PORT: '5432', DATABASE_URL: '',
+      DATABASE_NAME: ['postgres', 'template0', 'template1'].includes(values.DATABASE_NAME) ? 'akzente' : (values.DATABASE_NAME || 'akzente'),
+      DATABASE_USERNAME: 'akzente_app', DATABASE_PASSWORD: crypto.randomBytes(48).toString('hex'),
+      DATABASE_SSL_ENABLED: 'false', DATABASE_REJECT_UNAUTHORIZED: 'true', DATABASE_CA: '', DATABASE_KEY: '', DATABASE_CERT: '',
+      MAIL_HOST: 'maildev', MAIL_PORT: '1025', MAIL_USER: '', MAIL_PASSWORD: '',
+      MAIL_SECURE: 'false', MAIL_REQUIRE_TLS: 'false', MAIL_IGNORE_TLS: 'true',
+    };
+  }
+  if (!fs.existsSync(path.join(base, '.env.source')) || !fs.existsSync(path.join(base, '.env.database'))) throw new Error('Managed credentials are missing; restore .env.source and .env.database');
+  validate(values);
+  writeRaw(target, values);
   return values;
+}
+function writeRaw(file, values) {
+  fs.writeFileSync(file + '.tmp', Object.entries(values).map(([k,v]) => k + '=' + v).join('\n') + '\n', {mode: 0o600});
+  fs.renameSync(file + '.tmp', file);
 }
 if (require.main === module) {
   try {

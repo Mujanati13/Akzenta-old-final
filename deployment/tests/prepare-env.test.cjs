@@ -19,12 +19,20 @@ test('parses dotenv without evaluating shell substitutions', () => {
 test('preserves connection credentials, generates strong stable secrets, and keeps raw values literal', t => {
   const dir = fixture(t);
   const first = prepare(dir, '203.0.113.10');
-  assert.equal(first.DATABASE_PASSWORD, 'literal$secret#value=rest');
-  assert.equal(first.DATABASE_HOST, '198.51.100.20');
+  const source = parseRaw(fs.readFileSync(path.join(dir, '.env.source'), 'utf8'));
+  assert.equal(source.DATABASE_PASSWORD, 'literal$secret#value=rest');
+  assert.equal(source.DATABASE_HOST, '198.51.100.20');
+  assert.equal(first.DATABASE_HOST, 'postgres');
+  assert.equal(first.DATABASE_USERNAME, 'akzente_app');
+  assert.equal(first.DATABASE_PASSWORD.length, 96);
+  assert.equal(first.MAIL_HOST, 'maildev');
+  assert.equal(first.MAIL_PORT, '1025');
+  assert.equal(first.DEPLOYMENT_STACK, 'managed');
+  assert.equal(parseRaw(fs.readFileSync(path.join(dir, '.env.database'), 'utf8')).POSTGRES_PASSWORD.length, 96);
   assert.equal(first.DATABASE_NAME, 'existing');
   assert.equal(first.DATABASE_SYNCHRONIZE, 'false');
   assert.equal(first.AUTH_COOKIE_SECURE, 'false');
-  assert.equal(first.MAIL_IGNORE_TLS, 'false');
+  assert.equal(first.MAIL_IGNORE_TLS, 'true');
   assert.equal(first.CLIENT_FRONTEND_DOMAIN, 'http://203.0.113.10:8081');
   assert.equal(first.AUTH_JWT_SECRET.length, 96);
   assert.notEqual(first.AUTH_JWT_SECRET, first.AUTH_REFRESH_SECRET);
@@ -54,4 +62,17 @@ test('rejects destructive settings, duplicate ports, and URLs inconsistent with 
   assert.throws(() => validate({ ...values, AUTH_JWT_SECRET: 'secret' }), /strong/);
   assert.throws(() => validate({ ...values, MAPBOX_PUBLIC_TOKEN: 'sk.not-for-browser' }), /public token/);
   validate({ ...values, MAPBOX_PUBLIC_TOKEN: 'pk.test-token' });
+});
+
+test('existing external production configuration is preserved once and converted without rotating JWT secrets', t => {
+  const dir = fixture(t);
+  const managed = prepare(dir, '203.0.113.10');
+  const sourceFile = path.join(dir, '.env.source');
+  const source = parseRaw(fs.readFileSync(sourceFile, 'utf8'));
+  fs.writeFileSync(path.join(dir, '.env.production'), Object.entries(source).map(([k,v]) => k + '=' + v).join('\n') + '\n');
+  const migrated = prepare(dir);
+  assert.equal(migrated.DATABASE_HOST, 'postgres');
+  assert.equal(migrated.AUTH_JWT_SECRET, source.AUTH_JWT_SECRET);
+  assert.deepEqual(parseRaw(fs.readFileSync(sourceFile, 'utf8')), source);
+  assert.equal(migrated.DATABASE_NAME, managed.DATABASE_NAME);
 });

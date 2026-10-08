@@ -12,12 +12,57 @@ x-app-env: &app-env
       max-file: "3"
 
 services:
+  postgres:
+    image: postgres:17-alpine
+    env_file:
+      - path: .env.database
+        format: raw
+    restart: unless-stopped
+    volumes:
+      - database:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "postgres", "-d", "postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  maildev:
+    image: maildev/maildev:2.2.1
+    restart: unless-stopped
+    environment:
+      MAILDEV_MAIL_DIRECTORY: /home/node/mail
+    volumes:
+      - maildata:/home/node/mail
+    ports:
+      - "127.0.0.1:1080:1080"
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://127.0.0.1:1080/healthz"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  adminer:
+    image: adminer:latest
+    restart: unless-stopped
+    environment:
+      ADMINER_DEFAULT_SERVER: postgres
+    ports:
+      - "127.0.0.1:8080:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+
   api:
     <<: *app-env
     image: akzente-api:${DEPLOY_TAG:-current}
     build:
       context: ./Backend
       dockerfile: Dockerfile.production
+    depends_on:
+      postgres:
+        condition: service_healthy
+      maildev:
+        condition: service_healthy
     init: true
     restart: unless-stopped
     read_only: true
@@ -83,13 +128,54 @@ services:
       - ./deployment/backup-database.sh:/backup-database.sh:ro
       - ./deployment/backups:/backups
 
+  source-check:
+    <<: *app-env
+    env_file:
+      - path: .env.source
+        format: raw
+    image: akzente-api:${DEPLOY_TAG:-current}
+    command: ["node", "deployment/check-database.cjs"]
+    profiles: ["tools"]
+    read_only: true
+    volumes:
+      - uploads:/app/uploads:ro
+      - ./Backend/uploads:/source-uploads:ro
+
+  source-backup:
+    <<: *app-env
+    env_file:
+      - path: .env.source
+        format: raw
+    image: ${DATABASE_CLIENT_IMAGE:-postgres:17-alpine}
+    environment:
+      BACKUP_RESULT_FILE: /backups/source.latest
+    entrypoint: ["/bin/sh", "/backup-database.sh"]
+    profiles: ["tools"]
+    volumes:
+      - ./deployment/backup-database.sh:/backup-database.sh:ro
+      - ./deployment/backups:/backups
+
+  db-bootstrap:
+    image: postgres:17-alpine
+    env_file:
+      - path: .env.production
+        format: raw
+      - path: .env.database
+        format: raw
+    entrypoint: ["/bin/sh", "/bootstrap-database.sh"]
+    profiles: ["tools"]
+    volumes:
+      - ./deployment/bootstrap-database.sh:/bootstrap-database.sh:ro
+      - ./deployment/backups:/backups:ro
+
   upload-init:
     image: alpine:3.22
     profiles: ["tools"]
-    command: ["sh", "-ec", "cp -an /source/. /uploads/; chown -R 1000:1000 /uploads"]
+    command: ["sh", "-ec", "cp -an /source/. /uploads/; chown -R 1000:1000 /uploads /maildev"]
     volumes:
       - ./Backend/uploads:/source:ro
       - uploads:/uploads
+      - maildata:/maildev
 
   upload-backup:
     image: alpine:3.22
@@ -100,5 +186,9 @@ services:
       - ./deployment/backups:/backups
 
 volumes:
+  database:
+    name: akzente_database
+  maildata:
+    name: akzente_mail
   uploads:
     name: akzente_uploads

@@ -1,89 +1,91 @@
-# Deploy all portals and the API on a VPS IP
+# One-command VPS deployment
 
-Run from the project root on a Linux VPS:
+From the project root on your Linux VPS:
 
 ```bash
-bash deploy.sh YOUR_VPS_IP
+./deploy.sh
 ```
 
-The requested filename also works: `bash deplot.sh YOUR_VPS_IP`.
+Or provide the public IP explicitly: `./deploy.sh YOUR_VPS_IP`. The `deplot.sh` and `deply.sh` aliases run the same command.
 
-| Application | Address |
+The first run asks for the VPS IP when missing. If neither `Backend/.env` nor saved production settings exist, it asks for your existing database connection and writes a private environment file automatically. Existing `Backend/.env` database settings are used without asking again. SMTP credentials are unnecessary for the included local mail server.
+
+## Included services
+
+| Service | Address / storage |
 | --- | --- |
 | HeadOffice | http://YOUR_VPS_IP/ |
 | Client | http://YOUR_VPS_IP:8081/ |
 | Merchandiser | http://YOUR_VPS_IP:8082/ |
-| API | /api/v1/ on any of the three addresses |
-| Readiness | /health on any of the three addresses |
+| API | /api/v1/ on each portal; private container port 3000 |
+| PostgreSQL 17 | Private Docker network; persistent `akzente_database` volume |
+| Maildev SMTP | Private Docker network, port 1025; captured mail in `akzente_mail` |
+| Mail viewer | VPS loopback only: 127.0.0.1:1080 |
+| Adminer | VPS loopback only: 127.0.0.1:8080 |
+| Uploaded files | Persistent `akzente_uploads` volume |
 
-The portals use separate ports so their existing root routes, assets, links, and auth flows work. Nginx proxies each portal's API requests to the same private backend. No backend, database, Adminer, or Maildev port is published by this stack.
+Nginx serves all three production frontend builds and proxies API requests to the same backend. PostgreSQL and SMTP ports are not exposed to the internet. Maildev captures messages for viewing; it does not deliver them to recipients. To deliver real emails, set the `MAIL_*` settings in `.env.production` to a real SMTP provider and redeploy. Maildev will still start as part of the stack.
 
-## Before the first run
+## Prerequisites and existing data
 
-1. Install Docker Engine and Docker Compose **2.30 or later**. The deploy user must have Docker access. The script also requires Bash, curl, and flock. Host Node/npm is unnecessary. Image builds need internet access to Docker Hub and the npm registry.
-2. Upload the project, including `deployment/`, `Backend/`, `Client/`, `HeadOffice/`, `Merchandiser/`, `docker-compose.production.yml`, `.dockerignore`, and both deployment scripts. Do not upload `node_modules`, `dist`, or `.verification`.
-3. Keep the **existing database connection and real SMTP settings** in `Backend/.env`. Preserve the current live upload directory in `Backend/uploads/`. These files contain private data and must be transferred privately. If the local upload snapshot is stale, copy the live uploads before deploying.
-4. The database must already contain the application's schema and data. This deployment reuses that database; it neither creates a replacement PostgreSQL instance nor imports the bundled SQL export. The database must be reachable from Docker. For PostgreSQL on the VPS host, use `DATABASE_HOST=host.docker.internal` and configure PostgreSQL's listen address and access rules for the Docker network. A database at localhost inside a container is not the host database.
-5. Allow inbound TCP ports **80, 8081, and 8082** in the VPS/provider firewall and ensure they are free. Permit the API container to reach the existing PostgreSQL and SMTP services. The script does not stop unrelated services or change your firewall.
-6. Run `bash deploy.sh YOUR_VPS_IP`.
+- Linux, Docker Engine, Docker Compose **2.30+**, Bash, curl, and flock. Host Node/npm is unnecessary. Builds need access to Docker Hub and npm.
+- Keep the existing source PostgreSQL reachable from containers. For PostgreSQL on the host, use `host.docker.internal` with the correct source port and PostgreSQL access rules. A source database in another Docker project needs a reachable address; the new stack's `postgres` hostname refers to the new database, not your old one.
+- Copy the current live uploads into `Backend/uploads/` before the first run. Database records referencing missing uploads stop deployment.
+- Schedule the first import with source application writes paused. The import copies data as of its backup; it does not continuously synchronize later changes from the original database. The command never stops unrelated applications or modifies the source database.
+- Allow public TCP ports **80, 8081, 8082**, and ensure they are free. Local mail-viewer and Adminer ports 1080/8080 must also be free. The script does not change your firewall or stop unrelated services.
 
-On first run, the script writes a private `.env.production` file, copies only the required database/mail settings, sets production mode and `DATABASE_SYNCHRONIZE=false`, and creates strong JWT secrets. Existing users and passwords remain in the database; users need to log in again when changing to the new deployment. Later runs retain those production settings and secrets. Environment values are raw, literal values without surrounding quotes, and values containing dollars or hashes are preserved.
+This workflow preserves an existing database. It does not silently create an empty business dataset or run development seeds. If you intend a fresh installation, a separately verified initial schema and secure administrator setup are required.
 
-The IP setup uses **HTTP**. Login cookies are HttpOnly, but HTTP does not encrypt credentials or traffic. Service workers remain disabled on insecure origins. For internet-facing production handling sensitive information, add trusted HTTPS before normal use; that also requires changing public URLs and enabling secure cookies. Do not simply enable secure cookies while still using HTTP.
+## First run and later runs
 
-## What the command does
+The command builds the API and all three portals first. It starts the private PostgreSQL service and checks its import marker. On first use it checks the source schema and uploads, creates and verifies a source backup, then restores it into an **empty target database** in one transaction. It records successful import in the administrative database. A populated target without an import marker is refused; no automatic overwrite, reset, or `--clean` is used.
 
-- Builds the API and all three portals from their lockfiles into production images.
-- Creates a PostgreSQL custom-format backup and verifies its archive table of contents.
-- Checks the existing database schema in a read-only connection. Structural differences stop deployment; index/comment differences are reported without changes. Development accounts using the known default password also stop deployment.
-- Checks that uploads referenced by local upload URLs exist in the source directory or persistent volume.
-- Imports local uploads into the named `akzente_uploads` volume without replacing files already present, then archives the volume.
-- Replaces the API and Nginx services only after preflight passes. Waits for health checks, checks each portal's index and login route, and checks the proxied API readiness from the host.
-- Attempts to restore the previous images if startup or host probes fail during an update. Initial deployments have no previous images to restore.
+After import, it verifies the managed database, creates a managed database backup, imports uploads without replacing existing files, archives uploads, and starts PostgreSQL, Maildev, Adminer, the API, and Nginx. It waits for health checks and probes each portal through its host port. Later runs retain the database and skip source backup/import. Image rollback is attempted on failed application startup; no database restore or data deletion runs during rollback.
 
-No development seeds, automatic schema synchronization, database resets, or incomplete legacy migration sequence run. The existing migration history is untouched. When schema changes are needed, use a separately reviewed and tested migration against a restored copy first; the deploy command deliberately refuses to guess how to modify live data.
+Private generated configuration:
 
-## Map configuration
+- `.env.source`: original connection used for first import. Correct this file if the source connection needs fixing after an initial failure.
+- `.env.database`: persistent PostgreSQL administrator credentials.
+- `.env.production`: API connection to the managed database, strong generated application password, JWT secrets, public URLs, and SMTP settings.
 
-Set `MAPBOX_PUBLIC_TOKEN=pk.YOUR_PUBLIC_TOKEN` in the private `Backend/.env` before the first deployment, or in `.env.production` for later deployments. The deployment supplies it to the frontend builds. Only public Mapbox tokens are accepted; never use a secret `sk.` token in a browser bundle. Without a public token, map features are unavailable.
+Back up all three privately and keep them with the corresponding volumes. They are excluded from Git and Docker build contexts. Do not delete them to retry a deployment: generating new credentials against existing volumes can break access. When upgrading the earlier external-database deployment, the original production settings are preserved in `.env.source` and JWT secrets are retained. Existing users and application records are imported; no default accounts are seeded. Known development accounts still using the default password stop preflight.
 
-## Later deployments and configuration
-
-```bash
-bash deploy.sh
-```
-
-Edit `.env.production` to change database or SMTP settings after the first deployment; changing `Backend/.env` alone does not replace production settings. Keep this file private and backed up. To change ports, update `HEAD_OFFICE_PORT`, `CLIENT_PORT`, and `MERCHANDISER_PORT` together with their corresponding public URLs. The script validates that they agree.
-
-The default backup client is PostgreSQL 17. If your database runs a newer major version, choose a compatible client, for example:
+Every later deployment uses the same command:
 
 ```bash
-DATABASE_CLIENT_IMAGE=postgres:18-alpine bash deploy.sh
+./deploy.sh
 ```
 
-Keep the existing application running only until the new deployment is verified. If the old application still serves the same database afterward, both applications can change the same business data; coordinate the final cutover.
+## IP access, email, and maps
+
+IP access uses HTTP and HttpOnly cookies. HTTP does not encrypt credentials or traffic; add trusted HTTPS before normal use with sensitive data. Secure cookies and public URL settings must then be adjusted together. Service workers remain disabled on insecure origins.
+
+Set `MAPBOX_PUBLIC_TOKEN=pk.YOUR_PUBLIC_TOKEN` in `Backend/.env` before the first run or `.env.production` afterward to enable maps. Secret `sk.` tokens are refused. Without a public token, map features are unavailable.
+
+View captured mail and Adminer from your own computer through SSH:
+
+```bash
+ssh -L 1080:127.0.0.1:1080 -L 8080:127.0.0.1:8080 root@YOUR_VPS_IP
+```
+
+Then open http://localhost:1080 for mail or http://localhost:8080 for Adminer. Adminer's server is `postgres`; use the database username, password, and name from `.env.production`.
 
 ## Operations and recovery
 
 ```bash
 docker compose -p akzente -f docker-compose.production.yml ps
-docker compose -p akzente -f docker-compose.production.yml logs --tail=100 api web
+docker compose -p akzente -f docker-compose.production.yml logs --tail=100 postgres maildev api web
 docker compose -p akzente -f docker-compose.production.yml restart api web
 ```
 
-Backups remain in `deployment/backups/` with private permissions. Copy them to secure off-VPS storage and set a retention policy; the script never deletes older backups. Upload archives are filesystem archives, not an atomic snapshot coordinated with the database. Quiesce writes for a fully consistent database/upload recovery point. Database restore and upload restore should be tested in an isolated environment before any live recovery.
+Backups are kept privately in `deployment/backups/`. `source.latest` identifies the archive used for initial import. Copy backups to secure off-VPS storage and set retention; this script does not delete previous backups. Upload archives are not an atomic snapshot coordinated with the database; pause writes for a consistent recovery point. Test restores in an isolated environment before live recovery. Never run `docker compose down -v` or remove the database/upload/mail volumes during an update.
 
-After a failed update, the last successful image tag remains in `deployment/.last-successful-tag`. With the default ports, it can be used to recover the previous build manually:
+A restore that finishes but loses its import-marker write is refused on retry because the target already contains data. Inspect that target and the verified source archive before repairing its marker; do not reset it automatically.
 
-```bash
-export DEPLOY_TAG="$(cat deployment/.last-successful-tag)"
-docker compose -p akzente -f docker-compose.production.yml up -d --no-build --wait api web
-```
+The bundled target is PostgreSQL 17. Source databases must be compatible with PostgreSQL 17; migrating from a newer major version requires an explicitly tested migration/target upgrade. Do not assume changing only the dump client makes a newer database compatible with this target.
 
-If using custom ports, also export their three values before that manual recovery command. Keep prior images until a release is stable. Do not run `docker compose down -v` or remove `akzente_uploads` during updates.
+## Validation
 
-## Verification performed in this workspace
+Configuration, credential preservation, first-run import ordering, later-run import skipping, build/schema failure handling, rollback orchestration, and read-only schema/upload checks are covered by automated tests. Compose and shell syntax were validated. A real isolated PostgreSQL 17 test verified backup restoration, UUID extension creation under the application role, retained rows, skipped repeated import, and refusal to overwrite a populated target without a marker.
 
-Shell and Node script syntax, Compose configuration, lockfile consistency, configuration preservation, deployment ordering, build/schema failure handling, and rollback orchestration were checked. The database and deployment tests use isolated fixtures/mocks and do not contact the live database.
-
-Full production builds and a running Docker smoke test could not be completed here: Docker Engine was unavailable, npm was broken, and outbound package downloads were blocked. The deploy command enforces the real build, backup, database and upload compatibility checks, container health checks, and host probes on the VPS before reporting success. After deployment, verify actual login/refresh in each portal, one business write, one upload, and email delivery with your existing accounts.
+Full Docker image builds and the complete running stack remain unverified in this workspace because Docker Engine was unavailable. The command enforces builds, preflight and container/host health checks on the VPS. After it succeeds, verify actual login/refresh for each portal, a business write, an upload, and captured mail (or actual delivery if an SMTP provider is configured).

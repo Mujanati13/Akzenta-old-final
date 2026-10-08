@@ -22,3 +22,8 @@ fi
 pg_restore --list "$backup_file.partial" >/dev/null
 mv "$backup_file.partial" "$backup_file"
 printf 'Database backup: deployment/backups/%s\n' "$backup_name"
+
+if [ -n "${BACKUP_RESULT_FILE:-}" ]; then
+  printf '%s\n' "$backup_name" >"$BACKUP_RESULT_FILE.tmp"
+  mv "$BACKUP_RESULT_FILE.tmp" "$BACKUP_RESULT_FILE"
+fi
