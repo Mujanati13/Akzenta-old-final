@@ -53,6 +53,42 @@ if [[ ! -f .env.production && ! -f Backend/.env ]]; then
   unset source_password
 fi
 
+# Complete partial source configuration without replacing existing settings.
+source_settings="$(docker run --rm --user "$(id -u):$(id -g)" -v "$TASK_ROOT:/project" -w /project node:22-alpine node deployment/source-config.cjs)"
+mapfile -t source_fields <<<"$source_settings"
+source_file="${source_fields[0]}"
+[[ "$source_file" == Backend/.env || "$source_file" == .env.production ]] || { echo 'Invalid source configuration path' >&2; exit 1; }
+for key in "${source_fields[@]:1}"; do
+  case "$key" in
+    DATABASE_HOST) prompt='Existing database host (host.docker.internal if on this VPS): ' ;;
+    DATABASE_PORT) prompt='Existing database port [5432]: ' ;;
+    DATABASE_NAME) prompt='Existing database name: ' ;;
+    DATABASE_USERNAME) prompt='Existing database username: ' ;;
+    DATABASE_PASSWORD) prompt='Existing database password: ' ;;
+    *) echo 'Invalid source configuration field' >&2; exit 1 ;;
+  esac
+  value=''
+  while [[ -z "$value" ]]; do
+    if [[ "$key" == DATABASE_PASSWORD ]]; then
+      read -r -s -p "$prompt" value </dev/tty
+      printf '\n' >/dev/tty
+    else
+      read -r -p "$prompt" value </dev/tty
+    fi
+    [[ "$key" != DATABASE_PORT || -n "$value" ]] || value=5432
+  done
+  if [[ "$source_file" == Backend/.env ]]; then
+    value="${value//\\/\\\\}"
+    value="${value//\"/\\\"}"
+    printf '\n%s="%s"\n' "$key" "$value" >>"$source_file"
+  else
+    printf '\n%s=%s\n' "$key" "$value" >>"$source_file"
+  fi
+  chmod 600 "$source_file"
+  unset value
+done
+unset source_settings source_fields
+
 # Bootstrap with Node in Docker; the host needs neither Node nor npm.
 ports="$(docker run --rm --user "$(id -u):$(id -g)" -v "$TASK_ROOT:/project" -w /project node:22-alpine node deployment/prepare-env.cjs "${1:-}")"
 read -r HEAD_OFFICE_PORT CLIENT_PORT MERCHANDISER_PORT MAPBOX_PUBLIC_TOKEN <<<"$ports"

@@ -9,6 +9,7 @@ const dockerMock = [
   '#!/usr/bin/env bash',
   'printf "docker %s\\n" "$*" >>"$MOCK_LOG"',
   'if [[ "$1" == info ]]; then exit 0; fi',
+  'if [[ "$*" == *"source-config.cjs"* ]]; then echo ".env.production"; exit 0; fi',
   'if [[ "$1" == run ]]; then echo "80 8081 8082"; exit 0; fi',
   'if [[ "$*" == *"db-bootstrap status"* ]]; then if [[ "$MOCK_FAIL" == repeat ]]; then echo done; else echo pending; fi; exit 0; fi',
   'if [[ "$1" == inspect ]]; then echo "previous:stable"; exit 0; fi',

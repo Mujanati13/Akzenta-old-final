@@ -8,7 +8,7 @@ From the project root on your Linux VPS:
 
 Or provide the public IP explicitly: `./deploy.sh YOUR_VPS_IP`. The `deplot.sh` and `deply.sh` aliases run the same command.
 
-The first run asks for the VPS IP when missing. If neither `Backend/.env` nor saved production settings exist, it asks for your existing database connection and writes a private environment file automatically. Existing `Backend/.env` database settings are used without asking again. SMTP credentials are unnecessary for the included local mail server.
+The first run asks for the VPS IP when missing. If neither `Backend/.env` nor saved production settings exist, it asks for your existing database connection and writes a private environment file automatically. Existing database settings are kept. Blank or missing source connection fields are prompted even when `Backend/.env` already exists; enter the actual existing database name to preserve its data. SMTP credentials are unnecessary for the included local mail server.
 
 ## Included services
 
