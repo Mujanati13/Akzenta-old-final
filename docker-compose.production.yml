@@ -207,8 +207,9 @@ services:
   upload-init:
     image: alpine:3.22
     profiles: ["tools"]
-    command: ["sh", "-ec", "cp -an /source/. /uploads/; chown -R 1000:1000 /uploads /maildev"]
+    command: ["sh", "/import-uploads.sh"]
     volumes:
+      - ./deployment/import-uploads.sh:/import-uploads.sh:ro
       - ./Backend/uploads:/source:ro
       - uploads:/uploads
       - maildata:/maildev
