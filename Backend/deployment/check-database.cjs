@@ -48,7 +48,11 @@ async function main() {
       });
       if (!present) missingUploads++;
     }
-    if (missingUploads) throw new Error(missingUploads + ' referenced upload(s) are absent. Copy the current live uploads into Backend/uploads before deploying.');
+    if (missingUploads) {
+      const testRestore = e.DEPLOYMENT_TEST_DATA === 'true' && e.ALLOW_MISSING_TEST_UPLOADS === 'true' && /^akzente_restore_[a-f0-9]{16}$/.test(e.DATABASE_NAME || '');
+      if (!testRestore) throw new Error(missingUploads + ' referenced upload(s) are absent. Copy the current live uploads into Backend/uploads before deploying.');
+      console.warn('TEST DATA ONLY: ' + missingUploads + ' referenced upload(s) are unavailable. Records are retained; missing images/documents will not open until their files are supplied.');
+    }
     console.log('Existing database schema checked in read-only mode; data and migration history preserved.');
     if (schema.upQueries.length) console.log('Optional index/comment differences detected; no changes applied.');
   } finally { await dataSource.destroy(); }

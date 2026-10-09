@@ -108,6 +108,23 @@ services:
     security_opt:
       - no-new-privileges:true
 
+  db-restore-existing:
+    <<: *app-env
+    image: akzente-api:${DEPLOY_TAG:-current}
+    user: "0:0"
+    env_file:
+      - path: .env.production
+        format: raw
+      - path: .env.database
+        format: raw
+    command: ["node", "deployment/restore-existing.cjs"]
+    profiles: ["tools"]
+    read_only: true
+    tmpfs: [/tmp]
+    volumes:
+      - ./deployment/import:/imports:ro
+      - ./deployment:/restore-output
+
   db-seed:
     <<: *app-env
     image: akzente-api:${DEPLOY_TAG:-current}

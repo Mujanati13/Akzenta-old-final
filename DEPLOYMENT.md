@@ -118,3 +118,17 @@ git pull --ff-only && ./deploy.sh --seed-all
 This runs a database backup before adding missing roles, account statuses, user types, merchandiser statuses, report statuses, 41 European countries, 402 European city entries, and 2,054 German city entries. City names shared by both datasets are inserted only once per country. Existing country IDs, cities, account passwords, and report statuses are preserved. It creates the existing demo seed users (`admin@example.com` and `john.doe@example.com`) only when absent, with generated passwords and HeadOffice membership. Read their passwords with `cat deployment/seeder-credentials.json`. This private file is excluded from Git. The initial deployment administrator remains available. No clients, projects, or reports are defined by these seeders. The destructive `seed_remote.sql` maintenance script is not a dataset and is not executed.
 
 The seed writes run in one transaction and can be repeated without duplicate records. Combine `--fresh --seed-all` for a new installation.
+
+## Restore the original database and existing test records
+
+The standard seeders do not include the full original dataset. Use the private `private-existing-test-data.tar.gz` package to restore the existing snapshot (24 client companies, 28 projects, 537 reports, 25 merchandisers, and 89 original users). The package contains `deployment/import/existing-data.sql` and the matching uploads available locally. It is intentionally excluded from GitHub because it contains account and business records.
+
+Upload the archive to the project directory on the VPS using SCP or SFTP. Then run:
+
+```bash
+git pull --ff-only && tar --skip-old-files -xzf private-existing-test-data.tar.gz && ./restore-existing.sh
+```
+
+The command backs up the current database, creates a separate restored database using the current application schema, imports the original records, checks foreign keys and schema compatibility, and deploys against it. It retains the previous database. Old sessions are excluded. The initial administrator remains available; a restored Client account and Merchandiser account receive generated test passwords stored privately in `deployment/restored-accounts.json`. Repeating the restore reuses the completed database rather than adding duplicate records. A failed validation keeps the previous configuration active.
+
+The available package has 203 of the snapshot's 790 referenced uploads. To restore all database records for testing while retaining the 587 unavailable file references, run `./restore-existing.sh --allow-missing-test-uploads`. This explicitly enables a warning for missing attachments only in a restored test database. Those images/documents will remain unavailable until the original files are supplied. The default restore refuses missing files. To use a complete upload archive, place its files in `Backend/uploads` before restoring.

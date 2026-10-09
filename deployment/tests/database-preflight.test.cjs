@@ -4,7 +4,7 @@ const vm = require('node:vm');
 const fs = require('node:fs');
 const path = require('node:path');
 const source = fs.readFileSync(path.join(__dirname, '../../Backend/deployment/check-database.cjs'), 'utf8');
-async function check({ queries = [], accounts = [], files = [], available = [] } = {}) {
+async function check({ queries = [], accounts = [], files = [], available = [], env = {} } = {}) {
   let options, destroyed = false;
   const sql = [], output = [];
   class DataSource {
@@ -22,7 +22,7 @@ async function check({ queries = [], accounts = [], files = [], available = [] }
     }
     async destroy() { destroyed = true; }
   }
-  const state = { env: { NODE_ENV: 'production', DATABASE_SYNCHRONIZE: 'false' }, exitCode: 0 };
+  const state = { env: { NODE_ENV: 'production', DATABASE_SYNCHRONIZE: 'false', ...env }, exitCode: 0 };
   const context = {
     require: name => {
       if (name === 'reflect-metadata') return {};
@@ -33,7 +33,7 @@ async function check({ queries = [], accounts = [], files = [], available = [] }
       throw new Error('Unexpected module: ' + name);
     },
     __dirname: '/app/deployment', URL, process: state,
-    console: { log: message => output.push(message), error: message => output.push(message) },
+    console: { log: message => output.push(message), error: message => output.push(message), warn: message => output.push(message) },
   };
   await vm.runInNewContext(source, context);
   return { options, destroyed, sql, output: output.join('\n'), exitCode: state.exitCode };
@@ -70,4 +70,12 @@ test('known default development account refuses deployment without altering its 
   assert.equal(r.exitCode, 1);
   assert.match(r.output, /development account/);
   assert.ok(r.sql.every(query => query.startsWith('SELECT ')));
+});
+
+test('missing uploads may warn only for an explicitly selected restored test database', async()=>{
+ const files=[{path:'/uploads/missing.jpg'}];
+ const env={DEPLOYMENT_TEST_DATA:'true',ALLOW_MISSING_TEST_UPLOADS:'true',DATABASE_NAME:'akzente_restore_0123456789abcdef'};
+ const allowed=await check({files,env});assert.equal(allowed.exitCode,0,allowed.output);assert.match(allowed.output,/TEST DATA ONLY/);
+ const production=await check({files,env:{...env,DATABASE_NAME:'production'}});assert.equal(production.exitCode,1);
+ const unapproved=await check({files,env:{...env,ALLOW_MISSING_TEST_UPLOADS:'false'}});assert.equal(unapproved.exitCode,1);
 });

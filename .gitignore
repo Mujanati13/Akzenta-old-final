@@ -26,3 +26,8 @@ deployment/.last-successful-tag
 
 /deployment/seeder-credentials.json
 /deployment/seeder-credentials.json.tmp
+
+/deployment/import/
+/deployment/.restore-target
+/deployment/restored-accounts.json
+/private-existing-test-data.tar.gz

@@ -1,0 +1,12 @@
+const fs=require('node:fs');
+const {parseRaw,validate}=require('./prepare-env.cjs');
+const target=fs.readFileSync('deployment/.restore-target','utf8').trim();
+if(!/^akzente_restore_[a-f0-9]{16}$/.test(target))throw new Error('Invalid restored database name');
+const values=parseRaw(fs.readFileSync('.env.production','utf8'));
+if(values.DEPLOYMENT_STACK!=='managed')throw new Error('Managed database configuration required');
+values.DATABASE_NAME=target;
+values.DEPLOYMENT_TEST_DATA='true';
+values.ALLOW_MISSING_TEST_UPLOADS=process.argv[2]==='true'?'true':'false';
+validate(values);
+fs.writeFileSync('.env.production.next',Object.entries(values).map(([k,v])=>k+'='+v).join('\n')+'\n',{mode:0o600});
+console.log(target);
