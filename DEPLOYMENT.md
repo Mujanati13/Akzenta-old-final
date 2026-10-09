@@ -132,3 +132,15 @@ git pull --ff-only && tar --skip-old-files -xzf private-existing-test-data.tar.g
 The command backs up the current database, creates a separate restored database using the current application schema, imports the original records, checks foreign keys and schema compatibility, and deploys against it. It retains the previous database. Old sessions are excluded. The initial administrator remains available; a restored Client account and Merchandiser account receive generated test passwords stored privately in `deployment/restored-accounts.json`. Repeating the restore reuses the completed database rather than adding duplicate records. A failed validation keeps the previous configuration active.
 
 The available package has 203 of the snapshot's 790 referenced uploads. To restore all database records for testing while retaining the 587 unavailable file references, run `./restore-existing.sh --allow-missing-test-uploads`. This explicitly enables a warning for missing attachments only in a restored test database. Those images/documents will remain unavailable until the original files are supplied. The default restore refuses missing files. To use a complete upload archive, place its files in `Backend/uploads` before restoring.
+
+### Encrypted data package from GitHub
+
+`deployment/existing-test-data.tar.gz.enc` contains all database records from the private snapshot, encrypted with AES-256-CBC and PBKDF2 (200,000 iterations, SHA-256). The password is delivered separately and is never committed.
+
+After pulling, run the following and enter the separately supplied password when OpenSSL prompts:
+
+```bash
+openssl enc -d -aes-256-cbc -pbkdf2 -iter 200000 -md sha256 -in deployment/existing-test-data.tar.gz.enc -out private-existing-test-data.tar.gz && tar --skip-old-files -xzf private-existing-test-data.tar.gz && ./restore-existing.sh --allow-missing-test-uploads
+```
+
+This restores records into a separate database and switches the apps after validation. Uploaded image and document files are not included in this database-only GitHub package; the explicit test flag allows missing files. The full private package can be transferred separately to add the available uploads. Keep the encrypted package password private. Decrypted data stays excluded from Git.
