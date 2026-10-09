@@ -144,3 +144,10 @@ openssl enc -d -aes-256-cbc -pbkdf2 -iter 200000 -md sha256 -in deployment/exist
 ```
 
 This restores records into a separate database and switches the apps after validation. Uploaded image and document files are not included in this database-only GitHub package; the explicit test flag allows missing files. The full private package can be transferred separately to add the available uploads. Keep the encrypted package password private. Decrypted data stays excluded from Git.
+### Restore available original media
+
+The encrypted media chunks in `deployment/media/` contain all 247 upload files available in the original local source. They use the database package password delivered separately. Of the snapshot's 790 referenced files, 203 are available and 587 are absent from the original source; this import cannot recover absent originals.
+
+Run `git pull --ff-only && bash ./restore-media.sh` on the VPS and enter the separately supplied package password. The importer verifies all chunks, decrypts and validates the archive, backs up the current Docker upload volume, copies available files without replacing newer uploads, and deploys the image routing fix. Database records and existing account passwords are preserved. This does not rerun the database snapshot restore. Missing original documents/images still require recovery from their original server or backup.
+
+The proxy reserves `/api/` before extension-based frontend asset handling so image and document URLs reach the API's upload controller.
